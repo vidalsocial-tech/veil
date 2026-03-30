@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veil — Daily Tarot</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0d0b10;
+    --parchment: #f5efe6;
+    --gold: #c9a84c;
+    --gold-light: #e8cc7a;
+    --mist: #8b7fa0;
+    --deep: #1a1228;
+    --card-bg: #13101a;
+    --accent: #7c5cbf;
+    --blush: #d4a5a5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Cormorant Garamond', serif;
+    background: var(--ink);
+    color: var(--parchment);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── STARFIELD ── */
+  #stars {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background: radial-gradient(ellipse at 20% 30%, #1e1535 0%, #0d0b10 60%);
+  }
+  #stars::before, #stars::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 55% 15%, rgba(201,168,76,.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,.3) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 15% 70%, rgba(201,168,76,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,.4) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 60%, rgba(255,255,255,.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 60% 45%, rgba(201,168,76,.3) 0%, transparent 100%),
+      radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,.3) 0%, transparent 100%);
+    background-size: 100% 100%;
+  }
+
+  /* ── LAYOUT ── */
+  #app {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 20px 60px;
+  }
+
+  header {
+    text-align: center;
+    padding: 48px 0 32px;
+  }
+  .logo {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: .3em;
+    color: var(--gold);
+    text-shadow: 0 0 40px rgba(201,168,76,.3);
+  }
+  .logo-sub {
+    font-size: .85rem;
+    letter-spacing: .25em;
+    color: var(--mist);
+    margin-top: 6px;
+    font-style: italic;
+  }
+
+  /* ── SCREENS ── */
+  .screen {
+    display: none; flex-direction: column; align-items: center;
+    width: 100%; max-width: 560px;
+    animation: fadeUp .6s ease both;
+  }
+  .screen.active { display: flex; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── INTENTION SCREEN ── */
+  .intention-title {
+    font-size: clamp(1.4rem, 4vw, 1.9rem);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--parchment);
+    text-align: center;
+    margin-bottom: 32px;
+    line-height: 1.5;
+  }
+  .focus-label {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    color: var(--mist);
+    margin-bottom: 14px;
+  }
+  .focus-pills {
+    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+    margin-bottom: 28px;
+  }
+  .pill {
+    padding: 8px 20px;
+    border: 1px solid rgba(201,168,76,.3);
+    border-radius: 40px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    color: var(--mist);
+    background: transparent;
+    cursor: pointer;
+    transition: all .25s;
+  }
+  .pill:hover { border-color: var(--gold); color: var(--gold-light); }
+  .pill.selected {
+    border-color: var(--gold);
+    background: rgba(201,168,76,.12);
+    color: var(--gold-light);
+  }
+
+  textarea {
+    width: 100%;
+    background: rgba(255,255,255,.04);
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 12px;
+    color: var(--parchment);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    padding: 16px 20px;
+    resize: none;
+    outline: none;
+    transition: border-color .25s;
+    margin-bottom: 28px;
+    line-height: 1.6;
+  }
+  textarea::placeholder { color: rgba(139,127,160,.5); }
+  textarea:focus { border-color: rgba(201,168,76,.5); }
+
+  .btn-primary {
+    font-family: 'Cinzel', serif;
+    font-size: .8rem;
+    letter-spacing: .2em;
+    color: var(--ink);
+    background: linear-gradient(135deg, var(--gold), var(--gold-light));
+    border: none;
+    border-radius: 40px;
+    padding: 14px 40px;
+    cursor: pointer;
+    transition: all .25s;
+    box-shadow: 0 4px 20px rgba(201,168,76,.25);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(201,168,76,.4);
+  }
+  .btn-primary:disabled { opacity: .4; cursor: default; transform: none; }
+
+  /* ── DRAW SCREEN ── */
+  .draw-prompt {
+    font-size: clamp(1.1rem, 3vw, 1.4rem);
+    font-style: italic;
+    color: var(--mist);
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.6;
+  }
+
+  .card-spread {
+    display: flex; gap: 20px; justify-content: center;
+    margin-bottom: 48px;
+    perspective: 800px;
+  }
+
+  .tarot-card {
+    width: 90px; height: 150px;
+    border-radius: 10px;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform .6s cubic-bezier(.23,1,.32,1), box-shadow .3s;
+    box-shadow: 0 4px 20px rgba(0,0,0,.6);
+  }
+  .tarot-card:hover {
+    transform: translateY(-12px) rotateY(5deg);
+    box-shadow: 0 16px 40px rgba(201,168,76,.25);
+  }
+  .tarot-card.selected {
+    transform: translateY(-20px) scale(1.08);
+    box-shadow: 0 20px 50px rgba(201,168,76,.5);
+  }
+
+  .card-back {
+    width: 100%; height: 100%;
+    border-radius: 10px;
+    background: var(--card-bg);
+    border: 1px solid rgba(201,168,76,.3);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-back::before {
+    content: '';
+    position: absolute; inset: 6px;
+    border: 1px solid rgba(201,168,76,.15);
+    border-radius: 6px;
+  }
+  .card-back::after {
+    content: '✦';
+    font-size: 1.8rem;
+    color: rgba(201,168,76,.4);
+  }
+
+  /* ── REVEAL SCREEN ── */
+  .reveal-wrap {
+    display: flex; flex-direction: column; align-items: center;
+    width: 100%;
+  }
+
+  .card-reveal {
+    width: 140px; height: 234px;
+    border-radius: 14px;
+    background: linear-gradient(160deg, #1e1535, #0d0b10);
+    border: 1px solid rgba(201,168,76,.5);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px;
+    box-shadow: 0 0 60px rgba(201,168,76,.2), 0 20px 60px rgba(0,0,0,.8);
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 32px;
+    animation: cardReveal .8s cubic-bezier(.23,1,.32,1) both;
+  }
+  @keyframes cardReveal {
+    from { opacity: 0; transform: scale(.85) rotateY(20deg); }
+    to   { opacity: 1; transform: scale(1) rotateY(0deg); }
+  }
+  .card-reveal::before {
+    content: '';
+    position: absolute; inset: 8px;
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 8px;
+  }
+  .card-glow {
+    position: absolute; inset: -20px;
+    background: radial-gradient(circle at 50% 50%, rgba(201,168,76,.1), transparent 70%);
+    pointer-events: none;
+  }
+  .card-symbol { font-size: 2.8rem; }
+  .card-name-on-card {
+    font-family: 'Cinzel', serif;
+    font-size: .6rem;
+    letter-spacing: .15em;
+    color: var(--gold);
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  .card-name-big {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    color: var(--gold);
+    letter-spacing: .1em;
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .card-archetype {
+    font-size: .9rem;
+    font-style: italic;
+    color: var(--mist);
+    letter-spacing: .1em;
+    margin-bottom: 24px;
+  }
+
+  /* ── READING BOX ── */
+  .reading-box {
+    width: 100%;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(201,168,76,.15);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .reading-box::before {
+    content: '✦';
+    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+    background: var(--ink);
+    padding: 0 8px;
+    color: var(--gold);
+    font-size: .8rem;
+  }
+  .reading-text {
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    line-height: 1.85;
+    color: var(--parchment);
+    font-weight: 300;
+    font-style: italic;
+  }
+  .reading-loading {
+    display: flex; align-items: center; gap: 10px;
+    color: var(--mist); font-style: italic;
+  }
+  .dot-pulse span {
+    display: inline-block; width: 6px; height: 6px;
+    border-radius: 50%; background: var(--gold);
+    animation: pulse 1.2s ease-in-out infinite;
+    margin: 0 2px;
+  }
+  .dot-pulse span:nth-child(2) { animation-delay: .2s; }
+  .dot-pulse span:nth-child(3) { animation-delay: .4s; }
+  @keyframes pulse {
+    0%,80%,100% { opacity: .3; transform: scale(.8); }
+    40% { opacity: 1; transform: scale(1); }
+  }
+
+  /* ── REFLECTION ── */
+  .reflection-section {
+    width: 100%;
+    margin-top: 8px;
+    border-top: 1px solid rgba(201,168,76,.1);
+    padding-top: 24px;
+  }
+  .reflection-q {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    color: var(--mist);
+    margin-bottom: 14px;
+  }
+  .mood-row {
+    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
+  }
+  .mood-btn {
+    padding: 7px 16px;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 30px;
+    background: transparent;
+    color: var(--mist);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-style: italic;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .mood-btn:hover, .mood-btn.selected {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(201,168,76,.08);
+  }
+
+  .save-note {
+    width: 100%;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 10px;
+    color: var(--parchment);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    padding: 12px 16px;
+    resize: none;
+    outline: none;
+    margin-bottom: 16px;
+    line-height: 1.6;
+    transition: border-color .2s;
+  }
+  .save-note::placeholder { color: rgba(139,127,160,.4); }
+  .save-note:focus { border-color: rgba(201,168,76,.3); }
+
+  .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  .btn-ghost {
+    font-family: 'Cinzel', serif;
+    font-size: .7rem;
+    letter-spacing: .15em;
+    color: var(--mist);
+    background: transparent;
+    border: 1px solid rgba(255,255,255,.15);
+    border-radius: 30px;
+    padding: 11px 28px;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── JOURNAL SCREEN ── */
+  .journal-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    letter-spacing: .2em;
+    color: var(--gold);
+    margin-bottom: 24px;
+    text-align: center;
+  }
+  .journal-empty {
+    color: var(--mist); font-style: italic; text-align: center; padding: 40px 0;
+    font-size: 1.05rem;
+  }
+  .journal-entry {
+    width: 100%;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(201,168,76,.15);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+  .je-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+  .je-card {
+    font-family: 'Cinzel', serif;
+    font-size: .8rem;
+    color: var(--gold);
+    letter-spacing: .1em;
+  }
+  .je-date { font-size: .85rem; color: var(--mist); font-style: italic; }
+  .je-focus {
+    display: inline-block;
+    padding: 2px 10px;
+    border: 1px solid rgba(201,168,76,.2);
+    border-radius: 20px;
+    font-size: .8rem;
+    color: var(--mist);
+    font-style: italic;
+    margin-bottom: 8px;
+  }
+  .je-note { font-size: 1rem; color: var(--parchment); font-style: italic; line-height: 1.6; }
+  .je-mood { font-size: .85rem; color: var(--blush); margin-top: 8px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(13,11,16,.92);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(201,168,76,.1);
+    display: flex; justify-content: center; gap: 0;
+    z-index: 100;
+  }
+  .nav-btn {
+    flex: 1; max-width: 120px;
+    padding: 14px 0;
+    background: transparent;
+    border: none;
+    color: var(--mist);
+    font-family: 'Cinzel', serif;
+    font-size: .62rem;
+    letter-spacing: .12em;
+    cursor: pointer;
+    transition: color .2s;
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+  }
+  .nav-btn .nav-icon { font-size: 1.1rem; }
+  .nav-btn.active { color: var(--gold); }
+
+  /* ── DIVIDER ── */
+  .divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 20px auto;
+  }
+</style>
+</head>
+<body>
+<div id="stars"></div>
+<div id="app">
+  <header>
+    <div class="logo">VEIL</div>
+    <div class="logo-sub">a daily reading</div>
+  </header>
+
+  <!-- INTENTION SCREEN -->
+  <div class="screen active" id="screen-intention">
+    <div class="intention-title">What are you carrying<br>into this moment?</div>
+
+    <div class="focus-label">CHOOSE A FOCUS</div>
+    <div class="focus-pills">
+      <button class="pill" onclick="selectFocus(this,'Love')">Love</button>
+      <button class="pill" onclick="selectFocus(this,'Career')">Career</button>
+      <button class="pill" onclick="selectFocus(this,'Clarity')">Clarity</button>
+      <button class="pill" onclick="selectFocus(this,'Healing')">Healing</button>
+      <button class="pill" onclick="selectFocus(this,'Change')">Change</button>
+      <button class="pill" onclick="selectFocus(this,'Purpose')">Purpose</button>
+    </div>
+
+    <textarea id="question-input" rows="3" placeholder="Describe what's weighing on you… or simply breathe and draw."></textarea>
+
+    <button class="btn-primary" id="btn-draw" onclick="goDraw()">DRAW A CARD</button>
+  </div>
+
+  <!-- DRAW SCREEN -->
+  <div class="screen" id="screen-draw">
+    <div class="draw-prompt">Three cards wait.<br>Trust what pulls you.</div>
+    <div class="card-spread" id="card-spread">
+      <div class="tarot-card" onclick="chooseCard(0)"><div class="card-back"></div></div>
+      <div class="tarot-card" onclick="chooseCard(1)"><div class="card-back"></div></div>
+      <div class="tarot-card" onclick="chooseCard(2)"><div class="card-back"></div></div>
+    </div>
+  </div>
+
+  <!-- REVEAL SCREEN -->
+  <div class="screen" id="screen-reveal">
+    <div class="reveal-wrap">
+      <div class="card-reveal" id="reveal-card">
+        <div class="card-glow"></div>
+        <div class="card-symbol" id="reveal-symbol">☽</div>
+        <div class="card-name-on-card" id="reveal-name-small">THE MOON</div>
+      </div>
+      <div class="card-name-big" id="reveal-name-big">The Moon</div>
+      <div class="card-archetype" id="reveal-archetype">Illusion · The Unconscious · Hidden Truths</div>
+      <div class="divider"></div>
+      <div class="reading-box">
+        <div id="reading-content" class="reading-loading">
+          <span>The cards are speaking</span>
+          <span class="dot-pulse"><span></span><span></span><span></span></span>
+        </div>
+      </div>
+      <div class="reflection-section">
+        <div class="reflection-q">HOW DOES THIS LAND?</div>
+        <div class="mood-row" id="mood-row">
+          <button class="mood-btn" onclick="selectMood(this,'Seen')">Seen</button>
+          <button class="mood-btn" onclick="selectMood(this,'Curious')">Curious</button>
+          <button class="mood-btn" onclick="selectMood(this,'Challenged')">Challenged</button>
+          <button class="mood-btn" onclick="selectMood(this,'Calm')">Calm</button>
+          <button class="mood-btn" onclick="selectMood(this,'Unsure')">Unsure</button>
+        </div>
+        <textarea class="save-note" id="note-input" rows="2" placeholder="A word, a feeling, an intention to carry forward…"></textarea>
+        <div class="btn-row">
+          <button class="btn-ghost" onclick="saveAndNew()">SAVE & NEW READING</button>
+          <button class="btn-primary" onclick="saveReading()">SAVE TO JOURNAL</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOURNAL SCREEN -->
+  <div class="screen" id="screen-journal">
+    <div class="journal-title">YOUR READINGS</div>
+    <div id="journal-list"></div>
+  </div>
+</div>
+
+<nav>
+  <button class="nav-btn active" id="nav-home" onclick="showScreen('intention','nav-home')">
+    <span class="nav-icon">✦</span>READ
+  </button>
+  <button class="nav-btn" id="nav-journal" onclick="showScreen('journal','nav-journal'); renderJournal()">
+    <span class="nav-icon">◯</span>JOURNAL
+  </button>
+</nav>
+
+<script>
+const TAROT_CARDS = [
+  { name: "The Fool",       symbol: "🌀", archetype: "Beginnings · Innocence · Leap of Faith" },
+  { name: "The Magician",   symbol: "⚡", archetype: "Will · Skill · Manifestation" },
+  { name: "The High Priestess", symbol: "☽", archetype: "Intuition · Mystery · Inner Knowing" },
+  { name: "The Empress",    symbol: "🌿", archetype: "Abundance · Nurturing · Creation" },
+  { name: "The Emperor",    symbol: "🏔", archetype: "Structure · Authority · Foundation" },
+  { name: "The Hierophant", symbol: "🔑", archetype: "Tradition · Guidance · Belief" },
+  { name: "The Lovers",     symbol: "∞", archetype: "Union · Choice · Alignment" },
+  { name: "The Chariot",    symbol: "◈", archetype: "Drive · Control · Victory" },
+  { name: "Strength",       symbol: "☀", archetype: "Courage · Patience · Inner Power" },
+  { name: "The Hermit",     symbol: "◉", archetype: "Solitude · Wisdom · Inner Light" },
+  { name: "Wheel of Fortune", symbol: "⊕", archetype: "Cycles · Change · Fate" },
+  { name: "Justice",        symbol: "⚖", archetype: "Truth · Fairness · Cause & Effect" },
+  { name: "The Hanged Man", symbol: "⟁", archetype: "Suspension · New Perspective · Sacrifice" },
+  { name: "Death",          symbol: "♦", archetype: "Endings · Transformation · Release" },
+  { name: "Temperance",     symbol: "△", archetype: "Balance · Patience · Moderation" },
+  { name: "The Devil",      symbol: "⛓", archetype: "Shadow · Attachment · Materialism" },
+  { name: "The Tower",      symbol: "◬", archetype: "Upheaval · Revelation · Sudden Change" },
+  { name: "The Star",       symbol: "✦", archetype: "Hope · Inspiration · Renewal" },
+  { name: "The Moon",       symbol: "☽", archetype: "Illusion · The Unconscious · Hidden Truths" },
+  { name: "The Sun",        symbol: "☼", archetype: "Joy · Vitality · Success" },
+  { name: "Judgement",      symbol: "◎", archetype: "Awakening · Reckoning · Rebirth" },
+  { name: "The World",      symbol: "◌", archetype: "Completion · Integration · Wholeness" },
+];
+
+let state = { focus: null, question: '', card: null, mood: null, reading: '' };
+let journal = JSON.parse(localStorage.getItem('veil_journal') || '[]');
+
+function selectFocus(el, f) {
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  state.focus = f;
+}
+
+function selectMood(el, m) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  el.classList.add('selected');
+  state.mood = m;
+}
+
+function showScreen(name, navId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + name).classList.add('active');
+  if (navId) document.getElementById(navId).classList.add('active');
+}
+
+function goDraw() {
+  state.question = document.getElementById('question-input').value.trim();
+  showScreen('draw');
+  document.getElementById('nav-home').classList.add('active');
+}
+
+function chooseCard(idx) {
+  const cards = document.querySelectorAll('.tarot-card');
+  cards.forEach((c, i) => {
+    c.classList.remove('selected');
+    if (i !== idx) { c.style.opacity = '.4'; c.style.pointerEvents = 'none'; }
+  });
+  cards[idx].classList.add('selected');
+
+  state.card = TAROT_CARDS[Math.floor(Math.random() * TAROT_CARDS.length)];
+  setTimeout(() => doReveal(), 700);
+}
+
+function doReveal() {
+  const c = state.card;
+  document.getElementById('reveal-symbol').textContent = c.symbol;
+  document.getElementById('reveal-name-small').textContent = c.name.toUpperCase();
+  document.getElementById('reveal-name-big').textContent = c.name;
+  document.getElementById('reveal-archetype').textContent = c.archetype;
+
+  showScreen('reveal');
+  document.getElementById('nav-home').classList.add('active');
+
+  document.getElementById('reading-content').innerHTML = `
+    <span class="reading-loading">The cards are speaking
+      <span class="dot-pulse"><span></span><span></span><span></span></span>
+    </span>`;
+
+  fetchReading(c);
+}
+
+async function fetchReading(card) {
+  try {
+    const res = await fetch("/api/reading", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        card: { name: card.name, archetype: card.archetype },
+        focus: state.focus,
+        question: state.question
+      })
+    });
+    if (!res.ok) throw new Error('API error');
+    const data = await res.json();
+    state.reading = data.reading || '';
+    document.getElementById('reading-content').className = 'reading-text';
+    document.getElementById('reading-content').textContent = state.reading;
+  } catch(e) {
+    document.getElementById('reading-content').className = 'reading-text';
+    document.getElementById('reading-content').textContent =
+      `${card.name} arrives bearing the energy of ${card.archetype.toLowerCase()}. Something you've been circling is asking to be seen more clearly. What would it mean to stop moving around it—and instead, move toward it?`;
+  }
+}
+
+function saveReading() {
+  const entry = {
+    id: Date.now(),
+    date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+    card: state.card.name,
+    focus: state.focus,
+    question: state.question,
+    reading: state.reading,
+    mood: state.mood,
+    note: document.getElementById('note-input').value.trim()
+  };
+  journal.unshift(entry);
+  localStorage.setItem('veil_journal', JSON.stringify(journal));
+
+  const btn = event.target;
+  btn.textContent = 'SAVED ✦';
+  btn.disabled = true;
+  setTimeout(() => { btn.textContent = 'SAVE TO JOURNAL'; btn.disabled = false; }, 2000);
+}
+
+function saveAndNew() {
+  saveReading();
+  resetState();
+  showScreen('intention', 'nav-home');
+}
+
+function resetState() {
+  state = { focus: null, question: '', card: null, mood: null, reading: '' };
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+  document.getElementById('question-input').value = '';
+  document.getElementById('note-input').value = '';
+  const cards = document.querySelectorAll('.tarot-card');
+  cards.forEach(c => { c.classList.remove('selected'); c.style.opacity = '1'; c.style.pointerEvents = ''; });
+}
+
+function renderJournal() {
+  const list = document.getElementById('journal-list');
+  if (!journal.length) {
+    list.innerHTML = '<div class="journal-empty">Your readings will appear here.<br>Begin when you\'re ready.</div>';
+    return;
+  }
+  list.innerHTML = journal.map(e => `
+    <div class="journal-entry">
+      <div class="je-top">
+        <div class="je-card">${e.card}</div>
+        <div class="je-date">${e.date}</div>
+      </div>
+      ${e.focus ? `<div class="je-focus">${e.focus}</div>` : ''}
+      ${e.note ? `<div class="je-note">"${e.note}"</div>` : ''}
+      ${e.mood ? `<div class="je-mood">Felt: ${e.mood}</div>` : ''}
+    </div>
+  `).join('');
+}
+</script>
+</body>
+</html>
