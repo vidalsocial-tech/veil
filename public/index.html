@@ -55,7 +55,7 @@
     position: relative; z-index: 1;
     min-height: 100vh;
     display: flex; flex-direction: column; align-items: center;
-    padding: 0 20px 60px;
+    padding: 0 20px 40px;
   }
 
   header {
@@ -395,73 +395,6 @@
   }
   .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
 
-  /* ── JOURNAL SCREEN ── */
-  .journal-title {
-    font-family: 'Cinzel', serif;
-    font-size: 1.1rem;
-    letter-spacing: .2em;
-    color: var(--gold);
-    margin-bottom: 24px;
-    text-align: center;
-  }
-  .journal-empty {
-    color: var(--mist); font-style: italic; text-align: center; padding: 40px 0;
-    font-size: 1.05rem;
-  }
-  .journal-entry {
-    width: 100%;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(201,168,76,.15);
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin-bottom: 14px;
-  }
-  .je-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-  .je-card {
-    font-family: 'Cinzel', serif;
-    font-size: .8rem;
-    color: var(--gold);
-    letter-spacing: .1em;
-  }
-  .je-date { font-size: .85rem; color: var(--mist); font-style: italic; }
-  .je-focus {
-    display: inline-block;
-    padding: 2px 10px;
-    border: 1px solid rgba(201,168,76,.2);
-    border-radius: 20px;
-    font-size: .8rem;
-    color: var(--mist);
-    font-style: italic;
-    margin-bottom: 8px;
-  }
-  .je-note { font-size: 1rem; color: var(--parchment); font-style: italic; line-height: 1.6; }
-  .je-mood { font-size: .85rem; color: var(--blush); margin-top: 8px; }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    background: rgba(13,11,16,.92);
-    backdrop-filter: blur(12px);
-    border-top: 1px solid rgba(201,168,76,.1);
-    display: flex; justify-content: center; gap: 0;
-    z-index: 100;
-  }
-  .nav-btn {
-    flex: 1; max-width: 120px;
-    padding: 14px 0;
-    background: transparent;
-    border: none;
-    color: var(--mist);
-    font-family: 'Cinzel', serif;
-    font-size: .62rem;
-    letter-spacing: .12em;
-    cursor: pointer;
-    transition: color .2s;
-    display: flex; flex-direction: column; align-items: center; gap: 4px;
-  }
-  .nav-btn .nav-icon { font-size: 1.1rem; }
-  .nav-btn.active { color: var(--gold); }
-
   /* ── DIVIDER ── */
   .divider {
     width: 60px; height: 1px;
@@ -533,30 +466,16 @@
           <button class="mood-btn" onclick="selectMood(this,'Calm')">Calm</button>
           <button class="mood-btn" onclick="selectMood(this,'Unsure')">Unsure</button>
         </div>
-        <textarea class="save-note" id="note-input" rows="2" placeholder="A word, a feeling, an intention to carry forward…"></textarea>
         <div class="btn-row">
-          <button class="btn-ghost" onclick="saveAndNew()">SAVE & NEW READING</button>
-          <button class="btn-primary" onclick="saveReading()">SAVE TO JOURNAL</button>
+          <button class="btn-primary" onclick="newReading()">NEW READING</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- JOURNAL SCREEN -->
-  <div class="screen" id="screen-journal">
-    <div class="journal-title">YOUR READINGS</div>
-    <div id="journal-list"></div>
-  </div>
 </div>
 
-<nav>
-  <button class="nav-btn active" id="nav-home" onclick="showScreen('intention','nav-home')">
-    <span class="nav-icon">✦</span>READ
-  </button>
-  <button class="nav-btn" id="nav-journal" onclick="showScreen('journal','nav-journal'); renderJournal()">
-    <span class="nav-icon">◯</span>JOURNAL
-  </button>
-</nav>
+
 
 <script>
 const TAROT_CARDS = [
@@ -585,7 +504,7 @@ const TAROT_CARDS = [
 ];
 
 let state = { focus: null, question: '', card: null, mood: null, reading: '' };
-let journal = JSON.parse(localStorage.getItem('veil_journal') || '[]');
+
 
 function selectFocus(el, f) {
   document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
@@ -599,17 +518,14 @@ function selectMood(el, m) {
   state.mood = m;
 }
 
-function showScreen(name, navId) {
+function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('screen-' + name).classList.add('active');
-  if (navId) document.getElementById(navId).classList.add('active');
 }
 
 function goDraw() {
   state.question = document.getElementById('question-input').value.trim();
   showScreen('draw');
-  document.getElementById('nav-home').classList.add('active');
 }
 
 function chooseCard(idx) {
@@ -632,7 +548,6 @@ function doReveal() {
   document.getElementById('reveal-archetype').textContent = c.archetype;
 
   showScreen('reveal');
-  document.getElementById('nav-home').classList.add('active');
 
   document.getElementById('reading-content').innerHTML = `
     <span class="reading-loading">The cards are speaking
@@ -665,59 +580,15 @@ async function fetchReading(card) {
   }
 }
 
-function saveReading() {
-  const entry = {
-    id: Date.now(),
-    date: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
-    card: state.card.name,
-    focus: state.focus,
-    question: state.question,
-    reading: state.reading,
-    mood: state.mood,
-    note: document.getElementById('note-input').value.trim()
-  };
-  journal.unshift(entry);
-  localStorage.setItem('veil_journal', JSON.stringify(journal));
-
-  const btn = event.target;
-  btn.textContent = 'SAVED ✦';
-  btn.disabled = true;
-  setTimeout(() => { btn.textContent = 'SAVE TO JOURNAL'; btn.disabled = false; }, 2000);
-}
-
-function saveAndNew() {
-  saveReading();
-  resetState();
-  showScreen('intention', 'nav-home');
-}
-
-function resetState() {
+function newReading() {
   state = { focus: null, question: '', card: null, mood: null, reading: '' };
   document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
   document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
   document.getElementById('question-input').value = '';
-  document.getElementById('note-input').value = '';
-  const cards = document.querySelectorAll('.tarot-card');
-  cards.forEach(c => { c.classList.remove('selected'); c.style.opacity = '1'; c.style.pointerEvents = ''; });
-}
-
-function renderJournal() {
-  const list = document.getElementById('journal-list');
-  if (!journal.length) {
-    list.innerHTML = '<div class="journal-empty">Your readings will appear here.<br>Begin when you\'re ready.</div>';
-    return;
-  }
-  list.innerHTML = journal.map(e => `
-    <div class="journal-entry">
-      <div class="je-top">
-        <div class="je-card">${e.card}</div>
-        <div class="je-date">${e.date}</div>
-      </div>
-      ${e.focus ? `<div class="je-focus">${e.focus}</div>` : ''}
-      ${e.note ? `<div class="je-note">"${e.note}"</div>` : ''}
-      ${e.mood ? `<div class="je-mood">Felt: ${e.mood}</div>` : ''}
-    </div>
-  `).join('');
+  document.querySelectorAll('.tarot-card').forEach(c => {
+    c.classList.remove('selected'); c.style.opacity = '1'; c.style.pointerEvents = '';
+  });
+  showScreen('intention');
 }
 </script>
 </body>
