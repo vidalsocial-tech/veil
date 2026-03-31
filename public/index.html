@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Veil Reads</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Cinzel:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink:       #0b0910;
@@ -17,7 +17,7 @@
     --mist-dim:  rgba(148,136,168,.35);
   }
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  html, body { height: 100%; font-family: 'Cormorant Garamond', serif; background: var(--ink); color: var(--parchment); overflow: hidden; }
+  html, body { height: 100%; font-family: 'Libre Baskerville', serif; background: var(--ink); color: var(--parchment); overflow: hidden; }
 
   /* ── ATMOSPHERE ── */
   #bg {
@@ -49,17 +49,17 @@
   .screen.exit   { opacity: 0; transform: translateY(-14px); pointer-events: none; }
 
   /* ── SHARED ── */
-  .logo-mark { font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.35em; color:var(--gold); opacity:.65; margin-bottom:44px; }
-  .eyebrow   { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.28em; color:var(--mist); margin-bottom:18px; }
+  .logo-mark { font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.3em; color:var(--gold); opacity:.65; margin-bottom:44px; }
+  .eyebrow   { font-family:'Inter',sans-serif; font-size:.65rem; font-weight:500; letter-spacing:.22em; color:var(--mist); margin-bottom:18px; text-transform:uppercase; }
   .btn-cta {
-    font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.22em;
+    font-family:'Inter',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.18em;
     color:var(--ink); background:linear-gradient(135deg,var(--gold),var(--gold-lt));
     border:none; border-radius:60px; padding:15px 46px; cursor:pointer;
     transition:transform .25s, box-shadow .25s;
     box-shadow:0 4px 22px rgba(201,162,82,.28);
   }
   .btn-cta:hover { transform:translateY(-2px); box-shadow:0 8px 34px rgba(201,162,82,.42); }
-  .step-label { font-family:'Cinzel',serif; font-size:.53rem; letter-spacing:.2em; color:var(--mist); opacity:.5; margin-top:26px; }
+  .step-label { font-family:'Inter',sans-serif; font-size:.6rem; font-weight:400; letter-spacing:.15em; color:var(--mist); opacity:.5; margin-top:26px; text-transform:uppercase; }
 
   /* ── MOON BANNER ── */
   .moon-banner {
@@ -73,47 +73,74 @@
     animation: fadeUp .7s .1s ease both;
   }
   .moon-top { display: flex; align-items: center; gap: 10px; }
-  .moon-emoji { font-size: 1.4rem; }
-  .moon-phase { font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.18em; color:var(--gold); }
-  .moon-date  { font-size:.8rem; font-style:italic; color:var(--mist); }
-  .moon-energy { font-size:.92rem; font-style:italic; color:var(--mist); text-align:center; line-height:1.5; opacity:.85; }
+  .moon-emoji { font-size: 1.3rem; }
+  .moon-phase { font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.15em; color:var(--gold); }
+  .moon-date  { font-size:.85rem; color:var(--mist); }
+  .moon-energy { font-size:.95rem; color:var(--mist); text-align:center; line-height:1.6; opacity:.85; }
   .season-tag {
-    font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.15em;
-    color:var(--mist); opacity:.55; margin-top:4px;
+    font-family:'Inter',sans-serif; font-size:.58rem; letter-spacing:.12em;
+    color:var(--mist); opacity:.55; margin-top:4px; text-transform:uppercase;
   }
 
   /* ── SCREEN 1 LANDING ── */
   .display-title {
-    font-family:'Cinzel',serif; font-size:clamp(2.4rem,8vw,4.4rem); font-weight:500;
+    font-family:'Cinzel',serif; font-size:clamp(2.2rem,8vw,4rem); font-weight:500;
     letter-spacing:.04em; text-align:center; line-height:1.1; margin-bottom:24px;
   }
-  .display-title em { font-style:italic; font-family:'Cormorant Garamond',serif; font-size:1.1em; color:var(--gold-lt); font-weight:300; }
-  .body-text { font-size:clamp(.95rem,2.5vw,1.15rem); font-weight:300; font-style:italic; line-height:1.85; color:var(--mist); text-align:center; max-width:460px; margin-bottom:40px; }
+  .display-title em { font-style:normal; font-family:'Libre Baskerville',serif; font-size:1.05em; color:var(--gold-lt); font-weight:400; }
+  .body-text { font-size:clamp(1rem,2.5vw,1.15rem); font-weight:400; line-height:1.9; color:var(--mist); text-align:center; max-width:460px; margin-bottom:40px; }
   .flow-steps { display:flex; gap:0; align-items:center; margin-bottom:44px; opacity:.7; }
-  .flow-step { font-family:'Cinzel',serif; font-size:.56rem; letter-spacing:.15em; color:var(--mist); white-space:nowrap; }
+  .flow-step { font-family:'Inter',sans-serif; font-size:.6rem; font-weight:500; letter-spacing:.14em; color:var(--mist); white-space:nowrap; text-transform:uppercase; }
   .flow-arrow { width:28px; height:1px; background:var(--mist-dim); margin:0 10px; }
   .landing-sigil { width:56px; height:56px; margin:0 auto 32px; animation:pulse 4s ease-in-out infinite; }
   @keyframes pulse { 0%,100%{opacity:.65;transform:scale(1)} 50%{opacity:1;transform:scale(1.06)} }
 
   /* ── SCREEN 2 INTENTION ── */
-  .section-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,1.8rem); letter-spacing:.08em; text-align:center; margin-bottom:8px; }
-  .section-sub { font-size:1rem; font-style:italic; color:var(--mist); text-align:center; margin-bottom:32px; line-height:1.6; }
+  .section-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,1.7rem); letter-spacing:.06em; text-align:center; margin-bottom:8px; }
+  .section-sub { font-size:1rem; color:var(--mist); text-align:center; margin-bottom:32px; line-height:1.7; }
   .focus-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:340px; margin-bottom:28px; }
   .focus-pill { padding:14px 16px; border:1px solid rgba(201,162,82,.2); border-radius:12px; background:rgba(255,255,255,.02); cursor:pointer; transition:all .25s; text-align:center; }
   .focus-pill:hover { border-color:rgba(201,162,82,.5); background:rgba(201,162,82,.06); }
   .focus-pill.selected { border-color:var(--gold); background:rgba(201,162,82,.1); box-shadow:0 0 18px rgba(201,162,82,.14); }
-  .focus-pill-label { font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.14em; color:var(--parchment); display:block; margin-bottom:3px; }
-  .focus-pill-sub { font-size:.82rem; font-style:italic; color:var(--mist); display:block; }
+  .focus-pill-label { font-family:'Inter',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.1em; color:var(--parchment); display:block; margin-bottom:3px; text-transform:uppercase; }
+  .focus-pill-sub { font-size:.88rem; color:var(--mist); display:block; }
   .optional-divider { display:flex; align-items:center; gap:10px; width:100%; max-width:340px; margin-bottom:14px; }
-  .optional-divider span { font-size:.75rem; font-style:italic; color:var(--mist); opacity:.45; white-space:nowrap; }
+  .optional-divider span { font-family:'Inter',sans-serif; font-size:.7rem; color:var(--mist); opacity:.45; white-space:nowrap; }
   .optional-divider::before, .optional-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.05); }
-  .intention-input { width:100%; max-width:340px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:10px; color:var(--parchment); font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; padding:13px 16px; resize:none; outline:none; transition:border-color .25s; margin-bottom:28px; line-height:1.6; }
+  .intention-input { width:100%; max-width:340px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:10px; color:var(--parchment); font-family:'Libre Baskerville',serif; font-size:1rem; padding:13px 16px; resize:none; outline:none; transition:border-color .25s; margin-bottom:28px; line-height:1.7; }
   .intention-input::placeholder { color:rgba(148,136,168,.28); }
   .intention-input:focus { border-color:rgba(201,162,82,.28); }
+  .intention-input.expanded { rows: 4; min-height: 100px; }
+
+  /* hidden note field */
+  .note-wrap {
+    width: 100%; max-width: 340px;
+    max-height: 0; overflow: hidden;
+    opacity: 0;
+    transition: max-height .4s cubic-bezier(.23,1,.32,1), opacity .35s ease, margin .4s ease;
+    margin-bottom: 0;
+  }
+  .note-wrap.visible {
+    max-height: 160px;
+    opacity: 1;
+    margin-bottom: 28px;
+  }
+
+  /* dimmed continue button */
+  .btn-cta-dim {
+    opacity: .35;
+    pointer-events: none;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+  .btn-cta-dim.ready {
+    opacity: 1;
+    pointer-events: all;
+  }
 
   /* ── SCREEN 3 SHUFFLE ── */
   #s-shuffle { background:transparent; justify-content:center; }
-  .shuffle-hint { font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.2em; color:var(--mist); opacity:.4; margin-top:36px; cursor:pointer; transition:opacity .2s; }
+  .shuffle-hint { font-family:'Inter',sans-serif; font-size:.6rem; font-weight:500; letter-spacing:.16em; color:var(--mist); opacity:.4; margin-top:36px; cursor:pointer; transition:opacity .2s; text-transform:uppercase; }
   .shuffle-hint:hover { opacity:.7; }
 
   .shuffle-stage {
@@ -137,7 +164,7 @@
   }
 
   /* ── SCREEN 4 CARDS ── */
-  .cards-prompt { font-size:clamp(.95rem,3vw,1.2rem); font-style:italic; font-weight:300; color:var(--mist); text-align:center; line-height:1.7; margin-bottom:48px; max-width:320px; }
+  .cards-prompt { font-size:clamp(1rem,3vw,1.2rem); font-weight:400; color:var(--mist); text-align:center; line-height:1.8; margin-bottom:48px; max-width:320px; }
   .card-spread { display:flex; gap:22px; justify-content:center; align-items:flex-end; perspective:900px; margin-bottom:40px; }
   .card-slot { display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; }
   .card-slot:nth-child(1) .card-face { transform:rotate(-5deg) translateY(6px); }
@@ -146,24 +173,24 @@
   .card-face { width:84px; height:140px; border-radius:10px; background:linear-gradient(160deg,#1e1830 0%,#110e1a 100%); border:1px solid rgba(201,162,82,.32); position:relative; overflow:hidden; transition:transform .5s cubic-bezier(.23,1,.32,1), box-shadow .4s, border-color .3s; box-shadow:0 8px 28px rgba(0,0,0,.6); }
   .card-face::before { content:''; position:absolute; inset:6px; border:1px solid rgba(201,162,82,.15); border-radius:5px; }
   .card-face::after { content:'✦'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:rgba(201,162,82,.22); }
-  .card-num { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.18em; color:var(--mist); opacity:.45; transition:opacity .3s, color .3s; }
+  .card-num { font-family:'Inter',sans-serif; font-size:.58rem; font-weight:500; letter-spacing:.14em; color:var(--mist); opacity:.45; transition:opacity .3s, color .3s; text-transform:uppercase; }
   .card-slot:hover .card-num, .card-slot.chosen .card-num { opacity:.85; color:var(--gold); }
 
   /* ── SCREEN 5 REVEAL ── */
   #s-reveal { justify-content:flex-start; padding-top:44px; }
   .reveal-img { width:150px; height:250px; border-radius:12px; object-fit:cover; display:block; box-shadow:0 0 70px rgba(201,162,82,.22), 0 22px 55px rgba(0,0,0,.8); border:1px solid rgba(201,162,82,.38); background:var(--deep); margin-bottom:24px; animation:rise .9s cubic-bezier(.23,1,.32,1) both; }
-  .reveal-name { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,1.5rem); letter-spacing:.1em; color:var(--gold); text-align:center; margin-bottom:5px; animation:rise .9s .15s cubic-bezier(.23,1,.32,1) both; }
-  .reveal-arch { font-size:.83rem; font-style:italic; color:var(--mist); text-align:center; margin-bottom:20px; animation:rise .9s .25s cubic-bezier(.23,1,.32,1) both; }
+  .reveal-name { font-family:'Cinzel',serif; font-size:clamp(1.1rem,3.5vw,1.6rem); letter-spacing:.08em; color:var(--gold); text-align:center; margin-bottom:5px; animation:rise .9s .15s cubic-bezier(.23,1,.32,1) both; }
+  .reveal-arch { font-family:'Inter',sans-serif; font-size:.7rem; font-weight:400; letter-spacing:.1em; color:var(--mist); text-align:center; margin-bottom:20px; animation:rise .9s .25s cubic-bezier(.23,1,.32,1) both; text-transform:uppercase; }
 
   /* moon-reading connector */
   .moon-connector { width:100%; max-width:460px; background:rgba(201,162,82,.04); border:1px solid var(--gold-dim); border-radius:10px; padding:14px 18px; margin-bottom:16px; display:flex; gap:10px; align-items:flex-start; animation:rise .9s .3s cubic-bezier(.23,1,.32,1) both; }
   .moon-connector-emoji { font-size:1.1rem; flex-shrink:0; margin-top:2px; }
-  .moon-connector-text { font-size:.88rem; font-style:italic; color:var(--mist); line-height:1.6; }
+  .moon-connector-text { font-size:.92rem; color:var(--mist); line-height:1.65; }
 
   .reading-box { width:100%; max-width:460px; background:rgba(255,255,255,.025); border:1px solid rgba(201,162,82,.11); border-radius:14px; padding:22px 26px; margin-bottom:20px; position:relative; animation:rise .9s .4s cubic-bezier(.23,1,.32,1) both; }
   .reading-box::before { content:'✦'; position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--ink); padding:0 10px; color:var(--gold); font-size:.68rem; }
-  .reading-text { font-size:clamp(.93rem,2.5vw,1.08rem); font-style:italic; font-weight:300; line-height:1.9; color:var(--parchment); }
-  .reading-loading { display:flex; align-items:center; gap:10px; color:var(--mist); font-style:italic; font-size:.97rem; justify-content:center; }
+  .reading-text { font-size:clamp(1rem,2.5vw,1.12rem); font-weight:400; line-height:2; color:var(--parchment); }
+  .reading-loading { display:flex; align-items:center; gap:10px; color:var(--mist); font-size:1rem; justify-content:center; }
   .dot-pulse span { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--gold); animation:dp 1.2s ease-in-out infinite; margin:0 2px; }
   .dot-pulse span:nth-child(2){animation-delay:.2s} .dot-pulse span:nth-child(3){animation-delay:.4s}
   @keyframes dp{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
@@ -171,7 +198,7 @@
   /* action row */
   .action-row { display:flex; flex-direction:column; gap:12px; align-items:center; animation:rise .9s .55s cubic-bezier(.23,1,.32,1) both; margin-bottom:40px; }
   .btn-again {
-    font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.22em;
+    font-family:'Inter',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.18em;
     color:var(--ink); background:linear-gradient(135deg,var(--gold),var(--gold-lt));
     border:none; border-radius:60px; padding:15px 46px; cursor:pointer;
     transition:transform .25s, box-shadow .25s;
@@ -179,7 +206,7 @@
   }
   .btn-again:hover { transform:translateY(-2px); box-shadow:0 8px 34px rgba(201,162,82,.42); }
   .btn-share {
-    font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.16em;
+    font-family:'Inter',sans-serif; font-size:.6rem; font-weight:400; letter-spacing:.12em;
     color:var(--mist); background:transparent; border:none;
     cursor:pointer; transition:color .2s; padding:6px 12px;
     display:flex; align-items:center; gap:6px; opacity:.6;
@@ -290,16 +317,17 @@
 <div class="screen" id="s-intention">
   <div class="logo-mark">Veil Reads</div>
   <div class="section-title">What brings you here today?</div>
-  <div class="section-sub">Choose a focus, or simply continue.<br>There is no wrong way to begin.</div>
+  <div class="section-sub">Choose a focus to begin.</div>
   <div class="focus-grid">
     <div class="focus-pill" onclick="selectFocus(this,'Love')"><span class="focus-pill-label">Love</span><span class="focus-pill-sub">heart & connection</span></div>
     <div class="focus-pill" onclick="selectFocus(this,'Clarity')"><span class="focus-pill-label">Clarity</span><span class="focus-pill-sub">mind & direction</span></div>
     <div class="focus-pill" onclick="selectFocus(this,'Purpose')"><span class="focus-pill-label">Purpose</span><span class="focus-pill-sub">path & meaning</span></div>
     <div class="focus-pill" onclick="selectFocus(this,'Change')"><span class="focus-pill-label">Change</span><span class="focus-pill-sub">growth & transition</span></div>
   </div>
-  <div class="optional-divider"><span>or add a personal note</span></div>
-  <textarea class="intention-input" id="intention-text" rows="2" placeholder="What's on your mind right now? (optional)"></textarea>
-  <button class="btn-cta" onclick="startShuffle()">CONTINUE</button>
+  <div class="note-wrap" id="note-wrap">
+    <textarea class="intention-input" id="intention-text" rows="2" placeholder="Add a personal note"></textarea>
+  </div>
+  <button class="btn-cta btn-cta-dim" id="btn-continue" onclick="startShuffle()">CONTINUE</button>
   <div class="step-label">Step 2 of 3</div>
 </div>
 
@@ -537,7 +565,14 @@ function goTo(id, dot) {
 
 function selectFocus(el, f) {
   document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected'); state.focus = f;
+  el.classList.add('selected');
+  state.focus = f;
+
+  // Reveal the note field
+  document.getElementById('note-wrap').classList.add('visible');
+
+  // Enable the continue button
+  document.getElementById('btn-continue').classList.add('ready');
 }
 
 // ══════════════════════════════════════
@@ -902,6 +937,9 @@ function restart() {
     document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
     document.querySelectorAll('.card-slot').forEach(s => { s.classList.remove('chosen'); s.style.opacity='1'; s.style.pointerEvents=''; });
     document.getElementById('intention-text').value = '';
+    document.getElementById('intention-text').style.height = 'auto';
+    document.getElementById('note-wrap').classList.remove('visible');
+    document.getElementById('btn-continue').classList.remove('ready');
     document.getElementById('reading-content').innerHTML = `<span class="reading-loading">The cards are speaking<span class="dot-pulse"><span></span><span></span><span></span></span></span>`;
     const cards = [0,1,2,3,4,5].map(i => document.getElementById('shc'+i));
     cards.forEach(c => { c.style.transition='none'; c.style.transform='translateX(0) translateY(0) rotate(0deg)'; c.style.opacity='1'; });
@@ -912,6 +950,13 @@ function restart() {
 
 // Init — Fisher-Yates on first load
 drawnCards = drawThreeCards();
+
+// Auto-expand textarea as user types
+const intentionTextarea = document.getElementById('intention-text');
+intentionTextarea.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 160) + 'px';
+});
 
 </script>
 </body>
