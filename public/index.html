@@ -3,653 +3,811 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Veil — Daily Tarot</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600&family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
+<title>Veil Reads — Prototype</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #0d0b10;
-    --parchment: #f5efe6;
-    --gold: #c9a84c;
+    --ink:        #0b0910;
+    --deep:       #13101c;
+    --parchment:  #f2ead8;
+    --parchment2: #e8ddc8;
+    --gold:       #c9a252;
     --gold-light: #e8cc7a;
-    --mist: #8b7fa0;
-    --deep: #1a1228;
-    --card-bg: #13101a;
-    --accent: #7c5cbf;
-    --blush: #d4a5a5;
+    --gold-dim:   rgba(201,162,82,.2);
+    --mist:       #9488a8;
+    --mist-dim:   rgba(148,136,168,.4);
+    --accent:     #7a5fa0;
   }
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
+  html, body {
+    height: 100%;
     font-family: 'Cormorant Garamond', serif;
     background: var(--ink);
     color: var(--parchment);
-    min-height: 100vh;
-    overflow-x: hidden;
+    overflow: hidden;
   }
 
-  /* ── STARFIELD ── */
-  #stars {
-    position: fixed; inset: 0; z-index: 0; pointer-events: none;
-    background: radial-gradient(ellipse at 20% 30%, #1e1535 0%, #0d0b10 60%);
-  }
-  #stars::before, #stars::after {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,.6) 0%, transparent 100%),
-      radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,.4) 0%, transparent 100%),
-      radial-gradient(1.5px 1.5px at 55% 15%, rgba(201,168,76,.7) 0%, transparent 100%),
-      radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 85% 35%, rgba(255,255,255,.3) 0%, transparent 100%),
-      radial-gradient(1.5px 1.5px at 15% 70%, rgba(201,168,76,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 45% 90%, rgba(255,255,255,.4) 0%, transparent 100%),
-      radial-gradient(1px 1px at 92% 60%, rgba(255,255,255,.5) 0%, transparent 100%),
-      radial-gradient(1px 1px at 60% 45%, rgba(201,168,76,.3) 0%, transparent 100%),
-      radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,.3) 0%, transparent 100%);
-    background-size: 100% 100%;
+  /* ══════════════════════════════════════
+     CANVAS / ATMOSPHERE
+  ══════════════════════════════════════ */
+  #bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, #1c1530 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 80% 100%, #0f0d1a 0%, transparent 60%),
+      var(--ink);
   }
 
-  /* ── LAYOUT ── */
-  #app {
-    position: relative; z-index: 1;
-    min-height: 100vh;
-    display: flex; flex-direction: column; align-items: center;
-    padding: 0 20px 40px;
+  /* animated grain overlay */
+  #grain {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .045;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size: 180px 180px;
+    animation: grain 0.8s steps(2) infinite;
   }
+  @keyframes grain { 0%{background-position:0 0} 25%{background-position:-20px 10px} 50%{background-position:15px -10px} 75%{background-position:-10px 20px} 100%{background-position:20px 5px} }
 
-  header {
-    text-align: center;
-    padding: 48px 0 32px;
+  /* floating orbs */
+  .orb {
+    position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
   }
-  .logo {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2rem, 6vw, 3.2rem);
-    font-weight: 600;
-    letter-spacing: .3em;
-    color: var(--gold);
-    text-shadow: 0 0 40px rgba(201,168,76,.3);
-  }
-  .logo-sub {
-    font-size: .85rem;
-    letter-spacing: .25em;
-    color: var(--mist);
-    margin-top: 6px;
-    font-style: italic;
-  }
+  .orb-1 { width:400px; height:400px; background:rgba(122,95,160,.08); top:-100px; left:-100px; animation: drift1 18s ease-in-out infinite; }
+  .orb-2 { width:300px; height:300px; background:rgba(201,162,82,.06); bottom:-80px; right:-80px; animation: drift2 22s ease-in-out infinite; }
+  .orb-3 { width:200px; height:200px; background:rgba(122,95,160,.05); top:40%; left:60%; animation: drift3 16s ease-in-out infinite; }
+  @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,30px)} }
+  @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,-40px)} }
+  @keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,30px)} }
 
-  /* ── SCREENS ── */
+  /* ══════════════════════════════════════
+     SCREENS
+  ══════════════════════════════════════ */
   .screen {
-    display: none; flex-direction: column; align-items: center;
-    width: 100%; max-width: 560px;
-    animation: fadeUp .6s ease both;
+    position: fixed; inset: 0; z-index: 10;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 40px 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity .6s ease, transform .6s ease;
+    transform: translateY(16px);
+    overflow-y: auto;
   }
-  .screen.active { display: flex; }
+  .screen.active {
+    opacity: 1; pointer-events: all; transform: translateY(0);
+  }
+  .screen.exit {
+    opacity: 0; transform: translateY(-16px); pointer-events: none;
+  }
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(18px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  /* ── INTENTION SCREEN ── */
-  .intention-title {
-    font-size: clamp(1.4rem, 4vw, 1.9rem);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--parchment);
-    text-align: center;
-    margin-bottom: 32px;
-    line-height: 1.5;
-  }
-  .focus-label {
+  /* ══════════════════════════════════════
+     SHARED COMPONENTS
+  ══════════════════════════════════════ */
+  .logo-mark {
     font-family: 'Cinzel', serif;
-    font-size: .7rem;
-    letter-spacing: .2em;
-    color: var(--mist);
-    margin-bottom: 14px;
+    font-size: .65rem;
+    letter-spacing: .35em;
+    color: var(--gold);
+    opacity: .7;
+    margin-bottom: 48px;
+    text-transform: uppercase;
   }
-  .focus-pills {
-    display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;
+
+  .eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: .6rem;
+    letter-spacing: .3em;
+    color: var(--mist);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .display-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.6rem, 8vw, 4.8rem);
+    font-weight: 500;
+    letter-spacing: .04em;
+    color: var(--parchment);
+    line-height: 1.1;
+    text-align: center;
     margin-bottom: 28px;
   }
-  .pill {
-    padding: 8px 20px;
-    border: 1px solid rgba(201,168,76,.3);
-    border-radius: 40px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
+  .display-title em {
     font-style: italic;
-    color: var(--mist);
-    background: transparent;
-    cursor: pointer;
-    transition: all .25s;
-  }
-  .pill:hover { border-color: var(--gold); color: var(--gold-light); }
-  .pill.selected {
-    border-color: var(--gold);
-    background: rgba(201,168,76,.12);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1em;
     color: var(--gold-light);
+    font-weight: 300;
   }
 
-  textarea {
+  .body-text {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.85;
+    color: var(--mist);
+    text-align: center;
+    max-width: 480px;
+    margin-bottom: 48px;
+  }
+
+  .rule {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+    margin: 0 auto 32px;
+  }
+
+  .btn-cta {
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .22em;
+    color: var(--ink);
+    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
+    border: none;
+    border-radius: 60px;
+    padding: 16px 48px;
+    cursor: pointer;
+    transition: transform .25s, box-shadow .25s;
+    box-shadow: 0 4px 24px rgba(201,162,82,.3);
+  }
+  .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(201,162,82,.45); }
+  .btn-cta:active { transform: translateY(0); }
+
+  .step-label {
+    font-family: 'Cinzel', serif;
+    font-size: .55rem;
+    letter-spacing: .25em;
+    color: var(--mist);
+    opacity: .6;
+    margin-top: 28px;
+  }
+
+  /* ══════════════════════════════════════
+     SCREEN 1 · LANDING
+  ══════════════════════════════════════ */
+  #s-landing {
+    gap: 0;
+    text-align: center;
+  }
+
+  .landing-sigil {
+    width: 64px; height: 64px;
+    margin: 0 auto 36px;
+    position: relative;
+    animation: sigil-pulse 4s ease-in-out infinite;
+  }
+  .landing-sigil svg { width: 100%; height: 100%; }
+  @keyframes sigil-pulse {
+    0%,100% { opacity: .7; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+
+  .flow-steps {
+    display: flex; gap: 0; align-items: center;
+    margin: 40px 0 52px;
+    opacity: .75;
+  }
+  .flow-step {
+    font-family: 'Cinzel', serif;
+    font-size: .58rem;
+    letter-spacing: .15em;
+    color: var(--mist);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .flow-arrow {
+    width: 32px; height: 1px;
+    background: linear-gradient(90deg, var(--mist-dim), var(--mist-dim));
+    margin: 0 10px;
+    flex-shrink: 0;
+  }
+
+  /* ══════════════════════════════════════
+     SCREEN 2 · INTENTION
+  ══════════════════════════════════════ */
+  #s-intention {
+    gap: 0;
+  }
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    font-weight: 400;
+    letter-spacing: .08em;
+    color: var(--parchment);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  .section-sub {
+    font-size: 1rem;
+    font-style: italic;
+    font-weight: 300;
+    color: var(--mist);
+    text-align: center;
+    margin-bottom: 40px;
+    line-height: 1.6;
+  }
+
+  /* focus pills — 4 only */
+  .focus-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
     width: 100%;
-    background: rgba(255,255,255,.04);
-    border: 1px solid rgba(201,168,76,.2);
+    max-width: 360px;
+    margin-bottom: 36px;
+  }
+  .focus-pill {
+    padding: 16px 20px;
+    border: 1px solid rgba(201,162,82,.2);
     border-radius: 12px;
+    background: rgba(255,255,255,.02);
+    cursor: pointer;
+    transition: all .25s;
+    text-align: center;
+  }
+  .focus-pill:hover {
+    border-color: rgba(201,162,82,.5);
+    background: rgba(201,162,82,.06);
+  }
+  .focus-pill.selected {
+    border-color: var(--gold);
+    background: rgba(201,162,82,.1);
+    box-shadow: 0 0 20px rgba(201,162,82,.15);
+  }
+  .focus-pill-label {
+    font-family: 'Cinzel', serif;
+    font-size: .72rem;
+    letter-spacing: .15em;
+    color: var(--parchment);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .focus-pill-sub {
+    font-size: .85rem;
+    font-style: italic;
+    color: var(--mist);
+    display: block;
+  }
+
+  /* optional text input */
+  .optional-divider {
+    display: flex; align-items: center; gap: 12px;
+    width: 100%; max-width: 360px;
+    margin-bottom: 16px;
+  }
+  .optional-divider span {
+    font-size: .75rem;
+    font-style: italic;
+    color: var(--mist);
+    opacity: .5;
+    white-space: nowrap;
+  }
+  .optional-divider::before, .optional-divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: rgba(255,255,255,.06);
+  }
+
+  .intention-input {
+    width: 100%; max-width: 360px;
+    background: rgba(255,255,255,.03);
+    border: 1px solid rgba(255,255,255,.07);
+    border-radius: 10px;
     color: var(--parchment);
     font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-style: italic;
-    padding: 16px 20px;
+    padding: 14px 18px;
     resize: none;
     outline: none;
     transition: border-color .25s;
-    margin-bottom: 28px;
+    margin-bottom: 32px;
     line-height: 1.6;
   }
-  textarea::placeholder { color: rgba(139,127,160,.5); }
-  textarea:focus { border-color: rgba(201,168,76,.5); }
+  .intention-input::placeholder { color: rgba(148,136,168,.3); }
+  .intention-input:focus { border-color: rgba(201,162,82,.3); }
 
-  .btn-primary {
-    font-family: 'Cinzel', serif;
-    font-size: .8rem;
-    letter-spacing: .2em;
-    color: var(--ink);
-    background: linear-gradient(135deg, var(--gold), var(--gold-light));
-    border: none;
-    border-radius: 40px;
-    padding: 14px 40px;
-    cursor: pointer;
-    transition: all .25s;
-    box-shadow: 0 4px 20px rgba(201,168,76,.25);
+  /* ══════════════════════════════════════
+     SCREEN 3 · CARD SELECTION
+  ══════════════════════════════════════ */
+  #s-cards {
+    gap: 0;
   }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(201,168,76,.4);
-  }
-  .btn-primary:disabled { opacity: .4; cursor: default; transform: none; }
 
-  /* ── DRAW SCREEN ── */
-  .draw-prompt {
-    font-size: clamp(1.1rem, 3vw, 1.4rem);
+  .cards-prompt {
+    font-size: clamp(1rem, 3vw, 1.25rem);
     font-style: italic;
+    font-weight: 300;
     color: var(--mist);
     text-align: center;
-    margin-bottom: 48px;
-    line-height: 1.6;
+    line-height: 1.7;
+    margin-bottom: 52px;
+    max-width: 340px;
   }
 
   .card-spread {
-    display: flex; gap: 20px; justify-content: center;
-    margin-bottom: 48px;
-    perspective: 800px;
+    display: flex; gap: 24px; justify-content: center; align-items: flex-end;
+    perspective: 900px;
+    margin-bottom: 44px;
   }
 
-  .tarot-card {
-    width: 90px; height: 150px;
-    border-radius: 10px;
+  .card-slot {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
     cursor: pointer;
-    position: relative;
-    transform-style: preserve-3d;
-    transition: transform .6s cubic-bezier(.23,1,.32,1), box-shadow .3s;
-    box-shadow: 0 4px 20px rgba(0,0,0,.6);
   }
-  .tarot-card:hover {
-    transform: translateY(-12px) rotateY(5deg);
-    box-shadow: 0 16px 40px rgba(201,168,76,.25);
-  }
-  .tarot-card.selected {
-    transform: translateY(-20px) scale(1.08);
-    box-shadow: 0 20px 50px rgba(201,168,76,.5);
-  }
+  .card-slot:nth-child(1) .card-face { transform: rotate(-6deg) translateY(8px); }
+  .card-slot:nth-child(3) .card-face { transform: rotate(6deg) translateY(8px); }
+  .card-slot:hover .card-face,
+  .card-slot.chosen .card-face { transform: rotate(0) translateY(-20px) scale(1.06) !important; }
 
-  .card-back {
-    width: 100%; height: 100%;
+  .card-face {
+    width: 88px; height: 148px;
     border-radius: 10px;
-    background: var(--card-bg);
-    border: 1px solid rgba(201,168,76,.3);
-    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(160deg, #1e1830 0%, #110e1a 100%);
+    border: 1px solid rgba(201,162,82,.35);
     position: relative;
     overflow: hidden;
+    transition: transform .5s cubic-bezier(.23,1,.32,1), box-shadow .4s;
+    box-shadow: 0 8px 30px rgba(0,0,0,.6);
   }
-  .card-back::before {
+  .card-slot:hover .card-face,
+  .card-slot.chosen .card-face {
+    box-shadow: 0 20px 50px rgba(201,162,82,.35);
+    border-color: rgba(201,162,82,.7);
+  }
+
+  /* intricate card back pattern */
+  .card-face::before {
     content: '';
-    position: absolute; inset: 6px;
-    border: 1px solid rgba(201,168,76,.15);
-    border-radius: 6px;
+    position: absolute; inset: 7px;
+    border: 1px solid rgba(201,162,82,.18);
+    border-radius: 5px;
   }
-  .card-back::after {
+  .card-face::after {
     content: '✦';
-    font-size: 1.8rem;
-    color: rgba(201,168,76,.4);
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    color: rgba(201,162,82,.25);
   }
 
-  /* ── REVEAL SCREEN ── */
-  .reveal-wrap {
-    display: flex; flex-direction: column; align-items: center;
-    width: 100%;
+  /* shimmer on hover */
+  .card-slot:hover .card-face .card-shimmer,
+  .card-slot.chosen .card-face .card-shimmer {
+    opacity: 1;
+  }
+  .card-shimmer {
+    position: absolute; inset: 0; opacity: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(201,162,82,.08) 50%, transparent 70%);
+    transition: opacity .4s;
   }
 
-  .card-reveal {
-    width: 180px; height: 315px;
-    border-radius: 14px;
-    background: var(--card-bg);
-    border: 1px solid rgba(201,168,76,.5);
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    box-shadow: 0 0 60px rgba(201,168,76,.2), 0 20px 60px rgba(0,0,0,.8);
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 32px;
-    animation: cardReveal .8s cubic-bezier(.23,1,.32,1) both;
-  }
-  @keyframes cardReveal {
-    from { opacity: 0; transform: scale(.85) rotateY(20deg); }
-    to   { opacity: 1; transform: scale(1) rotateY(0deg); }
-  }
-  .card-reveal::before {
-    content: '';
-    position: absolute; inset: 8px;
-    border: 1px solid rgba(201,168,76,.2);
-    border-radius: 8px;
-  }
-  .card-glow {
-    position: absolute; inset: -20px;
-    background: radial-gradient(circle at 50% 50%, rgba(201,168,76,.1), transparent 70%);
-    pointer-events: none;
-  }
-  .card-symbol { font-size: 2.8rem; }
-  .card-name-on-card {
+  .card-num {
     font-family: 'Cinzel', serif;
-    font-size: .6rem;
-    letter-spacing: .15em;
-    color: var(--gold);
-    text-align: center;
-    padding: 0 10px;
+    font-size: .55rem;
+    letter-spacing: .2em;
+    color: var(--mist);
+    opacity: .5;
+    transition: opacity .3s;
+  }
+  .card-slot:hover .card-num, .card-slot.chosen .card-num {
+    opacity: .9; color: var(--gold);
   }
 
-  .card-name-big {
+  /* ══════════════════════════════════════
+     SCREEN 4 · REVEAL
+  ══════════════════════════════════════ */
+  #s-reveal {
+    justify-content: flex-start;
+    padding-top: 48px;
+    overflow-y: auto;
+  }
+
+  .reveal-card-wrap {
+    margin-bottom: 28px;
+    animation: rise .9s cubic-bezier(.23,1,.32,1) both;
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(30px) scale(.93); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .reveal-card-img {
+    width: 160px; height: 267px;
+    border-radius: 12px;
+    object-fit: cover;
+    display: block;
+    box-shadow: 0 0 80px rgba(201,162,82,.25), 0 24px 60px rgba(0,0,0,.8);
+    border: 1px solid rgba(201,162,82,.4);
+    background: var(--deep);
+  }
+
+  .reveal-card-name {
     font-family: 'Cinzel', serif;
-    font-size: clamp(1.2rem, 4vw, 1.8rem);
-    color: var(--gold);
+    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
     letter-spacing: .1em;
+    color: var(--gold);
     text-align: center;
     margin-bottom: 6px;
-  }
-  .card-archetype {
-    font-size: .9rem;
-    font-style: italic;
-    color: var(--mist);
-    letter-spacing: .1em;
-    margin-bottom: 24px;
+    animation: rise .9s .15s cubic-bezier(.23,1,.32,1) both;
   }
 
-  /* ── READING BOX ── */
+  .reveal-archetype {
+    font-size: .85rem;
+    font-style: italic;
+    color: var(--mist);
+    letter-spacing: .08em;
+    text-align: center;
+    margin-bottom: 24px;
+    animation: rise .9s .25s cubic-bezier(.23,1,.32,1) both;
+  }
+
   .reading-box {
-    width: 100%;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(201,168,76,.15);
-    border-radius: 16px;
-    padding: 28px;
+    width: 100%; max-width: 480px;
+    background: rgba(255,255,255,.025);
+    border: 1px solid rgba(201,162,82,.12);
+    border-radius: 14px;
+    padding: 24px 28px;
     margin-bottom: 24px;
     position: relative;
+    animation: rise .9s .4s cubic-bezier(.23,1,.32,1) both;
   }
   .reading-box::before {
     content: '✦';
-    position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-    background: var(--ink);
-    padding: 0 8px;
-    color: var(--gold);
-    font-size: .8rem;
+    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    background: var(--ink); padding: 0 10px;
+    color: var(--gold); font-size: .7rem;
   }
   .reading-text {
-    font-size: clamp(1rem, 2.5vw, 1.15rem);
-    line-height: 1.85;
-    color: var(--parchment);
-    font-weight: 300;
+    font-size: clamp(.95rem, 2.5vw, 1.1rem);
     font-style: italic;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--parchment);
   }
   .reading-loading {
     display: flex; align-items: center; gap: 10px;
-    color: var(--mist); font-style: italic;
+    color: var(--mist); font-style: italic; font-size: 1rem;
+    justify-content: center;
   }
   .dot-pulse span {
-    display: inline-block; width: 6px; height: 6px;
+    display: inline-block; width: 5px; height: 5px;
     border-radius: 50%; background: var(--gold);
-    animation: pulse 1.2s ease-in-out infinite;
-    margin: 0 2px;
+    animation: dp 1.2s ease-in-out infinite; margin: 0 2px;
   }
   .dot-pulse span:nth-child(2) { animation-delay: .2s; }
   .dot-pulse span:nth-child(3) { animation-delay: .4s; }
-  @keyframes pulse {
-    0%,80%,100% { opacity: .3; transform: scale(.8); }
-    40% { opacity: 1; transform: scale(1); }
+  @keyframes dp { 0%,80%,100%{opacity:.3;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
+
+  /* mood section */
+  .mood-section {
+    width: 100%; max-width: 480px;
+    padding-top: 24px;
+    animation: rise .9s .55s cubic-bezier(.23,1,.32,1) both;
+    display: flex; justify-content: center;
   }
 
-  /* ── REFLECTION ── */
-  .reflection-section {
-    width: 100%;
-    margin-top: 8px;
-    border-top: 1px solid rgba(201,168,76,.1);
-    padding-top: 24px;
-  }
-  .reflection-q {
+  .btn-again {
     font-family: 'Cinzel', serif;
-    font-size: .7rem;
-    letter-spacing: .2em;
+    font-size: .68rem;
+    letter-spacing: .18em;
     color: var(--mist);
-    margin-bottom: 14px;
-  }
-  .mood-row {
-    display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px;
-  }
-  .mood-btn {
-    padding: 7px 16px;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 30px;
     background: transparent;
-    color: var(--mist);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    font-style: italic;
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 40px;
+    padding: 12px 32px;
     cursor: pointer;
     transition: all .2s;
+    display: block; margin: 0 auto;
   }
-  .mood-btn:hover, .mood-btn.selected {
-    border-color: var(--gold);
-    color: var(--gold-light);
-    background: rgba(201,168,76,.08);
+  .btn-again:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ══════════════════════════════════════
+     PROGRESS DOTS
+  ══════════════════════════════════════ */
+  #progress {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 20;
+    transition: opacity .4s;
   }
-
-  .save-note {
-    width: 100%;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 10px;
-    color: var(--parchment);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1rem;
-    padding: 12px 16px;
-    resize: none;
-    outline: none;
-    margin-bottom: 16px;
-    line-height: 1.6;
-    transition: border-color .2s;
+  .pdot {
+    width: 5px; height: 5px; border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    transition: background .3s, transform .3s;
   }
-  .save-note::placeholder { color: rgba(139,127,160,.4); }
-  .save-note:focus { border-color: rgba(201,168,76,.3); }
+  .pdot.active { background: var(--gold); transform: scale(1.3); }
 
-  .btn-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-
-  .btn-ghost {
+  /* ══════════════════════════════════════
+     PROTOTYPE BADGE
+  ══════════════════════════════════════ */
+  #proto-badge {
+    position: fixed; top: 16px; right: 16px; z-index: 100;
     font-family: 'Cinzel', serif;
-    font-size: .7rem;
+    font-size: .5rem;
     letter-spacing: .15em;
     color: var(--mist);
-    background: transparent;
-    border: 1px solid rgba(255,255,255,.15);
-    border-radius: 30px;
-    padding: 11px 28px;
-    cursor: pointer;
-    transition: all .2s;
-  }
-  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* ── DIVIDER ── */
-  .divider {
-    width: 60px; height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 20px auto;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    padding: 5px 12px;
+    opacity: .5;
   }
 </style>
 </head>
 <body>
-<div id="stars"></div>
-<div id="app">
-  <header>
-    <div class="logo">VEIL</div>
-    <div class="logo-sub">a daily reading</div>
-  </header>
 
-  <!-- INTENTION SCREEN -->
-  <div class="screen active" id="screen-intention">
-    <div class="intention-title">What are you carrying<br>into this moment?</div>
+<div id="bg"></div>
+<div id="grain"></div>
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+<div id="proto-badge">PROTOTYPE</div>
 
-    <div class="focus-label">CHOOSE A FOCUS</div>
-    <div class="focus-pills">
-      <button class="pill" onclick="selectFocus(this,'Love')">Love</button>
-      <button class="pill" onclick="selectFocus(this,'Career')">Career</button>
-      <button class="pill" onclick="selectFocus(this,'Clarity')">Clarity</button>
-      <button class="pill" onclick="selectFocus(this,'Healing')">Healing</button>
-      <button class="pill" onclick="selectFocus(this,'Change')">Change</button>
-      <button class="pill" onclick="selectFocus(this,'Purpose')">Purpose</button>
-    </div>
-
-    <textarea id="question-input" rows="3" placeholder="Describe what's weighing on you… or simply breathe and draw."></textarea>
-
-    <button class="btn-primary" id="btn-draw" onclick="goDraw()">DRAW A CARD</button>
+<!-- ══ SCREEN 1 · LANDING ══ -->
+<div class="screen active" id="s-landing">
+  <div class="landing-sigil">
+    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="32" cy="32" r="30" stroke="rgba(201,162,82,.3)" stroke-width=".8"/>
+      <circle cx="32" cy="32" r="22" stroke="rgba(201,162,82,.2)" stroke-width=".6"/>
+      <line x1="32" y1="2" x2="32" y2="62" stroke="rgba(201,162,82,.15)" stroke-width=".6"/>
+      <line x1="2" y1="32" x2="62" y2="32" stroke="rgba(201,162,82,.15)" stroke-width=".6"/>
+      <line x1="9" y1="9" x2="55" y2="55" stroke="rgba(201,162,82,.1)" stroke-width=".6"/>
+      <line x1="55" y1="9" x2="9" y2="55" stroke="rgba(201,162,82,.1)" stroke-width=".6"/>
+      <circle cx="32" cy="32" r="4" fill="rgba(201,162,82,.5)"/>
+      <circle cx="32" cy="10" r="2" fill="rgba(201,162,82,.4)"/>
+      <circle cx="32" cy="54" r="2" fill="rgba(201,162,82,.4)"/>
+      <circle cx="10" cy="32" r="2" fill="rgba(201,162,82,.4)"/>
+      <circle cx="54" cy="32" r="2" fill="rgba(201,162,82,.4)"/>
+    </svg>
   </div>
 
-  <!-- DRAW SCREEN -->
-  <div class="screen" id="screen-draw">
-    <div class="draw-prompt">Three cards wait.<br>Trust what pulls you.</div>
-    <div class="card-spread" id="card-spread">
-      <div class="tarot-card" onclick="chooseCard(0)"><div class="card-back"></div></div>
-      <div class="tarot-card" onclick="chooseCard(1)"><div class="card-back"></div></div>
-      <div class="tarot-card" onclick="chooseCard(2)"><div class="card-back"></div></div>
-    </div>
+  <div class="eyebrow">A Guided Reading Experience</div>
+
+  <div class="display-title">Veil<em>Reads</em></div>
+
+  <div class="body-text">
+    A daily practice of reflection through tarot.<br>
+    Set an intention, draw a card, receive a reading<br>
+    crafted to meet you where you are.
   </div>
 
-  <!-- REVEAL SCREEN -->
-  <div class="screen" id="screen-reveal">
-    <div class="reveal-wrap">
-      <div class="card-reveal" id="reveal-card">
-        <div class="card-glow"></div>
-        <img id="reveal-img" src="" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:12px;display:block;">
-      </div>
-      <div class="card-name-big" id="reveal-name-big">The Moon</div>
-      <div class="card-archetype" id="reveal-archetype">Illusion · The Unconscious · Hidden Truths</div>
-      <div class="divider"></div>
-      <div class="reading-box">
-        <div id="reading-content" class="reading-loading">
-          <span>The cards are speaking</span>
-          <span class="dot-pulse"><span></span><span></span><span></span></span>
-        </div>
-      </div>
-      <div class="reflection-section">
-        <div class="reflection-q">HOW DOES THIS LAND?</div>
-        <div class="mood-row" id="mood-row">
-          <button class="mood-btn" onclick="selectMood(this,'Seen')">Seen</button>
-          <button class="mood-btn" onclick="selectMood(this,'Curious')">Curious</button>
-          <button class="mood-btn" onclick="selectMood(this,'Challenged')">Challenged</button>
-          <button class="mood-btn" onclick="selectMood(this,'Calm')">Calm</button>
-          <button class="mood-btn" onclick="selectMood(this,'Unsure')">Unsure</button>
-        </div>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="newReading()">NEW READING</button>
-        </div>
-      </div>
-    </div>
+  <div class="flow-steps">
+    <span class="flow-step">Intention</span>
+    <div class="flow-arrow"></div>
+    <span class="flow-step">Select</span>
+    <div class="flow-arrow"></div>
+    <span class="flow-step">Interpret</span>
   </div>
 
+  <button class="btn-cta" onclick="goTo('s-intention', 1)">BEGIN YOUR READING</button>
+
+  <div class="step-label">Step 1 of 3</div>
 </div>
 
+<!-- ══ SCREEN 2 · INTENTION ══ -->
+<div class="screen" id="s-intention">
+  <div class="logo-mark">Veil Reads</div>
 
+  <div class="section-title">What brings you here today?</div>
+  <div class="section-sub">Choose a focus, or simply continue.<br>There is no wrong way to begin.</div>
+
+  <div class="focus-grid">
+    <div class="focus-pill" onclick="selectFocus(this, 'Love')">
+      <span class="focus-pill-label">Love</span>
+      <span class="focus-pill-sub">heart & connection</span>
+    </div>
+    <div class="focus-pill" onclick="selectFocus(this, 'Clarity')">
+      <span class="focus-pill-label">Clarity</span>
+      <span class="focus-pill-sub">mind & direction</span>
+    </div>
+    <div class="focus-pill" onclick="selectFocus(this, 'Purpose')">
+      <span class="focus-pill-label">Purpose</span>
+      <span class="focus-pill-sub">path & meaning</span>
+    </div>
+    <div class="focus-pill" onclick="selectFocus(this, 'Change')">
+      <span class="focus-pill-label">Change</span>
+      <span class="focus-pill-sub">growth & transition</span>
+    </div>
+  </div>
+
+  <div class="optional-divider">
+    <span>or add a personal note</span>
+  </div>
+
+  <textarea class="intention-input" id="intention-text" rows="2"
+    placeholder="What's on your mind right now? (optional)"></textarea>
+
+  <button class="btn-cta" onclick="goTo('s-cards', 2)">CONTINUE</button>
+  <div class="step-label">Step 2 of 3</div>
+</div>
+
+<!-- ══ SCREEN 3 · CARD SELECTION ══ -->
+<div class="screen" id="s-cards">
+  <div class="logo-mark">Veil Reads</div>
+
+  <div class="cards-prompt">
+    Three cards have been drawn for you.<br>
+    One holds your reading — trust your instinct.
+  </div>
+
+  <div class="card-spread">
+    <div class="card-slot" id="slot-0" onclick="chooseCard(0)">
+      <div class="card-face"><div class="card-shimmer"></div></div>
+      <span class="card-num">I</span>
+    </div>
+    <div class="card-slot" id="slot-1" onclick="chooseCard(1)">
+      <div class="card-face"><div class="card-shimmer"></div></div>
+      <span class="card-num">II</span>
+    </div>
+    <div class="card-slot" id="slot-2" onclick="chooseCard(2)">
+      <div class="card-face"><div class="card-shimmer"></div></div>
+      <span class="card-num">III</span>
+    </div>
+  </div>
+
+  <div class="step-label">Step 3 of 3 — choose a card</div>
+</div>
+
+<!-- ══ SCREEN 4 · REVEAL ══ -->
+<div class="screen" id="s-reveal">
+  <div class="logo-mark" style="margin-bottom:24px;">Veil Reads</div>
+
+  <div class="reveal-card-wrap">
+    <img class="reveal-card-img" id="reveal-img" src="" alt="">
+  </div>
+
+  <div class="reveal-card-name" id="reveal-name">The Moon</div>
+  <div class="reveal-archetype" id="reveal-archetype">Illusion · The Unconscious · Hidden Truths</div>
+
+  <div class="reading-box">
+    <div id="reading-content" class="reading-loading">
+      <span>The cards are speaking</span>
+      <span class="dot-pulse"><span></span><span></span><span></span></span>
+    </div>
+  </div>
+
+  <div class="mood-section">
+    <button class="btn-again" onclick="restart()">DRAW AGAIN</button>
+  </div>
+</div>
+
+<!-- Progress dots -->
+<div id="progress">
+  <div class="pdot active" id="dot-0"></div>
+  <div class="pdot" id="dot-1"></div>
+  <div class="pdot" id="dot-2"></div>
+  <div class="pdot" id="dot-3"></div>
+</div>
 
 <script>
+// ── TAROT DATA (sample — full 78 in production) ──
 const BASE = "https://archive.org/download/rider-waite-tarot/";
-const TAROT_CARDS = [
-  // ── MAJOR ARCANA ──
-  { name: "The Fool",             img: BASE+"major_arcana_fool.png",          symbol: "🌀", archetype: "Beginnings · Innocence · Leap of Faith",        meaning: "A new journey begins. You are being called to step into the unknown with an open heart. Trust, spontaneity, and fearless optimism are your guides. The Fool reminds you that every great adventure starts before you feel ready." },
-  { name: "The Magician",         img: BASE+"major_arcana_magician.png",       symbol: "⚡", archetype: "Will · Skill · Manifestation",                  meaning: "You have everything you need. Your tools — intellect, emotion, intuition, and body — are aligned. This is a moment of focused willpower. What you direct your attention toward, you can bring into being." },
-  { name: "The High Priestess",   img: BASE+"major_arcana_priestess.png",      symbol: "☽", archetype: "Intuition · Mystery · Inner Knowing",            meaning: "The answer you seek is already inside you. Be still. The High Priestess guards the threshold between the conscious and unconscious — she asks you to trust what you sense beneath the surface, not just what you can prove." },
-  { name: "The Empress",          img: BASE+"major_arcana_empress.png",        symbol: "🌿", archetype: "Abundance · Nurturing · Creation",              meaning: "You are entering a season of fertile growth. Creativity, sensuality, and care are your natural state right now. The Empress invites you to slow down, tend to what you love, and trust that nourishment — given and received — is its own form of power." },
-  { name: "The Emperor",          img: BASE+"major_arcana_emperor.png",        symbol: "🏔", archetype: "Structure · Authority · Foundation",            meaning: "It is time to build something that lasts. The Emperor asks: where do you need more discipline, more clarity, more decisive action? True authority begins with mastering yourself before directing anything else." },
-  { name: "The Hierophant",       img: BASE+"major_arcana_hierophant.png",     symbol: "🔑", archetype: "Tradition · Guidance · Belonging",              meaning: "You are being asked to examine the beliefs and structures you've inherited. Some are worth keeping; others may be worth questioning. Seek a teacher, a tradition, or a community — but make sure your path is truly yours." },
-  { name: "The Lovers",           img: BASE+"major_arcana_lovers.png",         symbol: "∞", archetype: "Union · Choice · Alignment",                    meaning: "A significant choice stands before you — one that touches your deepest values. The Lovers is not just about romance; it is about alignment between what you feel and what you choose. When head and heart agree, you move with integrity." },
-  { name: "The Chariot",          img: BASE+"major_arcana_chariot.png",        symbol: "◈", archetype: "Drive · Control · Victory",                     meaning: "You are capable of moving through obstacles with focused will. The Chariot asks you to hold opposing forces — confidence and doubt, urgency and patience — and move forward anyway. Victory comes from direction, not force." },
-  { name: "Strength",             img: BASE+"major_arcana_strength.png",       symbol: "☀", archetype: "Courage · Compassion · Inner Power",            meaning: "True strength is not loud. It is the quiet courage to stay open, to face what frightens you with gentleness, and to lead from love rather than fear. You are stronger than you believe — especially in the places you feel most fragile." },
-  { name: "The Hermit",           img: BASE+"major_arcana_hermit.png",         symbol: "◉", archetype: "Solitude · Wisdom · Inner Light",               meaning: "Step back from the noise. The Hermit knows that wisdom comes through reflection, not reaction. A period of solitude or slowing down is not isolation — it is necessary restoration. What do you find when you stop and listen to yourself?" },
-  { name: "Wheel of Fortune",     img: BASE+"major_arcana_fortune.png",        symbol: "⊕", archetype: "Cycles · Change · Fate",                        meaning: "Everything turns. What felt fixed is moving; what seemed lost may be returning. The Wheel of Fortune reminds you that you are not the only force at work — life has its own rhythms. Your task is to stay centered as things shift." },
-  { name: "Justice",              img: BASE+"major_arcana_justice.png",        symbol: "⚖", archetype: "Truth · Fairness · Cause & Effect",             meaning: "Every action has a consequence that will, in time, make itself known. Justice asks you to be honest — with yourself most of all. Where have you been avoiding a difficult truth? What decision requires you to act from integrity, not convenience?" },
-  { name: "The Hanged Man",       img: BASE+"major_arcana_hanged.png",         symbol: "⟁", archetype: "Suspension · New Perspective · Surrender",      meaning: "You are being asked to pause. Not because you are stuck, but because stillness right now is the movement. The Hanged Man sees the world differently — surrender the need to force an outcome, and a new understanding will arrive." },
-  { name: "Death",                img: BASE+"major_arcana_death.png",          symbol: "♦", archetype: "Endings · Transformation · Release",            meaning: "Something is ending so something else can begin. Death in tarot is rarely literal — it is the necessary closing of a chapter. What have you been holding onto past its time? Let it complete. Transformation cannot happen without release." },
-  { name: "Temperance",           img: BASE+"major_arcana_temperance.png",     symbol: "△", archetype: "Balance · Patience · Integration",              meaning: "You are being called to find the middle path. Temperance is the art of blending opposites — not choosing between extremes but finding what is sustainable, what flows. Slow down. Integrate. There is deep alchemy in patience." },
-  { name: "The Devil",            img: BASE+"major_arcana_devil.png",          symbol: "⛓", archetype: "Shadow · Attachment · Liberation",              meaning: "What binds you is not as unbreakable as it appears. The Devil illuminates the patterns, addictions, or fears that keep you small. But look closely — the chains are often loosely worn. What would it mean to simply... choose differently?" },
-  { name: "The Tower",            img: BASE+"major_arcana_tower.png",          symbol: "◬", archetype: "Upheaval · Revelation · Sudden Change",         meaning: "What is crumbling was built on an unstable foundation. The Tower is disruptive, yes — but it clears what was never truly solid. After the shock comes clarity. What is falling away had to fall. What remains is real." },
-  { name: "The Star",             img: BASE+"major_arcana_star.png",           symbol: "✦", archetype: "Hope · Healing · Renewal",                      meaning: "After difficulty, the Star arrives as a quiet, steady light. This is a card of healing and faith — not blind optimism, but the deep knowing that you are supported, that beauty is still possible, that the path forward exists even if you can't see it fully yet." },
-  { name: "The Moon",             img: BASE+"major_arcana_moon.png",           symbol: "☽", archetype: "Illusion · The Unconscious · Hidden Truths",    meaning: "Not everything is as it appears. The Moon stirs the unconscious — fears, dreams, and unresolved feelings may be surfacing. Pay attention to what you sense rather than what you see. Navigate by feeling right now, and trust the process even in the dark." },
-  { name: "The Sun",              img: BASE+"major_arcana_sun.png",            symbol: "☼", archetype: "Joy · Clarity · Vitality",                      meaning: "You are stepping into a moment of genuine brightness. The Sun brings clarity after confusion, warmth after isolation, and confidence after doubt. This is not performance — it is your authentic self, fully lit. Let yourself be seen." },
-  { name: "Judgement",            img: BASE+"major_arcana_judgement.png",      symbol: "◎", archetype: "Awakening · Reckoning · Rebirth",               meaning: "A call is rising within you — one that asks you to rise above old stories and see yourself clearly. Judgement is not condemnation; it is liberation. Who are you becoming? What part of your past is ready to be forgiven, released, and transcended?" },
-  { name: "The World",            img: BASE+"major_arcana_world.png",          symbol: "◌", archetype: "Completion · Integration · Wholeness",          meaning: "You have arrived. A significant cycle is completing, and the The World asks you to acknowledge how far you've come. This is not the end — it is integration. Everything you've learned, survived, and become is now part of you. Celebrate that." },
-  // ── WANDS ──
-  { name: "Ace of Wands",         img: BASE+"minor_arcana_wands_ace.png",      symbol: "🔥", archetype: "Spark · Inspiration · New Energy",             meaning: "A burst of creative energy is available to you right now. The Ace of Wands is pure potential — a spark looking for kindling. Say yes to the idea that excites you. This is the moment to begin, not plan." },
-  { name: "Two of Wands",         img: BASE+"minor_arcana_wands_2.png",        symbol: "🌐", archetype: "Vision · Planning · Bold Choices",             meaning: "You are standing at the edge of something larger than your current life. The Two of Wands asks: what is the bigger vision? Don't shrink to fit where you are. You are ready to plan a path toward something more expansive." },
-  { name: "Three of Wands",       img: BASE+"minor_arcana_wands_3.png",        symbol: "⛵", archetype: "Expansion · Foresight · Progress",             meaning: "Your efforts are beginning to move. What you set in motion is now finding its legs. The Three of Wands invites you to keep your eyes on the horizon — expansion is underway, and patience will be rewarded." },
-  { name: "Four of Wands",        img: BASE+"minor_arcana_wands_4.png",        symbol: "🎊", archetype: "Celebration · Homecoming · Stability",        meaning: "Pause and celebrate what you've built. The Four of Wands marks a moment of earned joy — a homecoming, a milestone, a moment of genuine stability. Let yourself feel it." },
-  { name: "Five of Wands",        img: BASE+"minor_arcana_wands_5.png",        symbol: "⚔", archetype: "Conflict · Competition · Tension",             meaning: "There is friction in the air — competing ideas, clashing energies, or internal conflict. The Five of Wands asks you not to avoid it, but to engage with it consciously." },
-  { name: "Six of Wands",         img: BASE+"minor_arcana_wands_6.png",        symbol: "🏆", archetype: "Victory · Recognition · Confidence",          meaning: "You are being recognized for something real. The Six of Wands marks a moment of public or personal victory — own it without apology." },
-  { name: "Seven of Wands",       img: BASE+"minor_arcana_wands_7.png",        symbol: "🛡", archetype: "Perseverance · Defense · Conviction",         meaning: "Hold your ground. You may feel challenged or outnumbered, but you are more capable than the opposition suggests. Stand for what you believe in." },
-  { name: "Eight of Wands",       img: BASE+"minor_arcana_wands_8.png",        symbol: "➶", archetype: "Speed · Movement · Momentum",                  meaning: "Things are moving fast. The Eight of Wands is pure momentum — messages, opportunities, and energy are in flight. Stay focused, stay nimble." },
-  { name: "Nine of Wands",        img: BASE+"minor_arcana_wands_9.png",        symbol: "🩹", archetype: "Resilience · Persistence · Near the End",      meaning: "You are tired, but you are closer than you think. The Nine of Wands honors the battle-worn — you have been through something, and you are still standing." },
-  { name: "Ten of Wands",         img: BASE+"minor_arcana_wands_10.png",       symbol: "🪵", archetype: "Burden · Overload · Release",                  meaning: "You are carrying too much. The Ten of Wands asks: what can you put down? Not everything is yours to carry alone." },
-  { name: "Page of Wands",        img: BASE+"minor_arcana_wands_page.png",     symbol: "🌱", archetype: "Curiosity · Enthusiasm · Exploration",        meaning: "Approach this with fresh eyes. The Page of Wands carries the energy of someone who hasn't been told yet that something isn't possible." },
-  { name: "Knight of Wands",      img: BASE+"minor_arcana_wands_knight.png",   symbol: "🐎", archetype: "Action · Passion · Impulsiveness",             meaning: "You are ready to charge — but channel that fire wisely. The Knight of Wands is passionate, bold, and sometimes reckless." },
-  { name: "Queen of Wands",       img: BASE+"minor_arcana_wands_queen.png",    symbol: "🦁", archetype: "Charisma · Confidence · Creative Power",      meaning: "You are in your power. The Queen of Wands is magnetic, warm, and entirely herself — she leads by being, not by performing." },
-  { name: "King of Wands",        img: BASE+"minor_arcana_wands_king.png",     symbol: "👑", archetype: "Vision · Leadership · Mastery",                meaning: "You have the vision and the will to bring others with you. The King of Wands is a natural leader through inspiring others with a clear, compelling direction." },
-  // ── CUPS ──
-  { name: "Ace of Cups",          img: BASE+"minor_arcana_cups_ace.png",       symbol: "🫙", archetype: "Emotional Beginning · Love · Intuition",       meaning: "Your heart is open. The Ace of Cups is an overflow of feeling — new love, renewed compassion, spiritual connection. Receive what is being offered." },
-  { name: "Two of Cups",          img: BASE+"minor_arcana_cups_2.png",         symbol: "🤝", archetype: "Partnership · Mutual Feeling · Connection",    meaning: "A meaningful connection is present or emerging. The Two of Cups is about genuine reciprocity — two people meeting as equals, with care flowing in both directions." },
-  { name: "Three of Cups",        img: BASE+"minor_arcana_cups_3.png",         symbol: "🥂", archetype: "Friendship · Joy · Community",                 meaning: "Let yourself be held by the people who love you. The Three of Cups is a card of genuine celebration — the deep comfort of belonging." },
-  { name: "Four of Cups",         img: BASE+"minor_arcana_cups_4.png",         symbol: "😔", archetype: "Apathy · Reflection · Missed Opportunity",     meaning: "You may be so focused on what's missing that you're not seeing what's being offered. The Four of Cups asks you to look up." },
-  { name: "Five of Cups",         img: BASE+"minor_arcana_cups_5.png",         symbol: "💧", archetype: "Grief · Loss · Partial Recovery",              meaning: "Grief is real and deserves to be felt. The Five of Cups acknowledges what has been lost — but also points to what remains standing." },
-  { name: "Six of Cups",          img: BASE+"minor_arcana_cups_6.png",         symbol: "🌸", archetype: "Nostalgia · Innocence · Past Connections",     meaning: "The past is visiting you — through memory, through people, through longing. What from your past carries genuine warmth worth bringing forward?" },
-  { name: "Seven of Cups",        img: BASE+"minor_arcana_cups_7.png",         symbol: "🌫", archetype: "Illusion · Fantasy · Choices",                 meaning: "There are many paths before you, but not all of them are real. Get honest about which options are truly aligned with your values." },
-  { name: "Eight of Cups",        img: BASE+"minor_arcana_cups_8.png",         symbol: "🚶", archetype: "Withdrawal · Walking Away · Seeking More",     meaning: "Something once meaningful no longer feeds you. The Eight of Cups is the quiet courage to walk away — not in anger, but in honesty." },
-  { name: "Nine of Cups",         img: BASE+"minor_arcana_cups_9.png",         symbol: "✨", archetype: "Fulfillment · Contentment · Wishes Met",       meaning: "What you wished for is here, or close. The Nine of Cups is a card of genuine satisfaction — allow yourself to feel it." },
-  { name: "Ten of Cups",          img: BASE+"minor_arcana_cups_10.png",        symbol: "🌈", archetype: "Harmony · Family · Emotional Wholeness",       meaning: "Deep relational happiness is available to you. The Ten of Cups points to the fullness that comes from genuine connection." },
-  { name: "Page of Cups",         img: BASE+"minor_arcana_cups_page.png",      symbol: "🐟", archetype: "Sensitivity · Dreaming · Emotional Messages",  meaning: "Something tender and unexpected is surfacing. Don't dismiss what seems irrational or soft. Your feeling life has something important to tell you." },
-  { name: "Knight of Cups",       img: BASE+"minor_arcana_cups_knight.png",    symbol: "🌊", archetype: "Romance · Idealism · Pursuit of the Heart",   meaning: "You are being moved by something deeply felt. Stay open to what you're feeling, but let reality inform the dream." },
-  { name: "Queen of Cups",        img: BASE+"minor_arcana_cups_queen.png",     symbol: "🪷", archetype: "Empathy · Emotional Intelligence · Intuition", meaning: "Lead with your heart, and trust it. The Queen of Cups is deeply intuitive and emotionally wise — she feels everything, but isn't swept away by it." },
-  { name: "King of Cups",         img: BASE+"minor_arcana_cups_king.png",      symbol: "🌊", archetype: "Emotional Mastery · Compassion · Wisdom",      meaning: "Emotional maturity is your greatest strength right now. The King of Cups has learned to feel deeply without being controlled by feeling." },
-  // ── SWORDS ──
-  { name: "Ace of Swords",        img: BASE+"minor_arcana_swords_ace.png",     symbol: "🗡", archetype: "Clarity · Truth · Breakthrough",               meaning: "A moment of sharp, clear insight is available. The Ace of Swords cuts through confusion — the truth you've been circling is now within reach." },
-  { name: "Two of Swords",        img: BASE+"minor_arcana_swords_2.png",       symbol: "🙈", archetype: "Stalemate · Avoidance · Difficult Choice",     meaning: "You may be avoiding a decision that needs to be made. The longer you wait, the more energy it costs. What do you already know?" },
-  { name: "Three of Swords",      img: BASE+"minor_arcana_swords_3.png",       symbol: "💔", archetype: "Heartbreak · Grief · Painful Truth",           meaning: "Pain is real, and this card doesn't minimize it. Allow yourself to grieve fully — but know that the storm passes." },
-  { name: "Four of Swords",       img: BASE+"minor_arcana_swords_4.png",       symbol: "🛏", archetype: "Rest · Recovery · Retreat",                    meaning: "You need to stop and rest. The Four of Swords is not giving up — it is strategic withdrawal, allowing the mind and body to recover." },
-  { name: "Five of Swords",       img: BASE+"minor_arcana_swords_5.png",       symbol: "😤", archetype: "Conflict · Hollow Victory · Loss",             meaning: "Was the battle worth winning? Consider the cost of being right. Sometimes the most powerful move is to walk away." },
-  { name: "Six of Swords",        img: BASE+"minor_arcana_swords_6.png",       symbol: "⛵", archetype: "Transition · Moving On · Calmer Waters",       meaning: "You are moving away from turbulence toward calmer ground. Leave what needs to be left behind. Calmer waters await." },
-  { name: "Seven of Swords",      img: BASE+"minor_arcana_swords_7.png",       symbol: "🦊", archetype: "Strategy · Deception · Independence",          meaning: "Something is not fully above board. Examine where you might be cutting corners or avoiding honesty." },
-  { name: "Eight of Swords",      img: BASE+"minor_arcana_swords_8.png",       symbol: "🙁", archetype: "Restriction · Self-Limitation · Entrapment",  meaning: "The bars of your cage may be more imagined than real. The key to freedom begins with examining the story you're telling yourself." },
-  { name: "Nine of Swords",       img: BASE+"minor_arcana_swords_9.png",       symbol: "😰", archetype: "Anxiety · Nightmares · Mental Anguish",        meaning: "The darkest hour of the mind. How much of what torments you is happening now, versus being projected into the future?" },
-  { name: "Ten of Swords",        img: BASE+"minor_arcana_swords_10.png",      symbol: "🌅", archetype: "Rock Bottom · Ending · Inevitable Shift",      meaning: "This is the bottom. And the bottom is also, finally, the turning point. Dawn always follows the darkest night. The worst is over." },
-  { name: "Page of Swords",       img: BASE+"minor_arcana_swords_page.png",    symbol: "📖", archetype: "Curiosity · Directness · Mental Agility",      meaning: "Ask the hard questions. Right now, intellectual honesty and direct communication will serve you far better than diplomacy for its own sake." },
-  { name: "Knight of Swords",     img: BASE+"minor_arcana_swords_knight.png",  symbol: "💨", archetype: "Ambition · Speed · Assertiveness",             meaning: "You are moving fast — almost too fast. Your clarity and directness are gifts; just make sure you're heading in the right direction." },
-  { name: "Queen of Swords",      img: BASE+"minor_arcana_swords_queen.png",   symbol: "🧊", archetype: "Clarity · Independence · Honest Perception",   meaning: "See it clearly and say it plainly. The Queen of Swords values truth, direct communication, and sharp discernment. What needs to be named right now?" },
-  { name: "King of Swords",       img: BASE+"minor_arcana_swords_king.png",    symbol: "⚖", archetype: "Intellectual Power · Authority · Justice",      meaning: "Think clearly. Lead with reason and principle. Make decisions based on truth rather than preference." },
-  // ── PENTACLES ──
-  { name: "Ace of Pentacles",     img: BASE+"minor_arcana_pentacles_ace.png",  symbol: "🌱", archetype: "New Opportunity · Material Beginnings · Seed", meaning: "A tangible opportunity is presenting itself. Plant it carefully. What you begin now, tended with patience, can grow into something lasting." },
-  { name: "Two of Pentacles",     img: BASE+"minor_arcana_pentacles_2.png",    symbol: "⚖", archetype: "Balance · Adaptability · Juggling Priorities",  meaning: "Life is asking you to hold multiple things at once. You can manage this, but it requires focus and honesty about what truly needs your attention." },
-  { name: "Three of Pentacles",   img: BASE+"minor_arcana_pentacles_3.png",    symbol: "🔨", archetype: "Collaboration · Craft · Skill",                meaning: "Your work is being recognized, and collaboration is key right now. The best things are rarely built alone. Who do you need to work with?" },
-  { name: "Four of Pentacles",    img: BASE+"minor_arcana_pentacles_4.png",    symbol: "🤲", archetype: "Security · Control · Holding On",              meaning: "There is a difference between building security and living in fear of losing it. Are you holding on so tightly that nothing new can arrive?" },
-  { name: "Five of Pentacles",    img: BASE+"minor_arcana_pentacles_5.png",    symbol: "❄", archetype: "Hardship · Scarcity · Seeking Support",        meaning: "You may be in a season of difficulty. The door to warmth and support is closer than it seems. It is okay to ask for help." },
-  { name: "Six of Pentacles",     img: BASE+"minor_arcana_pentacles_6.png",    symbol: "🎁", archetype: "Generosity · Giving · Receiving",              meaning: "The flow of giving and receiving is in focus. Are you in a position to give, or in a season of receiving? Both are sacred." },
-  { name: "Seven of Pentacles",   img: BASE+"minor_arcana_pentacles_7.png",    symbol: "🌾", archetype: "Patience · Long-Term Vision · Evaluation",    meaning: "You have done the work. Now comes the harder discipline of waiting. Not every result is immediate. Some harvests take time." },
-  { name: "Eight of Pentacles",   img: BASE+"minor_arcana_pentacles_8.png",    symbol: "🔧", archetype: "Mastery · Dedication · Craftsmanship",        meaning: "Put your head down and do the work. There are no shortcuts here — only the quiet, daily practice of getting better." },
-  { name: "Nine of Pentacles",    img: BASE+"minor_arcana_pentacles_9.png",    symbol: "🏡", archetype: "Independence · Abundance · Self-Sufficiency",  meaning: "You have earned this. The Nine of Pentacles marks a moment of genuine abundance — the result of your own effort. Enjoy it fully and without guilt." },
-  { name: "Ten of Pentacles",     img: BASE+"minor_arcana_pentacles_10.png",   symbol: "🏛", archetype: "Legacy · Lasting Wealth · Generational Roots", meaning: "You are building something that outlasts the moment. What are you creating that will endure? What do you want your life to stand for?" },
-  { name: "Page of Pentacles",    img: BASE+"minor_arcana_pentacles_page.png", symbol: "📚", archetype: "Learning · Ambition · Practical Beginnings",   meaning: "Be a student of what you want to build. This is not the time for shortcuts. Invest in mastering the fundamentals." },
-  { name: "Knight of Pentacles",  img: BASE+"minor_arcana_pentacles_knight.png", symbol: "🐂", archetype: "Responsibility · Persistence · Method",      meaning: "Slow and steady is not glamorous, but it works. Consistency and follow-through will take you further than inspiration alone." },
-  { name: "Queen of Pentacles",   img: BASE+"minor_arcana_pentacles_queen.png", symbol: "🌻", archetype: "Nurturing · Practicality · Grounded Abundance", meaning: "Care for what is in front of you with full attention. Your capacity to nurture yourself and others is a profound power." },
-  { name: "King of Pentacles",    img: BASE+"minor_arcana_pentacles_king.png", symbol: "🏦", archetype: "Abundance · Security · Wise Stewardship",      meaning: "You have the capacity to build lasting wealth — financial, relational, or spiritual. What you steward well, grows." },
+const CARDS = [
+  { name:"The Fool",           img:BASE+"major_arcana_fool.png",         archetype:"Beginnings · Innocence · Leap of Faith",      meaning:"A new journey begins. You are being called to step into the unknown with an open heart. Trust, spontaneity, and fearless optimism are your guides. The Fool reminds you that every great adventure starts before you feel ready." },
+  { name:"The Magician",       img:BASE+"major_arcana_magician.png",      archetype:"Will · Skill · Manifestation",                meaning:"You have everything you need. Your tools — intellect, emotion, intuition, and body — are aligned. This is a moment of focused willpower. What you direct your attention toward, you can bring into being." },
+  { name:"The High Priestess", img:BASE+"major_arcana_priestess.png",     archetype:"Intuition · Mystery · Inner Knowing",         meaning:"The answer you seek is already inside you. Be still. She guards the threshold between the conscious and unconscious — trust what you sense beneath the surface." },
+  { name:"The Empress",        img:BASE+"major_arcana_empress.png",       archetype:"Abundance · Nurturing · Creation",            meaning:"You are entering a season of fertile growth. Creativity, sensuality, and care are your natural state right now. Slow down, tend to what you love." },
+  { name:"The Emperor",        img:BASE+"major_arcana_emperor.png",       archetype:"Structure · Authority · Foundation",          meaning:"It is time to build something that lasts. Where do you need more discipline, more clarity, more decisive action? True authority begins with mastering yourself." },
+  { name:"The Lovers",         img:BASE+"major_arcana_lovers.png",        archetype:"Union · Choice · Alignment",                  meaning:"A significant choice stands before you — one that touches your deepest values. When head and heart agree, you move with integrity." },
+  { name:"The Chariot",        img:BASE+"major_arcana_chariot.png",       archetype:"Drive · Control · Victory",                   meaning:"You are capable of moving through obstacles with focused will. Hold opposing forces — confidence and doubt — and move forward anyway." },
+  { name:"Strength",           img:BASE+"major_arcana_strength.png",      archetype:"Courage · Compassion · Inner Power",         meaning:"True strength is not loud. It is the quiet courage to stay open, to face what frightens you with gentleness, and to lead from love rather than fear." },
+  { name:"The Hermit",         img:BASE+"major_arcana_hermit.png",        archetype:"Solitude · Wisdom · Inner Light",             meaning:"Step back from the noise. Wisdom comes through reflection, not reaction. A period of solitude is not isolation — it is necessary restoration." },
+  { name:"Wheel of Fortune",   img:BASE+"major_arcana_fortune.png",       archetype:"Cycles · Change · Fate",                      meaning:"Everything turns. What felt fixed is moving; what seemed lost may be returning. Your task is to stay centered as things shift." },
+  { name:"Justice",            img:BASE+"major_arcana_justice.png",       archetype:"Truth · Fairness · Cause & Effect",           meaning:"Every action has a consequence. Where have you been avoiding a difficult truth? Act from integrity, not convenience." },
+  { name:"The Hanged Man",     img:BASE+"major_arcana_hanged.png",        archetype:"Suspension · New Perspective · Surrender",    meaning:"You are being asked to pause. Surrender the need to force an outcome, and a new understanding will arrive." },
+  { name:"Death",              img:BASE+"major_arcana_death.png",         archetype:"Endings · Transformation · Release",         meaning:"Something is ending so something else can begin. What have you been holding onto past its time? Transformation cannot happen without release." },
+  { name:"Temperance",         img:BASE+"major_arcana_temperance.png",    archetype:"Balance · Patience · Integration",            meaning:"You are being called to find the middle path — not choosing between extremes but finding what is sustainable, what flows." },
+  { name:"The Devil",          img:BASE+"major_arcana_devil.png",         archetype:"Shadow · Attachment · Liberation",            meaning:"What binds you is not as unbreakable as it appears. The chains are often loosely worn. What would it mean to simply... choose differently?" },
+  { name:"The Tower",          img:BASE+"major_arcana_tower.png",         archetype:"Upheaval · Revelation · Sudden Change",       meaning:"What is crumbling was built on an unstable foundation. After the shock comes clarity. What is falling away had to fall. What remains is real." },
+  { name:"The Star",           img:BASE+"major_arcana_star.png",          archetype:"Hope · Healing · Renewal",                   meaning:"After difficulty, the Star arrives as a quiet, steady light. You are supported. Beauty is still possible, and the path forward exists." },
+  { name:"The Moon",           img:BASE+"major_arcana_moon.png",          archetype:"Illusion · The Unconscious · Hidden Truths",  meaning:"Not everything is as it appears. Fears, dreams, and unresolved feelings may be surfacing. Navigate by feeling right now, and trust the process even in the dark." },
+  { name:"The Sun",            img:BASE+"major_arcana_sun.png",           archetype:"Joy · Clarity · Vitality",                   meaning:"You are stepping into a moment of genuine brightness. This is not performance — it is your authentic self, fully lit. Let yourself be seen." },
+  { name:"Judgement",          img:BASE+"major_arcana_judgement.png",     archetype:"Awakening · Reckoning · Rebirth",             meaning:"A call is rising within you. Judgement is not condemnation; it is liberation. What part of your past is ready to be forgiven and transcended?" },
+  { name:"The World",          img:BASE+"major_arcana_world.png",         archetype:"Completion · Integration · Wholeness",        meaning:"You have arrived. A significant cycle is completing. Everything you've learned, survived, and become is now part of you. Celebrate that." },
+  { name:"Ace of Cups",        img:BASE+"minor_arcana_cups_ace.png",      archetype:"Emotional Beginning · Love · Intuition",      meaning:"Your heart is open. The Ace of Cups is an overflow of feeling — new love, renewed compassion, spiritual connection. Receive what is being offered." },
+  { name:"Three of Cups",      img:BASE+"minor_arcana_cups_3.png",        archetype:"Friendship · Joy · Community",                meaning:"Let yourself be held by the people who love you. The Three of Cups is a card of genuine celebration — the deep comfort of belonging." },
+  { name:"Nine of Cups",       img:BASE+"minor_arcana_cups_9.png",        archetype:"Fulfillment · Contentment · Wishes Met",      meaning:"What you wished for is here, or close. Allow yourself to feel it. Not as an ending, but as a moment of arrival." },
+  { name:"Ace of Wands",       img:BASE+"minor_arcana_wands_ace.png",     archetype:"Spark · Inspiration · New Energy",            meaning:"A burst of creative energy is available to you. The Ace of Wands is pure potential — say yes to the idea that excites you." },
+  { name:"The Star",           img:BASE+"major_arcana_star.png",          archetype:"Hope · Healing · Renewal",                   meaning:"After difficulty, the Star arrives as a quiet, steady light. You are supported. Beauty is still possible." },
 ];
 
-let state = { focus: null, question: '', card: null, mood: null, reading: '' };
+let state = { focus: null, question: '', card: null };
+let drawnCards = [];
 
+// ── NAVIGATION ──
+function goTo(screenId, dotIndex) {
+  const current = document.querySelector('.screen.active');
+  if (current) {
+    current.classList.add('exit');
+    setTimeout(() => current.classList.remove('exit','active'), 600);
+  }
+  setTimeout(() => {
+    const next = document.getElementById(screenId);
+    next.classList.add('active');
+  }, 200);
 
-function selectFocus(el, f) {
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
-  state.focus = f;
-}
-
-function selectMood(el, m) {
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-  el.classList.add('selected');
-  state.mood = m;
-}
-
-function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-' + name).classList.add('active');
-}
-
-function goDraw() {
-  state.question = document.getElementById('question-input').value.trim();
-  showScreen('draw');
-}
-
-function chooseCard(idx) {
-  const cards = document.querySelectorAll('.tarot-card');
-  cards.forEach((c, i) => {
-    c.classList.remove('selected');
-    if (i !== idx) { c.style.opacity = '.4'; c.style.pointerEvents = 'none'; }
+  document.querySelectorAll('.pdot').forEach((d,i) => {
+    d.classList.toggle('active', i <= dotIndex);
   });
-  cards[idx].classList.add('selected');
 
-  state.card = TAROT_CARDS[Math.floor(Math.random() * TAROT_CARDS.length)];
-  setTimeout(() => doReveal(), 700);
+  // hide progress on reveal
+  document.getElementById('progress').style.opacity = screenId === 's-reveal' ? '0' : '1';
 }
 
-function doReveal() {
-  const c = state.card;
-  document.getElementById('reveal-img').src = c.img;
-  document.getElementById('reveal-img').alt = c.name;
-  document.getElementById('reveal-name-big').textContent = c.name;
-  document.getElementById('reveal-archetype').textContent = c.archetype;
-
-  showScreen('reveal');
-
-  document.getElementById('reading-content').innerHTML = `
-    <span class="reading-loading">The cards are speaking
-      <span class="dot-pulse"><span></span><span></span><span></span></span>
-    </span>`;
-
-  fetchReading(c);
+// ── INTENTION ──
+function selectFocus(el, focus) {
+  document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected');
+  state.focus = focus;
 }
 
+// ── CARD SELECTION ──
+function chooseCard(idx) {
+  document.querySelectorAll('.card-slot').forEach((s,i) => {
+    if (i !== idx) { s.style.opacity = '.3'; s.style.pointerEvents = 'none'; }
+    else s.classList.add('chosen');
+  });
+
+  state.question = document.getElementById('intention-text').value.trim();
+  state.card = drawnCards[idx] || CARDS[Math.floor(Math.random() * CARDS.length)];
+
+  setTimeout(() => {
+    document.getElementById('reveal-img').src = state.card.img;
+    document.getElementById('reveal-img').alt = state.card.name;
+    document.getElementById('reveal-name').textContent = state.card.name;
+    document.getElementById('reveal-archetype').textContent = state.card.archetype;
+    goTo('s-reveal', 3);
+    fetchReading(state.card);
+  }, 700);
+}
+
+// ── READING ──
 async function fetchReading(card) {
   try {
     const res = await fetch("/api/reading", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        card: { name: card.name, archetype: card.archetype, meaning: card.meaning },
-        focus: state.focus,
-        question: state.question
-      })
+      body: JSON.stringify({ card, focus: state.focus, question: state.question })
     });
-    if (!res.ok) throw new Error('API error');
+    if (!res.ok) throw new Error();
     const data = await res.json();
-    state.reading = data.reading || '';
     document.getElementById('reading-content').className = 'reading-text';
-    document.getElementById('reading-content').textContent = state.reading;
-  } catch(e) {
+    document.getElementById('reading-content').textContent = data.reading;
+  } catch {
+    // fallback readings — neutral, open-ended, non-directive
+    const fallbacks = [
+      `Something is present in this moment that hasn't fully taken shape yet. There may be more than one way to hold what you're carrying — and this card invites you to sit with that ambiguity rather than resolve it too quickly. Nothing is being asked of you right now except attention. What do you notice when you slow down enough to look?`,
+      `There is a quality of movement here — not forward or backward, but a kind of turning. Whatever has felt fixed may be more fluid than it appears, and whatever has felt open may be asking for more stillness. This card doesn't point to an answer so much as a doorway. What would it mean to simply stand at the threshold for a moment longer?`,
+      `Things are in motion beneath the surface, in ways that may not yet be visible. This card reflects something about the texture of where you are — not where you should go, but what is already true. The question it leaves with you is not urgent. What feels most alive in you right now, even quietly so?`
+    ];
     document.getElementById('reading-content').className = 'reading-text';
-    document.getElementById('reading-content').textContent =
-      `${card.name} arrives bearing the energy of ${card.archetype.toLowerCase()}. Something you've been circling is asking to be seen more clearly. What would it mean to stop moving around it—and instead, move toward it?`;
+    document.getElementById('reading-content').textContent = fallbacks[Math.floor(Math.random() * fallbacks.length)];
   }
 }
 
-function newReading() {
-  state = { focus: null, question: '', card: null, mood: null, reading: '' };
-  document.querySelectorAll('.pill').forEach(p => p.classList.remove('selected'));
-  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-  document.getElementById('question-input').value = '';
-  document.querySelectorAll('.tarot-card').forEach(c => {
-    c.classList.remove('selected'); c.style.opacity = '1'; c.style.pointerEvents = '';
+// ── RESTART ──
+function restart() {
+  state = { focus: null, question: '', card: null };
+  drawnCards = [];
+  document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.mood-pill').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.card-slot').forEach(s => {
+    s.classList.remove('chosen'); s.style.opacity = '1'; s.style.pointerEvents = '';
   });
-  showScreen('intention');
+  document.getElementById('intention-text').value = '';
+  document.getElementById('reading-content').innerHTML = `
+    <span class="reading-loading">The cards are speaking
+      <span class="dot-pulse"><span></span><span></span><span></span></span>
+    </span>`;
+  goTo('s-landing', 0);
+  // reset progress dots
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === 0));
 }
+
+// pre-shuffle 3 cards for the spread
+function initDraw() {
+  const shuffled = [...CARDS].sort(() => Math.random() - .5);
+  drawnCards = shuffled.slice(0, 3);
+}
+initDraw();
 </script>
 </body>
 </html>

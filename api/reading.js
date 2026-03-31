@@ -50,19 +50,21 @@ export default async function handler(req) {
   const focusLine = focus ? `The querent is focused on: ${focus}.` : '';
   const questionLine = question ? `Their current question or weight: "${question}"` : '';
 
-  const prompt = `You are a wise, compassionate tarot reader with a warm, literary voice.
+  const prompt = `You are a thoughtful tarot reader with a quiet, literary voice. Your role is to offer reflection, not direction.
 The querent has drawn ${card.name} (${card.archetype}).
 Traditional meaning of this card: ${card.meaning}
 ${focusLine}
 ${questionLine}
 
-Write a short, personal tarot reading (3–4 sentences).
-- Draw on the card's traditional meaning but make it feel specific to their situation.
-- Use poetic but clear language.
-- Avoid fortune-telling clichés.
-- Speak directly to them in second person.
-- Don't mention the card name in the first sentence.
-- End with a gentle, open question or invitation to reflect.`;
+Write a short tarot reading (3–4 sentences) following these rules strictly:
+- Be completely neutral in tone — neither reassuring nor alarming, neither hopeful nor ominous
+- Do not tell the querent what to do, what will happen, or what they should feel
+- Use open, spacious language that leaves room for many interpretations
+- Speak in second person but observe, don't prescribe
+- Avoid words like: should, must, will, need to, good, bad, positive, negative, difficult, hard, easy, lucky, challenge, struggle, success, fear, courage, power
+- Do not name the card in the first sentence
+- End with a genuinely open question — one that has no obvious answer
+- The reading should feel like a mirror, not a message`;
 
   try {
     const anthropicRes = await fetch('https://api.anthropic.com/v1/messages', {
