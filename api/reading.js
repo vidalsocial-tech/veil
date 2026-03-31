@@ -15,8 +15,8 @@ export default async function handler(req) {
     'http://localhost:3000',
     'http://localhost:5500',
     'http://127.0.0.1:5500',
-    // Add your production domain here, e.g.:
-    // 'https://veil.app',
+    'https://veilreads.com',
+    'https://www.veilreads.com',
   ];
   const isAllowed = allowedOrigins.some(o => origin.startsWith(o)) || origin === '';
 
@@ -40,21 +40,23 @@ export default async function handler(req) {
     });
   }
 
-  const { card, focus, question } = body;
+  const { card, focus, question, moonPhase, moonEnergy } = body;
   if (!card) {
     return new Response(JSON.stringify({ error: 'card is required' }), {
       status: 400, headers: corsHeaders,
     });
   }
 
-  const focusLine = focus ? `The querent is focused on: ${focus}.` : '';
-  const questionLine = question ? `Their current question or weight: "${question}"` : '';
+  const focusLine    = focus       ? `The querent is focused on: ${focus}.` : '';
+  const questionLine = question    ? `Their current thought: "${question}"` : '';
+  const moonLine     = moonPhase   ? `Today's moon phase is ${moonPhase} — ${moonEnergy}` : '';
 
   const prompt = `You are a thoughtful tarot reader with a quiet, literary voice. Your role is to offer reflection, not direction.
 The querent has drawn ${card.name} (${card.archetype}).
 Traditional meaning of this card: ${card.meaning}
 ${focusLine}
 ${questionLine}
+${moonLine}
 
 Write a short tarot reading (3–4 sentences) following these rules strictly:
 - Be completely neutral in tone — neither reassuring nor alarming, neither hopeful nor ominous
@@ -62,6 +64,7 @@ Write a short tarot reading (3–4 sentences) following these rules strictly:
 - Use open, spacious language that leaves room for many interpretations
 - Speak in second person but observe, don't prescribe
 - Avoid words like: should, must, will, need to, good, bad, positive, negative, difficult, hard, easy, lucky, challenge, struggle, success, fear, courage, power
+- If a moon phase is provided, weave it in naturally — just once, lightly
 - Do not name the card in the first sentence
 - End with a genuinely open question — one that has no obvious answer
 - The reading should feel like a mirror, not a message`;

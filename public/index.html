@@ -15,514 +15,306 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Cinzel:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink:        #0b0910;
-    --deep:       #13101c;
-    --parchment:  #f2ead8;
-    --parchment2: #e8ddc8;
-    --gold:       #c9a252;
-    --gold-light: #e8cc7a;
-    --gold-dim:   rgba(201,162,82,.2);
-    --mist:       #9488a8;
-    --mist-dim:   rgba(148,136,168,.4);
-    --accent:     #7a5fa0;
+    --ink:       #0b0910;
+    --deep:      #13101c;
+    --parchment: #f2ead8;
+    --gold:      #c9a252;
+    --gold-lt:   #e8cc7a;
+    --gold-dim:  rgba(201,162,82,.18);
+    --mist:      #9488a8;
+    --mist-dim:  rgba(148,136,168,.35);
   }
-
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; font-family: 'Cormorant Garamond', serif; background: var(--ink); color: var(--parchment); overflow: hidden; }
 
-  html, body {
-    height: 100%;
-    font-family: 'Cormorant Garamond', serif;
-    background: var(--ink);
-    color: var(--parchment);
-    overflow: hidden;
-  }
-
-  /* ══════════════════════════════════════
-     CANVAS / ATMOSPHERE
-  ══════════════════════════════════════ */
+  /* ── ATMOSPHERE ── */
   #bg {
     position: fixed; inset: 0; z-index: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, #1c1530 0%, transparent 70%),
-      radial-gradient(ellipse 60% 80% at 80% 100%, #0f0d1a 0%, transparent 60%),
-      var(--ink);
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, #1c1530 0%, transparent 65%), var(--ink);
   }
-
-  /* animated grain overlay */
   #grain {
-    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .045;
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .04;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size: 180px 180px;
-    animation: grain 0.8s steps(2) infinite;
+    background-size: 180px; animation: grain .8s steps(2) infinite;
   }
-  @keyframes grain { 0%{background-position:0 0} 25%{background-position:-20px 10px} 50%{background-position:15px -10px} 75%{background-position:-10px 20px} 100%{background-position:20px 5px} }
+  @keyframes grain { 0%{background-position:0 0} 25%{background-position:-20px 10px} 50%{background-position:15px -10px} 75%{background-position:-10px 20px} }
+  .orb { position: fixed; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
+  .orb-1 { width:380px; height:380px; background:rgba(122,95,160,.07); top:-80px; left:-80px; animation: d1 20s ease-in-out infinite; }
+  .orb-2 { width:260px; height:260px; background:rgba(201,162,82,.05); bottom:-60px; right:-60px; animation: d2 24s ease-in-out infinite; }
+  @keyframes d1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(50px,40px)} }
+  @keyframes d2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-40px,-50px)} }
 
-  /* floating orbs */
-  .orb {
-    position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
-  }
-  .orb-1 { width:400px; height:400px; background:rgba(122,95,160,.08); top:-100px; left:-100px; animation: drift1 18s ease-in-out infinite; }
-  .orb-2 { width:300px; height:300px; background:rgba(201,162,82,.06); bottom:-80px; right:-80px; animation: drift2 22s ease-in-out infinite; }
-  .orb-3 { width:200px; height:200px; background:rgba(122,95,160,.05); top:40%; left:60%; animation: drift3 16s ease-in-out infinite; }
-  @keyframes drift1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,30px)} }
-  @keyframes drift2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,-40px)} }
-  @keyframes drift3 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-20px,30px)} }
-
-  /* ══════════════════════════════════════
-     SCREENS
-  ══════════════════════════════════════ */
+  /* ── SCREENS ── */
   .screen {
     position: fixed; inset: 0; z-index: 10;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 40px 24px;
+    padding: 40px 24px; overflow-y: auto;
     opacity: 0; pointer-events: none;
-    transition: opacity .6s ease, transform .6s ease;
-    transform: translateY(16px);
-    overflow-y: auto;
+    transition: opacity .55s ease, transform .55s ease;
+    transform: translateY(14px);
   }
-  .screen.active {
-    opacity: 1; pointer-events: all; transform: translateY(0);
-  }
-  .screen.exit {
-    opacity: 0; transform: translateY(-16px); pointer-events: none;
-  }
+  .screen.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+  .screen.exit   { opacity: 0; transform: translateY(-14px); pointer-events: none; }
 
-  /* ══════════════════════════════════════
-     SHARED COMPONENTS
-  ══════════════════════════════════════ */
-  .logo-mark {
-    font-family: 'Cinzel', serif;
-    font-size: .65rem;
-    letter-spacing: .35em;
-    color: var(--gold);
-    opacity: .7;
-    margin-bottom: 48px;
-    text-transform: uppercase;
-  }
-
-  .eyebrow {
-    font-family: 'Cinzel', serif;
-    font-size: .6rem;
-    letter-spacing: .3em;
-    color: var(--mist);
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-
-  .display-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(2.6rem, 8vw, 4.8rem);
-    font-weight: 500;
-    letter-spacing: .04em;
-    color: var(--parchment);
-    line-height: 1.1;
-    text-align: center;
-    margin-bottom: 28px;
-  }
-  .display-title em {
-    font-style: italic;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1em;
-    color: var(--gold-light);
-    font-weight: 300;
-  }
-
-  .body-text {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    font-weight: 300;
-    font-style: italic;
-    line-height: 1.85;
-    color: var(--mist);
-    text-align: center;
-    max-width: 480px;
-    margin-bottom: 48px;
-  }
-
-  .rule {
-    width: 1px; height: 48px;
-    background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-    margin: 0 auto 32px;
-  }
-
+  /* ── SHARED ── */
+  .logo-mark { font-family:'Cinzel',serif; font-size:.62rem; letter-spacing:.35em; color:var(--gold); opacity:.65; margin-bottom:44px; }
+  .eyebrow   { font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.28em; color:var(--mist); margin-bottom:18px; }
   .btn-cta {
-    font-family: 'Cinzel', serif;
-    font-size: .72rem;
-    letter-spacing: .22em;
-    color: var(--ink);
-    background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 100%);
-    border: none;
-    border-radius: 60px;
-    padding: 16px 48px;
-    cursor: pointer;
-    transition: transform .25s, box-shadow .25s;
-    box-shadow: 0 4px 24px rgba(201,162,82,.3);
+    font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.22em;
+    color:var(--ink); background:linear-gradient(135deg,var(--gold),var(--gold-lt));
+    border:none; border-radius:60px; padding:15px 46px; cursor:pointer;
+    transition:transform .25s, box-shadow .25s;
+    box-shadow:0 4px 22px rgba(201,162,82,.28);
   }
-  .btn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(201,162,82,.45); }
-  .btn-cta:active { transform: translateY(0); }
+  .btn-cta:hover { transform:translateY(-2px); box-shadow:0 8px 34px rgba(201,162,82,.42); }
+  .step-label { font-family:'Cinzel',serif; font-size:.53rem; letter-spacing:.2em; color:var(--mist); opacity:.5; margin-top:26px; }
 
-  .step-label {
-    font-family: 'Cinzel', serif;
-    font-size: .55rem;
-    letter-spacing: .25em;
-    color: var(--mist);
-    opacity: .6;
-    margin-top: 28px;
-  }
-
-  /* ══════════════════════════════════════
-     SCREEN 1 · LANDING
-  ══════════════════════════════════════ */
-  #s-landing {
-    gap: 0;
-    text-align: center;
-  }
-
-  .landing-sigil {
-    width: 64px; height: 64px;
-    margin: 0 auto 36px;
-    position: relative;
-    animation: sigil-pulse 4s ease-in-out infinite;
-  }
-  .landing-sigil svg { width: 100%; height: 100%; }
-  @keyframes sigil-pulse {
-    0%,100% { opacity: .7; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.05); }
-  }
-
-  .flow-steps {
-    display: flex; gap: 0; align-items: center;
-    margin: 40px 0 52px;
-    opacity: .75;
-  }
-  .flow-step {
-    font-family: 'Cinzel', serif;
-    font-size: .58rem;
-    letter-spacing: .15em;
-    color: var(--mist);
-    text-transform: uppercase;
-    white-space: nowrap;
-  }
-  .flow-arrow {
-    width: 32px; height: 1px;
-    background: linear-gradient(90deg, var(--mist-dim), var(--mist-dim));
-    margin: 0 10px;
-    flex-shrink: 0;
-  }
-
-  /* ══════════════════════════════════════
-     SCREEN 2 · INTENTION
-  ══════════════════════════════════════ */
-  #s-intention {
-    gap: 0;
-  }
-
-  .section-title {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.3rem, 4vw, 2rem);
-    font-weight: 400;
-    letter-spacing: .08em;
-    color: var(--parchment);
-    text-align: center;
-    margin-bottom: 10px;
-  }
-  .section-sub {
-    font-size: 1rem;
-    font-style: italic;
-    font-weight: 300;
-    color: var(--mist);
-    text-align: center;
-    margin-bottom: 40px;
-    line-height: 1.6;
-  }
-
-  /* focus pills — 4 only */
-  .focus-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    width: 100%;
-    max-width: 360px;
+  /* ── MOON BANNER ── */
+  .moon-banner {
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
     margin-bottom: 36px;
-  }
-  .focus-pill {
-    padding: 16px 20px;
-    border: 1px solid rgba(201,162,82,.2);
-    border-radius: 12px;
-    background: rgba(255,255,255,.02);
-    cursor: pointer;
-    transition: all .25s;
-    text-align: center;
-  }
-  .focus-pill:hover {
-    border-color: rgba(201,162,82,.5);
-    background: rgba(201,162,82,.06);
-  }
-  .focus-pill.selected {
-    border-color: var(--gold);
-    background: rgba(201,162,82,.1);
-    box-shadow: 0 0 20px rgba(201,162,82,.15);
-  }
-  .focus-pill-label {
-    font-family: 'Cinzel', serif;
-    font-size: .72rem;
-    letter-spacing: .15em;
-    color: var(--parchment);
-    display: block;
-    margin-bottom: 4px;
-  }
-  .focus-pill-sub {
-    font-size: .85rem;
-    font-style: italic;
-    color: var(--mist);
-    display: block;
-  }
-
-  /* optional text input */
-  .optional-divider {
-    display: flex; align-items: center; gap: 12px;
-    width: 100%; max-width: 360px;
-    margin-bottom: 16px;
-  }
-  .optional-divider span {
-    font-size: .75rem;
-    font-style: italic;
-    color: var(--mist);
-    opacity: .5;
-    white-space: nowrap;
-  }
-  .optional-divider::before, .optional-divider::after {
-    content: ''; flex: 1; height: 1px;
-    background: rgba(255,255,255,.06);
-  }
-
-  .intention-input {
-    width: 100%; max-width: 360px;
-    background: rgba(255,255,255,.03);
-    border: 1px solid rgba(255,255,255,.07);
-    border-radius: 10px;
-    color: var(--parchment);
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.05rem;
-    font-style: italic;
-    padding: 14px 18px;
-    resize: none;
-    outline: none;
-    transition: border-color .25s;
-    margin-bottom: 32px;
-    line-height: 1.6;
-  }
-  .intention-input::placeholder { color: rgba(148,136,168,.3); }
-  .intention-input:focus { border-color: rgba(201,162,82,.3); }
-
-  /* ══════════════════════════════════════
-     SCREEN 3 · CARD SELECTION
-  ══════════════════════════════════════ */
-  #s-cards {
-    gap: 0;
-  }
-
-  .cards-prompt {
-    font-size: clamp(1rem, 3vw, 1.25rem);
-    font-style: italic;
-    font-weight: 300;
-    color: var(--mist);
-    text-align: center;
-    line-height: 1.7;
-    margin-bottom: 52px;
-    max-width: 340px;
-  }
-
-  .card-spread {
-    display: flex; gap: 24px; justify-content: center; align-items: flex-end;
-    perspective: 900px;
-    margin-bottom: 44px;
-  }
-
-  .card-slot {
-    display: flex; flex-direction: column; align-items: center; gap: 12px;
-    cursor: pointer;
-  }
-  .card-slot:nth-child(1) .card-face { transform: rotate(-6deg) translateY(8px); }
-  .card-slot:nth-child(3) .card-face { transform: rotate(6deg) translateY(8px); }
-  .card-slot:hover .card-face,
-  .card-slot.chosen .card-face { transform: rotate(0) translateY(-20px) scale(1.06) !important; }
-
-  .card-face {
-    width: 88px; height: 148px;
-    border-radius: 10px;
-    background: linear-gradient(160deg, #1e1830 0%, #110e1a 100%);
-    border: 1px solid rgba(201,162,82,.35);
-    position: relative;
-    overflow: hidden;
-    transition: transform .5s cubic-bezier(.23,1,.32,1), box-shadow .4s;
-    box-shadow: 0 8px 30px rgba(0,0,0,.6);
-  }
-  .card-slot:hover .card-face,
-  .card-slot.chosen .card-face {
-    box-shadow: 0 20px 50px rgba(201,162,82,.35);
-    border-color: rgba(201,162,82,.7);
-  }
-
-  /* intricate card back pattern */
-  .card-face::before {
-    content: '';
-    position: absolute; inset: 7px;
-    border: 1px solid rgba(201,162,82,.18);
-    border-radius: 5px;
-  }
-  .card-face::after {
-    content: '✦';
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.4rem;
-    color: rgba(201,162,82,.25);
-  }
-
-  /* shimmer on hover */
-  .card-slot:hover .card-face .card-shimmer,
-  .card-slot.chosen .card-face .card-shimmer {
-    opacity: 1;
-  }
-  .card-shimmer {
-    position: absolute; inset: 0; opacity: 0;
-    background: linear-gradient(135deg, transparent 30%, rgba(201,162,82,.08) 50%, transparent 70%);
-    transition: opacity .4s;
-  }
-
-  .card-num {
-    font-family: 'Cinzel', serif;
-    font-size: .55rem;
-    letter-spacing: .2em;
-    color: var(--mist);
-    opacity: .5;
-    transition: opacity .3s;
-  }
-  .card-slot:hover .card-num, .card-slot.chosen .card-num {
-    opacity: .9; color: var(--gold);
-  }
-
-  /* ══════════════════════════════════════
-     SCREEN 4 · REVEAL
-  ══════════════════════════════════════ */
-  #s-reveal {
-    justify-content: flex-start;
-    padding-top: 48px;
-    overflow-y: auto;
-  }
-
-  .reveal-card-wrap {
-    margin-bottom: 28px;
-    animation: rise .9s cubic-bezier(.23,1,.32,1) both;
-  }
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(30px) scale(.93); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .reveal-card-img {
-    width: 160px; height: 267px;
-    border-radius: 12px;
-    object-fit: cover;
-    display: block;
-    box-shadow: 0 0 80px rgba(201,162,82,.25), 0 24px 60px rgba(0,0,0,.8);
-    border: 1px solid rgba(201,162,82,.4);
-    background: var(--deep);
-  }
-
-  .reveal-card-name {
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.1rem, 3.5vw, 1.6rem);
-    letter-spacing: .1em;
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 6px;
-    animation: rise .9s .15s cubic-bezier(.23,1,.32,1) both;
-  }
-
-  .reveal-archetype {
-    font-size: .85rem;
-    font-style: italic;
-    color: var(--mist);
-    letter-spacing: .08em;
-    text-align: center;
-    margin-bottom: 24px;
-    animation: rise .9s .25s cubic-bezier(.23,1,.32,1) both;
-  }
-
-  .reading-box {
-    width: 100%; max-width: 480px;
-    background: rgba(255,255,255,.025);
-    border: 1px solid rgba(201,162,82,.12);
+    padding: 14px 24px;
+    border: 1px solid var(--gold-dim);
     border-radius: 14px;
-    padding: 24px 28px;
-    margin-bottom: 24px;
-    position: relative;
-    animation: rise .9s .4s cubic-bezier(.23,1,.32,1) both;
+    background: rgba(201,162,82,.04);
+    max-width: 340px; width: 100%;
+    animation: fadeUp .7s .1s ease both;
   }
-  .reading-box::before {
-    content: '✦';
-    position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
-    background: var(--ink); padding: 0 10px;
-    color: var(--gold); font-size: .7rem;
-  }
-  .reading-text {
-    font-size: clamp(.95rem, 2.5vw, 1.1rem);
-    font-style: italic;
-    font-weight: 300;
-    line-height: 1.9;
-    color: var(--parchment);
-  }
-  .reading-loading {
-    display: flex; align-items: center; gap: 10px;
-    color: var(--mist); font-style: italic; font-size: 1rem;
-    justify-content: center;
-  }
-  .dot-pulse span {
-    display: inline-block; width: 5px; height: 5px;
-    border-radius: 50%; background: var(--gold);
-    animation: dp 1.2s ease-in-out infinite; margin: 0 2px;
-  }
-  .dot-pulse span:nth-child(2) { animation-delay: .2s; }
-  .dot-pulse span:nth-child(3) { animation-delay: .4s; }
-  @keyframes dp { 0%,80%,100%{opacity:.3;transform:scale(.8)} 40%{opacity:1;transform:scale(1)} }
-
-  /* mood section */
-  .mood-section {
-    width: 100%; max-width: 480px;
-    padding-top: 24px;
-    animation: rise .9s .55s cubic-bezier(.23,1,.32,1) both;
-    display: flex; justify-content: center;
+  .moon-top { display: flex; align-items: center; gap: 10px; }
+  .moon-emoji { font-size: 1.4rem; }
+  .moon-phase { font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.18em; color:var(--gold); }
+  .moon-date  { font-size:.8rem; font-style:italic; color:var(--mist); }
+  .moon-energy { font-size:.92rem; font-style:italic; color:var(--mist); text-align:center; line-height:1.5; opacity:.85; }
+  .season-tag {
+    font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.15em;
+    color:var(--mist); opacity:.55; margin-top:4px;
   }
 
+  /* ── SCREEN 1 LANDING ── */
+  .display-title {
+    font-family:'Cinzel',serif; font-size:clamp(2.4rem,8vw,4.4rem); font-weight:500;
+    letter-spacing:.04em; text-align:center; line-height:1.1; margin-bottom:24px;
+  }
+  .display-title em { font-style:italic; font-family:'Cormorant Garamond',serif; font-size:1.1em; color:var(--gold-lt); font-weight:300; }
+  .body-text { font-size:clamp(.95rem,2.5vw,1.15rem); font-weight:300; font-style:italic; line-height:1.85; color:var(--mist); text-align:center; max-width:460px; margin-bottom:40px; }
+  .flow-steps { display:flex; gap:0; align-items:center; margin-bottom:44px; opacity:.7; }
+  .flow-step { font-family:'Cinzel',serif; font-size:.56rem; letter-spacing:.15em; color:var(--mist); white-space:nowrap; }
+  .flow-arrow { width:28px; height:1px; background:var(--mist-dim); margin:0 10px; }
+  .landing-sigil { width:56px; height:56px; margin:0 auto 32px; animation:pulse 4s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:.65;transform:scale(1)} 50%{opacity:1;transform:scale(1.06)} }
+
+  /* ── SCREEN 2 INTENTION ── */
+  .section-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,1.8rem); letter-spacing:.08em; text-align:center; margin-bottom:8px; }
+  .section-sub { font-size:1rem; font-style:italic; color:var(--mist); text-align:center; margin-bottom:32px; line-height:1.6; }
+  .focus-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:340px; margin-bottom:28px; }
+  .focus-pill { padding:14px 16px; border:1px solid rgba(201,162,82,.2); border-radius:12px; background:rgba(255,255,255,.02); cursor:pointer; transition:all .25s; text-align:center; }
+  .focus-pill:hover { border-color:rgba(201,162,82,.5); background:rgba(201,162,82,.06); }
+  .focus-pill.selected { border-color:var(--gold); background:rgba(201,162,82,.1); box-shadow:0 0 18px rgba(201,162,82,.14); }
+  .focus-pill-label { font-family:'Cinzel',serif; font-size:.68rem; letter-spacing:.14em; color:var(--parchment); display:block; margin-bottom:3px; }
+  .focus-pill-sub { font-size:.82rem; font-style:italic; color:var(--mist); display:block; }
+  .optional-divider { display:flex; align-items:center; gap:10px; width:100%; max-width:340px; margin-bottom:14px; }
+  .optional-divider span { font-size:.75rem; font-style:italic; color:var(--mist); opacity:.45; white-space:nowrap; }
+  .optional-divider::before, .optional-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.05); }
+  .intention-input { width:100%; max-width:340px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:10px; color:var(--parchment); font-family:'Cormorant Garamond',serif; font-size:1rem; font-style:italic; padding:13px 16px; resize:none; outline:none; transition:border-color .25s; margin-bottom:28px; line-height:1.6; }
+  .intention-input::placeholder { color:rgba(148,136,168,.28); }
+  .intention-input:focus { border-color:rgba(201,162,82,.28); }
+
+  /* ── SCREEN 3 SHUFFLE ── */
+  #s-shuffle { background:transparent; justify-content:center; }
+  .shuffle-hint { font-family:'Cinzel',serif; font-size:.55rem; letter-spacing:.2em; color:var(--mist); opacity:.4; margin-top:36px; cursor:pointer; transition:opacity .2s; }
+  .shuffle-hint:hover { opacity:.7; }
+
+  .shuffle-stage {
+    position: relative; width: 240px; height: 180px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .sh-card {
+    position: absolute;
+    width: 72px; height: 120px;
+    border-radius: 8px;
+    background: linear-gradient(160deg, #1e1830 0%, #0f0d1a 100%);
+    border: 1px solid rgba(201,162,82,.35);
+    box-shadow: 0 6px 24px rgba(0,0,0,.6);
+    transform-origin: center bottom;
+    will-change: transform, opacity;
+  }
+  .sh-card::after {
+    content: '✦'; position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; color:rgba(201,162,82,.2);
+  }
+
+  /* ── SCREEN 4 CARDS ── */
+  .cards-prompt { font-size:clamp(.95rem,3vw,1.2rem); font-style:italic; font-weight:300; color:var(--mist); text-align:center; line-height:1.7; margin-bottom:48px; max-width:320px; }
+  .card-spread { display:flex; gap:22px; justify-content:center; align-items:flex-end; perspective:900px; margin-bottom:40px; }
+  .card-slot { display:flex; flex-direction:column; align-items:center; gap:10px; cursor:pointer; }
+  .card-slot:nth-child(1) .card-face { transform:rotate(-5deg) translateY(6px); }
+  .card-slot:nth-child(3) .card-face { transform:rotate(5deg) translateY(6px); }
+  .card-slot:hover .card-face, .card-slot.chosen .card-face { transform:rotate(0) translateY(-18px) scale(1.06) !important; box-shadow:0 18px 46px rgba(201,162,82,.32); border-color:rgba(201,162,82,.65); }
+  .card-face { width:84px; height:140px; border-radius:10px; background:linear-gradient(160deg,#1e1830 0%,#110e1a 100%); border:1px solid rgba(201,162,82,.32); position:relative; overflow:hidden; transition:transform .5s cubic-bezier(.23,1,.32,1), box-shadow .4s, border-color .3s; box-shadow:0 8px 28px rgba(0,0,0,.6); }
+  .card-face::before { content:''; position:absolute; inset:6px; border:1px solid rgba(201,162,82,.15); border-radius:5px; }
+  .card-face::after { content:'✦'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:1.3rem; color:rgba(201,162,82,.22); }
+  .card-num { font-family:'Cinzel',serif; font-size:.52rem; letter-spacing:.18em; color:var(--mist); opacity:.45; transition:opacity .3s, color .3s; }
+  .card-slot:hover .card-num, .card-slot.chosen .card-num { opacity:.85; color:var(--gold); }
+
+  /* ── SCREEN 5 REVEAL ── */
+  #s-reveal { justify-content:flex-start; padding-top:44px; }
+  .reveal-img { width:150px; height:250px; border-radius:12px; object-fit:cover; display:block; box-shadow:0 0 70px rgba(201,162,82,.22), 0 22px 55px rgba(0,0,0,.8); border:1px solid rgba(201,162,82,.38); background:var(--deep); margin-bottom:24px; animation:rise .9s cubic-bezier(.23,1,.32,1) both; }
+  .reveal-name { font-family:'Cinzel',serif; font-size:clamp(1rem,3.5vw,1.5rem); letter-spacing:.1em; color:var(--gold); text-align:center; margin-bottom:5px; animation:rise .9s .15s cubic-bezier(.23,1,.32,1) both; }
+  .reveal-arch { font-size:.83rem; font-style:italic; color:var(--mist); text-align:center; margin-bottom:20px; animation:rise .9s .25s cubic-bezier(.23,1,.32,1) both; }
+
+  /* moon-reading connector */
+  .moon-connector { width:100%; max-width:460px; background:rgba(201,162,82,.04); border:1px solid var(--gold-dim); border-radius:10px; padding:14px 18px; margin-bottom:16px; display:flex; gap:10px; align-items:flex-start; animation:rise .9s .3s cubic-bezier(.23,1,.32,1) both; }
+  .moon-connector-emoji { font-size:1.1rem; flex-shrink:0; margin-top:2px; }
+  .moon-connector-text { font-size:.88rem; font-style:italic; color:var(--mist); line-height:1.6; }
+
+  .reading-box { width:100%; max-width:460px; background:rgba(255,255,255,.025); border:1px solid rgba(201,162,82,.11); border-radius:14px; padding:22px 26px; margin-bottom:20px; position:relative; animation:rise .9s .4s cubic-bezier(.23,1,.32,1) both; }
+  .reading-box::before { content:'✦'; position:absolute; top:-9px; left:50%; transform:translateX(-50%); background:var(--ink); padding:0 10px; color:var(--gold); font-size:.68rem; }
+  .reading-text { font-size:clamp(.93rem,2.5vw,1.08rem); font-style:italic; font-weight:300; line-height:1.9; color:var(--parchment); }
+  .reading-loading { display:flex; align-items:center; gap:10px; color:var(--mist); font-style:italic; font-size:.97rem; justify-content:center; }
+  .dot-pulse span { display:inline-block; width:5px; height:5px; border-radius:50%; background:var(--gold); animation:dp 1.2s ease-in-out infinite; margin:0 2px; }
+  .dot-pulse span:nth-child(2){animation-delay:.2s} .dot-pulse span:nth-child(3){animation-delay:.4s}
+  @keyframes dp{0%,80%,100%{opacity:.3;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+
+  /* action row */
+  .action-row { display:flex; flex-direction:column; gap:12px; align-items:center; animation:rise .9s .55s cubic-bezier(.23,1,.32,1) both; margin-bottom:40px; }
   .btn-again {
-    font-family: 'Cinzel', serif;
-    font-size: .68rem;
-    letter-spacing: .18em;
-    color: var(--mist);
-    background: transparent;
-    border: 1px solid rgba(255,255,255,.1);
-    border-radius: 40px;
-    padding: 12px 32px;
-    cursor: pointer;
-    transition: all .2s;
-    display: block; margin: 0 auto;
+    font-family:'Cinzel',serif; font-size:.72rem; letter-spacing:.22em;
+    color:var(--ink); background:linear-gradient(135deg,var(--gold),var(--gold-lt));
+    border:none; border-radius:60px; padding:15px 46px; cursor:pointer;
+    transition:transform .25s, box-shadow .25s;
+    box-shadow:0 4px 22px rgba(201,162,82,.28);
   }
-  .btn-again:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-again:hover { transform:translateY(-2px); box-shadow:0 8px 34px rgba(201,162,82,.42); }
+  .btn-share {
+    font-family:'Cinzel',serif; font-size:.58rem; letter-spacing:.16em;
+    color:var(--mist); background:transparent; border:none;
+    cursor:pointer; transition:color .2s; padding:6px 12px;
+    display:flex; align-items:center; gap:6px; opacity:.6;
+  }
+  .btn-share:hover { color:var(--gold); opacity:1; }
 
-  /* ══════════════════════════════════════
-     PROGRESS DOTS
-  ══════════════════════════════════════ */
-  #progress {
-    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
-    display: flex; gap: 8px; z-index: 20;
-    transition: opacity .4s;
+  /* ── CARD FLIP OVERLAY ── */
+  #flip-overlay {
+    position: fixed; inset: 0; z-index: 50;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: var(--ink);
+    opacity: 0; pointer-events: none;
+    transition: opacity .4s ease;
   }
-  .pdot {
-    width: 5px; height: 5px; border-radius: 50%;
-    background: rgba(255,255,255,.15);
-    transition: background .3s, transform .3s;
+  #flip-overlay.active { opacity: 1; pointer-events: all; }
+
+  .flip-card-wrap {
+    width: 160px; height: 267px;
+    perspective: 800px;
   }
-  .pdot.active { background: var(--gold); transform: scale(1.3); }
+  .flip-card-inner {
+    width: 100%; height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateY(0deg);
+    transition: transform 1.4s cubic-bezier(.4,0,.2,1);
+  }
+  .flip-card-inner.flipped { transform: rotateY(180deg); }
+
+  .flip-face {
+    position: absolute; inset: 0;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .flip-back {
+    background: linear-gradient(160deg, #1e1830 0%, #0f0d1a 100%);
+    border: 1px solid rgba(201,162,82,.4);
+    box-shadow: 0 0 60px rgba(201,162,82,.15), 0 20px 50px rgba(0,0,0,.8);
+    display: flex; align-items: center; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+  .flip-back::before {
+    content: ''; position: absolute; inset: 10px;
+    border: 1px solid rgba(201,162,82,.18); border-radius: 8px;
+  }
+  .flip-back::after {
+    content: '✦'; font-size: 2rem; color: rgba(201,162,82,.25);
+  }
+  /* shimmer sweep across back before flip */
+  .flip-shimmer {
+    position: absolute; inset: 0; border-radius: 14px;
+    background: linear-gradient(105deg, transparent 30%, rgba(201,162,82,.18) 50%, transparent 70%);
+    background-size: 200% 100%;
+    animation: shimmer-sweep 0s linear forwards paused;
+  }
+  .flip-shimmer.go { animation: shimmer-sweep .8s linear forwards; }
+  @keyframes shimmer-sweep { from{background-position:200% 0} to{background-position:-200% 0} }
+
+  .flip-front {
+    transform: rotateY(180deg);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(201,162,82,.45);
+    box-shadow: 0 0 80px rgba(201,162,82,.3), 0 24px 60px rgba(0,0,0,.9);
+  }
+  .flip-front img {
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    border-radius: 14px;
+  }
+
+  /* particle burst */
+  .flip-particles { position: absolute; inset: 0; pointer-events: none; }
+  .flip-particle {
+    position: absolute; width: 3px; height: 3px; border-radius: 50%;
+    background: var(--gold); opacity: 0;
+  }
+
+  .flip-card-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; letter-spacing: .12em; color: var(--gold);
+    margin-top: 28px; text-align: center;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity .6s .8s ease, transform .6s .8s ease;
+  }
+  .flip-card-name.show { opacity: 1; transform: translateY(0); }
+
+  /* ── SHARE CARD (hidden, used for image export) ── */
+  #share-card {
+    position: fixed; left: -9999px; top: -9999px;
+    width: 540px; height: 960px;
+    background: linear-gradient(160deg, #1c1530 0%, #0b0910 60%, #13101c 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 60px 50px; gap: 0; z-index: -1;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  #share-card .sc-logo { font-family:'Cinzel',serif; font-size:1rem; letter-spacing:.3em; color:rgba(201,162,82,.6); margin-bottom:40px; }
+  #share-card .sc-moon { font-size:1.8rem; margin-bottom:8px; }
+  #share-card .sc-moon-name { font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.2em; color:rgba(201,162,82,.7); margin-bottom:36px; }
+  #share-card .sc-card-img { width:160px; height:267px; border-radius:12px; object-fit:cover; border:1px solid rgba(201,162,82,.4); box-shadow:0 0 60px rgba(201,162,82,.2); margin-bottom:28px; }
+  #share-card .sc-card-name { font-family:'Cinzel',serif; font-size:1.4rem; letter-spacing:.1em; color:rgba(201,162,82,.9); margin-bottom:6px; }
+  #share-card .sc-archetype { font-size:.95rem; font-style:italic; color:rgba(148,136,168,.7); margin-bottom:28px; letter-spacing:.06em; }
+  #share-card .sc-reading { font-size:1.05rem; font-style:italic; font-weight:300; line-height:1.8; color:rgba(242,234,216,.8); text-align:center; max-width:380px; margin-bottom:36px; }
+  #share-card .sc-url { font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.22em; color:rgba(148,136,168,.4); margin-top:auto; }
+
+  /* ── SHARE TOAST ── */
+  #share-toast {
+    position: fixed; bottom: 48px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: rgba(201,162,82,.12); border: 1px solid var(--gold-dim);
+    border-radius: 30px; padding: 10px 22px;
+    font-family:'Cinzel',serif; font-size:.6rem; letter-spacing:.15em; color:var(--gold);
+    opacity: 0; pointer-events: none; z-index: 100;
+    transition: opacity .3s, transform .3s;
+  }
+  #share-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* ── PROGRESS DOTS ── */
+  #progress { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); display:flex; gap:7px; z-index:20; transition:opacity .4s; }
+  .pdot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,.12); transition:background .3s, transform .3s; }
+  .pdot.active { background:var(--gold); transform:scale(1.3); }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes rise   { from{opacity:0;transform:translateY(28px) scale(.94)} to{opacity:1;transform:translateY(0) scale(1)} }
+  @keyframes particle-burst {
+    0%   { opacity:1; transform:translate(0,0) scale(1); }
+    100% { opacity:0; transform:translate(var(--tx),var(--ty)) scale(0); }
+  }
 </style>
 </head>
 <body>
@@ -531,36 +323,28 @@
 <div id="grain"></div>
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
 
-<!-- ══ SCREEN 1 · LANDING ══ -->
+<!-- ══ S1 LANDING ══ -->
 <div class="screen active" id="s-landing">
   <div class="landing-sigil">
-    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <circle cx="32" cy="32" r="30" stroke="rgba(201,162,82,.3)" stroke-width=".8"/>
-      <circle cx="32" cy="32" r="22" stroke="rgba(201,162,82,.2)" stroke-width=".6"/>
-      <line x1="32" y1="2" x2="32" y2="62" stroke="rgba(201,162,82,.15)" stroke-width=".6"/>
-      <line x1="2" y1="32" x2="62" y2="32" stroke="rgba(201,162,82,.15)" stroke-width=".6"/>
-      <line x1="9" y1="9" x2="55" y2="55" stroke="rgba(201,162,82,.1)" stroke-width=".6"/>
-      <line x1="55" y1="9" x2="9" y2="55" stroke="rgba(201,162,82,.1)" stroke-width=".6"/>
-      <circle cx="32" cy="32" r="4" fill="rgba(201,162,82,.5)"/>
-      <circle cx="32" cy="10" r="2" fill="rgba(201,162,82,.4)"/>
-      <circle cx="32" cy="54" r="2" fill="rgba(201,162,82,.4)"/>
-      <circle cx="10" cy="32" r="2" fill="rgba(201,162,82,.4)"/>
-      <circle cx="54" cy="32" r="2" fill="rgba(201,162,82,.4)"/>
+    <svg viewBox="0 0 64 64" fill="none">
+      <circle cx="32" cy="32" r="30" stroke="rgba(201,162,82,.28)" stroke-width=".8"/>
+      <circle cx="32" cy="32" r="20" stroke="rgba(201,162,82,.18)" stroke-width=".6"/>
+      <line x1="32" y1="2" x2="32" y2="62" stroke="rgba(201,162,82,.12)" stroke-width=".6"/>
+      <line x1="2" y1="32" x2="62" y2="32" stroke="rgba(201,162,82,.12)" stroke-width=".6"/>
+      <line x1="10" y1="10" x2="54" y2="54" stroke="rgba(201,162,82,.08)" stroke-width=".6"/>
+      <line x1="54" y1="10" x2="10" y2="54" stroke="rgba(201,162,82,.08)" stroke-width=".6"/>
+      <circle cx="32" cy="32" r="3.5" fill="rgba(201,162,82,.5)"/>
+      <circle cx="32" cy="11"  r="1.8" fill="rgba(201,162,82,.38)"/>
+      <circle cx="32" cy="53"  r="1.8" fill="rgba(201,162,82,.38)"/>
+      <circle cx="11" cy="32"  r="1.8" fill="rgba(201,162,82,.38)"/>
+      <circle cx="53" cy="32"  r="1.8" fill="rgba(201,162,82,.38)"/>
     </svg>
   </div>
 
   <div class="eyebrow">A Guided Reading Experience</div>
-
   <div class="display-title">Veil<em>Reads</em></div>
-
-  <div class="body-text">
-    A daily practice of reflection through tarot.<br>
-    Set an intention, draw a card, receive a reading<br>
-    crafted to meet you where you are.
-  </div>
-
+  <div class="body-text">A daily practice of reflection through tarot.<br>Set an intention, draw a card, receive a reading<br>crafted to meet you where you are.</div>
   <div class="flow-steps">
     <span class="flow-step">Intention</span>
     <div class="flow-arrow"></div>
@@ -568,238 +352,603 @@
     <div class="flow-arrow"></div>
     <span class="flow-step">Interpret</span>
   </div>
-
-  <button class="btn-cta" onclick="goTo('s-intention', 1)">BEGIN YOUR READING</button>
-
+  <button class="btn-cta" onclick="goTo('s-intention',1)">BEGIN YOUR READING</button>
   <div class="step-label">Step 1 of 3</div>
 </div>
 
-<!-- ══ SCREEN 2 · INTENTION ══ -->
+<!-- ══ S2 INTENTION ══ -->
 <div class="screen" id="s-intention">
   <div class="logo-mark">Veil Reads</div>
-
   <div class="section-title">What brings you here today?</div>
   <div class="section-sub">Choose a focus, or simply continue.<br>There is no wrong way to begin.</div>
-
   <div class="focus-grid">
-    <div class="focus-pill" onclick="selectFocus(this, 'Love')">
-      <span class="focus-pill-label">Love</span>
-      <span class="focus-pill-sub">heart & connection</span>
-    </div>
-    <div class="focus-pill" onclick="selectFocus(this, 'Clarity')">
-      <span class="focus-pill-label">Clarity</span>
-      <span class="focus-pill-sub">mind & direction</span>
-    </div>
-    <div class="focus-pill" onclick="selectFocus(this, 'Purpose')">
-      <span class="focus-pill-label">Purpose</span>
-      <span class="focus-pill-sub">path & meaning</span>
-    </div>
-    <div class="focus-pill" onclick="selectFocus(this, 'Change')">
-      <span class="focus-pill-label">Change</span>
-      <span class="focus-pill-sub">growth & transition</span>
-    </div>
+    <div class="focus-pill" onclick="selectFocus(this,'Love')"><span class="focus-pill-label">Love</span><span class="focus-pill-sub">heart & connection</span></div>
+    <div class="focus-pill" onclick="selectFocus(this,'Clarity')"><span class="focus-pill-label">Clarity</span><span class="focus-pill-sub">mind & direction</span></div>
+    <div class="focus-pill" onclick="selectFocus(this,'Purpose')"><span class="focus-pill-label">Purpose</span><span class="focus-pill-sub">path & meaning</span></div>
+    <div class="focus-pill" onclick="selectFocus(this,'Change')"><span class="focus-pill-label">Change</span><span class="focus-pill-sub">growth & transition</span></div>
   </div>
-
-  <div class="optional-divider">
-    <span>or add a personal note</span>
-  </div>
-
-  <textarea class="intention-input" id="intention-text" rows="2"
-    placeholder="What's on your mind right now? (optional)"></textarea>
-
-  <button class="btn-cta" onclick="goTo('s-cards', 2)">CONTINUE</button>
+  <div class="optional-divider"><span>or add a personal note</span></div>
+  <textarea class="intention-input" id="intention-text" rows="2" placeholder="What's on your mind right now? (optional)"></textarea>
+  <button class="btn-cta" onclick="startShuffle()">CONTINUE</button>
   <div class="step-label">Step 2 of 3</div>
 </div>
 
-<!-- ══ SCREEN 3 · CARD SELECTION ══ -->
+<!-- ══ S3 SHUFFLE ══ -->
+<div class="screen" id="s-shuffle">
+  <div class="shuffle-stage" id="shuffle-stage">
+    <div class="sh-card" id="shc0"></div>
+    <div class="sh-card" id="shc1"></div>
+    <div class="sh-card" id="shc2"></div>
+    <div class="sh-card" id="shc3"></div>
+    <div class="sh-card" id="shc4"></div>
+    <div class="sh-card" id="shc5"></div>
+  </div>
+  <div class="shuffle-hint" onclick="skipShuffle()">TAP TO SKIP</div>
+</div>
+
+<!-- ══ S4 CARD SELECTION ══ -->
 <div class="screen" id="s-cards">
   <div class="logo-mark">Veil Reads</div>
-
-  <div class="cards-prompt">
-    Three cards have been drawn for you.<br>
-    One holds your reading — trust your instinct.
-  </div>
-
+  <div class="cards-prompt">Three cards have been drawn.<br>One holds your reading — trust your instinct.</div>
   <div class="card-spread">
-    <div class="card-slot" id="slot-0" onclick="chooseCard(0)">
-      <div class="card-face"><div class="card-shimmer"></div></div>
-      <span class="card-num">I</span>
-    </div>
-    <div class="card-slot" id="slot-1" onclick="chooseCard(1)">
-      <div class="card-face"><div class="card-shimmer"></div></div>
-      <span class="card-num">II</span>
-    </div>
-    <div class="card-slot" id="slot-2" onclick="chooseCard(2)">
-      <div class="card-face"><div class="card-shimmer"></div></div>
-      <span class="card-num">III</span>
-    </div>
+    <div class="card-slot" id="slot-0" onclick="chooseCard(0)"><div class="card-face"></div><span class="card-num">I</span></div>
+    <div class="card-slot" id="slot-1" onclick="chooseCard(1)"><div class="card-face"></div><span class="card-num">II</span></div>
+    <div class="card-slot" id="slot-2" onclick="chooseCard(2)"><div class="card-face"></div><span class="card-num">III</span></div>
   </div>
-
   <div class="step-label">Step 3 of 3 — choose a card</div>
 </div>
 
-<!-- ══ SCREEN 4 · REVEAL ══ -->
+<!-- ══ S5 REVEAL ══ -->
 <div class="screen" id="s-reveal">
-  <div class="logo-mark" style="margin-bottom:24px;">Veil Reads</div>
-
-  <div class="reveal-card-wrap">
-    <img class="reveal-card-img" id="reveal-img" src="" alt="">
-  </div>
-
-  <div class="reveal-card-name" id="reveal-name">The Moon</div>
-  <div class="reveal-archetype" id="reveal-archetype">Illusion · The Unconscious · Hidden Truths</div>
-
+  <div class="logo-mark" style="margin-bottom:20px">Veil Reads</div>
+  <img class="reveal-img" id="reveal-img" src="" alt="">
+  <div class="reveal-name" id="reveal-name">The Moon</div>
+  <div class="reveal-arch" id="reveal-arch">Illusion · The Unconscious · Hidden Truths</div>
+  <div class="moon-connector" id="moon-connector"></div>
   <div class="reading-box">
     <div id="reading-content" class="reading-loading">
       <span>The cards are speaking</span>
       <span class="dot-pulse"><span></span><span></span><span></span></span>
     </div>
   </div>
-
-  <div class="mood-section">
+  <div class="action-row">
     <button class="btn-again" onclick="restart()">DRAW AGAIN</button>
+    <button class="btn-share" onclick="shareReading()">↑ share this reading</button>
   </div>
 </div>
 
-<!-- Progress dots -->
+<!-- ══ FLIP OVERLAY ══ -->
+<div id="flip-overlay">
+  <div class="flip-particles" id="flip-particles"></div>
+  <div class="flip-card-wrap">
+    <div class="flip-card-inner" id="flip-inner">
+      <div class="flip-face flip-back">
+        <div class="flip-shimmer" id="flip-shimmer"></div>
+      </div>
+      <div class="flip-face flip-front">
+        <img id="flip-img" src="" alt="">
+      </div>
+    </div>
+  </div>
+  <div class="flip-card-name" id="flip-card-name"></div>
+</div>
+
+<!-- Hidden share card template -->
+<div id="share-card">
+  <div class="sc-logo">VEIL READS</div>
+  <div class="sc-moon" id="sc-moon-emoji"></div>
+  <div class="sc-moon-name" id="sc-moon-name"></div>
+  <img class="sc-card-img" id="sc-card-img" src="" alt="">
+  <div class="sc-card-name" id="sc-card-name"></div>
+  <div class="sc-archetype" id="sc-archetype"></div>
+  <div class="sc-reading" id="sc-reading-excerpt"></div>
+  <div class="sc-url">veilreads.com</div>
+</div>
+
+<div id="share-toast">Reading saved to your photos ✦</div>
+
 <div id="progress">
   <div class="pdot active" id="dot-0"></div>
   <div class="pdot" id="dot-1"></div>
   <div class="pdot" id="dot-2"></div>
   <div class="pdot" id="dot-3"></div>
+  <div class="pdot" id="dot-4"></div>
 </div>
 
 <script>
-// ── TAROT DATA (sample — full 78 in production) ──
-const BASE = "https://archive.org/download/rider-waite-tarot/";
-const CARDS = [
-  { name:"The Fool",           img:BASE+"major_arcana_fool.png",         archetype:"Beginnings · Innocence · Leap of Faith",      meaning:"A new journey begins. You are being called to step into the unknown with an open heart. Trust, spontaneity, and fearless optimism are your guides. The Fool reminds you that every great adventure starts before you feel ready." },
-  { name:"The Magician",       img:BASE+"major_arcana_magician.png",      archetype:"Will · Skill · Manifestation",                meaning:"You have everything you need. Your tools — intellect, emotion, intuition, and body — are aligned. This is a moment of focused willpower. What you direct your attention toward, you can bring into being." },
-  { name:"The High Priestess", img:BASE+"major_arcana_priestess.png",     archetype:"Intuition · Mystery · Inner Knowing",         meaning:"The answer you seek is already inside you. Be still. She guards the threshold between the conscious and unconscious — trust what you sense beneath the surface." },
-  { name:"The Empress",        img:BASE+"major_arcana_empress.png",       archetype:"Abundance · Nurturing · Creation",            meaning:"You are entering a season of fertile growth. Creativity, sensuality, and care are your natural state right now. Slow down, tend to what you love." },
-  { name:"The Emperor",        img:BASE+"major_arcana_emperor.png",       archetype:"Structure · Authority · Foundation",          meaning:"It is time to build something that lasts. Where do you need more discipline, more clarity, more decisive action? True authority begins with mastering yourself." },
-  { name:"The Lovers",         img:BASE+"major_arcana_lovers.png",        archetype:"Union · Choice · Alignment",                  meaning:"A significant choice stands before you — one that touches your deepest values. When head and heart agree, you move with integrity." },
-  { name:"The Chariot",        img:BASE+"major_arcana_chariot.png",       archetype:"Drive · Control · Victory",                   meaning:"You are capable of moving through obstacles with focused will. Hold opposing forces — confidence and doubt — and move forward anyway." },
-  { name:"Strength",           img:BASE+"major_arcana_strength.png",      archetype:"Courage · Compassion · Inner Power",         meaning:"True strength is not loud. It is the quiet courage to stay open, to face what frightens you with gentleness, and to lead from love rather than fear." },
-  { name:"The Hermit",         img:BASE+"major_arcana_hermit.png",        archetype:"Solitude · Wisdom · Inner Light",             meaning:"Step back from the noise. Wisdom comes through reflection, not reaction. A period of solitude is not isolation — it is necessary restoration." },
-  { name:"Wheel of Fortune",   img:BASE+"major_arcana_fortune.png",       archetype:"Cycles · Change · Fate",                      meaning:"Everything turns. What felt fixed is moving; what seemed lost may be returning. Your task is to stay centered as things shift." },
-  { name:"Justice",            img:BASE+"major_arcana_justice.png",       archetype:"Truth · Fairness · Cause & Effect",           meaning:"Every action has a consequence. Where have you been avoiding a difficult truth? Act from integrity, not convenience." },
-  { name:"The Hanged Man",     img:BASE+"major_arcana_hanged.png",        archetype:"Suspension · New Perspective · Surrender",    meaning:"You are being asked to pause. Surrender the need to force an outcome, and a new understanding will arrive." },
-  { name:"Death",              img:BASE+"major_arcana_death.png",         archetype:"Endings · Transformation · Release",         meaning:"Something is ending so something else can begin. What have you been holding onto past its time? Transformation cannot happen without release." },
-  { name:"Temperance",         img:BASE+"major_arcana_temperance.png",    archetype:"Balance · Patience · Integration",            meaning:"You are being called to find the middle path — not choosing between extremes but finding what is sustainable, what flows." },
-  { name:"The Devil",          img:BASE+"major_arcana_devil.png",         archetype:"Shadow · Attachment · Liberation",            meaning:"What binds you is not as unbreakable as it appears. The chains are often loosely worn. What would it mean to simply... choose differently?" },
-  { name:"The Tower",          img:BASE+"major_arcana_tower.png",         archetype:"Upheaval · Revelation · Sudden Change",       meaning:"What is crumbling was built on an unstable foundation. After the shock comes clarity. What is falling away had to fall. What remains is real." },
-  { name:"The Star",           img:BASE+"major_arcana_star.png",          archetype:"Hope · Healing · Renewal",                   meaning:"After difficulty, the Star arrives as a quiet, steady light. You are supported. Beauty is still possible, and the path forward exists." },
-  { name:"The Moon",           img:BASE+"major_arcana_moon.png",          archetype:"Illusion · The Unconscious · Hidden Truths",  meaning:"Not everything is as it appears. Fears, dreams, and unresolved feelings may be surfacing. Navigate by feeling right now, and trust the process even in the dark." },
-  { name:"The Sun",            img:BASE+"major_arcana_sun.png",           archetype:"Joy · Clarity · Vitality",                   meaning:"You are stepping into a moment of genuine brightness. This is not performance — it is your authentic self, fully lit. Let yourself be seen." },
-  { name:"Judgement",          img:BASE+"major_arcana_judgement.png",     archetype:"Awakening · Reckoning · Rebirth",             meaning:"A call is rising within you. Judgement is not condemnation; it is liberation. What part of your past is ready to be forgiven and transcended?" },
-  { name:"The World",          img:BASE+"major_arcana_world.png",         archetype:"Completion · Integration · Wholeness",        meaning:"You have arrived. A significant cycle is completing. Everything you've learned, survived, and become is now part of you. Celebrate that." },
-  { name:"Ace of Cups",        img:BASE+"minor_arcana_cups_ace.png",      archetype:"Emotional Beginning · Love · Intuition",      meaning:"Your heart is open. The Ace of Cups is an overflow of feeling — new love, renewed compassion, spiritual connection. Receive what is being offered." },
-  { name:"Three of Cups",      img:BASE+"minor_arcana_cups_3.png",        archetype:"Friendship · Joy · Community",                meaning:"Let yourself be held by the people who love you. The Three of Cups is a card of genuine celebration — the deep comfort of belonging." },
-  { name:"Nine of Cups",       img:BASE+"minor_arcana_cups_9.png",        archetype:"Fulfillment · Contentment · Wishes Met",      meaning:"What you wished for is here, or close. Allow yourself to feel it. Not as an ending, but as a moment of arrival." },
-  { name:"Ace of Wands",       img:BASE+"minor_arcana_wands_ace.png",     archetype:"Spark · Inspiration · New Energy",            meaning:"A burst of creative energy is available to you. The Ace of Wands is pure potential — say yes to the idea that excites you." },
-  { name:"The Star",           img:BASE+"major_arcana_star.png",          archetype:"Hope · Healing · Renewal",                   meaning:"After difficulty, the Star arrives as a quiet, steady light. You are supported. Beauty is still possible." },
+// ══════════════════════════════════════
+// MOON PHASE ENGINE
+// ══════════════════════════════════════
+const MOON_PHASES = [
+  { name:'New Moon',        emoji:'🌑', energy:'A time for planting seeds and setting intentions.', guidance:'Fresh starts and quiet beginnings.' },
+  { name:'Waxing Crescent', emoji:'🌒', energy:'A time for gathering momentum and building.', guidance:'Growth and forward motion.' },
+  { name:'First Quarter',   emoji:'🌓', energy:'A time for decisive action and commitment.', guidance:'Movement and resolve.' },
+  { name:'Waxing Gibbous',  emoji:'🌔', energy:'A time for refinement and nearing completion.', guidance:'Refinement and anticipation.' },
+  { name:'Full Moon',       emoji:'🌕', energy:'A time of peak clarity, illumination, and release.', guidance:'Fullness and revelation.' },
+  { name:'Waning Gibbous',  emoji:'🌖', energy:'A time for reflection, gratitude, and sharing.', guidance:'Integration and gratitude.' },
+  { name:'Last Quarter',    emoji:'🌗', energy:'A time for letting go and releasing what no longer serves.', guidance:'Release and forgiveness.' },
+  { name:'Waning Crescent', emoji:'🌘', energy:'A time for rest, surrender, and quiet preparation.', guidance:'Rest and inner listening.' },
 ];
 
-let state = { focus: null, question: '', card: null };
+const SEASONS = [
+  { months:[12,1,2],  name:'Winter', note:'A season of inner work and dreaming.' },
+  { months:[3,4,5],   name:'Spring', note:'A season of emergence and new growth.' },
+  { months:[6,7,8],   name:'Summer', note:'A season of fullness and creative peak.' },
+  { months:[9,10,11], name:'Autumn', note:'A season of harvest and turning inward.' },
+];
+
+function getMoonPhase() {
+  const now = new Date();
+  const known = new Date('2000-01-06T18:14:00Z'); // known new moon
+  const synodic = 29.53058867;
+  const elapsed = (now - known) / (1000 * 60 * 60 * 24);
+  const cycle = ((elapsed % synodic) + synodic) % synodic;
+  const idx = Math.floor((cycle / synodic) * 8) % 8;
+  const illumination = Math.round(Math.abs(Math.cos((cycle / synodic) * 2 * Math.PI) * -50 + 50));
+  return { ...MOON_PHASES[idx], cycle, illumination };
+}
+
+function getSeason() {
+  const m = new Date().getMonth() + 1;
+  return SEASONS.find(s => s.months.includes(m));
+}
+
+function formatDate() {
+  return new Date().toLocaleDateString('en-US', { month:'long', day:'numeric', year:'numeric' });
+}
+
+const moon = getMoonPhase();
+const season = getSeason();
+
+function renderMoonBanner(el) {
+  if (!el) return;
+  el.innerHTML = `
+    <div class="moon-top">
+      <span class="moon-emoji">${moon.emoji}</span>
+      <span class="moon-phase">${moon.name}</span>
+      <span class="moon-date">${formatDate()}</span>
+    </div>
+    <div class="moon-energy">${moon.energy}</div>
+    ${season ? `<div class="season-tag">${season.name} · ${season.note}</div>` : ''}
+  `;
+}
+// ══════════════════════════════════════
+const BASE = 'https://archive.org/download/rider-waite-tarot/';
+const CARDS = [
+  { name:'The Fool',           img:BASE+'major_arcana_fool.png',         archetype:'Beginnings · Innocence · Leap of Faith',     meaning:'There is a threshold here — one that does not announce itself loudly. Something in the quality of this moment carries the texture of a first step, taken before the full shape of the path is known.' },
+  { name:'The Magician',       img:BASE+'major_arcana_magician.png',      archetype:'Will · Skill · Manifestation',               meaning:'The elements present in your life right now are not random. There is a kind of gathering happening — a drawing together of threads. What is already in your hands, and what are you doing with it?' },
+  { name:'The High Priestess', img:BASE+'major_arcana_priestess.png',     archetype:'Intuition · Mystery · Inner Knowing',        meaning:'Something is held in reserve — not hidden, but not yet spoken. There is a layer beneath what is visible that is asking for a different kind of attention. What do you notice when you stop looking directly?' },
+  { name:'The Empress',        img:BASE+'major_arcana_empress.png',       archetype:'Abundance · Nurturing · Creation',           meaning:'There is a fullness in this season — a quality of ripeness that does not demand urgency. Something is growing at its own pace, and the conditions around it are part of its unfolding.' },
+  { name:'The Emperor',        img:BASE+'major_arcana_emperor.png',       archetype:'Structure · Authority · Foundation',         meaning:'There are forms and structures present in this moment. Some were built, some were inherited. What holds its shape here, and what does that shape make possible?' },
+  { name:'The Lovers',         img:BASE+'major_arcana_lovers.png',        archetype:'Union · Choice · Alignment',                 meaning:'A point of convergence is nearby — not necessarily between people, but between parts of yourself or between values that have been pulling in different directions. What is being asked to come into alignment?' },
+  { name:'The Chariot',        img:BASE+'major_arcana_chariot.png',       archetype:'Drive · Direction · Movement',               meaning:'There is motion here — forward, purposeful, though not without its tensions. Something is being directed. What is providing the direction, and what is following it?' },
+  { name:'Strength',           img:BASE+'major_arcana_strength.png',      archetype:'Presence · Patience · Inner Steadiness',     meaning:'Something here does not need to announce itself. There is a quality of holding — not forcing — that runs beneath the surface of this moment. What does it feel like to meet something without needing to change it?' },
+  { name:'The Hermit',         img:BASE+'major_arcana_hermit.png',        archetype:'Solitude · Reflection · Inner Light',        meaning:'There is a quietness available here. Not absence, but a particular quality of being alone with something — a thought, a question, a part of yourself that only surfaces in stillness.' },
+  { name:'Wheel of Fortune',   img:BASE+'major_arcana_fortune.png',       archetype:'Cycles · Turning · Continuity',              meaning:'Something is in motion that is larger than any single decision or moment. There is a quality of turning — of things completing and beginning again. Where in your life do you feel this rotation?' },
+  { name:'Justice',            img:BASE+'major_arcana_justice.png',       archetype:'Balance · Discernment · Consequence',        meaning:'There is a weighing happening here — not of right and wrong, but of what is and what follows from it. Something is being measured, and the measure is attentive.' },
+  { name:'The Hanged Man',     img:BASE+'major_arcana_hanged.png',        archetype:'Suspension · Perspective · Pause',           meaning:'There is a waiting present in this moment — not passive, but suspended. Something is being seen from an angle that was not available before. What looks different from where you are now?' },
+  { name:'Death',              img:BASE+'major_arcana_death.png',         archetype:'Transition · Ending · Threshold',            meaning:'Something is completing. Not vanishing, but moving from one form to another. There is a transition in the texture of this moment — a before and an after that are becoming distinguishable.' },
+  { name:'Temperance',         img:BASE+'major_arcana_temperance.png',    archetype:'Flow · Integration · Proportion',            meaning:'There is a blending present here — not of opposites forced together, but of elements finding their proportion. Something is being adjusted, calibrated, poured between vessels.' },
+  { name:'The Devil',          img:BASE+'major_arcana_devil.png',         archetype:'Attachment · Pattern · Shadow',              meaning:'Something here has weight — a familiar pull, a pattern that recurs. This card does not name it good or bad, only notices that it is present. What keeps returning, and what does its return tell you?' },
+  { name:'The Tower',          img:BASE+'major_arcana_tower.png',         archetype:'Disruption · Revelation · Clearing',         meaning:'Something is shifting — not gently. There is a quality of sudden rearrangement in this moment, as if a structure that held things in place is no longer holding in the same way.' },
+  { name:'The Star',           img:BASE+'major_arcana_star.png',          archetype:'Openness · Continuity · Quiet Presence',     meaning:'There is a steadiness here that does not ask for anything. A quiet presence, like light that does not diminish when shared. Something remains, even after much has changed.' },
+  { name:'The Moon',           img:BASE+'major_arcana_moon.png',          archetype:'Depth · Reflection · The Unseen',            meaning:'What is visible right now may not be the whole of it. There are currents beneath the surface — feelings, images, half-formed thoughts that have not yet come fully into the light.' },
+  { name:'The Sun',            img:BASE+'major_arcana_sun.png',           archetype:'Clarity · Warmth · Openness',                meaning:'Something is present here without concealment. There is a quality of visibility — of things being as they appear, of warmth that does not require interpretation. What is simply here, right now?' },
+  { name:'Judgement',          img:BASE+'major_arcana_judgement.png',     archetype:'Recognition · Response · Calling',           meaning:'Something is being heard or answered — not an external verdict, but an inner recognition. There is a quality of being called, of something within responding to something it has been waiting for.' },
+  { name:'The World',          img:BASE+'major_arcana_world.png',         archetype:'Completion · Wholeness · Continuity',        meaning:'Something has come full circle. Not ended, but arrived somewhere. There is a quality of completion here — not finality, but a particular kind of wholeness that can only be felt from where you now stand.' },
+  { name:'Ace of Cups',        img:BASE+'minor_arcana_cups_ace.png',      archetype:'Opening · Feeling · Capacity',               meaning:'There is an opening here — a capacity that has not yet been filled or named. Something in the emotional register is making space. What is arriving, or what has been waiting to arrive?' },
+  { name:'Two of Cups',        img:BASE+'minor_arcana_cups_2.png',        archetype:'Meeting · Recognition · Exchange',           meaning:'There is a quality of recognition in this moment — of something meeting something else and finding a response. What is being met, and what is it reflecting back?' },
+  { name:'Three of Cups',      img:BASE+'minor_arcana_cups_3.png',        archetype:'Together · Celebration · Shared Presence',   meaning:'There is a quality of plurality here — of more than one, of something shared. Something is being marked or celebrated, even quietly. Who or what is present in this?' },
+  { name:'Ace of Wands',       img:BASE+'minor_arcana_wands_ace.png',     archetype:'Impulse · Beginnings · Creative Spark',      meaning:'Something is initiating. There is an energy present that has not yet taken form — a spark before the flame. What is asking to be started, even without knowing where it leads?' },
+  { name:'Nine of Cups',       img:BASE+'minor_arcana_cups_9.png',        archetype:'Arrival · Stillness · Having Enough',        meaning:'Something has settled. There is a quality of arrival in this moment — not triumph, but a kind of quiet sufficiency. What is present that did not used to be?' },
+  { name:'Six of Swords',      img:BASE+'minor_arcana_swords_6.png',      archetype:'Passage · Moving Through · Transition',      meaning:'There is a crossing happening — from one place to another, from one quality of experience to something different. The passage is not yet complete, but it is underway.' },
+  { name:'Four of Pentacles',  img:BASE+'minor_arcana_pentacles_4.png',   archetype:'Holding · Boundary · Containment',           meaning:'Something is being held — kept close, protected, or preserved. There is a quality of containment in this moment. What is being held, and what does holding it feel like?' },
+];
+
+let state = { focus: null, question: '', card: null, reading: '' };
 let drawnCards = [];
+let shuffleTimer = null;
+let shuffleDone = false;
 
-// ── NAVIGATION ──
-function goTo(screenId, dotIndex) {
-  const current = document.querySelector('.screen.active');
-  if (current) {
-    current.classList.add('exit');
-    setTimeout(() => current.classList.remove('exit','active'), 600);
+// ══════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════
+function goTo(id, dot) {
+  const cur = document.querySelector('.screen.active');
+  if (cur) { cur.classList.add('exit'); setTimeout(() => cur.classList.remove('exit','active'), 550); }
+  setTimeout(() => document.getElementById(id).classList.add('active'), 200);
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i <= dot));
+  document.getElementById('progress').style.opacity = id === 's-reveal' ? '0' : '1';
+}
+
+function selectFocus(el, f) {
+  document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
+  el.classList.add('selected'); state.focus = f;
+}
+
+// ══════════════════════════════════════
+// FEATURE 1: SHUFFLE ANIMATION
+// ══════════════════════════════════════
+function startShuffle() {
+  state.question = document.getElementById('intention-text').value.trim();
+  shuffleDone = false;
+
+  // respect prefers-reduced-motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    skipShuffle(); return;
   }
-  setTimeout(() => {
-    const next = document.getElementById(screenId);
-    next.classList.add('active');
-  }, 200);
 
-  document.querySelectorAll('.pdot').forEach((d,i) => {
-    d.classList.toggle('active', i <= dotIndex);
+  goTo('s-shuffle', 2);
+  runShuffleAnimation();
+}
+
+function runShuffleAnimation() {
+  const cards = [0,1,2,3,4,5].map(i => document.getElementById('shc'+i));
+
+  // Reset all cards to center stack
+  cards.forEach((c, i) => {
+    c.style.transition = 'none';
+    c.style.transform = `translateX(0) translateY(${i * -1}px) rotate(0deg)`;
+    c.style.opacity = '1';
+    c.style.zIndex = i;
   });
 
-  // hide progress on reveal
-  document.getElementById('progress').style.opacity = screenId === 's-reveal' ? '0' : '1';
+  const tl = [
+    // Phase 1: Fan out (0–300ms)
+    () => {
+      const positions = [-130,-80,-30,30,80,130];
+      const rotations = [-18,-10,-4,4,10,18];
+      cards.forEach((c, i) => {
+        c.style.transition = 'transform 350ms cubic-bezier(.23,1,.32,1)';
+        c.style.transform = `translateX(${positions[i]}px) translateY(${Math.abs(positions[i])*0.2}px) rotate(${rotations[i]}deg)`;
+        c.style.zIndex = i;
+      });
+    },
+    // Phase 2: Shuffle — arc over (300–1100ms)
+    () => {
+      const order = [5,0,4,1,3,2];
+      order.forEach((ci, step) => {
+        setTimeout(() => {
+          cards[ci].style.transition = 'transform 280ms cubic-bezier(.4,0,.2,1)';
+          cards[ci].style.zIndex = 10 + step;
+          cards[ci].style.transform = `translateX(${(Math.random()-0.5)*60}px) translateY(-60px) rotate(${(Math.random()-0.5)*25}deg)`;
+          setTimeout(() => {
+            cards[ci].style.transform = `translateX(${(Math.random()-0.5)*30}px) translateY(${Math.random()*10}px) rotate(${(Math.random()-0.5)*8}deg)`;
+          }, 150);
+        }, step * 130);
+      });
+    },
+    // Phase 3: Reassemble to stack (1100–1350ms)
+    () => {
+      cards.forEach((c, i) => {
+        c.style.transition = 'transform 250ms cubic-bezier(.23,1,.32,1)';
+        c.style.transform = `translateX(0) translateY(${i * -1.5}px) rotate(${(Math.random()-0.5)*3}deg)`;
+        c.style.zIndex = i;
+      });
+    },
+    // Phase 4: Spread to 3 final positions (1400–1700ms)
+    () => {
+      cards.forEach((c, i) => {
+        c.style.transition = 'transform 300ms cubic-bezier(.23,1,.32,1), opacity 200ms ease';
+        if (i >= 3) { c.style.opacity = '0'; c.style.zIndex = 0; return; }
+        const xPos = [-100, 0, 100][i];
+        const rot = [-5, 0, 5][i];
+        const yOff = [6, 0, 6][i];
+        c.style.transform = `translateX(${xPos}px) translateY(${yOff}px) rotate(${rot}deg)`;
+        c.style.zIndex = i + 1;
+      });
+    },
+    // Phase 5: Settle + go to card screen (1800ms)
+    () => {
+      if (!shuffleDone) { shuffleDone = true; goTo('s-cards', 3); }
+    }
+  ];
+
+  tl[0]();
+  shuffleTimer = setTimeout(() => { tl[1](); }, 300);
+  shuffleTimer = setTimeout(() => { tl[2](); }, 1100);
+  shuffleTimer = setTimeout(() => { tl[3](); }, 1400);
+  shuffleTimer = setTimeout(() => { tl[4](); }, 1800);
 }
 
-// ── INTENTION ──
-function selectFocus(el, focus) {
-  document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
-  el.classList.add('selected');
-  state.focus = focus;
+function skipShuffle() {
+  if (shuffleDone) return;
+  shuffleDone = true;
+  clearTimeout(shuffleTimer);
+  goTo('s-cards', 3);
 }
 
-// ── CARD SELECTION ──
+// ══════════════════════════════════════
+// CARD SELECTION
+// ══════════════════════════════════════
 function chooseCard(idx) {
   document.querySelectorAll('.card-slot').forEach((s,i) => {
-    if (i !== idx) { s.style.opacity = '.3'; s.style.pointerEvents = 'none'; }
+    if (i !== idx) { s.style.opacity='.28'; s.style.pointerEvents='none'; }
     else s.classList.add('chosen');
   });
+  state.card = drawnCards[idx] || CARDS[Math.floor(Math.random()*CARDS.length)];
 
-  state.question = document.getElementById('intention-text').value.trim();
-  state.card = drawnCards[idx] || CARDS[Math.floor(Math.random() * CARDS.length)];
-
-  setTimeout(() => {
-    document.getElementById('reveal-img').src = state.card.img;
-    document.getElementById('reveal-img').alt = state.card.name;
-    document.getElementById('reveal-name').textContent = state.card.name;
-    document.getElementById('reveal-archetype').textContent = state.card.archetype;
-    goTo('s-reveal', 3);
-    fetchReading(state.card);
-  }, 700);
+  // Trigger flip animation
+  setTimeout(() => runFlipAnimation(state.card), 400);
 }
 
-// ── READING ──
+function runFlipAnimation(card) {
+  const overlay  = document.getElementById('flip-overlay');
+  const inner    = document.getElementById('flip-inner');
+  const img      = document.getElementById('flip-img');
+  const nameEl   = document.getElementById('flip-card-name');
+  const shimmer  = document.getElementById('flip-shimmer');
+
+  // Reset
+  inner.classList.remove('flipped');
+  nameEl.classList.remove('show');
+  nameEl.textContent = card.name;
+  img.src = card.img;
+  shimmer.classList.remove('go');
+
+  // Show overlay
+  overlay.classList.add('active');
+
+  // Shimmer sweep on back
+  setTimeout(() => shimmer.classList.add('go'), 100);
+
+  // Flip the card
+  setTimeout(() => {
+    inner.classList.add('flipped');
+    burstParticles();
+  }, 900);
+
+  // Show card name
+  setTimeout(() => nameEl.classList.add('show'), 1500);
+
+  // Transition to reveal screen
+  setTimeout(() => {
+    overlay.classList.remove('active');
+    setupReveal();
+    goTo('s-reveal', 4);
+    fetchReading(card);
+  }, 2400);
+}
+
+function burstParticles() {
+  const container = document.getElementById('flip-particles');
+  container.innerHTML = '';
+  const cx = 160/2, cy = 267/2;
+  for (let i = 0; i < 16; i++) {
+    const p = document.createElement('div');
+    p.className = 'flip-particle';
+    const angle = (i / 16) * Math.PI * 2;
+    const dist = 60 + Math.random() * 80;
+    const tx = Math.cos(angle) * dist;
+    const ty = Math.sin(angle) * dist;
+    const size = 2 + Math.random() * 3;
+    p.style.cssText = `
+      left:${cx}px; top:${cy}px; width:${size}px; height:${size}px;
+      background:${Math.random() > .5 ? 'var(--gold)' : 'var(--gold-lt)'};
+      animation: particle-burst .9s ${Math.random()*.2}s cubic-bezier(.2,0,.8,1) forwards;
+      --tx:${tx}px; --ty:${ty}px;
+    `;
+    container.appendChild(p);
+  }
+}
+
+
+function setupReveal() {
+  const c = state.card;
+  document.getElementById('reveal-img').src = c.img;
+  document.getElementById('reveal-img').alt = c.name;
+  document.getElementById('reveal-name').textContent = c.name;
+  document.getElementById('reveal-arch').textContent = c.archetype;
+
+  // Moon connector
+  document.getElementById('moon-connector').innerHTML = `
+    <span class="moon-connector-emoji">${moon.emoji}</span>
+    <span class="moon-connector-text">
+      Under the <strong style="color:rgba(201,162,82,.8)">${moon.name}</strong> — ${moon.guidance}
+      This reading arrives at a moment of ${moon.energy.toLowerCase()}
+    </span>
+  `;
+
+  // Share card setup
+  document.getElementById('sc-moon-emoji').textContent = moon.emoji;
+  document.getElementById('sc-moon-name').textContent = moon.name + ' · ' + formatDate();
+  document.getElementById('sc-card-img').src = c.img;
+  document.getElementById('sc-card-name').textContent = c.name;
+  document.getElementById('sc-archetype').textContent = c.archetype;
+}
+
+// ══════════════════════════════════════
+// READING (with moon-aware prompt)
+// ══════════════════════════════════════
 async function fetchReading(card) {
   try {
-    const res = await fetch("/api/reading", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ card, focus: state.focus, question: state.question })
+    const res = await fetch('/api/reading', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        card,
+        focus: state.focus,
+        question: state.question,
+        moonPhase: moon.name,
+        moonEnergy: moon.energy
+      })
     });
     if (!res.ok) throw new Error();
     const data = await res.json();
+    state.reading = data.reading || '';
     document.getElementById('reading-content').className = 'reading-text';
-    document.getElementById('reading-content').textContent = data.reading;
+    document.getElementById('reading-content').textContent = state.reading;
+    document.getElementById('sc-reading-excerpt').textContent = state.reading.slice(0, 180) + (state.reading.length > 180 ? '…' : '');
   } catch {
-    // fallback readings — neutral, open-ended, non-directive
-    const fallbacks = [
-      `Something is present in this moment that hasn't fully taken shape yet. There may be more than one way to hold what you're carrying — and this card invites you to sit with that ambiguity rather than resolve it too quickly. Nothing is being asked of you right now except attention. What do you notice when you slow down enough to look?`,
-      `There is a quality of movement here — not forward or backward, but a kind of turning. Whatever has felt fixed may be more fluid than it appears, and whatever has felt open may be asking for more stillness. This card doesn't point to an answer so much as a doorway. What would it mean to simply stand at the threshold for a moment longer?`,
-      `Things are in motion beneath the surface, in ways that may not yet be visible. This card reflects something about the texture of where you are — not where you should go, but what is already true. The question it leaves with you is not urgent. What feels most alive in you right now, even quietly so?`
-    ];
+    const fallback = card.meaning + ` Under the ${moon.name}, this quality takes on a particular resonance — ${moon.energy.toLowerCase()} What does this moment ask you to notice?`;
+    state.reading = fallback;
     document.getElementById('reading-content').className = 'reading-text';
-    document.getElementById('reading-content').textContent = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    document.getElementById('reading-content').textContent = fallback;
+    document.getElementById('sc-reading-excerpt').textContent = fallback.slice(0, 180) + '…';
   }
 }
 
-// ── RESTART ──
-function restart() {
-  state = { focus: null, question: '', card: null };
-  drawnCards = [];
-  document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
-  document.querySelectorAll('.mood-pill').forEach(p => p.classList.remove('selected'));
-  document.querySelectorAll('.card-slot').forEach(s => {
-    s.classList.remove('chosen'); s.style.opacity = '1'; s.style.pointerEvents = '';
-  });
-  document.getElementById('intention-text').value = '';
-  document.getElementById('reading-content').innerHTML = `
-    <span class="reading-loading">The cards are speaking
-      <span class="dot-pulse"><span></span><span></span><span></span></span>
-    </span>`;
-  goTo('s-landing', 0);
-  // reset progress dots
-  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i === 0));
+// ══════════════════════════════════════
+// FEATURE 3: SOCIAL SHARING
+// ══════════════════════════════════════
+async function shareReading() {
+  const shareCard = document.getElementById('share-card');
+
+  // Try html-to-image if available, otherwise fallback canvas
+  try {
+    // Simple canvas-based share card
+    const canvas = document.createElement('canvas');
+    canvas.width = 540; canvas.height = 960;
+    const ctx = canvas.getContext('2d');
+
+    // Background gradient
+    const grad = ctx.createLinearGradient(0, 0, 540, 960);
+    grad.addColorStop(0, '#1c1530');
+    grad.addColorStop(0.6, '#0b0910');
+    grad.addColorStop(1, '#13101c');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, 540, 960);
+
+    // Subtle vignette circle
+    const vignette = ctx.createRadialGradient(270, 480, 100, 270, 480, 400);
+    vignette.addColorStop(0, 'rgba(201,162,82,.04)');
+    vignette.addColorStop(1, 'transparent');
+    ctx.fillStyle = vignette;
+    ctx.fillRect(0, 0, 540, 960);
+
+    // Logo
+    ctx.font = '500 18px Cinzel, serif';
+    ctx.fillStyle = 'rgba(201,162,82,0.55)';
+    ctx.textAlign = 'center';
+    ctx.letterSpacing = '8px';
+    ctx.fillText('VEIL READS', 270, 80);
+
+    // Moon
+    ctx.font = '48px serif';
+    ctx.fillText(moon.emoji, 270, 155);
+    ctx.font = '500 13px Cinzel, serif';
+    ctx.fillStyle = 'rgba(201,162,82,0.65)';
+    ctx.fillText(moon.name.toUpperCase(), 270, 185);
+    ctx.font = 'italic 14px Cormorant Garamond, serif';
+    ctx.fillStyle = 'rgba(148,136,168,0.7)';
+    ctx.fillText(formatDate(), 270, 208);
+
+    // Card image
+    const img = new Image();
+    img.crossOrigin = 'anonymous';
+    img.src = state.card.img;
+
+    img.onload = async () => {
+      // Draw card image
+      const imgX = 270 - 70, imgY = 225;
+      ctx.save();
+      const r = 10;
+      ctx.beginPath();
+      ctx.moveTo(imgX + r, imgY);
+      ctx.lineTo(imgX + 140 - r, imgY);
+      ctx.quadraticCurveTo(imgX+140, imgY, imgX+140, imgY+r);
+      ctx.lineTo(imgX+140, imgY+233-r);
+      ctx.quadraticCurveTo(imgX+140, imgY+233, imgX+140-r, imgY+233);
+      ctx.lineTo(imgX+r, imgY+233);
+      ctx.quadraticCurveTo(imgX, imgY+233, imgX, imgY+233-r);
+      ctx.lineTo(imgX, imgY+r);
+      ctx.quadraticCurveTo(imgX, imgY, imgX+r, imgY);
+      ctx.closePath();
+      ctx.clip();
+      ctx.drawImage(img, imgX, imgY, 140, 233);
+      ctx.restore();
+
+      // Gold border on card
+      ctx.strokeStyle = 'rgba(201,162,82,0.4)';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(imgX, imgY, 140, 233);
+
+      // Card name
+      ctx.font = '500 22px Cinzel, serif';
+      ctx.fillStyle = 'rgba(201,162,82,0.88)';
+      ctx.textAlign = 'center';
+      ctx.fillText(state.card.name, 270, 490);
+
+      // Archetype
+      ctx.font = 'italic 14px Cormorant Garamond, serif';
+      ctx.fillStyle = 'rgba(148,136,168,0.7)';
+      ctx.fillText(state.card.archetype, 270, 514);
+
+      // Divider
+      ctx.strokeStyle = 'rgba(201,162,82,0.15)';
+      ctx.lineWidth = .8;
+      ctx.beginPath(); ctx.moveTo(160, 535); ctx.lineTo(380, 535); ctx.stroke();
+
+      // Reading excerpt — word wrap
+      const excerpt = state.reading.slice(0, 200);
+      ctx.font = 'italic 300 16px Cormorant Garamond, serif';
+      ctx.fillStyle = 'rgba(242,234,216,0.78)';
+      const words = excerpt.split(' ');
+      let line = '', y = 568;
+      for (const word of words) {
+        const test = line + word + ' ';
+        if (ctx.measureText(test).width > 380 && line) {
+          ctx.fillText(line.trim(), 270, y); line = word + ' '; y += 26;
+          if (y > 780) { ctx.fillText(line.trim() + '…', 270, y); break; }
+        } else line = test;
+      }
+      if (y <= 780) ctx.fillText(line.trim(), 270, y);
+
+      // URL
+      ctx.font = '500 11px Cinzel, serif';
+      ctx.fillStyle = 'rgba(148,136,168,0.35)';
+      ctx.fillText('VEILREADS.COM', 270, 920);
+
+      // Convert and share
+      canvas.toBlob(async (blob) => {
+        const file = new File([blob], 'my-veil-reading.png', { type: 'image/png' });
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title: 'My reading from Veil Reads' });
+        } else {
+          // Fallback: download
+          const a = document.createElement('a');
+          a.href = canvas.toDataURL('image/png');
+          a.download = 'veil-reading.png';
+          a.click();
+          showToast('Reading saved ✦');
+        }
+      });
+    };
+
+    img.onerror = () => downloadFallback(canvas, ctx);
+
+  } catch(e) {
+    console.error(e);
+    showToast('Could not generate image');
+  }
 }
 
-// pre-shuffle 3 cards for the spread
-function initDraw() {
-  const shuffled = [...CARDS].sort(() => Math.random() - .5);
-  drawnCards = shuffled.slice(0, 3);
+function showToast(msg) {
+  const t = document.getElementById('share-toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
 }
-initDraw();
+
+// ══════════════════════════════════════
+// RESTART
+// ══════════════════════════════════════
+function restart() {
+  state = { focus: null, question: '', card: null, reading: '' };
+  drawnCards = [...CARDS].sort(() => Math.random()-.5).slice(0,3);
+  shuffleDone = false;
+  document.querySelectorAll('.focus-pill').forEach(p => p.classList.remove('selected'));
+  document.querySelectorAll('.card-slot').forEach(s => { s.classList.remove('chosen'); s.style.opacity='1'; s.style.pointerEvents=''; });
+  document.getElementById('intention-text').value = '';
+  document.getElementById('reading-content').innerHTML = `<span class="reading-loading">The cards are speaking<span class="dot-pulse"><span></span><span></span><span></span></span></span>`;
+  const cards = [0,1,2,3,4,5].map(i => document.getElementById('shc'+i));
+  cards.forEach(c => { c.style.transition='none'; c.style.transform='translateX(0) translateY(0) rotate(0deg)'; c.style.opacity='1'; });
+  goTo('s-intention', 1);
+  document.querySelectorAll('.pdot').forEach((d,i) => d.classList.toggle('active', i<=1));
+}
+
+// Init
+drawnCards = [...CARDS].sort(() => Math.random()-.5).slice(0,3);
 </script>
 </body>
 </html>
