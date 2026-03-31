@@ -347,22 +347,6 @@
   </div>
 </div>
 
-<!-- ══ FLIP OVERLAY ══ -->
-<div id="flip-overlay">
-  <div class="flip-particles" id="flip-particles"></div>
-  <div class="flip-card-wrap">
-    <div class="flip-card-inner" id="flip-inner">
-      <div class="flip-face flip-back">
-        <div class="flip-shimmer" id="flip-shimmer"></div>
-      </div>
-      <div class="flip-face flip-front">
-        <img id="flip-img" src="" alt="">
-      </div>
-    </div>
-  </div>
-  <div class="flip-card-name" id="flip-card-name"></div>
-</div>
-
 <!-- Hidden share card template -->
 <div id="share-card">
   <div class="sc-logo">VEIL READS</div>
@@ -619,14 +603,11 @@ function chooseCard(idx) {
     else s.classList.add('chosen');
   });
   state.card = drawnCards[idx] || CARDS[Math.floor(Math.random()*CARDS.length)];
-
-  setTimeout(() => {
-    showLoader(() => {
-      setupReveal();
-      goTo('s-reveal', 4);
-      fetchReading(state.card);
-    });
-  }, 300);
+  showLoader(() => {
+    setupReveal();
+    goTo('s-reveal', 4);
+    fetchReading(state.card);
+  });
 }
 
 
