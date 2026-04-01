@@ -38,13 +38,26 @@ const MOON_SENTENCES = {
   waning_crescent: "Today is a Waning Crescent Moon — a time of rest and surrender.",
 };
 
-const SYSTEM_PROMPT = `You are Veil — a poetic, contemplative tarot reading voice.
-You speak in second person, present tense.
-Your readings are intimate, honest, and rooted in deep archetypal meaning.
-You never predict the future — you illuminate the present.
-Your tone is warm but not soft, precise but not clinical.
-You write in flowing prose. No bullet points. No headers. No labels.
-Each reading is 3–4 paragraphs. Paragraph breaks only.`;
+// How each theme shapes what the card speaks to
+const FOCUS_LENSES = {
+  love:    "The seeker is asking about love, connection, or relationship. Let the card speak directly to what is alive or unresolved in their emotional life — not love in the abstract, but the specific texture of how they give, receive, or withhold it.",
+  clarity: "The seeker is asking for clarity — they are navigating confusion, a decision, or a mental fog. Let the card illuminate the specific thought pattern or belief that may be keeping things unclear. Speak to what the mind is doing, not just what the heart feels.",
+  change:  "The seeker is in a moment of transition or is resisting one. Let the card speak to what is actually shifting — what is ending, what is beginning, and what they are being asked to release or step toward. Be specific about the threshold they are on.",
+};
+
+const SYSTEM_PROMPT = `You are a gifted, warm tarot reader — the kind of friend who happens to know the cards deeply and speaks to you like a real person, not a mystical oracle.
+
+Your voice is:
+- Warm and direct. Like a wise, caring friend who tells you what they actually see.
+- Optimistic but honest. You find the hopeful, empowering angle in every card — even complex ones.
+- Human and grounded. No vague mystical language. Speak in clear, beautiful sentences that feel real.
+- Personal. The person reading this should feel like this was written specifically for them.
+
+Your readings are 3 paragraphs. Each paragraph is 2-4 sentences. No headers. No bullet points. No card jargon like "upright" or "reversed."
+
+Always end with something that opens a door — a question, an invitation, or a gentle affirmation that gives the person something to carry with them.
+
+Remember: leave people feeling seen, supported, and a little more hopeful than when they arrived.`;
 
 function pick(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -101,26 +114,58 @@ export default async function handler(req) {
     return new Response(JSON.stringify({ error: 'card is required' }), { status: 400, headers: corsHeaders });
   }
 
+  // Random structure elements
   const frameKeys  = Object.keys(NARRATIVE_FRAMES);
   const frameKey   = pickExcluding(frameKeys, lastFrame);
   const frameDesc  = NARRATIVE_FRAMES[frameKey];
   const opening    = pick(OPENING_STYLES);
   const closing    = pick(CLOSING_INVITATIONS);
-  const moonKey    = getMoonKey(new Date());
+
+  // Moon as atmosphere only
+  const moonKey      = getMoonKey(new Date());
   const moonSentence = MOON_SENTENCES[moonKey];
-  const intentionKey = (focus || 'clarity').toLowerCase();
-  const angle = card.readingAngles?.[intentionKey] || card.readingAngles?.clarity || '';
+
+  // Focus lens — shapes what dimension of the card to surface
+  const focusKey  = (focus || '').toLowerCase();
+  const focusLens = FOCUS_LENSES[focusKey] || '';
+
+  // Card's reading angle for this focus (from JSON data)
+  const cardAngle = card.readingAngles?.[focusKey] || '';
+
+  // Build the prompt — personal note is the primary anchor
+  const hasNote  = question && question.trim().length > 0;
+  const hasFocus = focus && focusLens;
+
+  let contextBlock = '';
+  if (hasNote && hasFocus) {
+    contextBlock = `The seeker has shared this personal note: "${question.trim()}"
+
+Their focus is: ${focus}. ${focusLens}
+
+The reading MUST directly address what they have shared. Speak to the specific situation, feeling, or question they described. The card's meaning should land inside their reality — not in the abstract. Reference what they wrote, not by repeating it verbatim, but by speaking to it clearly and specifically so they feel seen.
+
+${cardAngle ? `Angle to emphasize through the ${focus} lens: ${cardAngle}` : ''}`;
+  } else if (hasNote) {
+    contextBlock = `The seeker has shared this personal note: "${question.trim()}"
+
+The reading MUST directly address what they have shared. Speak to the specific situation, feeling, or question they described — clearly enough that they recognize themselves in the reading. Use the card's meaning to illuminate what is alive in their specific experience.`;
+  } else if (hasFocus) {
+    contextBlock = `The seeker has come with the intention of: ${focus}.
+
+${focusLens}
+
+${cardAngle ? `Angle to emphasize: ${cardAngle}` : ''}`;
+  } else {
+    contextBlock = `The seeker has come without a specific intention — let the card speak to whatever is most present.`;
+  }
 
   const userPrompt = `${moonSentence}
 
-The seeker has come with the intention of: ${focus || 'open reflection'}.
-${question ? `They've shared: '${question}'.` : ''}
+${contextBlock}
 
 The card drawn is: ${card.name}.
 
 Core meaning: ${card.deepMeaning || card.meaning || ''}
-
-${angle ? `Angle to emphasize: ${angle}` : ''}
 
 Narrative frame: ${frameKey} — ${frameDesc}
 
@@ -128,7 +173,7 @@ Opening style: ${opening}
 
 Closing style: ${closing}
 
-Write a reading. Do not mention the narrative frame by name. Do not reference the moon phase explicitly unless it arises naturally. Do not repeat card keywords verbatim. Let the meaning live in the language.`;
+Write the reading. Make it feel like it was written specifically for this person — warm, direct, and genuinely uplifting. Find the hopeful, empowering truth in this card. If the seeker shared a personal note, speak to it clearly so they feel seen. Do not mention the narrative frame by name. Do not reference the moon phase explicitly unless it arises naturally. Do not use tarot jargon. Write like a human who cares.`;
 
   const callAnthropic = async () => {
     const res = await fetch('https://api.anthropic.com/v1/messages', {
@@ -154,7 +199,7 @@ Write a reading. Do not mention the narrative frame by name. Do not reference th
 
   try {
     let reading = await callAnthropic();
-    if (reading.length < 100) reading = await callAnthropic(); // retry once if too short
+    if (reading.length < 100) reading = await callAnthropic();
 
     return new Response(JSON.stringify({ reading, frameUsed: frameKey }), {
       status: 200, headers: corsHeaders,
