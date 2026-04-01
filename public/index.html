@@ -917,139 +917,206 @@ async function fetchReading(card) {
 }
 
 // ══════════════════════════════════════
-// FEATURE 3: SOCIAL SHARING
+// SOCIAL SHARING
 // ══════════════════════════════════════
 async function shareReading() {
-  const shareCard = document.getElementById('share-card');
-
-  // Try html-to-image if available, otherwise fallback canvas
   try {
-    // Simple canvas-based share card
     const canvas = document.createElement('canvas');
-    canvas.width = 540; canvas.height = 960;
+    const W = 1080, H = 1920;
+    canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext('2d');
 
-    // Background gradient
-    const grad = ctx.createLinearGradient(0, 0, 540, 960);
-    grad.addColorStop(0, '#1c1530');
-    grad.addColorStop(0.6, '#0b0910');
-    grad.addColorStop(1, '#13101c');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, 540, 960);
+    // ── BACKGROUND — match app exactly ──
+    const bg = ctx.createLinearGradient(0, 0, 0, H);
+    bg.addColorStop(0,   '#1c1530');
+    bg.addColorStop(0.45,'#0b0910');
+    bg.addColorStop(1,   '#13101c');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
-    // Subtle vignette circle
-    const vignette = ctx.createRadialGradient(270, 480, 100, 270, 480, 400);
-    vignette.addColorStop(0, 'rgba(201,162,82,.04)');
-    vignette.addColorStop(1, 'transparent');
-    ctx.fillStyle = vignette;
-    ctx.fillRect(0, 0, 540, 960);
+    // top radial glow
+    const glow = ctx.createRadialGradient(W/2, 0, 0, W/2, 0, W*0.8);
+    glow.addColorStop(0, 'rgba(122,95,160,0.18)');
+    glow.addColorStop(1, 'transparent');
+    ctx.fillStyle = glow; ctx.fillRect(0, 0, W, H);
 
-    // Logo
-    ctx.font = '500 18px Cinzel, serif';
-    ctx.fillStyle = 'rgba(201,162,82,0.55)';
+    // center card glow
+    const cglow = ctx.createRadialGradient(W/2, H*0.38, 0, W/2, H*0.38, 500);
+    cglow.addColorStop(0, 'rgba(201,162,82,0.08)');
+    cglow.addColorStop(1, 'transparent');
+    ctx.fillStyle = cglow; ctx.fillRect(0, 0, W, H);
+
+    // ── LOGO ──
     ctx.textAlign = 'center';
-    ctx.letterSpacing = '8px';
-    ctx.fillText('VEIL READS', 270, 80);
+    ctx.fillStyle = 'rgba(201,162,82,0.75)';
+    ctx.font = '500 38px Cinzel, Georgia, serif';
+    ctx.letterSpacing = '12px';
+    ctx.fillText('VEIL READS', W/2, 118);
 
-    // Moon
-    ctx.font = '48px serif';
-    ctx.fillText(moon.emoji, 270, 155);
-    ctx.font = '500 13px Cinzel, serif';
-    ctx.fillStyle = 'rgba(201,162,82,0.65)';
-    ctx.fillText(moon.name.toUpperCase(), 270, 185);
-    ctx.font = 'italic 14px Cormorant Garamond, serif';
-    ctx.fillStyle = 'rgba(148,136,168,0.7)';
-    ctx.fillText(formatDate(), 270, 208);
+    // ── MOON PHASE ──
+    ctx.font = '52px serif';
+    ctx.letterSpacing = '0px';
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    ctx.fillText(moon.emoji, W/2, 222);
 
-    // Card image
-    const img = new Image();
-    img.crossOrigin = 'anonymous';
-    img.src = state.card.img;
+    ctx.font = '500 24px Cinzel, Georgia, serif';
+    ctx.fillStyle = 'rgba(201,162,82,0.7)';
+    ctx.letterSpacing = '6px';
+    ctx.fillText(moon.name.toUpperCase(), W/2, 272);
 
-    img.onload = async () => {
-      // Draw card image
-      const imgX = 270 - 70, imgY = 225;
-      ctx.save();
-      const r = 10;
-      ctx.beginPath();
-      ctx.moveTo(imgX + r, imgY);
-      ctx.lineTo(imgX + 140 - r, imgY);
-      ctx.quadraticCurveTo(imgX+140, imgY, imgX+140, imgY+r);
-      ctx.lineTo(imgX+140, imgY+233-r);
-      ctx.quadraticCurveTo(imgX+140, imgY+233, imgX+140-r, imgY+233);
-      ctx.lineTo(imgX+r, imgY+233);
-      ctx.quadraticCurveTo(imgX, imgY+233, imgX, imgY+233-r);
-      ctx.lineTo(imgX, imgY+r);
-      ctx.quadraticCurveTo(imgX, imgY, imgX+r, imgY);
-      ctx.closePath();
-      ctx.clip();
-      ctx.drawImage(img, imgX, imgY, 140, 233);
-      ctx.restore();
+    ctx.font = '400 22px Georgia, serif';
+    ctx.fillStyle = 'rgba(148,136,168,0.55)';
+    ctx.letterSpacing = '1px';
+    ctx.fillText(formatDate(), W/2, 308);
 
-      // Gold border on card
-      ctx.strokeStyle = 'rgba(201,162,82,0.4)';
-      ctx.lineWidth = 1;
-      ctx.strokeRect(imgX, imgY, 140, 233);
+    // ── CARD IMAGE ──
+    const cardImg = new Image();
+    cardImg.crossOrigin = 'anonymous';
+    cardImg.src = state.card.img;
+    await new Promise((resolve, reject) => {
+      cardImg.onload = resolve;
+      cardImg.onerror = () => resolve(); // continue even if image fails
+      setTimeout(resolve, 5000);
+    });
 
-      // Card name
-      ctx.font = '500 22px Cinzel, serif';
-      ctx.fillStyle = 'rgba(201,162,82,0.88)';
-      ctx.textAlign = 'center';
-      ctx.fillText(state.card.name, 270, 490);
+    const cW = 310, cH = 516;
+    const cX = (W - cW) / 2, cY = 356;
+    const rad = 20;
 
-      // Archetype
-      ctx.font = 'italic 14px Cormorant Garamond, serif';
-      ctx.fillStyle = 'rgba(148,136,168,0.7)';
-      ctx.fillText(state.card.archetype, 270, 514);
+    // card glow shadow
+    ctx.save();
+    ctx.shadowColor = 'rgba(201,162,82,0.3)';
+    ctx.shadowBlur = 80;
+    ctx.shadowOffsetY = 24;
 
-      // Divider
-      ctx.strokeStyle = 'rgba(201,162,82,0.15)';
-      ctx.lineWidth = .8;
-      ctx.beginPath(); ctx.moveTo(160, 535); ctx.lineTo(380, 535); ctx.stroke();
+    // clip + draw card
+    ctx.beginPath();
+    ctx.moveTo(cX+rad, cY); ctx.lineTo(cX+cW-rad, cY);
+    ctx.quadraticCurveTo(cX+cW, cY, cX+cW, cY+rad);
+    ctx.lineTo(cX+cW, cY+cH-rad);
+    ctx.quadraticCurveTo(cX+cW, cY+cH, cX+cW-rad, cY+cH);
+    ctx.lineTo(cX+rad, cY+cH);
+    ctx.quadraticCurveTo(cX, cY+cH, cX, cY+cH-rad);
+    ctx.lineTo(cX, cY+rad);
+    ctx.quadraticCurveTo(cX, cY, cX+rad, cY);
+    ctx.closePath();
+    ctx.clip();
+    if (cardImg.complete && cardImg.naturalWidth > 0) {
+      ctx.drawImage(cardImg, cX, cY, cW, cH);
+    } else {
+      // fallback if image didn't load
+      ctx.fillStyle = '#1e1830';
+      ctx.fillRect(cX, cY, cW, cH);
+    }
+    ctx.restore();
 
-      // Reading excerpt — word wrap
-      const excerpt = state.reading.slice(0, 200);
-      ctx.font = 'italic 300 16px Cormorant Garamond, serif';
-      ctx.fillStyle = 'rgba(242,234,216,0.78)';
-      const words = excerpt.split(' ');
-      let line = '', y = 568;
-      for (const word of words) {
-        const test = line + word + ' ';
-        if (ctx.measureText(test).width > 380 && line) {
-          ctx.fillText(line.trim(), 270, y); line = word + ' '; y += 26;
-          if (y > 780) { ctx.fillText(line.trim() + '…', 270, y); break; }
-        } else line = test;
+    // card border
+    ctx.strokeStyle = 'rgba(201,162,82,0.5)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(cX+rad, cY); ctx.lineTo(cX+cW-rad, cY);
+    ctx.quadraticCurveTo(cX+cW, cY, cX+cW, cY+rad);
+    ctx.lineTo(cX+cW, cY+cH-rad);
+    ctx.quadraticCurveTo(cX+cW, cY+cH, cX+cW-rad, cY+cH);
+    ctx.lineTo(cX+rad, cY+cH);
+    ctx.quadraticCurveTo(cX, cY+cH, cX, cY+cH-rad);
+    ctx.lineTo(cX, cY+rad);
+    ctx.quadraticCurveTo(cX, cY, cX+rad, cY);
+    ctx.closePath();
+    ctx.stroke();
+
+    // ── CARD NAME ──
+    const nameY = cY + cH + 72;
+    ctx.font = '500 54px Cinzel, Georgia, serif';
+    ctx.fillStyle = 'rgba(201,162,82,0.95)';
+    ctx.letterSpacing = '4px';
+    ctx.fillText(state.card.name, W/2, nameY);
+
+    // archetype — split long ones across lines
+    const arch = state.card.archetype;
+    ctx.font = '400 22px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(148,136,168,0.65)';
+    ctx.letterSpacing = '4px';
+    ctx.fillText(arch.toUpperCase(), W/2, nameY + 52);
+
+    // thin gold divider
+    const divY = nameY + 90;
+    ctx.strokeStyle = 'rgba(201,162,82,0.25)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(W/2 - 40, divY); ctx.lineTo(W/2 + 40, divY);
+    ctx.stroke();
+    // tiny diamond
+    ctx.fillStyle = 'rgba(201,162,82,0.5)';
+    ctx.save();
+    ctx.translate(W/2, divY);
+    ctx.rotate(Math.PI/4);
+    ctx.fillRect(-4, -4, 8, 8);
+    ctx.restore();
+
+    // ── READING EXCERPT ──
+    const reading = state.reading || '';
+    const sentences = reading.match(/[^.!?]+[.!?]+/g) || [reading];
+    const excerpt = sentences.slice(0, 2).join(' ').trim();
+    const displayText = (excerpt.length > 200 ? excerpt.slice(0, 200) + '…' : excerpt);
+
+    ctx.font = '400 30px Georgia, "Times New Roman", serif';
+    ctx.fillStyle = 'rgba(242,234,216,0.85)';
+    ctx.letterSpacing = '0px';
+    ctx.textAlign = 'center';
+    shareWrapText(ctx, displayText, W/2, divY + 70, 860, 50);
+
+    // ── FOCUS TAG (if set) ──
+    if (state.focus) {
+      const tagY = H - 170;
+      ctx.font = '500 20px Arial, sans-serif';
+      ctx.fillStyle = 'rgba(201,162,82,0.5)';
+      ctx.letterSpacing = '4px';
+      ctx.fillText(state.focus.toUpperCase(), W/2, tagY);
+    }
+
+    // ── URL ──
+    ctx.font = '500 20px Arial, sans-serif';
+    ctx.fillStyle = 'rgba(148,136,168,0.3)';
+    ctx.letterSpacing = '5px';
+    ctx.fillText('VEILREADS.COM', W/2, H - 80);
+
+    // ── EXPORT ──
+    canvas.toBlob(async (blob) => {
+      const file = new File([blob], 'veil-reading.png', { type: 'image/png' });
+      if (navigator.canShare && navigator.canShare({ files: [file] })) {
+        await navigator.share({ files: [file], title: 'My reading from Veil Reads' });
+      } else {
+        const a = document.createElement('a');
+        a.href = canvas.toDataURL('image/png');
+        a.download = 'veil-reading.png';
+        a.click();
+        showToast('Reading saved ✦');
       }
-      if (y <= 780) ctx.fillText(line.trim(), 270, y);
-
-      // URL
-      ctx.font = '500 11px Cinzel, serif';
-      ctx.fillStyle = 'rgba(148,136,168,0.35)';
-      ctx.fillText('VEILREADS.COM', 270, 920);
-
-      // Convert and share
-      canvas.toBlob(async (blob) => {
-        const file = new File([blob], 'my-veil-reading.png', { type: 'image/png' });
-        if (navigator.canShare && navigator.canShare({ files: [file] })) {
-          await navigator.share({ files: [file], title: 'My reading from Veil Reads' });
-        } else {
-          // Fallback: download
-          const a = document.createElement('a');
-          a.href = canvas.toDataURL('image/png');
-          a.download = 'veil-reading.png';
-          a.click();
-          showToast('Reading saved ✦');
-        }
-      });
-    };
-
-    img.onerror = () => downloadFallback(canvas, ctx);
+    }, 'image/png', 0.95);
 
   } catch(e) {
-    console.error(e);
+    console.error('Share error:', e);
     showToast('Could not generate image');
   }
 }
+
+function shareWrapText(ctx, text, x, y, maxWidth, lineHeight) {
+  const words = text.split(' ');
+  let line = '';
+  let cy = y;
+  for (let i = 0; i < words.length; i++) {
+    const test = line + words[i] + ' ';
+    if (ctx.measureText(test).width > maxWidth && line !== '') {
+      ctx.fillText(line.trim(), x, cy);
+      line = words[i] + ' ';
+      cy += lineHeight;
+      if (cy > 1780) { ctx.fillText(line.trim() + '…', x, cy); return; }
+    } else { line = test; }
+  }
+  ctx.fillText(line.trim(), x, cy);
+}
+
+
 
 function showToast(msg) {
   const t = document.getElementById('share-toast');
