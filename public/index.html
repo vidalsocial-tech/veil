@@ -217,17 +217,6 @@
   }
   .btn-share:hover { border-color:var(--gold); background:rgba(201,162,82,.08); transform:translateY(-1px); }
 
-  /* feedback button */
-  #feedback-btn {
-    position: fixed; bottom: 24px; right: 20px; z-index: 50;
-    font-family:'Inter',sans-serif; font-size:.62rem; font-weight:500; letter-spacing:.12em;
-    color:var(--mist); background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.1); border-radius:30px;
-    padding:9px 16px; cursor:pointer;
-    transition:all .25s; text-transform:uppercase;
-    display:flex; align-items:center; gap:6px;
-  }
-  #feedback-btn:hover { color:var(--parchment); border-color:rgba(255,255,255,.25); background:rgba(255,255,255,.08); }
 
   /* ── LOADING BAR ── */
   #loading-bar {
@@ -415,16 +404,8 @@
   <div class="pdot" id="dot-4"></div>
 </div>
 
-<button id="feedback-btn" onclick="openFeedback()">
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-  Feedback
-</button>
 
 <script>
-function openFeedback() {
-  window.open('mailto:vluchanastorage@gmail.com?subject=Veil Reads Feedback', '_blank');
-}
-
 // ══════════════════════════════════════
 // MOON PHASE ENGINE
 // ══════════════════════════════════════
