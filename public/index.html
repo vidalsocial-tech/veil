@@ -49,7 +49,7 @@
   .screen.exit   { opacity: 0; transform: translateY(-14px); pointer-events: none; }
 
   /* ── SHARED ── */
-  .logo-mark { font-family:'Cinzel',serif; font-size:.7rem; letter-spacing:.3em; color:var(--gold); opacity:.65; margin-bottom:44px; }
+  .logo-mark { font-family:'Cinzel',serif; font-size:.9rem; letter-spacing:.3em; color:var(--gold); opacity:.75; margin-bottom:36px; }
   .eyebrow   { font-family:'Inter',sans-serif; font-size:.65rem; font-weight:500; letter-spacing:.22em; color:var(--mist); margin-bottom:18px; text-transform:uppercase; }
   .btn-cta {
     font-family:'Inter',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.18em;
@@ -96,9 +96,9 @@
   @keyframes pulse { 0%,100%{opacity:.65;transform:scale(1)} 50%{opacity:1;transform:scale(1.06)} }
 
   /* ── SCREEN 2 INTENTION ── */
-  .section-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,1.7rem); letter-spacing:.06em; text-align:center; margin-bottom:8px; }
-  .section-sub { font-size:1rem; color:var(--mist); text-align:center; margin-bottom:32px; line-height:1.7; }
-  .focus-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; width:100%; max-width:340px; margin-bottom:28px; }
+  .section-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,1.7rem); letter-spacing:.06em; text-align:center; margin-bottom:10px; }
+  .section-sub { font-size:1rem; color:var(--mist); text-align:center; margin-bottom:40px; line-height:1.7; }
+  .focus-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; width:100%; max-width:400px; margin-bottom:0; }
   .focus-pill { padding:14px 16px; border:1px solid rgba(201,162,82,.2); border-radius:12px; background:rgba(255,255,255,.02); cursor:pointer; transition:all .25s; text-align:center; }
   .focus-pill:hover { border-color:rgba(201,162,82,.5); background:rgba(201,162,82,.06); }
   .focus-pill.selected { border-color:var(--gold); background:rgba(201,162,82,.1); box-shadow:0 0 18px rgba(201,162,82,.14); }
@@ -107,26 +107,28 @@
   .optional-divider { display:flex; align-items:center; gap:10px; width:100%; max-width:340px; margin-bottom:14px; }
   .optional-divider span { font-family:'Inter',sans-serif; font-size:.7rem; color:var(--mist); opacity:.45; white-space:nowrap; }
   .optional-divider::before, .optional-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.05); }
-  .intention-input { width:100%; max-width:340px; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:10px; color:var(--parchment); font-family:'Libre Baskerville',serif; font-size:1rem; padding:13px 16px; resize:none; outline:none; transition:border-color .25s; margin-bottom:28px; line-height:1.7; }
+  .intention-input { width:100%; max-width:100%; background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:10px; color:var(--parchment); font-family:'Libre Baskerville',serif; font-size:1rem; padding:13px 16px; resize:none; outline:none; transition:border-color .25s; margin-bottom:28px; line-height:1.7; }
   .intention-input::placeholder { color:rgba(148,136,168,.28); }
   .intention-input:focus { border-color:rgba(201,162,82,.28); }
   .intention-input.expanded { rows: 4; min-height: 100px; }
 
   /* hidden note field */
   .note-wrap {
-    width: 100%; max-width: 340px;
+    width: 100%; max-width: 400px; box-sizing: border-box;
     max-height: 0; overflow: hidden;
     opacity: 0;
     transition: max-height .4s cubic-bezier(.23,1,.32,1), opacity .35s ease, margin .4s ease;
-    margin-bottom: 0;
+    margin-bottom: 0; margin-top: 0;
   }
   .note-wrap.visible {
     max-height: 160px;
     opacity: 1;
-    margin-bottom: 28px;
+    margin-top: 20px;
+    margin-bottom: 36px;
   }
 
   /* dimmed continue button */
+  #btn-continue { margin-top: 36px; }
   .btn-cta-dim {
     opacity: .35;
     pointer-events: none;
@@ -321,7 +323,6 @@
   <div class="focus-grid">
     <div class="focus-pill" onclick="selectFocus(this,'Love')"><span class="focus-pill-label">Love</span><span class="focus-pill-sub">heart & connection</span></div>
     <div class="focus-pill" onclick="selectFocus(this,'Clarity')"><span class="focus-pill-label">Clarity</span><span class="focus-pill-sub">mind & direction</span></div>
-    <div class="focus-pill" onclick="selectFocus(this,'Purpose')"><span class="focus-pill-label">Purpose</span><span class="focus-pill-sub">path & meaning</span></div>
     <div class="focus-pill" onclick="selectFocus(this,'Change')"><span class="focus-pill-label">Change</span><span class="focus-pill-sub">growth & transition</span></div>
   </div>
   <div class="note-wrap" id="note-wrap">
