@@ -99,11 +99,13 @@
   .section-title { font-family:'Cinzel',serif; font-size:clamp(1.2rem,4vw,1.7rem); letter-spacing:.06em; text-align:center; margin-bottom:10px; }
   .section-sub { font-size:1rem; color:var(--mist); text-align:center; margin-bottom:40px; line-height:1.7; }
   .focus-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; width:100%; max-width:400px; margin-bottom:0; }
-  .focus-pill { padding:14px 16px; border:1px solid rgba(201,162,82,.2); border-radius:12px; background:rgba(255,255,255,.02); cursor:pointer; transition:all .25s; text-align:center; }
+  .focus-pill { padding:22px 12px 18px; border:1px solid rgba(201,162,82,.2); border-radius:14px; background:rgba(255,255,255,.02); cursor:pointer; transition:all .25s; text-align:center; display:flex; flex-direction:column; align-items:center; gap:10px; }
   .focus-pill:hover { border-color:rgba(201,162,82,.5); background:rgba(201,162,82,.06); }
-  .focus-pill.selected { border-color:var(--gold); background:rgba(201,162,82,.1); box-shadow:0 0 18px rgba(201,162,82,.14); }
-  .focus-pill-label { font-family:'Inter',sans-serif; font-size:.72rem; font-weight:500; letter-spacing:.1em; color:var(--parchment); display:block; margin-bottom:3px; text-transform:uppercase; }
-  .focus-pill-sub { font-size:.88rem; color:var(--mist); display:block; }
+  .focus-pill.selected { border-color:var(--gold); background:rgba(201,162,82,.1); box-shadow:0 0 22px rgba(201,162,82,.16); }
+  .focus-pill-icon { width:28px; height:28px; opacity:.7; transition:opacity .25s; }
+  .focus-pill.selected .focus-pill-icon { opacity:1; }
+  .focus-pill:hover .focus-pill-icon { opacity:.9; }
+  .focus-pill-label { font-family:'Inter',sans-serif; font-size:.72rem; font-weight:600; letter-spacing:.12em; color:var(--parchment); display:block; text-transform:uppercase; }
   .optional-divider { display:flex; align-items:center; gap:10px; width:100%; max-width:340px; margin-bottom:14px; }
   .optional-divider span { font-family:'Inter',sans-serif; font-size:.7rem; color:var(--mist); opacity:.45; white-space:nowrap; }
   .optional-divider::before, .optional-divider::after { content:''; flex:1; height:1px; background:rgba(255,255,255,.05); }
@@ -324,9 +326,35 @@
   <div class="section-title">What brings you here today?</div>
   <div class="section-sub">Choose a focus to begin.</div>
   <div class="focus-grid">
-    <div class="focus-pill" onclick="selectFocus(this,'Love')"><span class="focus-pill-label">Love</span><span class="focus-pill-sub">heart & connection</span></div>
-    <div class="focus-pill" onclick="selectFocus(this,'Clarity')"><span class="focus-pill-label">Clarity</span><span class="focus-pill-sub">mind & direction</span></div>
-    <div class="focus-pill" onclick="selectFocus(this,'Change')"><span class="focus-pill-label">Change</span><span class="focus-pill-sub">growth & transition</span></div>
+    <div class="focus-pill" onclick="selectFocus(this,'Love')">
+      <svg class="focus-pill-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 24s-9-5.5-9-12a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 6.5-9 12-9 12z" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="focus-pill-label">Love</span>
+    </div>
+    <div class="focus-pill" onclick="selectFocus(this,'Clarity')">
+      <svg class="focus-pill-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="5" stroke="var(--gold)" stroke-width="1.5"/>
+        <line x1="14" y1="3" x2="14" y2="6" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="14" y1="22" x2="14" y2="25" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="3" y1="14" x2="6" y2="14" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="22" y1="14" x2="25" y2="14" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="5.9" y1="5.9" x2="7.9" y2="7.9" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="20.1" y1="20.1" x2="22.1" y2="22.1" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="22.1" y1="5.9" x2="20.1" y2="7.9" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="7.9" y1="20.1" x2="5.9" y2="22.1" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <span class="focus-pill-label">Clarity</span>
+    </div>
+    <div class="focus-pill" onclick="selectFocus(this,'Change')">
+      <svg class="focus-pill-icon" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 14 C5 9 9 5 14 5 C17.5 5 20.5 6.8 22 9.5" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <path d="M23 14 C23 19 19 23 14 23 C10.5 23 7.5 21.2 6 18.5" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round"/>
+        <polyline points="19,7 22,9.5 19.5,12.5" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="9,21 6,18.5 8.5,15.5" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="focus-pill-label">Change</span>
+    </div>
   </div>
   <div class="note-wrap" id="note-wrap">
     <textarea class="intention-input" id="intention-text" rows="2" placeholder="Add a personal note"></textarea>
