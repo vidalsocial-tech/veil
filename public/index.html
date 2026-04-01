@@ -979,7 +979,7 @@ async function shareReading() {
     });
 
     const cW = 310, cH = 516;
-    const cX = (W - cW) / 2, cY = 356;
+    const cX = (W - cW) / 2, cY = 320;
     const rad = 20;
 
     // card glow shadow
@@ -1054,16 +1054,17 @@ async function shareReading() {
     ctx.restore();
 
     // ── READING EXCERPT ──
-    const reading = state.reading || '';
+    // Use actual AI reading — take first 3 sentences or ~280 chars
+    const reading = state.reading || state.card.deepMeaning || '';
     const sentences = reading.match(/[^.!?]+[.!?]+/g) || [reading];
-    const excerpt = sentences.slice(0, 2).join(' ').trim();
-    const displayText = (excerpt.length > 200 ? excerpt.slice(0, 200) + '…' : excerpt);
+    const excerpt = sentences.slice(0, 3).join(' ').trim();
+    const displayText = excerpt.length > 280 ? excerpt.slice(0, 280) + '…' : excerpt;
 
-    ctx.font = '400 30px Georgia, "Times New Roman", serif';
-    ctx.fillStyle = 'rgba(242,234,216,0.85)';
-    ctx.letterSpacing = '0px';
+    ctx.font = '400 28px Georgia, "Times New Roman", serif';
+    ctx.fillStyle = 'rgba(242,234,216,0.88)';
+    ctx.letterSpacing = '0.3px';
     ctx.textAlign = 'center';
-    shareWrapText(ctx, displayText, W/2, divY + 70, 860, 50);
+    shareWrapText(ctx, displayText, W/2, divY + 60, 880, 48);
 
     // ── FOCUS TAG (if set) ──
     if (state.focus) {
@@ -1110,7 +1111,7 @@ function shareWrapText(ctx, text, x, y, maxWidth, lineHeight) {
       ctx.fillText(line.trim(), x, cy);
       line = words[i] + ' ';
       cy += lineHeight;
-      if (cy > 1780) { ctx.fillText(line.trim() + '…', x, cy); return; }
+      if (cy > 1820) { ctx.fillText(line.trim() + '…', x, cy); return; }
     } else { line = test; }
   }
   ctx.fillText(line.trim(), x, cy);
