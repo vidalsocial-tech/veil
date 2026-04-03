@@ -82,7 +82,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .cslot{display:flex;flex-direction:column;align-items:center;gap:8px;}
 .pos-num{font-family:'Inter',sans-serif;font-size:.54rem;font-weight:600;letter-spacing:.14em;color:var(--mist);text-transform:uppercase;opacity:.5;}
 
-/* 3D flip — real images on front */
+/* 3D flip */
 .flip-wrap{perspective:900px;cursor:pointer;}
 .flip-inner{width:88px;height:148px;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.4,0,.2,1);position:relative;}
 .flip-inner.flipped{transform:rotateY(180deg) !important;}
@@ -90,9 +90,18 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .card-back{background:linear-gradient(155deg,#1e1836 0%,#0e0c1c 100%);border:1px solid rgba(201,162,82,.28);box-shadow:0 8px 28px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;}
 .card-back::before{content:'';position:absolute;inset:5px;border:1px solid rgba(201,162,82,.1);border-radius:4px;}
 .card-back::after{content:'✦';font-size:1.1rem;color:rgba(201,162,82,.2);}
-.card-front{transform:rotateY(180deg);border:1px solid rgba(201,162,82,.45);box-shadow:0 0 36px rgba(201,162,82,.2),0 12px 36px rgba(0,0,0,.8);overflow:hidden;background:linear-gradient(155deg,#1e1836 0%,#0e0c1c 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;}
-.card-front-emoji{font-size:2.4rem;line-height:1;}
-.card-front-name{font-family:'Cinzel',serif;font-size:.38rem;letter-spacing:.12em;color:rgba(201,162,82,.85);text-transform:uppercase;text-align:center;padding:0 4px;opacity:0;transition:opacity .5s .5s;}
+.card-front{
+  transform:rotateY(180deg);
+  border:1px solid rgba(201,162,82,.45);
+  box-shadow:0 0 36px rgba(201,162,82,.2),0 12px 36px rgba(0,0,0,.8);
+  background:linear-gradient(155deg,#1e1836 0%,#0e0c1c 100%);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:6px;overflow:hidden;position:relative;
+}
+.card-front::before{content:'';position:absolute;inset:5px;border:1px solid rgba(201,162,82,.12);border-radius:5px;pointer-events:none;}
+.card-front-emoji{font-size:2.2rem;line-height:1;position:relative;z-index:1;}
+.card-front-name{font-family:'Cinzel',serif;font-size:.36rem;letter-spacing:.12em;color:rgba(201,162,82,.85);text-transform:uppercase;text-align:center;padding:0 6px;opacity:0;transition:opacity .5s .5s;position:relative;z-index:1;}
 .flip-inner.flipped .card-front-name{opacity:1;}
 
 .pos-label{font-family:'Cinzel',serif;font-size:.52rem;letter-spacing:.1em;color:var(--mist);text-align:center;opacity:0;transition:opacity .6s .7s;max-width:92px;line-height:1.5;}
@@ -285,49 +294,49 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 <script>
 
 const CARDS = [
-  { slug:"the-fool", num:"0", roman:"0", name:"The Fool", keywords:"New beginnings · Innocence · Leap of faith",
+  { slug:"the-fool", emoji:"🎒", num:"0", roman:"0", name:"The Fool", keywords:"New beginnings · Innocence · Leap of faith",
     upright:"A fresh start is available to you. Step forward with an open heart, even without knowing every detail of what comes next. Pure potential is yours.", love:"Love asks you to be open and unguarded. Drop the rehearsed version of yourself.", clarity:"The answer lives in action, not analysis. Take the first step.", change:"Something entirely new is beginning. Trust the leap." },
-  { slug:"the-magician", num:"I", roman:"I", name:"The Magician", keywords:"Manifestation · Willpower · Skill",
+  { slug:"the-magician", emoji:"⚗️", num:"I", roman:"I", name:"The Magician", keywords:"Manifestation · Willpower · Skill",
     upright:"You have everything you need. The tools are already in your hands — focus your will and begin. This is a moment to act, not to wait.", love:"You have more influence in this situation than you realize. Show up fully.", clarity:"The clarity you seek comes through doing. Begin, and understanding will follow.", change:"You have the power to shape this transition. Use it deliberately." },
-  { slug:"the-high-priestess", num:"II", roman:"II", name:"The High Priestess", keywords:"Intuition · Inner knowing · Mystery",
+  { slug:"the-high-priestess", emoji:"🌙", num:"II", roman:"II", name:"The High Priestess", keywords:"Intuition · Inner knowing · Mystery",
     upright:"The answer you seek is already within you. Be still and listen. Not everything can be reasoned out — some truths are felt before they are understood.", love:"What does your body know about this connection that your mind keeps overriding?", clarity:"Stop seeking more information. Sit with what you already sense.", change:"This change will reveal itself in time. Trust what you feel." },
-  { slug:"the-empress", num:"III", roman:"III", name:"The Empress", keywords:"Abundance · Creativity · Nurturing",
+  { slug:"the-empress", emoji:"🌿", num:"III", roman:"III", name:"The Empress", keywords:"Abundance · Creativity · Nurturing",
     upright:"You are entering a season of growth. Something beautiful is growing in your life right now — tend to it, do not rush it.", love:"Let love be warm, abundant, and unguarded. You are allowed to receive.", clarity:"The answer is already growing. Give it time and the right conditions.", change:"This transition carries abundance with it. Be fertile ground." },
-  { slug:"the-emperor", num:"IV", roman:"IV", name:"The Emperor", keywords:"Authority · Structure · Foundation",
+  { slug:"the-emperor", emoji:"⚔️", num:"IV", roman:"IV", name:"The Emperor", keywords:"Authority · Structure · Foundation",
     upright:"Build something solid. Discipline and clear boundaries are your allies now. Take charge of what is yours to lead.", love:"A strong, stable foundation is what love needs from you right now.", clarity:"Create order from the chaos. Structure brings understanding.", change:"Approach this transition with strategy and steady resolve." },
-  { slug:"the-hierophant", num:"V", roman:"V", name:"The Hierophant", keywords:"Tradition · Wisdom · Spiritual guidance",
+  { slug:"the-hierophant", emoji:"🏛️", num:"V", roman:"V", name:"The Hierophant", keywords:"Tradition · Wisdom · Spiritual guidance",
     upright:"Seek wisdom from tradition, mentors, or established knowledge. There is value in what has been tested by time.", love:"Honor the depth and commitment this connection deserves.", clarity:"The answer may already exist in received wisdom. Ask someone you trust.", change:"This change is supported by something larger than your individual will." },
-  { slug:"the-lovers", num:"VI", roman:"VI", name:"The Lovers", keywords:"Love · Alignment · Conscious choice",
+  { slug:"the-lovers", emoji:"💞", num:"VI", roman:"VI", name:"The Lovers", keywords:"Love · Alignment · Conscious choice",
     upright:"A meaningful choice is before you — one that requires your whole heart. This is about integrity and alignment with your deepest values.", love:"What does your whole heart want? Not the safe answer. The true one.", clarity:"The clarity needed here is values-based. What do you truly stand for?", change:"This change asks for a genuine choice — not a drift, not a default." },
-  { slug:"the-chariot", num:"VII", roman:"VII", name:"The Chariot", keywords:"Willpower · Direction · Victory",
+  { slug:"the-chariot", emoji:"🏆", num:"VII", roman:"VII", name:"The Chariot", keywords:"Willpower · Direction · Victory",
     upright:"You have the strength and determination to move forward. Hold the reins firmly but without rigidity. Forward motion is your power right now.", love:"Pursue what you want with confidence. Hesitation is not serving you here.", clarity:"Push through the uncertainty. Movement creates clarity.", change:"You have what it takes to drive this change forward. Do not hesitate." },
-  { slug:"strength", num:"VIII", roman:"VIII", name:"Strength", keywords:"Inner strength · Courage · Compassion",
+  { slug:"strength", emoji:"🦁", num:"VIII", roman:"VIII", name:"Strength", keywords:"Inner strength · Courage · Compassion",
     upright:"True strength is not force — it is patience, compassion, and the quiet courage to stay open even when it is difficult. You are stronger than you know.", love:"Softness is power here. Meet this moment with warmth, not armor.", clarity:"The answer is in what remains when you stop pushing.", change:"You can move through this with grace as well as courage." },
-  { slug:"the-hermit", num:"IX", roman:"IX", name:"The Hermit", keywords:"Solitude · Inner guidance · Wisdom",
+  { slug:"the-hermit", emoji:"🏮", num:"IX", roman:"IX", name:"The Hermit", keywords:"Solitude · Inner guidance · Wisdom",
     upright:"Turn inward. The wisdom you need is not outside — it lives in stillness, in honest time alone with yourself.", love:"Time with yourself right now is preparation for deeper connection.", clarity:"Withdraw from the noise. Your clearest thinking happens in quiet.", change:"This transition requires inner work before outward movement." },
-  { slug:"wheel-of-fortune", num:"X", roman:"X", name:"Wheel of Fortune", keywords:"Change · Cycles · Turning point",
+  { slug:"wheel-of-fortune", emoji:"🎡", num:"X", roman:"X", name:"Wheel of Fortune", keywords:"Change · Cycles · Turning point",
     upright:"The wheel is turning in your favor. What has felt stuck is beginning to shift. Momentum is with you.", love:"Something in your love life is in motion. Stay open to what arrives.", clarity:"The situation is evolving faster than you realize. Stay flexible.", change:"You are at a genuine turning point. Let the wheel carry you." },
-  { slug:"justice", num:"XI", roman:"XI", name:"Justice", keywords:"Truth · Cause & effect · Accountability",
+  { slug:"justice", emoji:"⚖️", num:"XI", roman:"XI", name:"Justice", keywords:"Truth · Cause & effect · Accountability",
     upright:"Truth and fairness are at work. Honest reckoning with what is — not what you wish were — is what this moment asks.", love:"Honest conversation, even the hard kind, is what this relationship needs.", clarity:"See the situation exactly as it is, without the filter of what you want.", change:"What you move toward will reflect the choices you are making now." },
-  { slug:"the-hanged-man", num:"XII", roman:"XII", name:"The Hanged Man", keywords:"Surrender · New perspective · Pause",
+  { slug:"the-hanged-man", emoji:"🔮", num:"XII", roman:"XII", name:"The Hanged Man", keywords:"Surrender · New perspective · Pause",
     upright:"Pause. What appears as a setback may be a reorientation. Surrender control and see what new understanding becomes available.", love:"Stop trying to make this into what you want it to be. See what it actually is.", clarity:"Release the need to resolve this immediately. Let clarity come on its own time.", change:"This is a waiting period, not a stuck period. The delay is intentional." },
-  { slug:"death", num:"XIII", roman:"XIII", name:"Death", keywords:"Transformation · Endings · New beginnings",
+  { slug:"death", emoji:"🦋", num:"XIII", roman:"XIII", name:"Death", keywords:"Transformation · Endings · New beginnings",
     upright:"Something is completing — and that completion is necessary. Death in tarot speaks to transformation, to the endings that make room for beginnings.", love:"Let what is finished be finished. Something truer is waiting on the other side.", clarity:"The old framework is no longer serving you. Allow it to end.", change:"This is real transformation, not surface change. Embrace the full depth of it." },
-  { slug:"temperance", num:"XIV", roman:"XIV", name:"Temperance", keywords:"Balance · Patience · Integration",
+  { slug:"temperance", emoji:"✨", num:"XIV", roman:"XIV", name:"Temperance", keywords:"Balance · Patience · Integration",
     upright:"Find the middle path. You are being called to blend, not choose. Patience and gradual integration will serve you far better than forcing a rapid resolution.", love:"The relationship that lasts knows how to find its own rhythm.", clarity:"The answer is neither extreme. It is in the balance between them.", change:"This change asks for patience and a steady, unhurried hand." },
-  { slug:"the-devil", num:"XV", roman:"XV", name:"The Devil", keywords:"Bondage · Shadow self · Patterns",
+  { slug:"the-devil", emoji:"⛓️", num:"XV", roman:"XV", name:"The Devil", keywords:"Bondage · Shadow self · Patterns",
     upright:"Something is keeping you bound — a pattern, a belief, a habit you return to. Recognizing it is the first step. The chains, on closer inspection, are not locked.", love:"What are you holding onto that no longer serves this connection?", clarity:"The thing preventing clarity may be a story you keep telling yourself.", change:"What pattern are you carrying into this new chapter that you could choose to leave behind?" },
-  { slug:"the-tower", num:"XVI", roman:"XVI", name:"The Tower", keywords:"Sudden change · Revelation · Disruption",
+  { slug:"the-tower", emoji:"🌩️", num:"XVI", roman:"XVI", name:"The Tower", keywords:"Sudden change · Revelation · Disruption",
     upright:"Something is being dismantled — suddenly, unexpectedly. What falls was built on an unstable foundation. The disruption is clearing what needed to go.", love:"The truth about this situation is breaking through. Let it.", clarity:"The confusion you feel is the result of a false structure collapsing. Clarity is coming.", change:"This is not a gentle transition. It is a breaking open — and it is necessary." },
-  { slug:"the-star", num:"XVII", roman:"XVII", name:"The Star", keywords:"Hope · Healing · Renewal",
+  { slug:"the-star", emoji:"🌟", num:"XVII", roman:"XVII", name:"The Star", keywords:"Hope · Healing · Renewal",
     upright:"After difficulty, there is restoration. The Star brings genuine hope — not wishful thinking, but the quiet knowing that healing is real.", love:"Tenderness and renewal are available here. Let yourself feel hopeful.", clarity:"The fog is lifting. What is becoming clear is more positive than your worry suggested.", change:"This change leads somewhere genuinely good. You are allowed to trust it." },
-  { slug:"the-moon", num:"XVIII", roman:"XVIII", name:"The Moon", keywords:"Intuition · The unconscious · Dreams",
+  { slug:"the-moon", emoji:"🌕", num:"XVIII", roman:"XVIII", name:"The Moon", keywords:"Intuition · The unconscious · Dreams",
     upright:"Not everything is as it appears. Navigate by feeling right now. Your intuition is more reliable than what seems visible on the surface.", love:"Pay attention to what you feel beneath the words and the explanations.", clarity:"Clarity will come through feeling before it arrives through thought.", change:"You cannot fully map this transition in advance. Move by feel." },
-  { slug:"the-sun", num:"XIX", roman:"XIX", name:"The Sun", emoji:"☀️", keywords:"Joy · Clarity · Vitality",
+  { slug:"the-sun", emoji:"☀️", num:"XIX", roman:"XIX", name:"The Sun", emoji:"☀️", keywords:"Joy · Clarity · Vitality",
     upright:"Something bright is genuinely true about your life right now. Let yourself feel it without waiting for the other shoe to drop. The Sun is one of the most affirming cards in the deck.", love:"Joy is available in this connection. Let yourself be happy without bracing for what might go wrong.", clarity:"Things are much clearer than your worry suggests. Look at what is actually here right now.", change:"This change leads somewhere bright. Trust the direction you are heading." },
-  { slug:"judgement", num:"XX", roman:"XX", name:"Judgement", keywords:"Awakening · Rebirth · Answering the call",
+  { slug:"judgement", emoji:"📯", num:"XX", roman:"XX", name:"Judgement", keywords:"Awakening · Rebirth · Answering the call",
     upright:"You are being called to rise into a fuller version of yourself. Something is awakening — a reckoning that is not punishment but liberation.", love:"A genuine new beginning in love is available — but it requires releasing the old story.", clarity:"The reckoning you have been avoiding is also the clarity you have been seeking.", change:"This is an inner awakening as much as an outer change. Answer the call." },
-  { slug:"the-world", num:"XXI", roman:"XXI", name:"The World", keywords:"Completion · Wholeness · Fulfillment",
+  { slug:"the-world", emoji:"🌍", num:"XXI", roman:"XXI", name:"The World", keywords:"Completion · Wholeness · Fulfillment",
     upright:"You have arrived somewhere real. A significant chapter is complete. Pause and receive the fullness of what you have accomplished, survived, and become.", love:"Something in your love life has come full circle. Honor how far you have come.", clarity:"You have more perspective than you are giving yourself credit for. Trust it.", change:"This arrival is worth celebrating. You are more whole on the other side." },
 ];
 const POSITIONS = {
@@ -404,7 +413,7 @@ function runShuffle(){
   shuffleTO=setTimeout(doShuffle,750);
 }
 
-// Step 5: Draw — set real card images
+// Step 5: Draw
 function setupDraw(){
   revealCount=0;
   drawn.forEach((card,i)=>{
