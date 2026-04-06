@@ -226,7 +226,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 <div class="screen" id="s5">
   <div class="logo" style="margin-bottom:24px">Veil<em>Reads</em></div>
   <p class="draw-instruction">Three cards have been drawn.<br>Tap each one to reveal.</p>
-  <div class="spread-legend" id="spread-legend">Past · Present · Future</div>
+  <div class="spread-legend" id="spread-legend">The Root · The Now · The Path</div>
   <div class="spread">
     <div class="cslot" id="cs0">
       <span class="pos-num">I</span>
@@ -294,56 +294,188 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 <script>
 
 const CARDS = [
-  { slug:"the-fool", emoji:"🎒", num:"0", roman:"0", name:"The Fool", keywords:"New beginnings · Innocence · Leap of faith",
-    upright:"A fresh start is available to you. Step forward with an open heart, even without knowing every detail of what comes next. Pure potential is yours.", love:"Love asks you to be open and unguarded. Drop the rehearsed version of yourself.", clarity:"The answer lives in action, not analysis. Take the first step.", change:"Something entirely new is beginning. Trust the leap." },
-  { slug:"the-magician", emoji:"⚗️", num:"I", roman:"I", name:"The Magician", keywords:"Manifestation · Willpower · Skill",
-    upright:"You have everything you need. The tools are already in your hands — focus your will and begin. This is a moment to act, not to wait.", love:"You have more influence in this situation than you realize. Show up fully.", clarity:"The clarity you seek comes through doing. Begin, and understanding will follow.", change:"You have the power to shape this transition. Use it deliberately." },
-  { slug:"the-high-priestess", emoji:"🌙", num:"II", roman:"II", name:"The High Priestess", keywords:"Intuition · Inner knowing · Mystery",
-    upright:"The answer you seek is already within you. Be still and listen. Not everything can be reasoned out — some truths are felt before they are understood.", love:"What does your body know about this connection that your mind keeps overriding?", clarity:"Stop seeking more information. Sit with what you already sense.", change:"This change will reveal itself in time. Trust what you feel." },
-  { slug:"the-empress", emoji:"🌿", num:"III", roman:"III", name:"The Empress", keywords:"Abundance · Creativity · Nurturing",
-    upright:"You are entering a season of growth. Something beautiful is growing in your life right now — tend to it, do not rush it.", love:"Let love be warm, abundant, and unguarded. You are allowed to receive.", clarity:"The answer is already growing. Give it time and the right conditions.", change:"This transition carries abundance with it. Be fertile ground." },
-  { slug:"the-emperor", emoji:"⚔️", num:"IV", roman:"IV", name:"The Emperor", keywords:"Authority · Structure · Foundation",
-    upright:"Build something solid. Discipline and clear boundaries are your allies now. Take charge of what is yours to lead.", love:"A strong, stable foundation is what love needs from you right now.", clarity:"Create order from the chaos. Structure brings understanding.", change:"Approach this transition with strategy and steady resolve." },
-  { slug:"the-hierophant", emoji:"🏛️", num:"V", roman:"V", name:"The Hierophant", keywords:"Tradition · Wisdom · Spiritual guidance",
-    upright:"Seek wisdom from tradition, mentors, or established knowledge. There is value in what has been tested by time.", love:"Honor the depth and commitment this connection deserves.", clarity:"The answer may already exist in received wisdom. Ask someone you trust.", change:"This change is supported by something larger than your individual will." },
-  { slug:"the-lovers", emoji:"💞", num:"VI", roman:"VI", name:"The Lovers", keywords:"Love · Alignment · Conscious choice",
-    upright:"A meaningful choice is before you — one that requires your whole heart. This is about integrity and alignment with your deepest values.", love:"What does your whole heart want? Not the safe answer. The true one.", clarity:"The clarity needed here is values-based. What do you truly stand for?", change:"This change asks for a genuine choice — not a drift, not a default." },
-  { slug:"the-chariot", emoji:"🏆", num:"VII", roman:"VII", name:"The Chariot", keywords:"Willpower · Direction · Victory",
-    upright:"You have the strength and determination to move forward. Hold the reins firmly but without rigidity. Forward motion is your power right now.", love:"Pursue what you want with confidence. Hesitation is not serving you here.", clarity:"Push through the uncertainty. Movement creates clarity.", change:"You have what it takes to drive this change forward. Do not hesitate." },
-  { slug:"strength", emoji:"🦁", num:"VIII", roman:"VIII", name:"Strength", keywords:"Inner strength · Courage · Compassion",
-    upright:"True strength is not force — it is patience, compassion, and the quiet courage to stay open even when it is difficult. You are stronger than you know.", love:"Softness is power here. Meet this moment with warmth, not armor.", clarity:"The answer is in what remains when you stop pushing.", change:"You can move through this with grace as well as courage." },
-  { slug:"the-hermit", emoji:"🏮", num:"IX", roman:"IX", name:"The Hermit", keywords:"Solitude · Inner guidance · Wisdom",
-    upright:"Turn inward. The wisdom you need is not outside — it lives in stillness, in honest time alone with yourself.", love:"Time with yourself right now is preparation for deeper connection.", clarity:"Withdraw from the noise. Your clearest thinking happens in quiet.", change:"This transition requires inner work before outward movement." },
-  { slug:"wheel-of-fortune", emoji:"🎡", num:"X", roman:"X", name:"Wheel of Fortune", keywords:"Change · Cycles · Turning point",
-    upright:"The wheel is turning in your favor. What has felt stuck is beginning to shift. Momentum is with you.", love:"Something in your love life is in motion. Stay open to what arrives.", clarity:"The situation is evolving faster than you realize. Stay flexible.", change:"You are at a genuine turning point. Let the wheel carry you." },
-  { slug:"justice", emoji:"⚖️", num:"XI", roman:"XI", name:"Justice", keywords:"Truth · Cause & effect · Accountability",
-    upright:"Truth and fairness are at work. Honest reckoning with what is — not what you wish were — is what this moment asks.", love:"Honest conversation, even the hard kind, is what this relationship needs.", clarity:"See the situation exactly as it is, without the filter of what you want.", change:"What you move toward will reflect the choices you are making now." },
-  { slug:"the-hanged-man", emoji:"🔮", num:"XII", roman:"XII", name:"The Hanged Man", keywords:"Surrender · New perspective · Pause",
-    upright:"Pause. What appears as a setback may be a reorientation. Surrender control and see what new understanding becomes available.", love:"Stop trying to make this into what you want it to be. See what it actually is.", clarity:"Release the need to resolve this immediately. Let clarity come on its own time.", change:"This is a waiting period, not a stuck period. The delay is intentional." },
-  { slug:"death", emoji:"🦋", num:"XIII", roman:"XIII", name:"Death", keywords:"Transformation · Endings · New beginnings",
-    upright:"Something is completing — and that completion is necessary. Death in tarot speaks to transformation, to the endings that make room for beginnings.", love:"Let what is finished be finished. Something truer is waiting on the other side.", clarity:"The old framework is no longer serving you. Allow it to end.", change:"This is real transformation, not surface change. Embrace the full depth of it." },
-  { slug:"temperance", emoji:"✨", num:"XIV", roman:"XIV", name:"Temperance", keywords:"Balance · Patience · Integration",
-    upright:"Find the middle path. You are being called to blend, not choose. Patience and gradual integration will serve you far better than forcing a rapid resolution.", love:"The relationship that lasts knows how to find its own rhythm.", clarity:"The answer is neither extreme. It is in the balance between them.", change:"This change asks for patience and a steady, unhurried hand." },
-  { slug:"the-devil", emoji:"⛓️", num:"XV", roman:"XV", name:"The Devil", keywords:"Bondage · Shadow self · Patterns",
-    upright:"Something is keeping you bound — a pattern, a belief, a habit you return to. Recognizing it is the first step. The chains, on closer inspection, are not locked.", love:"What are you holding onto that no longer serves this connection?", clarity:"The thing preventing clarity may be a story you keep telling yourself.", change:"What pattern are you carrying into this new chapter that you could choose to leave behind?" },
-  { slug:"the-tower", emoji:"🌩️", num:"XVI", roman:"XVI", name:"The Tower", keywords:"Sudden change · Revelation · Disruption",
-    upright:"Something is being dismantled — suddenly, unexpectedly. What falls was built on an unstable foundation. The disruption is clearing what needed to go.", love:"The truth about this situation is breaking through. Let it.", clarity:"The confusion you feel is the result of a false structure collapsing. Clarity is coming.", change:"This is not a gentle transition. It is a breaking open — and it is necessary." },
-  { slug:"the-star", emoji:"🌟", num:"XVII", roman:"XVII", name:"The Star", keywords:"Hope · Healing · Renewal",
-    upright:"After difficulty, there is restoration. The Star brings genuine hope — not wishful thinking, but the quiet knowing that healing is real.", love:"Tenderness and renewal are available here. Let yourself feel hopeful.", clarity:"The fog is lifting. What is becoming clear is more positive than your worry suggested.", change:"This change leads somewhere genuinely good. You are allowed to trust it." },
-  { slug:"the-moon", emoji:"🌕", num:"XVIII", roman:"XVIII", name:"The Moon", keywords:"Intuition · The unconscious · Dreams",
-    upright:"Not everything is as it appears. Navigate by feeling right now. Your intuition is more reliable than what seems visible on the surface.", love:"Pay attention to what you feel beneath the words and the explanations.", clarity:"Clarity will come through feeling before it arrives through thought.", change:"You cannot fully map this transition in advance. Move by feel." },
-  { slug:"the-sun", emoji:"☀️", num:"XIX", roman:"XIX", name:"The Sun", emoji:"☀️", keywords:"Joy · Clarity · Vitality",
-    upright:"Something bright is genuinely true about your life right now. Let yourself feel it without waiting for the other shoe to drop. The Sun is one of the most affirming cards in the deck.", love:"Joy is available in this connection. Let yourself be happy without bracing for what might go wrong.", clarity:"Things are much clearer than your worry suggests. Look at what is actually here right now.", change:"This change leads somewhere bright. Trust the direction you are heading." },
-  { slug:"judgement", emoji:"📯", num:"XX", roman:"XX", name:"Judgement", keywords:"Awakening · Rebirth · Answering the call",
-    upright:"You are being called to rise into a fuller version of yourself. Something is awakening — a reckoning that is not punishment but liberation.", love:"A genuine new beginning in love is available — but it requires releasing the old story.", clarity:"The reckoning you have been avoiding is also the clarity you have been seeking.", change:"This is an inner awakening as much as an outer change. Answer the call." },
-  { slug:"the-world", emoji:"🌍", num:"XXI", roman:"XXI", name:"The World", keywords:"Completion · Wholeness · Fulfillment",
-    upright:"You have arrived somewhere real. A significant chapter is complete. Pause and receive the fullness of what you have accomplished, survived, and become.", love:"Something in your love life has come full circle. Honor how far you have come.", clarity:"You have more perspective than you are giving yourself credit for. Trust it.", change:"This arrival is worth celebrating. You are more whole on the other side." },
+  { slug:"the-fool", emoji:"🎒", num:"0", name:"The Fool",
+    keywords:"New beginnings · Spontaneity · Leap of faith · Innocence",
+    element:"Air", astrology:"Uranus",
+    deep:"The Fool stands at the edge of a cliff, bag in hand, eyes skyward — pure potential before the weight of experience descends. He is not reckless; he is unafraid. The zero assigned to him means all possibilities exist simultaneously. When The Fool appears, the universe is extending an invitation: step forward, even before you feel ready.",
+    love:"An unexpected connection or a relationship entering an exciting, uncharted chapter.",
+    clarity:"You are being called to release overthinking and trust your gut instinct.",
+    change:"A new beginning is not only possible — it is already in motion. Let go of what has defined you to make room for what could." },
+
+  { slug:"the-magician", emoji:"⚗️", num:"I", name:"The Magician",
+    keywords:"Power · Skill · Willpower · Manifestation · Resourcefulness",
+    element:"Air", astrology:"Mercury",
+    deep:"The Magician stands before a table laid with all four symbols — wand, cup, sword, pentacle — and points one hand to heaven, one to earth. Every resource you need is already within reach. The question is whether you are willing to harness them with intention.",
+    love:"You have the magnetism and the words to draw the connection you want — use them consciously.",
+    clarity:"Stop waiting for more information. You already have the tools. Trust them.",
+    change:"This is a moment of peak capability. Act now while the conditions align." },
+
+  { slug:"the-high-priestess", emoji:"🌙", num:"II", name:"The High Priestess",
+    keywords:"Intuition · Mystery · The unconscious · Stillness · Divine feminine",
+    element:"Water", astrology:"Moon",
+    deep:"The High Priestess sits at the veil between the seen and unseen worlds. She does not speak — she listens. She is the archetype of inner knowing. When she appears, the answers you seek are not outside you. They are waiting in the silence you have not yet entered.",
+    love:"There is more beneath the surface of this connection than is visible. Trust your feelings, not just the facts.",
+    clarity:"Your intellect has taken you far. Now let your intuition lead. Sit quietly before acting.",
+    change:"Not all change requires a dramatic move. Some transformation happens in the depths of inner stillness." },
+
+  { slug:"the-empress", emoji:"🌿", num:"III", name:"The Empress",
+    keywords:"Abundance · Nurturing · Fertility · Creativity · Nature · Sensuality",
+    element:"Earth", astrology:"Venus",
+    deep:"The Empress is seated on a throne in a lush forest, the great mother archetype — not just of children, but of ideas, art, relationships, and the earth itself. She teaches that creation is not forced; it is cultivated. When she arrives, something is being born. Your job is to tend it with love.",
+    love:"A relationship deepens or a new one blooms with nurturing, sensual, and reciprocal energy.",
+    clarity:"You are more creative and abundant than your doubts suggest. Give what you are building time to grow.",
+    change:"A fertile period is opening. Plant intentional seeds now — the soil is unusually rich." },
+
+  { slug:"the-emperor", emoji:"⚔️", num:"IV", name:"The Emperor",
+    keywords:"Authority · Structure · Stability · Discipline · Fatherhood · Leadership",
+    element:"Fire", astrology:"Aries",
+    deep:"The Emperor sits on a throne of stone, mountains behind him unyielding. He is the archetype of ordered power — rules that protect, structure that enables. His appearance signals that chaos must be brought into form. Where are you being called to lead yourself with greater discipline?",
+    love:"A relationship may need clearer boundaries or more stability. True care sometimes means being dependable, not just warm.",
+    clarity:"Apply logic and structure to the situation. The answer requires discipline, not just feeling.",
+    change:"Building something lasting requires scaffolding. Do not skip the structural work." },
+
+  { slug:"the-hierophant", emoji:"🏛️", num:"V", name:"The Hierophant",
+    keywords:"Tradition · Mentorship · Spiritual guidance · Institutions · Belonging",
+    element:"Earth", astrology:"Taurus",
+    deep:"The Hierophant is the keeper of sacred tradition. He raises one hand to bless, one to teach. His presence asks: whose knowledge are you drawing on? Where is community a source of strength rather than constraint? And do the traditions you follow still serve your growth?",
+    love:"A relationship may be deepened through shared values, rituals, or commitment. Consider what you both believe in.",
+    clarity:"Seek guidance from a trusted mentor, teacher, or established body of knowledge. Wisdom already exists for your question.",
+    change:"Sometimes transformation is not rebellion — it is a return to what is genuinely sacred and true." },
+
+  { slug:"the-lovers", emoji:"💞", num:"VI", name:"The Lovers",
+    keywords:"Love · Alignment · Choice · Values · Partnership · Union",
+    element:"Air", astrology:"Gemini",
+    deep:"The Lovers card is less about romance than alignment — the sacred choice to unite with what truly reflects your values. This is the moment before consequence, the choice made with full awareness. The card asks: are you choosing from your truest self, or from fear, habit, or the need to please?",
+    love:"A meaningful bond deepens, or a moment of clarity arrives about whether a relationship truly aligns with who you are.",
+    clarity:"A decision is at hand. Honor your values above all else.",
+    change:"Alignment with what you genuinely love is the most powerful force for transformation." },
+
+  { slug:"the-chariot", emoji:"🏆", num:"VII", name:"The Chariot",
+    keywords:"Victory · Willpower · Forward motion · Control · Ambition · Drive",
+    element:"Water", astrology:"Cancer",
+    deep:"A crowned warrior rides a chariot pulled by two sphinxes — one black, one white — moving in opposite directions, yet the chariot moves forward. Mastery is not the absence of opposing forces, but the ability to channel them with focused will. Momentum is on your side. Keep your grip steady.",
+    love:"A relationship requires mutual direction. Are you both driving toward the same destination?",
+    clarity:"Stop second-guessing. You know what needs to happen. Choose a direction and commit to it fully.",
+    change:"Triumph is not inevitable — it is the result of disciplined, sustained movement. Keep going." },
+
+  { slug:"strength", emoji:"🦁", num:"VIII", name:"Strength",
+    keywords:"Inner strength · Courage · Patience · Compassion · Resilience · Gentleness",
+    element:"Fire", astrology:"Leo",
+    deep:"A woman in white gently holds open the mouth of a lion — not by force, but by love. True strength is not dominance — it is the steadiness to face what frightens you with openness rather than aggression. It is the courage to be tender.",
+    love:"Patience and compassion are the most powerful tools in this relationship. Respond from love, not fear.",
+    clarity:"The answer requires courage, not cleverness. Face the hard truth gently but directly.",
+    change:"You have more inner resilience than you currently believe. Lean into it." },
+
+  { slug:"the-hermit", emoji:"🏮", num:"IX", name:"The Hermit",
+    keywords:"Solitude · Introspection · Inner light · Guidance · Wisdom · Retreat",
+    element:"Earth", astrology:"Virgo",
+    deep:"The Hermit stands alone at a mountain peak, lantern raised against the dark. He has climbed away from the noise of the world not in defeat, but in search of himself. His lantern is his own inner light — wisdom earned through experience and turned inward.",
+    love:"This may be a season for self-reflection before re-engaging. What do you need to understand about yourself first?",
+    clarity:"The answer does not live in more information or more opinions. It lives in your own honest self-reflection.",
+    change:"Meaningful transformation sometimes requires withdrawal before the breakthrough." },
+
+  { slug:"wheel-of-fortune", emoji:"🎡", num:"X", name:"Wheel of Fortune",
+    keywords:"Cycles · Fate · Turning points · Luck · Karma · Change",
+    element:"Fire", astrology:"Jupiter",
+    deep:"The Wheel turns. Nothing stays still. The Wheel of Fortune is the great reminder that life moves in cycles — seasons, rhythms, returns. When it appears, you are at a turning point. Something is shifting. The question is not whether the wheel will turn, but what you will do as it does.",
+    love:"A shift is happening in your love life — a new cycle is beginning or an old pattern is finally releasing.",
+    clarity:"What feels stuck is actually in motion. Have faith in the timing.",
+    change:"This is a powerful pivot point. The energy of the moment supports bold movement." },
+
+  { slug:"justice", emoji:"⚖️", num:"XI", name:"Justice",
+    keywords:"Truth · Fairness · Accountability · Balance · Cause and effect · Clarity",
+    element:"Air", astrology:"Libra",
+    deep:"Justice sits between two pillars, scales in one hand, a double-edged sword in the other. The sword cuts through illusion; the scales weigh what is actually true. Justice does not punish; she clarifies. When she appears, the reading invites radical honesty: what is the real situation, stripped of fear and self-justification?",
+    love:"Honesty and fairness are essential now. Is this relationship actually equitable, or are you telling yourself a story?",
+    clarity:"Face what is true, not what is comfortable. The facts will set you free.",
+    change:"Real change begins with honest reckoning — not blame, but clear-eyed accountability." },
+
+  { slug:"the-hanged-man", emoji:"🔮", num:"XII", name:"The Hanged Man",
+    keywords:"Pause · Surrender · New perspective · Sacrifice · Waiting · Release",
+    element:"Water", astrology:"Neptune",
+    deep:"He hangs willingly from a living tree, one leg crossed behind the other — face serene, not anguished. He has chosen suspension: a deliberate pause to see the world from a completely different angle. What looks like defeat is actually the deepest form of wisdom: knowing when not to act.",
+    love:"Releasing the need to control this relationship may be the most loving thing you can do right now.",
+    clarity:"Let go of your current interpretation — the answer requires you to see things from a completely different angle.",
+    change:"Some transformations cannot be rushed. This pause is part of the process." },
+
+  { slug:"death", emoji:"🦋", num:"XIII", name:"Death",
+    keywords:"Transformation · Endings · Release · Rebirth · Transition · Closing cycles",
+    element:"Water", astrology:"Scorpio",
+    deep:"Death rides a white horse bearing a black flag with a white rose — the symbol of purity within transformation. Behind the scene, the sun rises between two towers, bathing the horizon in gold. Death in tarot is not literal death — it is the death of what has outlived its usefulness, so that something truer can be born.",
+    love:"A relationship dynamic that no longer serves you is ending — which makes space for something more authentic.",
+    clarity:"Stop holding onto what you already know is over. The new answer waits on the other side of this release.",
+    change:"This is the most powerful card for genuine, lasting transformation. Something is truly completing. Honor it." },
+
+  { slug:"temperance", emoji:"✨", num:"XIV", name:"Temperance",
+    keywords:"Balance · Moderation · Patience · Integration · Healing · The middle path",
+    element:"Fire", astrology:"Sagittarius",
+    deep:"An angel stands at the edge of a pool, pouring water between two cups in an endless flow. One foot is in the water (intuition), one on land (groundedness). Temperance teaches the art of alchemy: blending opposing energies without forcing a result. Healing is rarely dramatic. It is slow, patient, and steady.",
+    love:"A gentle, patient approach will allow this relationship to find its natural balance. Stop pushing; allow.",
+    clarity:"Integrate what you know with what you feel. The answer is in the middle, not at either extreme.",
+    change:"Sustainable transformation is gradual. Trust the process even when progress feels invisible." },
+
+  { slug:"the-devil", emoji:"⛓️", num:"XV", name:"The Devil",
+    keywords:"Bondage · Shadow self · Materialism · Addiction · Illusion · Reclaiming power",
+    element:"Earth", astrology:"Capricorn",
+    deep:"Two figures stand chained to a pedestal below a winged devil — but the chains are loose. They could slip free at any moment, if only they looked down. The Devil confronts the places where we have given our power away: to fear, to habit, to a story we keep telling ourselves. You are freer than you believe.",
+    love:"Examine whether patterns of fear, control, or dependency are limiting this connection. Awareness is the first step to freedom.",
+    clarity:"You may be attached to a belief or a story that is keeping you stuck. What would change if you released it?",
+    change:"True change begins the moment you stop identifying with the thing that binds you." },
+
+  { slug:"the-tower", emoji:"🌩️", num:"XVI", name:"The Tower",
+    keywords:"Sudden upheaval · Revelation · Collapse of false structures · Liberation · Truth",
+    element:"Fire", astrology:"Mars",
+    deep:"Lightning strikes a tower crowned with gold. Two figures fall. And yet — what is falling is not the self. What is falling is the false structure: the illusion, the rigid belief, the identity that was never really true. What cannot withstand the truth was never solid to begin with. After the tower falls, you stand on open ground.",
+    love:"Something that has been kept hidden or denied is coming to light. The disruption is painful, but it creates the honesty the relationship truly needs.",
+    clarity:"The version of reality you have been holding is shifting. Let the false picture go — what remains will be real.",
+    change:"This is radical, irreversible transformation. Something that no longer aligns with truth is being dismantled." },
+
+  { slug:"the-star", emoji:"🌟", num:"XVII", name:"The Star",
+    keywords:"Hope · Renewal · Faith · Healing · Inspiration · Guidance · Serenity",
+    element:"Air", astrology:"Aquarius",
+    deep:"After the storm of The Tower, a woman kneels at the water's edge beneath a vast night sky. She pours water into the pool and onto the earth — replenishing both the unconscious and the tangible world. The Star is the great exhale. It is the card of hope restored after hardship, of faith that did not die despite the difficulty. You are being refilled.",
+    love:"Healing is happening in your heart. A tender, genuine connection — or a renewed one — is possible. Open to it.",
+    clarity:"Trust the vision that comes in quiet moments. The guidance you receive now is real.",
+    change:"A period of renewal is beginning. You are moving from surviving to truly living." },
+
+  { slug:"the-moon", emoji:"🌕", num:"XVIII", name:"The Moon",
+    keywords:"Illusion · The unconscious · Dreams · Anxiety · Intuition · Mystery",
+    element:"Water", astrology:"Pisces",
+    deep:"A full moon casts uncertain light over two towers. A crayfish emerges from the pool of the unconscious; a wolf and a dog howl at the sky. The Moon is the realm of dreams, fear, and the stories we tell ourselves in the dark. Not all of what you are feeling is real — but not all of it is imagined either. Walk the uncertain path without forcing clarity that has not yet arrived.",
+    love:"Uncertainty and projection may be distorting this connection. What do you know for certain, and what are you assuming?",
+    clarity:"You may not have the full picture yet. Be patient with the ambiguity — forcing an answer now may lead you astray.",
+    change:"Transformation is happening in your subconscious before it appears in the world. Trust the process in the dark." },
+
+  { slug:"the-sun", emoji:"☀️", num:"XIX", name:"The Sun",
+    keywords:"Joy · Success · Vitality · Confidence · Clarity · Abundance · Warmth",
+    element:"Fire", astrology:"Sun",
+    deep:"A radiant child rides a white horse beneath an enormous, blazing sun — unburdened, joyful, alive. This is the card of unambiguous celebration: success earned, joy uncontained, clarity after confusion. The Sun does not require interpretation — it simply shines. When it appears, life is affirming something. Let yourself feel it without suspicion.",
+    love:"Warmth, joy, and genuine connection radiate in your relationship. Let yourself receive happiness without guard.",
+    clarity:"The situation is clearer than you think. Trust what you can see in full light.",
+    change:"You are stepping into a more empowered, joyful version of yourself. The change is working." },
+
+  { slug:"judgement", emoji:"📯", num:"XX", name:"Judgement",
+    keywords:"Awakening · Rebirth · Calling · Reckoning · Self-evaluation · Transformation",
+    element:"Fire", astrology:"Pluto",
+    deep:"An angel sounds a trumpet from the clouds. Below, figures rise from coffins, arms spread wide, faces lifted in recognition. Judgement asks: who have you become, and who are you truly meant to be? This marks a period of deep awakening — a reckoning that leads not to guilt, but to clarity and rebirth.",
+    love:"A significant moment of recognition or awakening in a relationship — seeing someone (or yourself) clearly for the first time.",
+    clarity:"You already know the answer. This is the moment you stop pretending you do not.",
+    change:"The version of yourself you have been outgrowing is being shed. You are answering a call." },
+
+  { slug:"the-world", emoji:"🌍", num:"XXI", name:"The World",
+    keywords:"Completion · Integration · Fulfillment · Wholeness · Mastery · Arrival",
+    element:"Earth", astrology:"Saturn",
+    deep:"A dancing figure at the center of a laurel wreath holds two wands — an echo of The Magician, but now with all the wisdom of the entire journey. The Fool's journey is complete. Not because there is nothing left to learn, but because this chapter has been mastered. Something is finishing. Something real has been achieved.",
+    love:"A relationship reaches a meaningful milestone — or you arrive at a place of wholeness within yourself that changes how you love.",
+    clarity:"The long arc of this situation is becoming visible. You have come further than you know.",
+    change:"This is arrival, not destination. Completion is the threshold to the next great beginning." },
+];
 ];
 const POSITIONS = {
-  love:    ['What Shaped It','Where You Stand','What Can Grow'],
-  clarity: ['What Clouded It','What Is Present','What Becomes Clear'],
-  change:  ['What Is Ending','The Threshold','What Is Beginning'],
-  default: ['Past','Present','Future'],
+  love:    ['The Root','The Now','The Path'],
+  clarity: ['The Root','The Now','The Path'],
+  change:  ['The Root','The Now','The Path'],
+  default: ['The Root','The Now','The Path'],
 };
 
 // State
@@ -456,13 +588,21 @@ async function runReading(){
 
   // Fetch real AI reading
   const note = document.getElementById('note-text').value.trim();
+  const focusKey = (focus || '').toLowerCase();
   let reading = '';
   try {
     const res = await fetch('/api/reading', {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({
-        cards: drawn.map((c,i) => ({ name:c.name, position:pos[i], keywords:c.keywords, meaning:c[focus]||c.upright })),
+        cards: drawn.map((c,i) => ({
+          name:     c.name,
+          position: pos[i],
+          keywords: c.keywords,
+          deep:     c.deep || c.upright || '',
+          angle:    c[focusKey] || c.upright || '',
+          element:  c.element || '',
+        })),
         focus,
         question: note,
         lastFrame,
@@ -595,8 +735,8 @@ function restart(){
     document.getElementById('note-wrap').classList.remove('open');
     document.getElementById('btn-continue').classList.remove('ready');
     document.getElementById('note-text').value='';document.getElementById('note-text').style.height='auto';
-    document.getElementById('spread-legend').textContent='Past · Present · Future';
-    ['pl0','pl1','pl2'].forEach((id,i)=>document.getElementById(id).textContent=['Past','Present','Future'][i]);
+    document.getElementById('spread-legend').textContent='The Root · The Now · The Path';
+    ['pl0','pl1','pl2'].forEach((id,i)=>document.getElementById(id).textContent=['The Root','The Now','The Path'][i]);
     [0,1,2,3,4].forEach(i=>{const c=document.getElementById('sh'+i);c.style.transition='none';c.style.transform='translate(-50%,-50%)';});
     clearTimeout(shuffleTO);
     document.getElementById('reading-body').style.display='none';
