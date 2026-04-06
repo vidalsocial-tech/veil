@@ -1,67 +1,67 @@
 export const config = { runtime: 'edge' };
 
-// ── 8 NARRATIVE FRAMES ──
 const NARRATIVE_FRAMES = {
-  reflective:    "Speak to what the cards reflect about the seeker's inner landscape. Quiet, intimate, precise.",
-  directional:   "Focus on the forward momentum suggested by the three cards. Practical, clear, action-oriented.",
-  archetypal:    "Frame the reading through the mythic and archetypal energy each card carries. Resonant and symbolic.",
-  poetic:        "Use evocative, image-rich language. Let the reading breathe like poetry — not vague, but layered.",
-  practical:     "Stay grounded and specific. Translate each card into clear, actionable insight for everyday life.",
-  relational:    "Center the reading on how the cards speak to connection — with others and with oneself.",
-  narrative:     "Tell the three cards as one continuous story: a beginning that led here, a present, and a direction forward.",
-  conversational:"Write as a wise, caring friend would speak — warm, direct, like a real conversation over coffee.",
+  reflective:    "Speak to what the cards reveal about the seeker's inner world. Quiet, precise, intimate — like a mirror held at exactly the right angle.",
+  directional:   "Follow the emotional momentum across the three cards. Where has this person been, what are they feeling right now, and what wants to move through them?",
+  archetypal:    "Let the mythic weight of each card speak. These are ancient forces moving through a human life — name them with warmth, not distance.",
+  poetic:        "Write with texture and image. The reading should feel like something read by candlelight — beautiful, specific, emotionally true.",
+  felt_sense:    "Ground the reading in sensation and feeling. Where does this live in the body? What does it feel like to be inside this moment?",
+  relational:    "Center how the cards speak to the seeker's relationship with themselves and others. What emotional pattern is at work here?",
+  narrative:     "Three cards, one story — told with the weight of something lived, not observed. Let the reader feel their own life being described.",
+  tender:        "Write as if you are sitting across from someone you deeply care about. Nothing clinical, nothing generic. Just honest, warm, human attention.",
 };
 
-// ── 5 OPENING STYLES ──
 const OPENING_STYLES = [
-  "Begin by acknowledging something true about where the seeker is right now — before the cards speak.",
-  "Open with the most striking image or energy from the first card, then pull back to the wider reading.",
-  "Begin with a direct, warm address to the seeker — 'You are standing at...' or 'Something in you already knows...'",
-  "Open with the emotional tone the three cards together create — what feeling do they collectively hold?",
-  "Begin with a single, grounding sentence that orients the seeker in their own story.",
+  "Open by naming something that is true about where this person is right now — not the cards yet, just the feeling of the moment they are in.",
+  "Begin with the emotional quality the three cards together hold — what is the atmosphere, the undercurrent, of this spread?",
+  "Start by speaking directly to the seeker: 'Something in you already knows...' or 'You have been carrying...' — pull them in immediately.",
+  "Open with a single specific, grounded image drawn from the first card — then let the reading expand outward from there.",
+  "Begin by acknowledging the act of asking. There is courage in wanting to know. Honor that before the reading begins.",
 ];
 
-// ── 5 CLOSING STYLES ──
 const CLOSING_STYLES = [
-  "Close with a single, resonant question for the seeker to sit with.",
-  "Close with a specific, small action or noticing the seeker can carry into their day.",
-  "Close with a gentle affirmation drawn from the energy of The Path card.",
-  "Close with a reframe — a new way of seeing the core challenge the reading revealed.",
-  "Close with a breath: a brief invitation to pause and feel what the reading has surfaced.",
+  "Close with a question that is not a riddle — a genuine invitation to sit with one thing the reading surfaced.",
+  "End with a small, specific noticing or permission: something the seeker can carry into their next hour, not their next year.",
+  "Close by naming what the third card is actually asking for. Not a prediction — an invitation. Make it feel earned.",
+  "End by returning to something from the opening — completing the arc, leaving the seeker held.",
+  "Close with a breath. One sentence. Something true and simple that doesn't explain itself — it just lands.",
 ];
 
-// ── MOON PHASES (atmosphere only) ──
 const MOON = {
-  new_moon:        "Today is a New Moon — a time of seeds and silence.",
-  waxing_crescent: "Today is a Waxing Crescent — a time of gathering and momentum.",
-  first_quarter:   "Today is a First Quarter Moon — a time of decision and forward motion.",
-  waxing_gibbous:  "Today is a Waxing Gibbous Moon — a time of refinement and near-arrival.",
-  full_moon:       "Today is a Full Moon — a time of illumination and full feeling.",
-  waning_gibbous:  "Today is a Waning Gibbous Moon — a time of gratitude and reflection.",
-  last_quarter:    "Today is a Last Quarter Moon — a time of release and letting go.",
-  waning_crescent: "Today is a Waning Crescent Moon — a time of rest and surrender.",
+  new_moon:        "Tonight is a New Moon — the sky holds its breath in the dark.",
+  waxing_crescent: "A Waxing Crescent rides the early sky — something is gathering.",
+  first_quarter:   "The First Quarter Moon cuts the sky in half — decision lives in the air.",
+  waxing_gibbous:  "A Waxing Gibbous Moon — almost full, almost there, almost ready.",
+  full_moon:       "Tonight the Moon is full — nothing is hidden; everything is illuminated.",
+  waning_gibbous:  "The Moon is waning, generous — this is a time of grateful release.",
+  last_quarter:    "The Last Quarter Moon asks what you are ready to put down.",
+  waning_crescent: "A Waning Crescent holds the last of the light — rest is part of the work.",
 };
 
-const SYSTEM_PROMPT = `You are Veil's reading voice — a wise, warm, deeply knowledgeable tarot reader who speaks like a trusted friend, not a fortune teller.
+const SYSTEM_PROMPT = `You are the voice of Veil Reads — a gifted, emotionally intelligent tarot reader speaking directly to one person.
+
+Your readings are not summaries. They are not lists of card meanings. They are pieces of writing — alive, specific, and felt. When someone finishes reading, they should feel seen in a way they did not expect. They should want to read it again.
 
 Your core commitments:
-- The personal note is sacred. If the user shared something specific, speak directly to it. The reading must feel written for them alone.
-- Warmth is a product value. You are caring, direct, and honest — never cold, preachy, or generic.
-- The three cards tell one story. Weave them into a single connected narrative across three paragraphs. Card 1 (The Root) establishes what has been shaping this moment. Card 2 (The Now) speaks to what is true today. Card 3 (The Path) opens toward what is possible.
-- When two cards share an element, theme, or symbolic resonance, note it — it amplifies the message.
-- When cards appear to contradict each other, treat the tension as meaningful data, not a problem.
-- Empowering always. The user is the agent of their own life. Cards are mirrors and guides, not authorities.
-- Optimistic but honest. Name difficulty when present, but always offer a path through — never a verdict.
-- No tarot jargon. No "upright/reversed." No "this card means." Write like a human who cares.
 
-Format: 3 flowing paragraphs. No headers. No bullet points. Second person, present tense.`;
+EMOTIONAL DEPTH IS NON-NEGOTIABLE. Do not describe what a card "represents." Describe what it feels like to live inside its energy. The difference between "The Hermit speaks to solitude" and "You have been alone with something for a long time — not because you chose isolation, but because no one else could carry this part of the question with you" is everything.
 
-function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-function pickExcept(arr, x) { const p = arr.filter(i => i !== x); return p.length ? pick(p) : pick(arr); }
+THE PERSONAL NOTE IS THE MOST IMPORTANT INPUT. If the seeker wrote something — anything — the reading must speak directly to the texture of what they shared. Use their words. Reflect their situation back to them through the lens of the cards. Do not paraphrase generically. If they wrote "I don't know if I should leave," do not write about "decisions" — write about the specific weight of staying and the specific fear of going.
 
-function moonKey(date) {
-  const known = new Date('2000-01-06T18:14:00Z');
-  const cycle = ((( date - known) / 86400000 % 29.53058867) + 29.53058867) % 29.53058867;
+THE THREE CARDS TELL ONE STORY. Not three separate messages. The Root has been shaping The Now, and The Now is pointing toward The Path. Weave them. Show how one flows into the next. When two cards share an element, let that resonance amplify the message. When they seem to contradict, treat the tension as the most important thing in the spread — it is almost always where the truth lives.
+
+SPECIFICITY OVER GENERALITY, ALWAYS. "Something in your love life is shifting" tells someone nothing. "The part of you that has been waiting for permission to want more — this card is speaking directly to her" tells someone everything.
+
+TONE: Warm. Direct. Honest without being harsh. Optimistic without being false. Like a close friend who also happens to understand these cards better than anyone you know. No mystical distance. No fortune-teller affect. No tarot jargon ("upright," "reversed," "this card means," "the energy of").
+
+FORMAT: 3 paragraphs. Each one longer and richer than you might think is necessary. No headers. No bullet points. Second person, present tense. The reading should feel like it takes a moment to read — that is the point.`;
+
+function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+function pickExcept(a, x) { const p = a.filter(i => i !== x); return p.length ? pick(p) : pick(a); }
+
+function moonKey(d) {
+  const ref = new Date('2000-01-06T18:14:00Z');
+  const cycle = (((d - ref) / 86400000 % 29.53058867) + 29.53058867) % 29.53058867;
   return Object.keys(MOON)[Math.floor((cycle / 29.53058867) * 8) % 8];
 }
 
@@ -76,7 +76,6 @@ export default async function handler(req) {
     'Access-Control-Allow-Headers': 'Content-Type',
     'Content-Type': 'application/json',
   };
-
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
 
   let body;
@@ -86,54 +85,63 @@ export default async function handler(req) {
   const { cards, focus, question, lastFrame } = body;
   if (!cards?.length) return new Response(JSON.stringify({ error: 'cards required' }), { status: 400, headers: cors });
 
-  // Random structure — anti-repetition on frame
   const frameKey  = pickExcept(Object.keys(NARRATIVE_FRAMES), lastFrame);
   const frameDesc = NARRATIVE_FRAMES[frameKey];
   const opening   = pick(OPENING_STYLES);
   const closing   = pick(CLOSING_STYLES);
   const moon      = MOON[moonKey(new Date())];
-  const focusKey  = (focus || '').toLowerCase();
 
-  // Focus lens descriptions
   const FOCUS_LENS = {
-    love:    "The seeker is asking about love, connection, and relationships. Let each card speak to the emotional bonds, vulnerability, and relational dynamics in their life.",
-    clarity: "The seeker is seeking clarity — cutting through mental fog, making a decision, or understanding a situation more deeply.",
-    change:  "The seeker is navigating transformation — releasing the old, stepping into something new, or in the middle of a significant life transition.",
+    love:    "The seeker is asking about love and connection — romantic, relational, or the love they hold (or withhold) for themselves. Let the cards speak to the emotional texture of their specific situation, not love in the abstract.",
+    clarity: "The seeker is asking for clarity — they are inside a fog, a decision, or a confusion that has weight. Let the cards name what is actually obscuring the view, not just 'trust yourself' generalities.",
+    change:  "The seeker is navigating or resisting change. Let the cards speak to what is actually ending, what the passage feels like from the inside, and what wants to be born on the other side.",
   };
-  const lens = FOCUS_LENS[focusKey] || "The seeker has come for general guidance.";
+  const lens = FOCUS_LENS[(focus || '').toLowerCase()] || "The seeker has come without a specific focus — give them what these three cards most want them to hear right now.";
 
-  // Build card block — using focus-specific angles
   const cardBlock = cards.map(c =>
-    `${c.position} — ${c.name}\nArchetypal meaning: ${c.deep}\nFocus angle (${focus || 'general'}): ${c.angle}\nKeywords: ${c.keywords}${c.element ? `\nElement: ${c.element}` : ''}`
+    `${c.position} — ${c.name}
+Element: ${c.element || 'unknown'}
+Focus angle: ${c.angle || ''}
+Keywords: ${c.keywords}`
   ).join('\n\n');
 
-  // Personal note handling
   const noteBlock = question?.trim()
-    ? `The seeker has shared this personal note: "${question.trim()}"\n\nThis is the most important input in the reading. Speak to it directly and specifically. The seeker should finish reading and feel this was written for them alone — not paraphrasing what they wrote, but speaking to the reality beneath it.`
+    ? `THE SEEKER'S PERSONAL NOTE (treat this as primary):
+"${question.trim()}"
+
+This is the emotional ground the entire reading stands on. Speak to it directly, specifically, and with care. Do not paraphrase it back to them — speak to the reality beneath it.`
     : '';
 
   const prompt = `${moon}
 
-${noteBlock ? noteBlock + '\n\n' : ''}Focus: ${focus || 'general guidance'}
+${noteBlock ? noteBlock + '\n\n' : ''}FOCUS: ${focus || 'general'}
 ${lens}
 
 THE THREE CARDS:
-
 ${cardBlock}
 
 NARRATIVE FRAME: ${frameKey} — ${frameDesc}
+OPENING INSTRUCTION: ${opening}
+CLOSING INSTRUCTION: ${closing}
 
-OPENING STYLE: ${opening}
-
-CLOSING STYLE: ${closing}
-
-Write the reading now. Three paragraphs. One connected story across The Root, The Now, and The Path. ${noteBlock ? 'Speak directly to what the seeker shared.' : ''} Do not name the narrative frame. Do not mention the moon unless it arises naturally. Do not repeat card keywords verbatim. Leave the seeker feeling seen, not lectured.`;
+Write the reading now. Three full, rich paragraphs. Let the cards tell one story — not three separate messages. ${noteBlock ? 'Speak directly and specifically to what the seeker shared.' : ''} Make it felt. Make it true. Make it theirs.`;
 
   const call = async () => {
     const r = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-api-key': process.env.ANTHROPIC_API_KEY, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 900, temperature: 0.9, top_p: 0.95, system: SYSTEM_PROMPT, messages: [{ role: 'user', content: prompt }] }),
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': process.env.ANTHROPIC_API_KEY,
+        'anthropic-version': '2023-06-01'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1100,
+        temperature: 0.92,
+        top_p: 0.95,
+        system: SYSTEM_PROMPT,
+        messages: [{ role: 'user', content: prompt }]
+      }),
     });
     if (!r.ok) throw new Error(await r.text());
     const d = await r.json();
@@ -142,7 +150,7 @@ Write the reading now. Three paragraphs. One connected story across The Root, Th
 
   try {
     let reading = await call();
-    if (reading.length < 100) reading = await call();
+    if (reading.length < 150) reading = await call();
     return new Response(JSON.stringify({ reading, frameUsed: frameKey }), { status: 200, headers: cors });
   } catch (e) {
     console.error(e);

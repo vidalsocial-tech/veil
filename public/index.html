@@ -10,47 +10,157 @@
 <style>
 :root{--ink:#080610;--gold:#c9a252;--gold-lt:#e2c47a;--mist:#8a7fa0;--parchment:#ede5d0;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-html,body{height:100%;width:100%;background:var(--ink);color:var(--parchment);font-family:'Libre Baskerville',serif;overflow:hidden;}
+html,body{height:100%;width:100%;background:var(--ink);color:var(--parchment);font-family:"Libre Baskerville",serif;overflow:hidden;}
 #bg{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 90% 60% at 50% -5%,#1c1535 0%,transparent 60%),var(--ink);}
 canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
-#grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.032;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;animation:gr .7s steps(3) infinite;}
+#grain{position:fixed;inset:0;z-index:2;pointer-events:none;opacity:.032;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:180px;animation:gr .7s steps(3) infinite;}
 @keyframes gr{0%{background-position:0 0}33%{background-position:-18px 9px}66%{background-position:14px -7px}}
-
-/* SCREENS */
 .screen{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:44px 22px;overflow-y:auto;opacity:0;pointer-events:none;transition:opacity .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1);transform:translateY(14px);}
 .screen.active{opacity:1;pointer-events:all;transform:translateY(0);}
 .screen.exit{opacity:0;transform:translateY(-14px);pointer-events:none;}
 #lb{position:fixed;top:0;left:0;right:0;z-index:200;height:1px;}
 #lf{height:100%;width:0%;opacity:0;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-lt),var(--gold),transparent);box-shadow:0 0 10px var(--gold);transition:width .55s cubic-bezier(.4,0,.2,1),opacity .3s;}
 #lf.on{opacity:1;}
-#home-btn{position:fixed;top:18px;right:18px;z-index:150;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(201,162,82,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .25s,border-color .25s,opacity .4s,transform .25s;opacity:0;pointer-events:none;}
+/* HOME BTN */
+#home-btn{position:fixed;top:18px;right:18px;z-index:150;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(201,162,82,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;opacity:0;pointer-events:none;}
 #home-btn.visible{opacity:1;pointer-events:all;}
 #home-btn:hover{background:rgba(201,162,82,.1);border-color:rgba(201,162,82,.55);transform:scale(1.08);}
 #home-btn svg{width:16px;height:16px;}
-
-/* SHARED */
-.logo{font-family:'Cinzel',serif;font-size:.82rem;letter-spacing:.34em;color:var(--gold);opacity:.72;margin-bottom:44px;}
-.logo em{font-style:normal;font-family:'Libre Baskerville',serif;color:var(--gold-lt);}
-.btn-gold{font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.2em;color:var(--ink);background:linear-gradient(135deg,var(--gold),var(--gold-lt));border:none;border-radius:60px;padding:15px 50px;cursor:pointer;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 26px rgba(201,162,82,.28);text-transform:uppercase;}
+.logo{font-family:"Cinzel",serif;font-size:.82rem;letter-spacing:.34em;color:var(--gold);opacity:.72;margin-bottom:44px;}
+.logo em{font-style:normal;color:var(--gold-lt);}
+.btn-gold{font-family:"Inter",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.2em;color:var(--ink);background:linear-gradient(135deg,var(--gold),var(--gold-lt));border:none;border-radius:60px;padding:15px 50px;cursor:pointer;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 26px rgba(201,162,82,.28);text-transform:uppercase;}
 .btn-gold:hover{transform:translateY(-2px);box-shadow:0 10px 36px rgba(201,162,82,.42);}
-.btn-ghost{font-family:'Inter',sans-serif;font-size:.68rem;font-weight:500;letter-spacing:.18em;color:var(--gold);background:transparent;border:1px solid rgba(201,162,82,.4);border-radius:60px;padding:14px 40px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .25s;text-transform:uppercase;justify-content:center;}
-.btn-ghost:hover{background:rgba(201,162,82,.07);border-color:var(--gold);}
+.btn-ghost{font-family:"Inter",sans-serif;font-size:.68rem;font-weight:400;letter-spacing:.14em;color:rgba(201,162,82,.55);background:transparent;border:1px solid rgba(201,162,82,.2);border-radius:60px;padding:13px 40px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .25s;text-transform:uppercase;justify-content:center;}
+.btn-ghost:hover{background:rgba(201,162,82,.06);border-color:rgba(201,162,82,.42);color:rgba(201,162,82,.85);}
 @keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
+/* ── LIBRARY SCREENS ── */
+#s-library{justify-content:flex-start;padding-top:0;padding-bottom:0;overflow:hidden;}
+#s-detail{justify-content:flex-start;padding-top:0;padding-bottom:0;overflow:hidden;}
+
+/* Library header */
+.lib-header{
+  width:100%;padding:22px 22px 0;
+  display:flex;flex-direction:column;align-items:center;
+  flex-shrink:0;
+}
+.lib-title{font-family:"Cinzel",serif;font-size:1.1rem;letter-spacing:.1em;color:var(--parchment);margin-bottom:5px;}
+.lib-sub{font-family:"Inter",sans-serif;font-size:.6rem;letter-spacing:.12em;color:rgba(138,127,160,.55);text-transform:uppercase;margin-bottom:14px;}
+
+/* Reading banner */
+.lib-banner{
+  width:100%;max-width:480px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:11px 16px;
+  background:rgba(201,162,82,.05);
+  border:1px solid rgba(201,162,82,.14);
+  border-radius:10px;margin-bottom:14px;
+}
+.lib-banner-text{font-family:"Inter",sans-serif;font-size:.62rem;color:rgba(237,229,208,.6);line-height:1.5;}
+.lib-banner-text strong{display:block;font-size:.65rem;font-weight:500;color:rgba(201,162,82,.8);margin-bottom:1px;}
+.lib-banner-btn{font-family:"Inter",sans-serif;font-size:.58rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:7px 13px;border-radius:18px;background:rgba(201,162,82,.1);color:rgba(201,162,82,.85);border:1px solid rgba(201,162,82,.22);cursor:pointer;white-space:nowrap;transition:all .2s;flex-shrink:0;}
+.lib-banner-btn:hover{background:rgba(201,162,82,.2);color:#e2c47a;}
+
+/* Filter pills */
+.lib-filters{display:flex;gap:6px;padding:0 22px 12px;width:100%;overflow-x:auto;flex-shrink:0;}
+.lib-filters::-webkit-scrollbar{display:none;}
+.lib-filter{font-family:"Inter",sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:14px;border:1px solid rgba(201,162,82,.15);background:transparent;color:rgba(138,127,160,.6);cursor:pointer;white-space:nowrap;transition:all .18s;}
+.lib-filter.on,.lib-filter:hover{border-color:rgba(201,162,82,.4);background:rgba(201,162,82,.08);color:rgba(201,162,82,.85);}
+
+/* Card grid */
+.lib-grid-wrap{flex:1;overflow-y:auto;padding:0 16px 24px;width:100%;}
+.lib-grid-wrap::-webkit-scrollbar{width:3px;}
+.lib-grid-wrap::-webkit-scrollbar-track{background:transparent;}
+.lib-grid-wrap::-webkit-scrollbar-thumb{background:rgba(201,162,82,.18);border-radius:2px;}
+.lib-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:480px;margin:0 auto;}
+
+.lib-card-thumb{cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;transition:transform .18s;}
+.lib-card-thumb:hover{transform:translateY(-3px);}
+.lib-thumb-face{
+  width:100%;aspect-ratio:5/8;border-radius:8px;
+  background:linear-gradient(155deg,#1e1836,#0e0c1c);
+  border:1px solid rgba(201,162,82,.22);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  transition:border-color .2s,box-shadow .2s;
+}
+.lib-card-thumb:hover .lib-thumb-face{border-color:rgba(201,162,82,.5);box-shadow:0 0 18px rgba(201,162,82,.12);}
+.lib-thumb-img{width:100%;height:100%;object-fit:cover;display:block;}
+.lib-thumb-roman{position:absolute;top:5px;left:50%;transform:translateX(-50%);font-family:"Cinzel",serif;font-size:.42rem;letter-spacing:.1em;color:rgba(201,162,82,.5);}
+.lib-thumb-name{position:absolute;bottom:5px;left:0;right:0;font-family:"Cinzel",serif;font-size:.36rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(201,162,82,.7);text-align:center;padding:0 3px;}
+.lib-thumb-elem{font-family:"Inter",sans-serif;font-size:.5rem;color:rgba(138,127,160,.4);}
+
+/* ── DETAIL SCREEN ── */
+.det-scroll{flex:1;overflow-y:auto;width:100%;padding:0 20px 40px;}
+.det-scroll::-webkit-scrollbar{width:3px;}
+.det-scroll::-webkit-scrollbar-track{background:transparent;}
+.det-scroll::-webkit-scrollbar-thumb{background:rgba(201,162,82,.18);border-radius:2px;}
+.det-inner{max-width:480px;margin:0 auto;}
+
+/* Back button */
+.det-back{font-family:"Inter",sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;color:rgba(138,127,160,.5);cursor:pointer;display:flex;align-items:center;gap:5px;background:none;border:none;padding:18px 0 16px;transition:color .18s;}
+.det-back:hover{color:rgba(201,162,82,.7);}
+
+/* Card hero row */
+.det-hero{display:flex;gap:18px;margin-bottom:22px;align-items:flex-start;}
+.det-card-face{
+  width:104px;min-width:104px;height:166px;border-radius:10px;
+  background:linear-gradient(155deg,#1e1836,#0e0c1c);
+  border:1.5px solid rgba(201,162,82,.4);
+  box-shadow:0 0 30px rgba(201,162,82,.1),0 12px 32px rgba(0,0,0,.7);
+  overflow:hidden;flex-shrink:0;position:relative;
+}
+.det-card-face img{width:100%;height:100%;object-fit:cover;display:block;}
+.det-card-roman{position:absolute;top:7px;left:50%;transform:translateX(-50%);font-family:"Cinzel",serif;font-size:.48rem;letter-spacing:.1em;color:rgba(201,162,82,.5);}
+.det-meta{flex:1;display:flex;flex-direction:column;gap:6px;}
+.det-arcana{font-family:"Inter",sans-serif;font-size:.55rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:rgba(201,162,82,.45);}
+.det-name{font-family:"Cinzel",serif;font-size:1.2rem;font-weight:400;letter-spacing:.05em;color:var(--parchment);}
+.det-elem{font-family:"Inter",sans-serif;font-size:.6rem;color:rgba(138,127,160,.6);display:flex;align-items:center;gap:5px;}
+.det-elem-dot{width:5px;height:5px;border-radius:50%;background:rgba(201,162,82,.3);flex-shrink:0;}
+.det-keywords{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px;}
+.det-kw{font-family:"Inter",sans-serif;font-size:.5rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:10px;border:1px solid rgba(201,162,82,.15);color:rgba(201,162,82,.55);}
+
+/* Sections */
+.det-section{margin-bottom:20px;}
+.det-section-label{font-family:"Inter",sans-serif;font-size:.55rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;color:rgba(201,162,82,.4);margin-bottom:8px;display:flex;align-items:center;gap:8px;}
+.det-section-label::after{content:"";flex:1;height:1px;background:rgba(201,162,82,.07);}
+.det-section-body{font-size:.95rem;line-height:1.95;color:rgba(237,229,208,.82);}
+.det-shadow{font-size:.88rem;line-height:1.85;color:rgba(138,127,160,.7);font-style:italic;border-left:2px solid rgba(201,162,82,.18);padding-left:14px;margin-top:8px;}
+
+/* Focus angle tabs */
+.det-tabs{display:flex;gap:5px;margin-bottom:10px;}
+.det-tab{font-family:"Inter",sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:14px;border:1px solid rgba(201,162,82,.14);background:transparent;color:rgba(138,127,160,.6);cursor:pointer;transition:all .18s;}
+.det-tab.on{border-color:rgba(201,162,82,.4);background:rgba(201,162,82,.08);color:rgba(201,162,82,.85);}
+.det-angle{display:none;font-size:.95rem;line-height:1.95;color:rgba(237,229,208,.82);padding:13px 15px;background:rgba(255,255,255,.022);border-radius:9px;border:1px solid rgba(201,162,82,.07);}
+.det-angle.on{display:block;}
+
+/* Reading CTA at bottom of detail */
+.det-reading-cta{margin-top:22px;padding:16px 18px;background:rgba(201,162,82,.04);border:1px solid rgba(201,162,82,.12);border-radius:12px;text-align:center;}
+.det-reading-cta p{font-family:"Inter",sans-serif;font-size:.65rem;color:rgba(138,127,160,.6);margin-bottom:10px;line-height:1.5;}
+.det-reading-cta p strong{display:block;font-size:.68rem;font-weight:500;color:rgba(201,162,82,.75);margin-bottom:3px;}
+
+/* Prev/Next nav */
+.det-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:16px;border-top:1px solid rgba(201,162,82,.07);}
+.det-nav-btn{font-family:"Inter",sans-serif;font-size:.58rem;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(201,162,82,.55);background:transparent;border:1px solid rgba(201,162,82,.15);border-radius:16px;padding:6px 13px;cursor:pointer;transition:all .18s;}
+.det-nav-btn:hover{border-color:rgba(201,162,82,.4);color:rgba(201,162,82,.9);}
+.det-nav-btn:disabled{opacity:.2;cursor:default;}
+.det-nav-counter{font-family:"Cinzel",serif;font-size:.65rem;color:rgba(138,127,160,.4);letter-spacing:.08em;}
 
 /* S1 */
 .sigil{width:54px;height:54px;margin-bottom:30px;animation:sg 4s ease-in-out infinite;}
 @keyframes sg{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.9;transform:scale(1.06)}}
-.hero-title{font-family:'Cinzel',serif;font-size:clamp(2.8rem,10vw,5rem);font-weight:400;letter-spacing:.06em;text-align:center;line-height:1;margin-bottom:16px;opacity:0;}
-.hero-title em{font-style:normal;color:var(--gold-lt);font-family:'Libre Baskerville',serif;font-weight:400;}
+.hero-title{font-family:"Cinzel",serif;font-size:clamp(2.8rem,10vw,5rem);font-weight:400;letter-spacing:.06em;text-align:center;line-height:1;margin-bottom:16px;opacity:0;}
+.hero-title em{font-style:normal;color:var(--gold-lt);}
 .hero-title.in{animation:rise 1.4s cubic-bezier(.2,0,.1,1) forwards;}
-.hero-sub{font-size:clamp(.9rem,2.5vw,1.05rem);color:var(--mist);text-align:center;margin-bottom:52px;line-height:1.8;opacity:0;}
+.hero-sub{font-size:clamp(.9rem,2.5vw,1.05rem);color:var(--mist);text-align:center;margin-bottom:40px;line-height:1.8;opacity:0;}
 .hero-sub.in{animation:rise 1.2s .35s cubic-bezier(.2,0,.1,1) forwards;}
-#btn-begin{opacity:0;}
-#btn-begin.in{animation:rise 1s 1.5s cubic-bezier(.2,0,.1,1) forwards;}
-
+.hero-cta{display:flex;flex-direction:column;gap:10px;align-items:center;width:100%;max-width:270px;opacity:0;}
+.hero-cta.in{animation:rise 1s .8s cubic-bezier(.2,0,.1,1) forwards;}
+.hero-hint{margin-top:24px;font-family:"Inter",sans-serif;font-size:.62rem;letter-spacing:.12em;color:rgba(138,127,160,.3);text-transform:uppercase;}
 /* S2 */
-.section-title{font-family:'Cinzel',serif;font-size:clamp(1.1rem,4vw,1.6rem);letter-spacing:.06em;text-align:center;margin-bottom:10px;}
+.section-title{font-family:"Cinzel",serif;font-size:clamp(1.1rem,4vw,1.6rem);letter-spacing:.06em;text-align:center;margin-bottom:10px;}
 .section-sub{font-size:.95rem;color:var(--mist);text-align:center;margin-bottom:36px;line-height:1.7;}
 .focus-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;width:100%;max-width:400px;}
 .focus-pill{display:flex;flex-direction:column;align-items:center;gap:10px;padding:20px 10px 16px;border:1px solid rgba(201,162,82,.2);border-radius:14px;background:rgba(255,255,255,.018);cursor:pointer;transition:all .28s cubic-bezier(.23,1,.32,1);}
@@ -58,94 +168,77 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .focus-pill.on{border-color:var(--gold);background:rgba(201,162,82,.1);box-shadow:0 0 24px rgba(201,162,82,.14);}
 .focus-icon{width:26px;height:26px;opacity:.6;transition:opacity .3s;}
 .focus-pill.on .focus-icon,.focus-pill:hover .focus-icon{opacity:1;}
-.focus-label{font-family:'Inter',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.12em;color:var(--parchment);text-transform:uppercase;}
+.focus-label{font-family:"Inter",sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.12em;color:var(--parchment);text-transform:uppercase;}
 .note-wrap{width:100%;max-width:400px;max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.23,1,.32,1),opacity .4s,margin .5s;}
 .note-wrap.open{max-height:150px;opacity:1;margin-top:16px;}
-.note-input{width:100%;background:rgba(255,255,255,.025);border:1px solid rgba(201,162,82,.18);border-radius:10px;color:var(--parchment);font-family:'Libre Baskerville',serif;font-size:.95rem;padding:13px 16px;resize:none;outline:none;line-height:1.7;transition:border-color .25s;}
+.note-input{width:100%;background:rgba(255,255,255,.025);border:1px solid rgba(201,162,82,.18);border-radius:10px;color:var(--parchment);font-family:"Libre Baskerville",serif;font-size:.95rem;padding:13px 16px;resize:none;outline:none;line-height:1.7;transition:border-color .25s;}
 .note-input::placeholder{color:rgba(148,136,168,.3);}
 .note-input:focus{border-color:rgba(201,162,82,.35);}
-.btn-continue{font-family:'Inter',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.2em;color:var(--ink);background:linear-gradient(135deg,var(--gold),var(--gold-lt));border:none;border-radius:60px;padding:15px 50px;cursor:pointer;transition:transform .25s,opacity .3s;box-shadow:0 4px 24px rgba(201,162,82,.28);margin-top:28px;text-transform:uppercase;opacity:.25;pointer-events:none;}
+.btn-continue{font-family:"Inter",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.2em;color:var(--ink);background:linear-gradient(135deg,var(--gold),var(--gold-lt));border:none;border-radius:60px;padding:15px 50px;cursor:pointer;transition:transform .25s,opacity .3s;box-shadow:0 4px 24px rgba(201,162,82,.28);margin-top:28px;text-transform:uppercase;opacity:.25;pointer-events:none;}
 .btn-continue.ready{opacity:1;pointer-events:all;}
-.btn-continue:hover{transform:translateY(-2px);}
-
 /* S3 */
 .prep-orb{width:88px;height:88px;border-radius:50%;background:radial-gradient(circle at 40% 35%,rgba(201,162,82,.3),rgba(122,95,160,.12) 55%,transparent 70%);box-shadow:0 0 70px rgba(201,162,82,.1);margin:0 auto 44px;animation:ob 3.2s ease-in-out infinite;}
 @keyframes ob{0%,100%{transform:scale(1)}50%{transform:scale(1.12);box-shadow:0 0 100px rgba(201,162,82,.2)}}
-.prep-title{font-family:'Cinzel',serif;font-size:clamp(1rem,3vw,1.2rem);letter-spacing:.1em;color:var(--gold);text-align:center;margin-bottom:14px;opacity:0;animation:rise .9s .3s forwards;}
+.prep-title{font-family:"Cinzel",serif;font-size:clamp(1rem,3vw,1.2rem);letter-spacing:.1em;color:var(--gold);text-align:center;margin-bottom:14px;opacity:0;animation:rise .9s .3s forwards;}
 .prep-sub{font-size:.93rem;color:var(--mist);text-align:center;line-height:1.85;opacity:0;animation:rise .9s .7s forwards;max-width:280px;}
-
-/* S4 SHUFFLE */
+/* S4 */
 .shuffle-deck{position:relative;width:200px;height:170px;margin:0 auto 40px;}
 .sh-card{position:absolute;width:74px;height:122px;border-radius:9px;background:linear-gradient(160deg,#1d1635,#0d0b1a);border:1px solid rgba(201,162,82,.28);top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 8px 28px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;}
-.sh-card::before{content:'';position:absolute;inset:6px;border:1px solid rgba(201,162,82,.1);border-radius:4px;}
-.sh-card::after{content:'✦';font-size:1rem;color:rgba(201,162,82,.18);}
-.shuffle-label{font-family:'Inter',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;opacity:0;animation:rise .8s .6s forwards;}
-
-/* S5 DRAW */
+.sh-card::before{content:"";position:absolute;inset:6px;border:1px solid rgba(201,162,82,.1);border-radius:4px;}
+.sh-card::after{content:"✦";font-size:1rem;color:rgba(201,162,82,.18);}
+.shuffle-label{font-family:"Inter",sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;opacity:0;animation:rise .8s .6s forwards;}
+/* S5 */
 #s5{justify-content:flex-start;padding-top:52px;}
 .draw-instruction{font-size:.93rem;color:var(--mist);text-align:center;line-height:1.8;margin-bottom:22px;max-width:300px;}
-.spread-legend{font-family:'Inter',sans-serif;font-size:.57rem;letter-spacing:.14em;color:var(--mist);text-align:center;text-transform:uppercase;opacity:.45;margin-bottom:22px;}
+.spread-legend{font-family:"Inter",sans-serif;font-size:.57rem;letter-spacing:.14em;color:var(--mist);text-align:center;text-transform:uppercase;opacity:.45;margin-bottom:22px;}
 .spread{display:flex;gap:16px;justify-content:center;align-items:flex-start;}
 .cslot{display:flex;flex-direction:column;align-items:center;gap:8px;}
-.pos-num{font-family:'Inter',sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.14em;color:var(--mist);text-transform:uppercase;opacity:.5;}
-/* 3D flip */
+.pos-num{font-family:"Inter",sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.14em;color:var(--mist);text-transform:uppercase;opacity:.5;}
 .flip-wrap{perspective:900px;cursor:pointer;}
 .flip-inner{width:88px;height:148px;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.4,0,.2,1);position:relative;}
 .flip-inner.flipped{transform:rotateY(180deg)!important;}
 .card-back,.card-front{position:absolute;inset:0;border-radius:9px;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
 .card-back{background:linear-gradient(155deg,#1e1836,#0e0c1c);border:1px solid rgba(201,162,82,.28);box-shadow:0 8px 28px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;}
-.card-back::before{content:'';position:absolute;inset:5px;border:1px solid rgba(201,162,82,.1);border-radius:4px;}
-.card-back::after{content:'✦';font-size:1.1rem;color:rgba(201,162,82,.2);}
+.card-back::before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,162,82,.1);border-radius:4px;}
+.card-back::after{content:"✦";font-size:1.1rem;color:rgba(201,162,82,.2);}
 .card-front{transform:rotateY(180deg);border:1.5px solid rgba(201,162,82,.5);box-shadow:0 0 36px rgba(201,162,82,.22),0 12px 36px rgba(0,0,0,.85);overflow:hidden;background:#0e0c1c;}
 .card-front img{width:100%;height:100%;object-fit:cover;display:block;}
-.pos-label{font-family:'Cinzel',serif;font-size:.5rem;letter-spacing:.1em;color:var(--mist);text-align:center;opacity:0;transition:opacity .6s .7s;max-width:90px;line-height:1.5;}
+.pos-label{font-family:"Cinzel",serif;font-size:.5rem;letter-spacing:.1em;color:var(--mist);text-align:center;opacity:0;transition:opacity .6s .7s;max-width:90px;line-height:1.5;}
 .cslot.revealed .pos-label{opacity:.75;}
 .flip-wrap:not(.done):hover .flip-inner{transform:translateY(-10px) scale(1.04);}
-.flip-wrap:not(.done):hover .card-back{border-color:rgba(201,162,82,.55);box-shadow:0 18px 48px rgba(201,162,82,.22);}
-
-/* S6 READING */
+.flip-wrap:not(.done):hover .card-back{border-color:rgba(201,162,82,.55);}
+/* S6 */
 #s6{justify-content:flex-start;padding-top:44px;padding-bottom:50px;overflow-y:auto;}
 .mini-spread{display:flex;gap:18px;justify-content:center;margin-bottom:28px;}
 .mini-card-wrap{display:flex;flex-direction:column;align-items:center;gap:7px;opacity:0;animation:rise .7s both;}
 .mini-card{width:66px;height:106px;border-radius:8px;border:1.5px solid rgba(201,162,82,.42);background:#0e0c1c;box-shadow:0 6px 22px rgba(0,0,0,.7),0 0 20px rgba(201,162,82,.12);overflow:hidden;flex-shrink:0;}
 .mini-card img{width:100%;height:100%;object-fit:cover;display:block;}
-.mini-pos{font-family:'Inter',sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,162,82,.55);}
-.mini-name{font-family:'Cinzel',serif;font-size:.54rem;letter-spacing:.06em;color:var(--mist);text-align:center;max-width:80px;line-height:1.4;}
-.reading-hold{font-family:'Inter',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;margin-bottom:28px;opacity:0;animation:fadein .8s .2s forwards;display:flex;align-items:center;gap:10px;}
+.mini-pos{font-family:"Inter",sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,162,82,.55);}
+.mini-name{font-family:"Cinzel",serif;font-size:.54rem;letter-spacing:.06em;color:var(--mist);text-align:center;max-width:80px;line-height:1.4;}
+.reading-hold{font-family:"Inter",sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:10px;}
 .dp span{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--gold);animation:dp 1.3s ease-in-out infinite;margin:0 2px;}
 .dp span:nth-child(2){animation-delay:.2s}.dp span:nth-child(3){animation-delay:.4s}
 @keyframes dp{0%,80%,100%{opacity:.2;transform:scale(.7)}40%{opacity:1;transform:scale(1)}}
-
-.reading-box{width:100%;max-width:480px;background:rgba(255,255,255,.022);border:1px solid rgba(201,162,82,.1);border-radius:14px;padding:28px 28px;position:relative;margin-bottom:28px;}
-.reading-box::before{content:'✦';position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--ink);padding:0 12px;color:var(--gold);font-size:.6rem;}
-.reading-text{font-size:clamp(1rem,2.6vw,1.1rem);line-height:2.1;color:var(--parchment);}
-.reading-text p{margin-bottom:1.3em;}
+.reading-box{width:100%;max-width:500px;background:rgba(255,255,255,.022);border:1px solid rgba(201,162,82,.1);border-radius:14px;padding:28px 30px;position:relative;margin-bottom:28px;}
+.reading-box::before{content:"✦";position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--ink);padding:0 12px;color:var(--gold);font-size:.6rem;}
+.reading-text{font-size:clamp(1rem,2.6vw,1.1rem);line-height:2.15;color:var(--parchment);}
+.reading-text p{margin-bottom:1.4em;}
 .reading-text p:last-child{margin-bottom:0;}
 .cursor{display:inline-block;width:1px;height:1em;background:var(--gold);margin-left:1px;vertical-align:middle;animation:bl .8s steps(1) infinite;}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
 .action-row{display:flex;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-bottom:48px;}
-#share-toast{position:fixed;bottom:48px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(201,162,82,.12);border:1px solid rgba(201,162,82,.3);border-radius:30px;padding:10px 22px;font-family:'Cinzel',serif;font-size:.6rem;letter-spacing:.15em;color:var(--gold);opacity:0;pointer-events:none;z-index:100;transition:opacity .3s,transform .3s;}
-#share-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-#dots{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:20;transition:opacity .4s;}
+#dots{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:20;}
 .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s;}
 .dot.on{background:var(--gold);transform:scale(1.35);}
 </style>
 </head>
 <body>
-<div id="bg"></div>
-<canvas id="stars"></canvas>
-<div id="grain"></div>
+<div id="bg"></div><canvas id="stars"></canvas><div id="grain"></div>
 <div id="lb"><div id="lf"></div></div>
-<div id="share-toast"></div>
-
-<!-- HOME ICON — visible on all screens except S1 -->
-<button id="home-btn" onclick="goHome()" aria-label="Back to home">
-  <svg viewBox="0 0 24 24" fill="none" stroke="rgba(201,162,82,.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H15v-5h-6v5H4a1 1 0 0 1-1-1V9.5z"/>
-  </svg>
+<button id="home-btn" onclick="goHome()" aria-label="Home">
+  <svg viewBox="0 0 24 24" fill="none" stroke="rgba(201,162,82,.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H15v-5h-6v5H4a1 1 0 0 1-1-1V9.5z"/></svg>
 </button>
 
-<!-- S1 ARRIVAL -->
 <div class="screen active" id="s1">
   <svg class="sigil" viewBox="0 0 54 54" fill="none">
     <circle cx="27" cy="27" r="25" stroke="rgba(201,162,82,.22)" stroke-width=".8"/>
@@ -153,8 +246,6 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
     <circle cx="27" cy="27" r="7" stroke="rgba(201,162,82,.18)" stroke-width=".7"/>
     <line x1="27" y1="2" x2="27" y2="52" stroke="rgba(201,162,82,.09)" stroke-width=".6"/>
     <line x1="2" y1="27" x2="52" y2="27" stroke="rgba(201,162,82,.09)" stroke-width=".6"/>
-    <line x1="9" y1="9" x2="45" y2="45" stroke="rgba(201,162,82,.06)" stroke-width=".5"/>
-    <line x1="45" y1="9" x2="9" y2="45" stroke="rgba(201,162,82,.06)" stroke-width=".5"/>
     <circle cx="27" cy="27" r="2.5" fill="rgba(201,162,82,.55)"/>
     <circle cx="27" cy="2" r="1.4" fill="rgba(201,162,82,.28)"/>
     <circle cx="27" cy="52" r="1.4" fill="rgba(201,162,82,.28)"/>
@@ -162,11 +253,14 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
     <circle cx="52" cy="27" r="1.4" fill="rgba(201,162,82,.28)"/>
   </svg>
   <h1 class="hero-title" id="hero-title">Veil<em>Reads</em></h1>
-  <p class="hero-sub" id="hero-sub">A daily tarot reading. Three cards. One story.</p>
-  <button class="btn-gold" id="btn-begin" onclick="step(2)">Begin Your Reading</button>
+  <p class="hero-sub" id="hero-sub">A daily tarot reading.<br>Three cards. One story.</p>
+  <div class="hero-cta" id="hero-cta">
+    <button class="btn-gold" onclick="step(2)">Begin Your Reading</button>
+    <button class="btn-ghost" onclick="openLibrary()">Explore the Deck</button>
+  </div>
+  <p class="hero-hint">22 Major Arcana · The Fool's Journey</p>
 </div>
 
-<!-- S2 INTENTION -->
 <div class="screen" id="s2">
   <div class="logo">Veil<em>Reads</em></div>
   <div class="section-title">What brings you here today?</div>
@@ -191,80 +285,134 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   <button class="btn-continue" id="btn-continue" onclick="step(3)">Continue</button>
 </div>
 
-<!-- S3 PREP -->
 <div class="screen" id="s3">
   <div class="prep-orb"></div>
   <div class="prep-title">Something is being chosen for you</div>
   <p class="prep-sub">Be still.<br>The cards are listening.</p>
 </div>
 
-<!-- S4 SHUFFLE -->
 <div class="screen" id="s4">
   <div class="shuffle-deck" id="shuffle-deck">
-    <div class="sh-card" id="sh0"></div>
-    <div class="sh-card" id="sh1"></div>
-    <div class="sh-card" id="sh2"></div>
-    <div class="sh-card" id="sh3"></div>
+    <div class="sh-card" id="sh0"></div><div class="sh-card" id="sh1"></div>
+    <div class="sh-card" id="sh2"></div><div class="sh-card" id="sh3"></div>
     <div class="sh-card" id="sh4"></div>
   </div>
-  <div class="shuffle-label">The cards are listening&thinsp;…</div>
+  <div class="shuffle-label">The cards are listening …</div>
 </div>
 
-<!-- S5 DRAW -->
 <div class="screen" id="s5">
   <div class="logo" style="margin-bottom:24px">Veil<em>Reads</em></div>
   <p class="draw-instruction">Three cards have been drawn.<br>Tap each one to reveal.</p>
-  <div class="spread-legend" id="spread-legend">The Root · The Now · The Path</div>
+  <div class="spread-legend">The Root · The Now · The Path</div>
   <div class="spread">
-    <div class="cslot" id="cs0">
-      <span class="pos-num">I</span>
-      <div class="flip-wrap" id="fw0" onclick="reveal(0)">
-        <div class="flip-inner" id="fi0">
-          <div class="card-back"></div>
-          <div class="card-front"><img id="cimg0" src="" alt="" loading="eager"></div>
-        </div>
-      </div>
-      <div class="pos-label" id="pl0">The Root</div>
+    <div class="cslot" id="cs0"><span class="pos-num">I</span>
+      <div class="flip-wrap" id="fw0" onclick="reveal(0)"><div class="flip-inner" id="fi0">
+        <div class="card-back"></div><div class="card-front"><img id="cimg0" src="" alt=""></div>
+      </div></div><div class="pos-label" id="pl0">The Root</div>
     </div>
-    <div class="cslot" id="cs1">
-      <span class="pos-num">II</span>
-      <div class="flip-wrap" id="fw1" onclick="reveal(1)">
-        <div class="flip-inner" id="fi1">
-          <div class="card-back"></div>
-          <div class="card-front"><img id="cimg1" src="" alt="" loading="eager"></div>
-        </div>
-      </div>
-      <div class="pos-label" id="pl1">The Now</div>
+    <div class="cslot" id="cs1"><span class="pos-num">II</span>
+      <div class="flip-wrap" id="fw1" onclick="reveal(1)"><div class="flip-inner" id="fi1">
+        <div class="card-back"></div><div class="card-front"><img id="cimg1" src="" alt=""></div>
+      </div></div><div class="pos-label" id="pl1">The Now</div>
     </div>
-    <div class="cslot" id="cs2">
-      <span class="pos-num">III</span>
-      <div class="flip-wrap" id="fw2" onclick="reveal(2)">
-        <div class="flip-inner" id="fi2">
-          <div class="card-back"></div>
-          <div class="card-front"><img id="cimg2" src="" alt="" loading="eager"></div>
-        </div>
-      </div>
-      <div class="pos-label" id="pl2">The Path</div>
+    <div class="cslot" id="cs2"><span class="pos-num">III</span>
+      <div class="flip-wrap" id="fw2" onclick="reveal(2)"><div class="flip-inner" id="fi2">
+        <div class="card-back"></div><div class="card-front"><img id="cimg2" src="" alt=""></div>
+      </div></div><div class="pos-label" id="pl2">The Path</div>
     </div>
   </div>
 </div>
 
-<!-- S6 READING -->
 <div class="screen" id="s6">
   <div class="logo" style="margin-bottom:18px">Veil<em>Reads</em></div>
   <div class="mini-spread" id="mini-spread"></div>
-  <div class="reading-hold" id="reading-hold">
+  <div class="reading-hold" id="reading-hold" style="opacity:0;animation:fadein .8s .2s forwards;">
     Reading the cards for you
     <span class="dp"><span></span><span></span><span></span></span>
   </div>
-  <div id="reading-body" style="display:none;width:100%;max-width:480px;flex-direction:column;align-items:center;">
+  <div id="reading-body" style="display:none;width:100%;max-width:500px;flex-direction:column;align-items:center;">
     <div class="reading-box"><div class="reading-text" id="reading-text"></div></div>
     <div class="action-row">
       <button class="btn-ghost" onclick="shareReading()">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         Share Reading
       </button>
       <button class="btn-gold" onclick="restart()">Draw Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- S-LIBRARY: Card grid -->
+<div class="screen" id="s-library">
+  <div class="lib-header">
+    <div class="lib-title">The Major Arcana</div>
+    <div class="lib-sub">22 cards · Tap any card to explore</div>
+    <div class="lib-banner">
+      <div class="lib-banner-text">
+        <strong>Ready for a reading?</strong>
+        Draw three cards and let the story unfold
+      </div>
+      <button class="lib-banner-btn" onclick="goTo('s2',1)">Begin →</button>
+    </div>
+    <div class="lib-filters">
+      <button class="lib-filter on" onclick="filterLib('all',this)">All 22</button>
+      <button class="lib-filter" onclick="filterLib('fire',this)">Fire</button>
+      <button class="lib-filter" onclick="filterLib('water',this)">Water</button>
+      <button class="lib-filter" onclick="filterLib('air',this)">Air</button>
+      <button class="lib-filter" onclick="filterLib('earth',this)">Earth</button>
+    </div>
+  </div>
+  <div class="lib-grid-wrap">
+    <div class="lib-grid" id="lib-grid"></div>
+  </div>
+</div>
+
+<!-- S-DETAIL: Individual card -->
+<div class="screen" id="s-detail">
+  <div class="det-scroll">
+    <div class="det-inner">
+      <button class="det-back" id="det-back-btn" onclick="detBack()">← All Cards</button>
+      <div class="det-hero">
+        <div class="det-card-face" id="det-face">
+          <img id="det-img" src="" alt="">
+          <div class="det-card-roman" id="det-roman"></div>
+        </div>
+        <div class="det-meta">
+          <div class="det-arcana" id="det-arcana"></div>
+          <div class="det-name" id="det-name"></div>
+          <div class="det-elem"><span class="det-elem-dot"></span><span id="det-elem"></span></div>
+          <div class="det-keywords" id="det-keywords"></div>
+        </div>
+      </div>
+
+      <div class="det-section">
+        <div class="det-section-label">Meaning</div>
+        <div class="det-section-body" id="det-archetype"></div>
+        <div class="det-shadow" id="det-shadow"></div>
+      </div>
+
+      <div class="det-section">
+        <div class="det-section-label">Reading angles</div>
+        <div class="det-tabs">
+          <button class="det-tab on" onclick="switchAngle('love',this)">Love</button>
+          <button class="det-tab" onclick="switchAngle('clarity',this)">Clarity</button>
+          <button class="det-tab" onclick="switchAngle('change',this)">Change</button>
+        </div>
+        <div class="det-angle on" id="da-love"></div>
+        <div class="det-angle" id="da-clarity"></div>
+        <div class="det-angle" id="da-change"></div>
+      </div>
+
+      <div class="det-reading-cta">
+        <p><strong>Want this card in a reading?</strong>Draw three cards and let the story unfold</p>
+        <button class="btn-gold" style="max-width:220px;font-size:.62rem;padding:13px 30px;" onclick="goTo('s2',1)">Begin Your Reading</button>
+      </div>
+
+      <div class="det-nav">
+        <button class="det-nav-btn" id="det-prev" onclick="navCard(-1)">← Prev</button>
+        <span class="det-nav-counter" id="det-counter"></span>
+        <button class="det-nav-btn" id="det-next" onclick="navCard(1)">Next →</button>
+      </div>
     </div>
   </div>
 </div>
@@ -273,242 +421,325 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   <div class="dot on"></div><div class="dot"></div><div class="dot"></div>
   <div class="dot"></div><div class="dot"></div><div class="dot"></div>
 </div>
-
-<!-- Card images loaded separately for performance -->
+<!-- Card images loaded separately -->
 <script src="cards.js"></script>
 <script>
+// ── CARDS — Full new philosophy data ──
 const CARDS = [
-  {slug:"the-fool",       emoji:"🎒", num:"0",    name:"The Fool",          keywords:"New beginnings · Spontaneity · Leap of faith",       element:"Air",   love:"An unexpected connection or a relationship entering an exciting, uncharted chapter.",                                          clarity:"You are being called to release overthinking and trust your gut instinct.",                                     change:"A new beginning is not only possible — it is already in motion. Let go of what has defined you to make room for what could."},
-  {slug:"the-magician",   emoji:"⚗️",  num:"I",    name:"The Magician",      keywords:"Power · Skill · Willpower · Manifestation",          element:"Air",   love:"You have the magnetism and the words to draw the connection you want — use them consciously.",                            clarity:"Stop waiting for more information. You already have the tools. Trust them.",                                    change:"This is a moment of peak capability. Act now while the conditions align."},
-  {slug:"the-high-priestess",emoji:"🌙",num:"II",  name:"The High Priestess",keywords:"Intuition · Mystery · The unconscious · Stillness",  element:"Water", love:"There is more beneath the surface of this connection than is visible. Trust your feelings, not just the facts.",          clarity:"Your intellect has taken you far. Now let your intuition lead. Sit quietly before acting.",                    change:"Not all change requires a dramatic move. Some transformation happens in the depths of inner stillness."},
-  {slug:"the-empress",    emoji:"🌿", num:"III",   name:"The Empress",       keywords:"Abundance · Nurturing · Fertility · Creativity",     element:"Earth", love:"A relationship deepens or a new one blooms with nurturing, sensual, and reciprocal energy.",                              clarity:"You are more creative and abundant than your doubts suggest. Give what you are building time to grow.",         change:"A fertile period is opening. Plant intentional seeds now — the soil is unusually rich."},
-  {slug:"the-emperor",    emoji:"⚔️", num:"IV",    name:"The Emperor",       keywords:"Authority · Structure · Stability · Discipline",     element:"Fire",  love:"A relationship may need clearer boundaries or more stability. True care sometimes means being dependable, not just warm.", clarity:"Apply logic and structure to the situation. The answer requires discipline, not just feeling.",                 change:"Building something lasting requires scaffolding. Do not skip the structural work."},
-  {slug:"the-hierophant", emoji:"🏛️", num:"V",     name:"The Hierophant",    keywords:"Tradition · Mentorship · Spiritual guidance",        element:"Earth", love:"A relationship may be deepened through shared values, rituals, or commitment. Consider what you both believe in.",        clarity:"Seek guidance from a trusted mentor or established body of knowledge. Wisdom already exists for your question.", change:"Sometimes transformation is not rebellion — it is a return to what is genuinely sacred and true."},
-  {slug:"the-lovers",     emoji:"💞", num:"VI",    name:"The Lovers",        keywords:"Love · Alignment · Conscious choice · Values",       element:"Air",   love:"A meaningful bond deepens, or a moment of clarity arrives about whether a relationship truly aligns with who you are.",   clarity:"A decision is at hand. Honor your values above all else.",                                                     change:"Alignment with what you genuinely love is the most powerful force for transformation."},
-  {slug:"the-chariot",    emoji:"🏆", num:"VII",   name:"The Chariot",       keywords:"Victory · Willpower · Forward motion · Drive",       element:"Water", love:"A relationship requires mutual direction. Are you both driving toward the same destination?",                              clarity:"Stop second-guessing. You know what needs to happen. Choose a direction and commit fully.",                     change:"Triumph is not inevitable — it is the result of disciplined, sustained movement. Keep going."},
-  {slug:"strength",       emoji:"🦁", num:"VIII",  name:"Strength",          keywords:"Inner strength · Courage · Patience · Compassion",   element:"Fire",  love:"Patience and compassion are the most powerful tools in this relationship. Respond from love, not fear.",                 clarity:"The answer requires courage, not cleverness. Face the hard truth gently but directly.",                        change:"You have more inner resilience than you currently believe. Lean into it."},
-  {slug:"the-hermit",     emoji:"🏮", num:"IX",    name:"The Hermit",        keywords:"Solitude · Introspection · Inner light · Wisdom",    element:"Earth", love:"This may be a season for self-reflection before re-engaging. What do you need to understand about yourself first?",      clarity:"The answer does not live in more information. It lives in your own honest self-reflection.",                   change:"Meaningful transformation sometimes requires withdrawal before the breakthrough."},
-  {slug:"wheel-of-fortune",emoji:"🎡",num:"X",     name:"Wheel of Fortune",  keywords:"Cycles · Fate · Turning points · Karma",            element:"Fire",  love:"A shift is happening in your love life — a new cycle is beginning or an old pattern is finally releasing.",              clarity:"What feels stuck is actually in motion. Have faith in the timing.",                                             change:"This is a powerful pivot point. The energy of the moment supports bold movement."},
-  {slug:"justice",        emoji:"⚖️", num:"XI",    name:"Justice",           keywords:"Truth · Fairness · Accountability · Balance",        element:"Air",   love:"Honesty and fairness are essential now. Is this relationship actually equitable, or are you telling yourself a story?",  clarity:"Face what is true, not what is comfortable. The facts will set you free.",                                     change:"Real change begins with honest reckoning — not blame, but clear-eyed accountability."},
-  {slug:"the-hanged-man", emoji:"🔮", num:"XII",   name:"The Hanged Man",    keywords:"Pause · Surrender · New perspective · Release",      element:"Water", love:"Releasing the need to control this relationship may be the most loving thing you can do right now.",                     clarity:"Let go of your current interpretation — the answer requires a completely different angle.",                    change:"Some transformations cannot be rushed. This pause is part of the process."},
-  {slug:"death",          emoji:"🦋", num:"XIII",  name:"Death",             keywords:"Transformation · Endings · Release · Rebirth",       element:"Water", love:"A relationship dynamic that no longer serves you is ending — which makes space for something more authentic.",              clarity:"Stop holding onto what you already know is over. The new answer waits on the other side.",                     change:"This is the most powerful card for genuine, lasting transformation. Something is truly completing. Honor it."},
-  {slug:"temperance",     emoji:"✨", num:"XIV",   name:"Temperance",        keywords:"Balance · Moderation · Patience · Integration",      element:"Fire",  love:"A gentle, patient approach will allow this relationship to find its natural balance. Stop pushing; allow.",               clarity:"Integrate what you know with what you feel. The answer is in the middle, not at either extreme.",              change:"Sustainable transformation is gradual. Trust the process even when progress feels invisible."},
-  {slug:"the-devil",      emoji:"⛓️", num:"XV",    name:"The Devil",         keywords:"Bondage · Shadow self · Addiction · Illusion",       element:"Earth", love:"Examine whether patterns of fear, control, or dependency are limiting this connection. Awareness is the first step.",    clarity:"You may be attached to a belief that is keeping you stuck. What would change if you released it?",             change:"True change begins the moment you stop identifying with the thing that binds you."},
-  {slug:"the-tower",      emoji:"🌩️", num:"XVI",   name:"The Tower",         keywords:"Sudden upheaval · Revelation · Liberation · Truth",  element:"Fire",  love:"Something hidden is coming to light. The disruption is painful, but it creates the honesty this relationship needs.",    clarity:"The version of reality you have been holding is shifting. Let the false picture go — what remains will be real.",change:"This is radical, irreversible transformation. Something that no longer aligns with truth is being dismantled."},
-  {slug:"the-star",       emoji:"🌟", num:"XVII",  name:"The Star",          keywords:"Hope · Renewal · Faith · Healing · Inspiration",    element:"Air",   love:"Healing is happening in your heart. A tender, genuine connection is possible. Open to it.",                              clarity:"Trust the vision that comes in quiet moments. The guidance you receive now is real.",                           change:"A period of renewal is beginning. You are moving from surviving to truly living."},
-  {slug:"the-moon",       emoji:"🌕", num:"XVIII", name:"The Moon",          keywords:"Illusion · The unconscious · Dreams · Intuition",   element:"Water", love:"Uncertainty and projection may be distorting this connection. What do you know for certain, and what are you assuming?",  clarity:"You may not have the full picture yet. Be patient — forcing an answer now may lead you astray.",               change:"Transformation is happening in your subconscious before it appears in the world. Trust the process."},
-  {slug:"the-sun",        emoji:"☀️", num:"XIX",   name:"The Sun",           keywords:"Joy · Success · Vitality · Confidence · Clarity",   element:"Fire",  love:"Warmth, joy, and genuine connection radiate here. Let yourself receive happiness without guard.",                          clarity:"The situation is clearer than you think. Trust what you can see in full light.",                                change:"You are stepping into a more empowered, joyful version of yourself. The change is working."},
-  {slug:"judgement",      emoji:"📯", num:"XX",    name:"Judgement",         keywords:"Awakening · Rebirth · Calling · Reckoning",         element:"Fire",  love:"A significant moment of recognition in a relationship — seeing someone, or yourself, clearly for the first time.",        clarity:"You already know the answer. This is the moment you stop pretending you do not.",                               change:"The version of yourself you have been outgrowing is being shed. You are answering a call."},
-  {slug:"the-world",      emoji:"🌍", num:"XXI",   name:"The World",         keywords:"Completion · Integration · Fulfillment · Wholeness", element:"Earth", love:"A relationship reaches a meaningful milestone — or you arrive at wholeness within yourself that changes how you love.",    clarity:"The long arc of this situation is becoming visible. You have come further than you know.",                      change:"This is arrival, not destination. Completion is the threshold to the next great beginning."},
+  { slug:"the-fool", emoji:"🎒", num:"0", name:"The Fool", element:"Air",
+    archetype:"The first card and the last — the zero that precedes everything. The Fool stands at a cliff edge looking upward, not forward. The dog barks because some part of him knows the drop is real. He steps anyway. His gift is not optimism but a specific form of courage: the willingness to enter the unknown fully aware that it is unknown.",
+    shadow:"The Fool who never lands. Perpetual beginning as a way of avoiding completion. Infinite potential that never becomes form.",
+    love:"Not the easy start but the vulnerable one — the moment when you have to let something begin before you know if it is safe.",
+    clarity:"You have been waiting for enough information. There will not be enough. The step and the knowing arrive together, not in sequence.",
+    change:"This is not a gentle transition. Something entirely new requires that you release your grip on what you already understand about yourself." },
+
+  { slug:"the-magician", emoji:"⚗️", num:"I", name:"The Magician", element:"Air",
+    archetype:"He has every tool on the table and points one hand to heaven, one to earth — the living bridge between intention and manifestation. His gift is the ability to direct will with precision. What he holds is not magic but focus, which in the right hands amounts to the same thing.",
+    shadow:"Persuasion turned toward control. The person who uses their gifts to manage others' perceptions rather than to build something real. Tremendous capability in service of a small project.",
+    love:"You have more power in this dynamic than you have been using. The question is whether you are directing it consciously or letting it scatter.",
+    clarity:"The issue is not lack of information. It is the gap between what you know and what you are willing to commit to.",
+    change:"You are at a rare moment of convergence — the conditions, the capability, and the need are aligned. This window closes." },
+
+  { slug:"the-high-priestess", emoji:"🌙", num:"II", name:"The High Priestess", element:"Water",
+    archetype:"She sits at the threshold between the seen and the unseen, holding open a door that must be held. She carries knowledge that has not yet become permission. Her stillness is not passivity — it is the specific discipline of waiting until the moment has fully arrived.",
+    shadow:"Intuition weaponized as withdrawal. The person who 'already knows' without checking, who uses inner authority to avoid engagement. Stillness as a permanent home rather than a necessary season.",
+    love:"There is something beneath what is being said that you have been sensing but not naming. The card is asking you to name it, at least to yourself.",
+    clarity:"The part of you that operates below logic has been trying to reach you. What arrives in the quiet before thinking starts is data, not noise.",
+    change:"Not all transformation announces itself. Something is shifting in the depths — in the part that moves before the conscious mind catches up." },
+
+  { slug:"the-empress", emoji:"🌿", num:"III", name:"The Empress", element:"Earth",
+    archetype:"The great mother of the Major Arcana — but not just of children. Of ideas, of creative work, of the slow patience required to grow something real. Her teaching is that creation cannot be forced; it can only be prepared for and then allowed. Something is being born. Your job is to tend it.",
+    shadow:"Love that smothers. Nurturing that prevents growth. The creative abundance that never releases its work into the world because it will never be quite ready.",
+    love:"Something is deepening here that requires no effort beyond presence. The card asks whether you are available to receive what is already growing.",
+    clarity:"What you are trying to force into being needs different conditions. Not more pressure. More patience and the right kind of attention.",
+    change:"The soil is unusually fertile right now. Not because the circumstances are perfect but because you have become ready to receive what you plant." },
+
+  { slug:"the-emperor", emoji:"⚔️", num:"IV", name:"The Emperor", element:"Fire",
+    archetype:"He sits on a throne of stone with mountains behind him — uncompromising, structured, unyielding. His gift is the capacity to bring chaos into form. The rules he makes protect as much as they constrain. What he asks is this: where have you been avoiding the discipline that would make the thing real?",
+    shadow:"The structure that was built to provide safety has become the thing being defended at all costs. Rigidity that mistakes control for strength. The person who cannot feel because feeling is not orderly.",
+    love:"Something in this connection needs a clearer architecture. Not coldness — clarity. The care that shows up on time, keeps its word, holds what it says it will hold.",
+    clarity:"You have been approaching this as a feeling problem when it is actually a structure problem. What needs to be organized, decided, committed to?",
+    change:"The new chapter requires a foundation you haven't built yet. That is the work. Not the feelings about the work — the work itself." },
+
+  { slug:"the-hierophant", emoji:"🏛️", num:"V", name:"The Hierophant", element:"Earth",
+    archetype:"Keeper of sacred tradition, teacher, the embodiment of inherited wisdom. He does not innovate — he transmits. His value is not in novelty but in continuity, in the kind of knowledge that has survived long enough to mean something. The question he asks is not whether traditions serve you but which ones do, and whether you have actually engaged with them or only resisted them.",
+    shadow:"Conformity mistaken for wisdom. The use of tradition to avoid the personal reckoning that tradition is meant to prepare you for. Seeking a teacher to avoid becoming accountable to yourself.",
+    love:"This connection may have more depth available than you have been asking of it. Shared meaning, shared values, shared commitment — these are not constraints. They are what makes love last.",
+    clarity:"The answer may already exist in the body of human experience that has addressed this before you. The right mentor, the right source, the right tradition. You do not have to arrive at this alone.",
+    change:"Sometimes the most radical thing is to return to something fundamental. What did you abandon that was actually solid?" },
+
+  { slug:"the-lovers", emoji:"💞", num:"VI", name:"The Lovers", element:"Air",
+    archetype:"Less about romance than about the moment of genuine choice — the alignment between what you want and what you actually value. Two figures stand under an angel: the man looks to the woman, the woman looks upward, and the angel looks at everything. The card asks whether the choice you are making is from your actual values or from the version of you that manages fear by appearing to choose freely.",
+    shadow:"The avoidance of real choice disguised as discernment. The person who frames every decision as a calling in order to escape the responsibility of simply choosing and living with it.",
+    love:"The question underneath the surface question is: are you choosing this, or are you choosing the idea of this? The card can only mean something if you are willing to feel the difference.",
+    clarity:"The decision before you has a values dimension that is being avoided. Not what do you want — what do you actually stand for? Let that answer the question.",
+    change:"Alignment with what you genuinely love is the most powerful engine of transformation. Not discipline, not willpower. Love." },
+
+  { slug:"the-chariot", emoji:"🏆", num:"VII", name:"The Chariot", element:"Water",
+    archetype:"A warrior holds the reins of two sphinxes pulling in opposite directions — and the chariot moves forward anyway. The paradox of the Chariot is that mastery is not the absence of opposing forces. It is the ability to hold them both without resolution and still choose a direction. The momentum here is real. The question is whether you are directing it or riding it.",
+    shadow:"Speed that substitutes for direction. The person who has confused being in motion with knowing where they are going. Winning at something that is no longer worth winning.",
+    love:"A relationship in motion. The question this card asks is whether you are both holding the same set of reins — whether you are moving together or in parallel.",
+    clarity:"Stop waiting to feel certain. You know enough. The clarity you are looking for is on the other side of committing to a direction, not before it.",
+    change:"The energy present now is real and it will not last indefinitely. What you set in motion in this period will carry further than it would at another time." },
+
+  { slug:"strength", emoji:"🦁", num:"VIII", name:"Strength", element:"Fire",
+    archetype:"A woman places her hand on the open mouth of a lion and he goes still — not because she dominated him but because something in her calm recognized something in his fear. This is the card's essential teaching: the move is not dominance but contact. Not the force that overcomes but the presence that disarms. The lemniscate above her head shows this strength is endlessly renewable.",
+    shadow:"Gentleness as avoidance. The person who uses compassion to never have the direct conversation. Or its opposite: the person who has confused endurance with strength and is quietly being destroyed by what they are tolerating.",
+    love:"The approach that is being called for here is not more effort. It is more presence. The lion doesn't need to be defeated. It needs to be met.",
+    clarity:"The answer requires you to stay in contact with what is difficult rather than managing it from a distance. Close the gap.",
+    change:"You have more capacity than you currently believe. Not because nothing is hard but because you have already done harder things than you remember." },
+
+  { slug:"the-hermit", emoji:"🏮", num:"IX", name:"The Hermit", element:"Earth",
+    archetype:"He has climbed to the mountain peak not in retreat but in search. The lantern he carries is his own inner light — knowledge earned through experience turned inward to illuminate the next step. He faces left, toward the past, because he carries its lessons forward. He is not lonely. He is alone with the only company that can answer the specific question he is asking.",
+    shadow:"Productive solitude calcified into protective isolation. The person who has made the mountain their permanent address, who has confused depth with withdrawal, who mistakes their own perspective for the only reliable one.",
+    love:"There is something you need to understand about yourself before you can bring what this connection requires. The card is not advising you to leave — it is advising you to look inward first.",
+    clarity:"More information, more opinions, more searching outward will not resolve this. The answer you are looking for is available only in silence.",
+    change:"The transformation that is available to you right now is an interior one. The outer movement comes after. Not before." },
+
+  { slug:"wheel-of-fortune", emoji:"🎡", num:"X", name:"Wheel of Fortune", element:"Fire",
+    archetype:"The great wheel turns regardless of what any individual wills. Around it move symbols of every suit, letters of the divine name, creatures of every kind — all subject to the same inexorable cycling. The Wheel is not cruel. It is indifferent. Its invitation is not to control the turning but to recognize which part of the cycle you are in and move accordingly.",
+    shadow:"Passivity dressed as acceptance. The person who uses the Wheel's wisdom to avoid the responsibility of steering when steering is actually possible.",
+    love:"A cycle in this connection is turning — something old releasing, something new becoming available. The question is whether you can feel which one is happening rather than which one you prefer.",
+    clarity:"The situation is in motion even if it does not appear to be. What feels stuck is actually in a phase. Stay calibrated.",
+    change:"You are at a genuine pivot point. The energy of this particular moment amplifies whatever you set in motion. Do not waste it waiting to be certain." },
+
+  { slug:"justice", emoji:"⚖️", num:"XI", name:"Justice", element:"Air",
+    archetype:"She holds scales in one hand and a double-edged sword in the other. The sword cuts both ways — through illusion, yes, but also through the comfortable version of the story. Justice does not punish. She weighs. What is in your scale right now, and what are you pretending weighs less than it does?",
+    shadow:"The use of fairness as a weapon — the person who invokes accountability for others with the precision of someone who has never fully applied it to themselves.",
+    love:"There is an equity question underneath this reading that is being avoided. The balance between what is being given and received. Name it honestly.",
+    clarity:"What is true does not require your belief in it to be true. The facts of the situation exist independently of your interpretation of them. Look at them directly.",
+    change:"The change you are seeking is on the other side of a reckoning you have been postponing. Not punishment — honest accounting." },
+
+  { slug:"the-hanged-man", emoji:"🔮", num:"XII", name:"The Hanged Man", element:"Water",
+    archetype:"He hangs by one foot from a living tree, hands relaxed behind him, face serene. He has chosen this. The golden halo around his head signals not suffering but illumination — the specific wisdom that arrives only when you stop trying to resolve the situation by force. He has inverted his perspective, and everything looks different from here.",
+    shadow:"Suspension as avoidance. The person who has turned waiting into an identity. Who mistakes the appearance of patience for the practice of it. Who uses 'sitting with it' as a way to never decide.",
+    love:"The move that is being called for in this connection is release — not of the person but of the need to make it into what you want it to be. See what it actually is.",
+    clarity:"The frame through which you have been interpreting this situation needs to be rotated. The answer is available, but not from this angle.",
+    change:"There are transformations that cannot be accelerated. The delay is not an obstacle. It is the process." },
+
+  { slug:"death", emoji:"🦋", num:"XIII", name:"Death", element:"Water",
+    archetype:"The most misunderstood card in the deck. Death does not mean literal death. It means the specific kind of transformation that requires something to actually be over — not diminished, not restructured, not paused. The sun rises in the background not as consolation but as confirmation: endings are what make new light available. The butterfly on the flag is not decoration. It is the entire point.",
+    shadow:"Performing transformation without allowing the actual death. The endless 'I'm working on it' that never arrives at the moment of release. Or the opposite: someone who ends things before they have finished living.",
+    love:"A dynamic in this connection has run its course. Honoring that is not giving up — it is making room for something more true.",
+    clarity:"You are holding onto something you already know is over because releasing it requires you to let go of the identity you built around it. That is the actual obstacle.",
+    change:"This is real transformation, not surface change. Something is completing. The reading asks you to let it complete fully rather than keeping one hand on what is ending." },
+
+  { slug:"temperance", emoji:"✨", num:"XIV", name:"Temperance", element:"Fire",
+    archetype:"The angel stands at the edge of a pool, pouring water between two cups in an endless flow — not choosing between them but integrating them. One foot in water, one on land. The alchemy here is not the dramatic fusion of opposites but the slow, patient practice of allowing seemingly opposing things to find their natural proportion. Healing that does not announce itself.",
+    shadow:"Balance that prevents depth. The person who moderates everything and commits to nothing. Or the one who uses patience as an excuse to never take a position.",
+    love:"The approach that is being asked for here is not more intensity. It is more patience. Not the passive kind — the active kind that tends without grasping.",
+    clarity:"The answer lives in the middle — not the compromise but the integration. What feels like a binary is actually a spectrum.",
+    change:"This transition is gradual. That is not failure. The sustainable version of this change is the one that builds without forcing." },
+
+  { slug:"the-devil", emoji:"⛓️", num:"XV", name:"The Devil", element:"Earth",
+    archetype:"The most important visual detail in the card: the chains are loose. The figures are not imprisoned — on some level, in some way, they have chosen to stay. The Devil is not about external evil. It is about the specific psychological mechanism by which a person maintains a situation that harms them because the alternative requires confronting something that feels more threatening than the harm. Named precisely, this is almost always one of three things: a specific fear, a story about their own worth, or a grief they haven't finished having.",
+    shadow:"The person who has intellectually understood their bondage and uses that understanding to feel sophisticated about remaining in it. Shadow work as a permanent project that never produces change.",
+    love:"Something in this pattern is not just limiting the connection — it is protecting you from something you believe you cannot survive. The card asks what that something actually is.",
+    clarity:"You may be attached to a conclusion that is keeping the question from resolving. What would you have to believe about yourself if the answer turned out to be simple?",
+    change:"The chains are loose. The holding is not being done to you. This is not an accusation — it is information about where the actual work is." },
+
+  { slug:"the-tower", emoji:"🌩️", num:"XVI", name:"The Tower", element:"Fire",
+    archetype:"Lightning strikes a tower crowned with gold. What falls is not the self but the false structure — the belief, the relationship, the identity that was maintained at the cost of truth. The experience is violent because the structure was load-bearing: entire lives were organized around it. But what survives the lightning is real. The seeker standing in the rubble is not ruined. They are, for possibly the first time, on actual ground.",
+    shadow:"The person who manufactures Tower moments — who keeps blowing up what they've built before it can be tested. Or the one who survives the collapse and rebuilds the exact same structure somewhere else.",
+    love:"Something that has been kept hidden or quietly known but unspoken is forcing its way into visibility. The disruption is painful. It is also the most honest thing that has happened in this connection in a long time.",
+    clarity:"The framework you have been using to understand this situation is the thing that is collapsing. What remains after the false structure falls will be clearer than anything the structure was capable of showing you.",
+    change:"What is being dismantled was never as solid as it appeared. The ground you are landing on is more real." },
+
+  { slug:"the-star", emoji:"🌟", num:"XVII", name:"The Star", element:"Air",
+    archetype:"After The Tower, a woman kneels at the water's edge and pours from two vessels — replenishing both the visible world and the unconscious depths simultaneously. One great star burns overhead. The Star's gift is not generic hope. It is the specific quality of aliveness that returns only after a real loss — the ability to tend to things again, to pour water into the earth that received all the falling, to want without protection.",
+    shadow:"Hope as avoidance of grief. The rush to the Star before the Tower has fully completed its work. Or: the person who has been through so much that they no longer trust restoration when it arrives.",
+    love:"Genuine tenderness is available here — not the kind that protects itself but the kind that has been worn open. Let it land.",
+    clarity:"The fog is lifting not because the situation has resolved but because something in you has. The guidance arriving in quiet moments is real. Trust it.",
+    change:"You are moving from surviving to something that has a future in it. Not a destination — a direction. That is enough." },
+
+  { slug:"the-moon", emoji:"🌕", num:"XVIII", name:"The Moon", element:"Water",
+    archetype:"A full moon casts uncertain light. A crayfish emerges from the unconscious pool. A dog and a wolf both howl — the tamed self and the wild self, both responding to something enormous they can sense but cannot see. The path between the two towers is real and it is passable, but only by someone who can navigate without knowing exactly where they are.",
+    shadow:"The person who has made a home in the Moon's realm — who mistakes the richness of the unconscious for the whole of reality. Intuition without groundedness becomes a hall of mirrors. Dreams as a substitute for waking life.",
+    love:"Not everything you are feeling about this connection is accurate. But not everything you're dismissing is projection either. The work is to stay present with the ambiguity rather than resolving it prematurely.",
+    clarity:"You do not yet have all the information. What you are experiencing is the disorientation of being in the middle of something that has not yet revealed its shape. Premature conclusions will mislead.",
+    change:"The transformation is happening in the dark — in the part of you that processes below the level of your attention. Trust the process you cannot see." },
+
+  { slug:"the-sun", emoji:"☀️", num:"XIX", name:"The Sun", element:"Fire",
+    archetype:"A radiant child rides a white horse beneath an enormous sun — unburdened, joyful, completely present to what is good. The Sun is the simplest and most honest card in the deck. It does not require interpretation. When it appears, something is genuinely bright in your life. The reading's job is to help you feel that without immediately looking for what might be wrong with it.",
+    shadow:"The refusal to receive what is good because of what it might cost to lose it. Joy hedged until it becomes something smaller. Or: the person whose sun is so bright it blinds them to real shadows.",
+    love:"Warmth, joy, and genuine connection are present here. Let yourself receive this without the armor that transforms happiness into something you have to manage.",
+    clarity:"The situation is clearer than your worry has been suggesting. The light that is available right now is real. Look at what is actually here.",
+    change:"The change is working. Not 'things are getting better in a vague future sense' — right now, something has genuinely shifted. Feel it." },
+
+  { slug:"the-world", emoji:"🌍", num:"XXI", name:"The World", element:"Earth",
+    archetype:"A dancing figure at the center of a laurel wreath holds two wands — an echo of The Magician, but now with all the wisdom of the complete journey. In the four corners, the same creatures that appeared on the Wheel of Fortune watch over this culmination. The Fool's Journey is complete. Not because there is nothing left to learn but because this chapter, in all its weight and grace, has been fully lived.",
+    shadow:"The arrival that cannot be received. The person who completes something and immediately minimizes it, or who reaches the World and feels the Fool's anxiety about what comes next before they have fully arrived here.",
+    love:"Something in this connection has reached a genuine milestone — or you have arrived at a wholeness within yourself that changes the terms of how you love. Both are real.",
+    clarity:"The long arc of this situation is finally visible. You have more perspective than you have been giving yourself credit for. Trust what you can now see.",
+    change:"This is arrival, not destination. Completion is the threshold to the next beginning. The Fool is already forming on the other side of The World." },
+
+  { slug:"judgement", emoji:"📯", num:"XX", name:"Judgement", element:"Fire",
+    archetype:"An angel sounds a trumpet from the clouds. Below, figures rise from coffins with their arms spread wide, faces lifted — not in fear but in recognition. Judgement is not about punishment. It is about the specific moment when a person hears the call that is meant for them and can no longer pretend they don't. Not a verdict handed down from outside. A summons from the deepest part of the self.",
+    shadow:"The person who hears the call clearly and intellectualizes their way into not answering. Or the one who confuses personal ambition with sacred calling and uses the card's energy to justify expansion rather than integration.",
+    love:"Something in this connection is asking to be seen more fully than it has been — or you are being asked to see yourself more fully than you have allowed.",
+    clarity:"You already know the answer. The reckoning you have been avoiding is also the clarity you have been seeking. They are the same thing.",
+    change:"This is not just an outer change. Something that has been forming in you for a long time is finally audible. Answer it." }
 ];
 
-const POSITIONS = {
-  love:'The Root · The Now · The Path',
-  clarity:'The Root · The Now · The Path',
-  change:'The Root · The Now · The Path',
-  default:'The Root · The Now · The Path',
+// ── CROSS-CARD LOGIC ──
+const SHADOW_PAIRS = {
+  "the-magician+the-devil": "amplification — power operating against the self",
+  "the-high-priestess+the-moon": "deep amplification — two water cards, the unconscious doubled",
+  "the-tower+the-star": "collapse and renewal — resist the cliché, find the specific",
+  "the-hermit+the-hanged-man": "amplified pause — generative or protective?",
+  "the-emperor+the-devil": "structure that imprisons — order turned pathological",
+  "death+judgement": "double transformation — completion and calling adjacent",
+  "the-lovers+justice": "choice and consequence — who else is in this equation?",
+  "the-moon+the-tower": "the unconscious erupting into the visible",
+  "the-star+the-world": "rare genuine arrival — do not rush past this",
+  "the-fool+the-tower": "beginning from ruin — the leap that has no preparation"
 };
-const POS_LABELS = ['The Root','The Now','The Path'];
 
-let focus='default', drawn=[], revealCount=0, shuffleTO=null;
-let lastFrame=sessionStorage.getItem('veil_last_frame')||null;
-let state={reading:''};
+function getCrossCardNote(cards) {
+  const slugs = cards.map(c => c.slug);
+  for (const [pair, note] of Object.entries(SHADOW_PAIRS)) {
+    const [a, b] = pair.split('+');
+    if (slugs.includes(a) && slugs.includes(b)) return note;
+  }
+  // Elemental resonance
+  const elements = cards.map(c => c.element);
+  if (elements.every(e => e === elements[0])) return `elemental amplification — three ${elements[0]} cards`;
+  const waterCount = elements.filter(e => e === 'Water').length;
+  if (waterCount >= 2) return 'water dominant — depth, the unconscious, what moves beneath the surface';
+  const fireCount = elements.filter(e => e === 'Fire').length;
+  if (fireCount >= 2) return 'fire dominant — will, drive, the heat of transformation';
+  return null;
+}
+
+// ── NEW PHILOSOPHY SAMPLE READINGS ──
+const READINGS = {
+  love: [
+    "There is a part of you that has been waiting for this connection to become safe enough before you let yourself actually be in it. The card in The Root position isn't describing the other person — it is describing that waiting, and the specific shape it has taken in you. Not fear exactly. Something quieter and more continuous, like a low-level preparation for disappointment that has been running in the background so long you've stopped hearing it as fear and started hearing it as just the way love feels.\n\nThe card that sits in The Now carries a different quality — something more immediate and less armored than what's been operating underneath. There is something genuinely present in this connection right now that doesn't require your protection of it to remain real. The question the second card is asking is whether you can be here without the running commentary of what might go wrong. Not as a permanent mode. Just for long enough to feel what is actually true between you.\n\nThe third card — what The Path holds — is the version of you that knows how to receive love without converting it immediately into something to manage. She is not naive. She has just decided that the cost of the armor is higher than the risk of the exposure. That decision is not behind you yet. But these three cards together suggest it is closer than you've been letting yourself believe.",
+
+    "Something finished in you before it finished in the situation — that is the quietest and most accurate way to read the first card. There is grief in the Root position that has not been named as grief because it arrived dressed as other things: as busyness, as the certainty that you were fine, as the small adjustments you made to want less so the want wouldn't hurt as much. The card is not asking you to perform that grief. It is just asking you to stop pretending it isn't there.\n\nThe Now card sits in a threshold. Not inside what is ending and not yet inside what comes next — which is the most uncomfortable position to hold, and also the most honest one. Something in you knows that what is being offered in this current moment is asking for more presence than you have been able to give while also managing everything else. The card doesn't demand more of you. It just makes visible the gap between what you have been bringing and what would actually change things.\n\nWhat The Path carries is gentler than you might expect after these first two. There is a quality in the third card that is less about doing something correctly and more about allowing something to be true. The closing question this reading leaves you with: what would it cost you to let yourself be loved in the specific way this person is actually offering — not the way you have been rehearsing, but the one that's actually in front of you?"
+  ],
+  clarity: [
+    "The fog you are describing — the thing you called confusion, or not knowing — the first card suggests it is not actually confusion. Confusion is when you don't have enough information. What you are in is something else: you have the information, and the information is requiring you to know something about yourself that you have not yet been willing to know. The Root card is not a problem to solve. It is a thing to see clearly. When you see it, the fog will lift on its own.\n\nThe Now card operates at the exact level where the difficulty is. Not the surface question — the layer beneath it. There is a story you have been using to interpret this situation that made sense when you adopted it and that is now actually preventing you from seeing what has changed. The card is not saying the story was wrong. It is saying the situation has moved and the frame hasn't moved with it. The disorientation you are feeling is the gap between those two things.\n\nWhat The Path opens toward is simpler than what you have been trying to arrive at. Not easy — but simple. The complexity that surrounds this question belongs, in large part, to the story in the second card. What the third card is offering is a more direct relationship with what you actually know. The reading's final question: if you let yourself know what you already know, what becomes possible that hasn't been possible while you were still deciding whether to know it?",
+
+    "There is something you keep arriving at when you think about this, and then moving away from. You arrive, you see it, and then something accelerates you past it — a redirect toward analysis, toward a different angle, toward the complexity of the situation rather than the simplicity of what you already understood for a moment. The first card names that pattern. Not as a character flaw. As the specific shape that avoidance takes in a person who is genuinely intelligent and has learned to use that intelligence to stay one step ahead of what they know.\n\nThe card that sits in The Now position carries the weight of something that has been building for longer than the current question has existed. You are not just asking about this situation. You are asking about a way of being in situations like this one that has generated the same quality of stuck for a while. The second card is pointing at the pattern beneath the question, which is both more uncomfortable and more useful than the question itself.\n\nThe Path opens through something you may have been treating as a feeling to manage rather than as information to act on. There is a specific thing your body has been knowing — before the analysis starts, before the more reasonable interpretation arrives — that has been consistent for longer than you have been willing to admit. The reading closes with this: what would you do if you trusted that first knowing, the one that arrives before you've had a chance to talk yourself out of it?"
+  ],
+  change: [
+    "What is ending has been ending for longer than you have been willing to say out loud. The first card speaks to a completion that is already well underway — not a sudden loss but the slow conclusion of something that ran as long as it could run. There is grief in the Root position that deserves to be met rather than moved past. Not because dwelling in it will help, but because endings that are not honored have a way of following you into what comes next, attached to the new thing like a question it cannot answer.\n\nYou are in the passage right now. The Now card sees you there — in the space between what was and what has not yet declared itself — and it does not try to rush you through it. The second card is the most honest thing in this spread: you are in the middle of something real. The discomfort is not a sign that something is wrong. It is the accurate feeling of genuine transition, and the only way through it is through it. The card is asking whether you can be in this passage without needing to have arrived yet.\n\nWhat The Path carries is less about destination and more about quality — a specific kind of aliveness that becomes available on the other side of a real ending. Not the same life resumed. Something that has been shaped by what you've been through into a form you couldn't have designed from the beginning. The third card's question is quiet: can you trust that what is forming in you right now, in the part of the passage where you can't yet see the other side, is already becoming something worth arriving at?",
+
+    "There is a version of this change you have been preparing for — the one where it unfolds in a way you can manage, where the transition is legible and the new chapter resembles the old one enough to feel like continuity. The first card is not that version. The Root position in this spread holds a force that is older and less accommodating than the change you had in mind. Something in you has already understood that what is coming will require you to release not just a situation but an identity that was organized around the situation. That is the actual weight here.\n\nThe Now card carries the specific disorientation of standing at a threshold that only goes forward. There is no version of this moment that includes going back to how it was before you knew what you now know. The second card is not frightening — it is clarifying. You are not at a place of decision. You are at a place of recognition. The decision was made by the situation itself, and your relationship to it is one of accounting for what has already occurred rather than choosing between futures.\n\nWhat The Path offers is not arrival but direction. The third card is the first genuine light of something that has been forming in the dark — not yet fully visible, not yet fully named, but moving. The reading's final note: the change you are in the middle of is making you into something you could not have become without it. That is not consolation. It is the actual architecture of what is happening."
+  ]
+};
+
+const POS_LABELS = ["The Root","The Now","The Path"];
+let focus="default", drawn=[], revealCount=0, shuffleTO=null;
 
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 function drawThree(){drawn=shuffle(CARDS).slice(0,3);}
 
-// Stars
-(function(){
-  const c=document.getElementById('stars'),ctx=c.getContext('2d');
-  let W,H,stars;
-  function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=Array.from({length:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+.2,a:Math.random(),da:(Math.random()-.5)*.003}));}
-  function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a=Math.max(.05,Math.min(1,s.a+s.da));if(Math.random()<.002)s.da*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.fill();});requestAnimationFrame(draw);}
-  window.addEventListener('resize',init);init();draw();
-})();
+(function(){const c=document.getElementById("stars"),ctx=c.getContext("2d");let W,H,stars;function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=Array.from({length:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+.2,a:Math.random(),da:(Math.random()-.5)*.003}));}function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a=Math.max(.05,Math.min(1,s.a+s.da));if(Math.random()<.002)s.da*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.fill();});requestAnimationFrame(draw);}window.addEventListener("resize",init);init();draw();})();
 
-// Boot
 drawThree();
-window.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(()=>{
-    document.getElementById('hero-title').classList.add('in');
-    document.getElementById('hero-sub').classList.add('in');
-  },80);
-  setTimeout(()=>document.getElementById('btn-begin').classList.add('in'),100);
+window.addEventListener("DOMContentLoaded",()=>{
+  setTimeout(()=>{document.getElementById("hero-title").classList.add("in");document.getElementById("hero-sub").classList.add("in");},80);
+  setTimeout(()=>document.getElementById("hero-cta").classList.add("in"),100);
 });
 
-function loader(cb){
-  const f=document.getElementById('lf');
-  f.style.width='0%';f.classList.add('on');
-  requestAnimationFrame(()=>{f.style.width='70%';setTimeout(()=>{f.style.width='100%';setTimeout(()=>{f.classList.remove('on');f.style.width='0%';cb();},320);},480);});
-}
+function loader(cb){const f=document.getElementById("lf");f.style.width="0%";f.classList.add("on");requestAnimationFrame(()=>{f.style.width="70%";setTimeout(()=>{f.style.width="100%";setTimeout(()=>{f.classList.remove("on");f.style.width="0%";cb();},320);},480);});}
 
 function goTo(id,dots){
-  const p=document.querySelector('.screen.active');
-  if(p){p.classList.add('exit');setTimeout(()=>p.classList.remove('exit','active'),600);}
-  setTimeout(()=>document.getElementById(id).classList.add('active'),180);
-  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i<dots));
-  document.getElementById('dots').style.opacity=dots>=6?'0':'1';
-  // Home button — hidden on landing, visible everywhere else
-  const hb=document.getElementById('home-btn');
-  if(id==='s1'){hb.classList.remove('visible');}
-  else{setTimeout(()=>hb.classList.add('visible'),400);}
-}
-
-function goHome(){
-  focus='default';revealCount=0;drawThree();
-  document.querySelectorAll('.focus-pill').forEach(p=>p.classList.remove('on'));
-  document.getElementById('note-wrap').classList.remove('open');
-  document.getElementById('btn-continue').classList.remove('ready');
-  document.getElementById('note-text').value='';
-  document.getElementById('note-text').style.height='auto';
-  [0,1,2,3,4].forEach(i=>{const c=document.getElementById('sh'+i);c.style.transition='none';c.style.transform='translate(-50%,-50%)';});
-  clearTimeout(shuffleTO);
-  document.getElementById('reading-body').style.display='none';
-  document.getElementById('reading-hold').style.cssText='display:flex;opacity:1;';
-  document.getElementById('reading-text').innerHTML='';
-  document.getElementById('mini-spread').innerHTML='';
-  document.getElementById('home-btn').classList.remove('visible');
-  goTo('s1',1);
+  const p=document.querySelector(".screen.active");
+  if(p){p.classList.add("exit");setTimeout(()=>p.classList.remove("exit","active"),600);}
+  setTimeout(()=>document.getElementById(id).classList.add("active"),180);
+  document.querySelectorAll(".dot").forEach((d,i)=>d.classList.toggle("on",i<dots));
+  document.getElementById("dots").style.opacity=dots>=6?"0":"1";
+  const hb=document.getElementById("home-btn");
+  if(id==="s1"){hb.classList.remove("visible");}
+  else{setTimeout(()=>hb.classList.add("visible"),400);}
 }
 
 function step(n){
-  if(n===2) goTo('s2',1);
-  else if(n===3){loader(()=>{goTo('s3',2);setTimeout(()=>step(4),3600);});}
-  else if(n===4){goTo('s4',3);runShuffle();}
-  else if(n===5){goTo('s5',4);setupDraw();}
-  else if(n===6){loader(()=>{goTo('s6',5);runReading();});}
+  if(n===2) goTo("s2",1);
+  else if(n===3){loader(()=>{goTo("s3",2);setTimeout(()=>step(4),3600);});}
+  else if(n===4){goTo("s4",3);runShuffle();}
+  else if(n===5){goTo("s5",4);setupDraw();}
+  else if(n===6){loader(()=>{goTo("s6",5);runReading();});}
 }
 
-function setFocus(el,f){
-  document.querySelectorAll('.focus-pill').forEach(p=>p.classList.remove('on'));
-  el.classList.add('on');
-  focus=f;
-  document.getElementById('note-wrap').classList.add('open');
-  document.getElementById('btn-continue').classList.add('ready');
-}
-document.getElementById('note-text').addEventListener('input',function(){
-  this.style.height='auto';
-  this.style.height=Math.min(this.scrollHeight,140)+'px';
-});
+function setFocus(el,f){document.querySelectorAll(".focus-pill").forEach(p=>p.classList.remove("on"));el.classList.add("on");focus=f;document.getElementById("note-wrap").classList.add("open");document.getElementById("btn-continue").classList.add("ready");}
+document.getElementById("note-text").addEventListener("input",function(){this.style.height="auto";this.style.height=Math.min(this.scrollHeight,140)+"px";});
 
-function runShuffle(){
-  const cards=[0,1,2,3,4].map(i=>document.getElementById('sh'+i));
-  const pos=[{x:-88,y:0,r:-6},{x:-44,y:6,r:-3},{x:0,y:10,r:0},{x:44,y:6,r:3},{x:88,y:0,r:6}];
-  cards.forEach((c,i)=>setTimeout(()=>{
-    c.style.transition='transform 480ms cubic-bezier(.23,1,.32,1)';
-    c.style.transform=`translate(calc(-50% + ${pos[i].x}px),calc(-50% + ${pos[i].y}px)) rotate(${pos[i].r}deg)`;
-  },i*70));
-  let phase=0;
-  function doShuffle(){
-    phase++;
-    const order=shuffle([0,1,2,3,4]);
-    cards.forEach((c,i)=>{const to=pos[order[i]];setTimeout(()=>{
-      c.style.transition=`transform ${280+Math.random()*180}ms cubic-bezier(.23,1,.32,1)`;
-      c.style.transform=`translate(calc(-50% + ${to.x}px),calc(-50% + ${to.y}px)) rotate(${to.r+(Math.random()-.5)*10}deg)`;
-    },i*55);});
-    if(phase<5) shuffleTO=setTimeout(doShuffle,480);
-    else{
-      setTimeout(()=>cards.forEach((c,i)=>setTimeout(()=>{
-        c.style.transition='transform 380ms cubic-bezier(.23,1,.32,1)';
-        c.style.transform=`translate(-50%,-50%) translateX(${(i-2)*3}px) translateY(${Math.abs(i-2)*-2}px)`;
-      },i*50)),360);
-      setTimeout(()=>step(5),1300);
-    }
-  }
-  shuffleTO=setTimeout(doShuffle,750);
-}
+function runShuffle(){const cards=[0,1,2,3,4].map(i=>document.getElementById("sh"+i));const pos=[{x:-88,y:0,r:-6},{x:-44,y:6,r:-3},{x:0,y:10,r:0},{x:44,y:6,r:3},{x:88,y:0,r:6}];cards.forEach((c,i)=>setTimeout(()=>{c.style.transition="transform 480ms cubic-bezier(.23,1,.32,1)";c.style.transform=`translate(calc(-50% + ${pos[i].x}px),calc(-50% + ${pos[i].y}px)) rotate(${pos[i].r}deg)`;},i*70));let phase=0;function doShuffle(){phase++;const order=shuffle([0,1,2,3,4]);cards.forEach((c,i)=>{const to=pos[order[i]];setTimeout(()=>{c.style.transition=`transform ${280+Math.random()*180}ms cubic-bezier(.23,1,.32,1)`;c.style.transform=`translate(calc(-50% + ${to.x}px),calc(-50% + ${to.y}px)) rotate(${to.r+(Math.random()-.5)*10}deg)`;},i*55);});if(phase<5)shuffleTO=setTimeout(doShuffle,480);else{setTimeout(()=>cards.forEach((c,i)=>setTimeout(()=>{c.style.transition="transform 380ms cubic-bezier(.23,1,.32,1)";c.style.transform=`translate(-50%,-50%) translateX(${(i-2)*3}px) translateY(${Math.abs(i-2)*-2}px)`;},i*50)),360);setTimeout(()=>step(5),1300);}}shuffleTO=setTimeout(doShuffle,750);}
 
-function setupDraw(){
-  revealCount=0;
-  drawn.forEach((card,i)=>{
-    const img=document.getElementById('cimg'+i);
-    img.src=CARD_IMAGES[card.slug]||'';
-    img.alt=card.name;
-    document.getElementById('fi'+i).classList.remove('flipped');
-    document.getElementById('cs'+i).classList.remove('revealed');
-    document.getElementById('fw'+i).classList.remove('done');
-  });
-}
+function setupDraw(){revealCount=0;drawn.forEach((card,i)=>{const img=document.getElementById("cimg"+i);img.src=CARD_IMAGES[card.slug]||"";img.alt=card.name;document.getElementById("fi"+i).classList.remove("flipped");document.getElementById("cs"+i).classList.remove("revealed");document.getElementById("fw"+i).classList.remove("done");});}
 
-function reveal(i){
-  const w=document.getElementById('fw'+i);
-  if(w.classList.contains('done'))return;
-  w.classList.add('done');
-  document.getElementById('fi'+i).classList.add('flipped');
-  document.getElementById('cs'+i).classList.add('revealed');
-  revealCount++;
-  if(revealCount===3)setTimeout(()=>step(6),1000);
-}
+function reveal(i){const w=document.getElementById("fw"+i);if(w.classList.contains("done"))return;w.classList.add("done");document.getElementById("fi"+i).classList.add("flipped");document.getElementById("cs"+i).classList.add("revealed");revealCount++;if(revealCount===3)setTimeout(()=>step(6),1000);}
 
 async function runReading(){
-  const holdEl=document.getElementById('reading-hold');
-  const bodyEl=document.getElementById('reading-body');
-  holdEl.style.display='flex';holdEl.style.opacity='1';
-  bodyEl.style.display='none';
-
-  // Mini spread
-  const ms=document.getElementById('mini-spread');
-  ms.innerHTML='';
+  const holdEl=document.getElementById("reading-hold");
+  const bodyEl=document.getElementById("reading-body");
+  holdEl.style.display="flex";holdEl.style.opacity="1";
+  bodyEl.style.display="none";
+  const ms=document.getElementById("mini-spread");ms.innerHTML="";
   drawn.forEach((c,i)=>{
-    const wrap=document.createElement('div');wrap.className='mini-card-wrap';wrap.style.animationDelay=(i*.14)+'s';
-    const mc=document.createElement('div');mc.className='mini-card';
-    const img=document.createElement('img');img.src=CARD_IMAGES[c.slug]||'';img.alt=c.name;
+    const wrap=document.createElement("div");wrap.className="mini-card-wrap";wrap.style.animationDelay=(i*.14)+"s";
+    const mc=document.createElement("div");mc.className="mini-card";
+    const img=document.createElement("img");img.src=CARD_IMAGES[c.slug]||"";img.alt=c.name;
     mc.appendChild(img);
-    const pos=document.createElement('div');pos.className='mini-pos';pos.textContent=POS_LABELS[i];
-    const nm=document.createElement('div');nm.className='mini-name';nm.textContent=c.name;
-    wrap.appendChild(mc);wrap.appendChild(pos);wrap.appendChild(nm);
-    ms.appendChild(wrap);
+    const pos=document.createElement("div");pos.className="mini-pos";pos.textContent=POS_LABELS[i];
+    const nm=document.createElement("div");nm.className="mini-name";nm.textContent=c.name;
+    wrap.appendChild(mc);wrap.appendChild(pos);wrap.appendChild(nm);ms.appendChild(wrap);
   });
 
-  const note=document.getElementById('note-text').value.trim();
-  const focusKey=(focus||'').toLowerCase();
+  const focusKey=(focus||"").toLowerCase();
+  const note=document.getElementById("note-text").value.trim();
+  const crossNote=getCrossCardNote(drawn);
 
+  // Fetch AI reading
   let reading='';
+  let lastFrameUsed=null;
+  const storedFrame=sessionStorage.getItem('veil_last_frame')||null;
   try{
     const res=await fetch('/api/reading',{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        cards:drawn.map((c,i)=>({name:c.name,position:POS_LABELS[i],keywords:c.keywords,angle:c[focusKey]||'',element:c.element||''})),
-        focus,question:note,lastFrame,
+        cards:drawn.map((c,i)=>({
+          name:c.name,position:POS_LABELS[i],
+          archetype:c.archetype||'',
+          shadow:c.shadow||'',
+          angle:c[focusKey]||'',
+          element:c.element||'',
+          crossNote:crossNote||''
+        })),
+        focus,question:note,lastFrame:storedFrame,
       })
     });
-    if(!res.ok)throw new Error();
+    if(!res.ok)throw new Error('API error');
     const d=await res.json();
     reading=d.reading||'';
-    if(d.frameUsed){lastFrame=d.frameUsed;sessionStorage.setItem('veil_last_frame',lastFrame);}
-  } catch {
-    reading=drawn.map((c,i)=>`${POS_LABELS[i]}: ${c.name} speaks to ${c[focusKey]||c.keywords}.`).join('\n\n')+'\n\nSit with what resonates most. The cards are mirrors, not verdicts.';
+    if(d.frameUsed){lastFrameUsed=d.frameUsed;sessionStorage.setItem('veil_last_frame',lastFrameUsed);}
+  }catch{
+    // Fallback to sample readings
+    const pool=READINGS[focusKey]||READINGS.clarity;
+    const idx=crossNote?1:Math.floor(Math.random()*pool.length);
+    reading=pool[Math.min(idx,pool.length-1)];
   }
-  state.reading=reading;
 
   setTimeout(()=>{
-    holdEl.style.opacity='0';
+    holdEl.style.opacity="0";
     setTimeout(()=>{
-      holdEl.style.display='none';
-      bodyEl.style.display='flex';
-
-      const txt=document.getElementById('reading-text');txt.innerHTML='';
+      holdEl.style.display="none";bodyEl.style.display="flex";
+      const txt=document.getElementById("reading-text");txt.innerHTML="";
       setTimeout(()=>typewrite(txt,reading),500);
     },600);
-  },3500);
+  },3000);
 }
 
-function typewrite(el,text,cb){
-  const paras=text.split(/\n\n+/).filter(Boolean);
-  let pi=0,ci=0,curP=null;
-  const cur=document.createElement('span');cur.className='cursor';
-  function next(){
-    if(pi>=paras.length){if(cur.parentNode)cur.parentNode.removeChild(cur);if(cb)cb();return;}
-    if(ci===0){curP=document.createElement('p');el.appendChild(curP);}
-    const p=paras[pi];
-    if(ci<p.length){curP.textContent=p.slice(0,ci+1);curP.appendChild(cur);ci++;setTimeout(next,20+Math.random()*15);}
-    else{if(cur.parentNode)cur.parentNode.removeChild(cur);pi++;ci=0;if(pi<paras.length)setTimeout(next,360);else if(cb)cb();}
-  }
-  next();
-}
+function typewrite(el,text,cb){const paras=text.split(/\n\n+/).filter(Boolean);let pi=0,ci=0,curP=null;const cur=document.createElement("span");cur.className="cursor";function next(){if(pi>=paras.length){if(cur.parentNode)cur.parentNode.removeChild(cur);if(cb)cb();return;}if(ci===0){curP=document.createElement("p");el.appendChild(curP);}const p=paras[pi];if(ci<p.length){curP.textContent=p.slice(0,ci+1);curP.appendChild(cur);ci++;setTimeout(next,18+Math.random()*14);}else{if(cur.parentNode)cur.parentNode.removeChild(cur);pi++;ci=0;if(pi<paras.length)setTimeout(next,380);else if(cb)cb();}}next();}
 
-async function shareReading(){
+function goHome(){focus="default";revealCount=0;drawThree();document.querySelectorAll(".focus-pill").forEach(p=>p.classList.remove("on"));document.getElementById("note-wrap").classList.remove("open");document.getElementById("btn-continue").classList.remove("ready");document.getElementById("note-text").value="";[0,1,2,3,4].forEach(i=>{const c=document.getElementById("sh"+i);c.style.transition="none";c.style.transform="translate(-50%,-50%)";});clearTimeout(shuffleTO);document.getElementById("reading-body").style.display="none";document.getElementById("reading-hold").style.cssText="display:flex;opacity:1;";document.getElementById("reading-text").innerHTML="";document.getElementById("mini-spread").innerHTML="";document.getElementById("home-btn").classList.remove("visible");goTo("s1",1);}
+
+function shareReading(){
   try{
     const canvas=document.createElement('canvas');
     const W=1080,H=1920;canvas.width=W;canvas.height=H;
@@ -520,51 +751,107 @@ async function shareReading(){
     ctx.font='500 40px Cinzel,Georgia,serif';ctx.fillText('VEIL READS',W/2,110);
     const cW=260,cH=430,gap=28,startX=(W-(cW*3+gap*2))/2,cY=200;
     const loadImg=src=>new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});
-    const imgs=await Promise.all(drawn.map(c=>loadImg(CARD_IMAGES[c.slug]||'')));
-    for(let i=0;i<3;i++){
-      const x=startX+i*(cW+gap);
-      ctx.save();const r=12;
-      ctx.beginPath();ctx.moveTo(x+r,cY);ctx.lineTo(x+cW-r,cY);ctx.quadraticCurveTo(x+cW,cY,x+cW,cY+r);ctx.lineTo(x+cW,cY+cH-r);ctx.quadraticCurveTo(x+cW,cY+cH,x+cW-r,cY+cH);ctx.lineTo(x+r,cY+cH);ctx.quadraticCurveTo(x,cY+cH,x,cY+cH-r);ctx.lineTo(x,cY+r);ctx.quadraticCurveTo(x,cY,x+r,cY);ctx.closePath();
-      ctx.shadowColor='rgba(201,162,82,.3)';ctx.shadowBlur=30;ctx.clip();
-      if(imgs[i])ctx.drawImage(imgs[i],x,cY,cW,cH);
-      ctx.restore();
-      ctx.font='400 22px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.7)';ctx.fillText(POS_LABELS[i].toUpperCase(),x+cW/2,cY+cH+36);
-      ctx.font='500 28px Cinzel,Georgia,serif';ctx.fillStyle='rgba(201,162,82,.9)';ctx.fillText(drawn[i].name,x+cW/2,cY+cH+68);
-    }
-    const excerpt=(state.reading.match(/[^.!?]+[.!?]+/g)||[state.reading]).slice(0,2).join(' ').slice(0,220);
-    ctx.font='400 26px Georgia,serif';ctx.fillStyle='rgba(242,234,216,.8)';
-    const lh=44,mw=880,words=excerpt.split(' ');let line='',cy=cY+cH+130;
-    for(const w of words){const t=line+w+' ';if(ctx.measureText(t).width>mw&&line){ctx.fillText(line.trim(),W/2,cy);line=w+' ';cy+=lh;}else line=t;}
-    if(line.trim())ctx.fillText(line.trim(),W/2,cy);
-    ctx.font='500 20px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.3)';ctx.fillText('VEILREADS.COM',W/2,H-80);
-    canvas.toBlob(async blob=>{
-      const file=new File([blob],'veil-reading.png',{type:'image/png'});
-      if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'My Veil Reads reading'});}
-      else{const a=document.createElement('a');a.href=canvas.toDataURL();a.download='veil-reading.png';a.click();showToast('Reading saved ✦');}
-    },'image/png',.95);
-  } catch(e){console.error(e);showToast('Could not generate image');}
+    const imgs=Promise.all(drawn.map(c=>loadImg(CARD_IMAGES[c.slug]||'')));
+    imgs.then(cardImgs=>{
+      for(let i=0;i<3;i++){
+        const x=startX+i*(cW+gap);
+        ctx.save();const r=12;
+        ctx.beginPath();ctx.moveTo(x+r,cY);ctx.lineTo(x+cW-r,cY);ctx.quadraticCurveTo(x+cW,cY,x+cW,cY+r);ctx.lineTo(x+cW,cY+cH-r);ctx.quadraticCurveTo(x+cW,cY+cH,x+cW-r,cY+cH);ctx.lineTo(x+r,cY+cH);ctx.quadraticCurveTo(x,cY+cH,x,cY+cH-r);ctx.lineTo(x,cY+r);ctx.quadraticCurveTo(x,cY,x+r,cY);ctx.closePath();
+        ctx.shadowColor='rgba(201,162,82,.3)';ctx.shadowBlur=30;ctx.clip();
+        if(cardImgs[i])ctx.drawImage(cardImgs[i],x,cY,cW,cH);ctx.restore();
+        ctx.font='400 22px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.7)';ctx.fillText(POS_LABELS[i].toUpperCase(),x+cW/2,cY+cH+36);
+        ctx.font='500 28px Cinzel,Georgia,serif';ctx.fillStyle='rgba(201,162,82,.9)';ctx.fillText(drawn[i].name,x+cW/2,cY+cH+68);
+      }
+      ctx.font='500 20px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.3)';ctx.fillText('VEILREADS.COM',W/2,H-80);
+      canvas.toBlob(async blob=>{
+        const file=new File([blob],'veil-reading.png',{type:'image/png'});
+        if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'My Veil Reads reading'});}
+        else{const a=document.createElement('a');a.href=canvas.toDataURL();a.download='veil-reading.png';a.click();}
+      },'image/png',.95);
+    });
+  }catch(e){console.error(e);}
+}
+function restart(){loader(()=>{goHome();setTimeout(()=>goTo("s2",1),100);});}
+// ── LIBRARY ──
+let libFilter='all',detCardIdx=0,detOrigin='library';
+
+function openLibrary(){
+  renderLibGrid('all');
+  document.querySelectorAll('.lib-filter').forEach((f,i)=>f.classList.toggle('on',i===0));
+  goTo('s-library',7);
 }
 
-function showToast(msg){const t=document.getElementById('share-toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
-
-function restart(){
-  loader(()=>{
-    focus='default';revealCount=0;drawThree();
-    document.querySelectorAll('.focus-pill').forEach(p=>p.classList.remove('on'));
-    document.getElementById('note-wrap').classList.remove('open');
-    document.getElementById('btn-continue').classList.remove('ready');
-    document.getElementById('note-text').value='';
-    document.getElementById('note-text').style.height='auto';
-    [0,1,2,3,4].forEach(i=>{const c=document.getElementById('sh'+i);c.style.transition='none';c.style.transform='translate(-50%,-50%)';});
-    clearTimeout(shuffleTO);
-    document.getElementById('reading-body').style.display='none';
-    document.getElementById('reading-hold').style.cssText='display:flex;opacity:1;';
-    document.getElementById('reading-text').innerHTML='';
-    document.getElementById('mini-spread').innerHTML='';
-    
-    goTo('s2',1);
-  });
+function filterLib(f,btn){
+  libFilter=f;
+  document.querySelectorAll('.lib-filter').forEach(x=>x.classList.remove('on'));
+  btn.classList.add('on');
+  renderLibGrid(f);
 }
+
+function renderLibGrid(filter){
+  const grid=document.getElementById('lib-grid');
+  const list=filter==='all'?CARDS:CARDS.filter(c=>c.element.toLowerCase()===filter);
+  grid.innerHTML=list.map(c=>{
+    const idx=CARDS.indexOf(c);
+    const src=CARD_IMAGES[c.slug]||'';
+    return `<div class="lib-card-thumb" onclick="openCard(${idx},'library')">
+      <div class="lib-thumb-face">
+        ${src?`<img class="lib-thumb-img" src="${src}" alt="${c.name}">`:''}
+        <div class="lib-thumb-roman">${c.num}</div>
+        <div class="lib-thumb-name">${c.name}</div>
+      </div>
+      <div class="lib-thumb-elem">${c.element}</div>
+    </div>`;
+  }).join('');
+}
+
+function openCard(idx,origin){
+  detCardIdx=idx;detOrigin=origin||'library';
+  populateDetail(idx);
+  document.getElementById('det-back-btn').textContent=origin==='reading'?'← Back to Reading':'← All Cards';
+  document.querySelector('.det-scroll').scrollTop=0;
+  goTo('s-detail',7);
+}
+
+function populateDetail(idx){
+  const c=CARDS[idx];
+  const src=CARD_IMAGES[c.slug]||'';
+  document.getElementById('det-img').src=src;
+  document.getElementById('det-img').alt=c.name;
+  document.getElementById('det-roman').textContent=c.num;
+  document.getElementById('det-arcana').textContent=`Major Arcana ${c.num} · ${c.element}`;
+  document.getElementById('det-name').textContent=c.name;
+  document.getElementById('det-elem').textContent=c.element;
+  document.getElementById('det-archetype').textContent=c.archetype||'';
+  document.getElementById('det-shadow').textContent=c.shadow?`Shadow: ${c.shadow}`:'';
+  document.getElementById('da-love').textContent=c.love||'';
+  document.getElementById('da-clarity').textContent=c.clarity||'';
+  document.getElementById('da-change').textContent=c.change||'';
+  document.getElementById('det-keywords').innerHTML=[c.element,`Arcana ${c.num}`].map(k=>`<span class="det-kw">${k}</span>`).join('');
+  document.getElementById('det-counter').textContent=`${idx+1} / ${CARDS.length}`;
+  document.getElementById('det-prev').disabled=idx===0;
+  document.getElementById('det-next').disabled=idx===CARDS.length-1;
+  document.querySelectorAll('.det-tab').forEach((t,i)=>t.classList.toggle('on',i===0));
+  document.querySelectorAll('.det-angle').forEach((a,i)=>a.classList.toggle('on',i===0));
+}
+
+function switchAngle(f,btn){
+  document.querySelectorAll('.det-tab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.det-angle').forEach(a=>a.classList.remove('on'));
+  btn.classList.add('on');
+  document.getElementById('da-'+f).classList.add('on');
+}
+
+function navCard(dir){
+  const n=detCardIdx+dir;
+  if(n>=0&&n<CARDS.length){detCardIdx=n;populateDetail(n);document.querySelector('.det-scroll').scrollTop=0;}
+}
+
+function detBack(){
+  if(detOrigin==='reading')goTo('s6',5);
+  else goTo('s-library',7);
+}
+
 </script>
 </body>
 </html>
