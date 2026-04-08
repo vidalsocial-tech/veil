@@ -226,26 +226,65 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .cslot.revealed .pos-label{opacity:.75;}
 .flip-wrap:not(.done):hover .flip-inner{transform:translateY(-10px) scale(1.04);}
 .flip-wrap:not(.done):hover .card-back{border-color:rgba(201,162,82,.55);}
-/* S6 */
-#s6{justify-content:flex-start;padding-top:44px;padding-bottom:50px;overflow-y:auto;}
-.mini-spread{display:flex;gap:18px;justify-content:center;margin-bottom:28px;}
+/* S6 — fixed layout, no page growth */
+#s6{
+  justify-content:flex-start;
+  padding:0;
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.s6-top{
+  flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;
+  padding:32px 22px 0;
+  width:100%;
+}
+.mini-spread{display:flex;gap:18px;justify-content:center;margin-bottom:20px;}
 .mini-card-wrap{display:flex;flex-direction:column;align-items:center;gap:7px;opacity:0;animation:rise .7s both;}
 .mini-card{width:66px;height:106px;border-radius:8px;border:1.5px solid rgba(201,162,82,.42);background:#0e0c1c;box-shadow:0 6px 22px rgba(0,0,0,.7),0 0 20px rgba(201,162,82,.12);overflow:hidden;flex-shrink:0;}
 .mini-card img{width:100%;height:100%;object-fit:cover;display:block;}
 .mini-pos{font-family:"Inter",sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,162,82,.55);}
 .mini-name{font-family:"Cinzel",serif;font-size:.54rem;letter-spacing:.06em;color:var(--mist);text-align:center;max-width:80px;line-height:1.4;}
-.reading-hold{font-family:"Inter",sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;gap:10px;}
+.reading-hold{font-family:"Inter",sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;margin-bottom:0;display:flex;align-items:center;gap:10px;}
 .dp span{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--gold);animation:dp 1.3s ease-in-out infinite;margin:0 2px;}
 .dp span:nth-child(2){animation-delay:.2s}.dp span:nth-child(3){animation-delay:.4s}
 @keyframes dp{0%,80%,100%{opacity:.2;transform:scale(.7)}40%{opacity:1;transform:scale(1)}}
-.reading-box{width:100%;max-width:500px;background:rgba(255,255,255,.022);border:1px solid rgba(201,162,82,.1);border-radius:14px;padding:clamp(18px,4vw,28px) clamp(18px,5vw,30px);position:relative;margin-bottom:28px;}
+/* scrollable reading area fills remaining vertical space */
+.s6-scroll{
+  flex:1;
+  overflow-y:auto;
+  width:100%;
+  padding:0 22px;
+  -webkit-overflow-scrolling:touch;
+}
+.s6-scroll::-webkit-scrollbar{width:3px;}
+.s6-scroll::-webkit-scrollbar-track{background:transparent;}
+.s6-scroll::-webkit-scrollbar-thumb{background:rgba(201,162,82,.18);border-radius:2px;}
+.reading-box{
+  width:100%;max-width:500px;margin:0 auto;
+  background:rgba(255,255,255,.022);
+  border:1px solid rgba(201,162,82,.1);
+  border-radius:14px;
+  padding:clamp(16px,4vw,26px) clamp(16px,5vw,28px);
+  position:relative;
+  margin-top:16px;
+}
 .reading-box::before{content:"✦";position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--ink);padding:0 12px;color:var(--gold);font-size:.6rem;}
 .reading-text{font-size:clamp(.875rem,2.2vw,.98rem);line-height:clamp(1.85,3vw,2.05);color:var(--parchment);}
 .reading-text p{margin-bottom:1.25em;}
 .reading-text p:last-child{margin-bottom:0;}
 .cursor{display:inline-block;width:1px;height:1em;background:var(--gold);margin-left:1px;vertical-align:middle;animation:bl .8s steps(1) infinite;}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
-.action-row{display:flex;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-bottom:48px;}
+/* action buttons pinned at bottom */
+.s6-bottom{
+  flex-shrink:0;
+  display:flex;flex-direction:column;align-items:center;
+  gap:12px;
+  padding:16px 22px 28px;
+  width:100%;
+  background:linear-gradient(to top,var(--ink) 70%,transparent);
+}
+.action-row{display:flex;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;}
 #dots{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;gap:7px;z-index:20;}
 .dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.1);transition:all .3s;}
 .dot.on{background:var(--gold);transform:scale(1.35);}
@@ -343,14 +382,21 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 </div>
 
 <div class="screen" id="s6">
-  <div class="logo" style="margin-bottom:18px">Veil<em>Reads</em></div>
-  <div class="mini-spread" id="mini-spread"></div>
-  <div class="reading-hold" id="reading-hold" style="opacity:0;animation:fadein .8s .2s forwards;">
-    Reading the cards for you
-    <span class="dp"><span></span><span></span><span></span></span>
+  <!-- fixed top: logo + mini cards + loading state -->
+  <div class="s6-top">
+    <div class="logo" style="margin-bottom:14px">Veil<em>Reads</em></div>
+    <div class="mini-spread" id="mini-spread"></div>
+    <div class="reading-hold" id="reading-hold" style="opacity:0;animation:fadein .8s .2s forwards;">
+      Reading the cards for you
+      <span class="dp"><span></span><span></span><span></span></span>
+    </div>
   </div>
-  <div id="reading-body" style="display:none;width:100%;max-width:500px;flex-direction:column;align-items:center;">
+  <!-- scrollable reading text -->
+  <div class="s6-scroll" id="s6-scroll" style="display:none;">
     <div class="reading-box"><div class="reading-text" id="reading-text"></div></div>
+  </div>
+  <!-- pinned action buttons -->
+  <div class="s6-bottom" id="s6-bottom" style="display:none;">
     <div class="action-row">
       <button class="btn-ghost" onclick="shareReading()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
@@ -695,9 +741,10 @@ function reveal(i){const w=document.getElementById("fw"+i);if(w.classList.contai
 
 async function runReading(){
   const holdEl=document.getElementById("reading-hold");
-  const bodyEl=document.getElementById("reading-body");
+  const scrollEl=document.getElementById("s6-scroll");
+  const bottomEl=document.getElementById("s6-bottom");
   holdEl.style.display="flex";holdEl.style.opacity="1";
-  bodyEl.style.display="none";
+  scrollEl.style.display="none";bottomEl.style.display="none";
   const ms=document.getElementById("mini-spread");ms.innerHTML="";
   drawn.forEach((c,i)=>{
     const wrap=document.createElement("div");wrap.className="mini-card-wrap";wrap.style.animationDelay=(i*.14)+"s";
@@ -713,7 +760,6 @@ async function runReading(){
   const note=document.getElementById("note-text").value.trim();
   const crossNote=getCrossCardNote(drawn);
 
-  // Fetch AI reading
   let reading='';
   let lastFrameUsed=null;
   const storedFrame=sessionStorage.getItem('veil_last_frame')||null;
@@ -738,7 +784,6 @@ async function runReading(){
     reading=d.reading||'';
     if(d.frameUsed){lastFrameUsed=d.frameUsed;sessionStorage.setItem('veil_last_frame',lastFrameUsed);}
   }catch{
-    // Fallback to sample readings
     const pool=READINGS[focusKey]||READINGS.clarity;
     const idx=crossNote?1:Math.floor(Math.random()*pool.length);
     reading=pool[Math.min(idx,pool.length-1)];
@@ -747,16 +792,21 @@ async function runReading(){
   setTimeout(()=>{
     holdEl.style.opacity="0";
     setTimeout(()=>{
-      holdEl.style.display="none";bodyEl.style.display="flex";
+      holdEl.style.display="none";
+      scrollEl.style.display="block";
+      bottomEl.style.display="flex";
+      scrollEl.scrollTop=0;
       const txt=document.getElementById("reading-text");txt.innerHTML="";
-      setTimeout(()=>typewrite(txt,reading),500);
+      setTimeout(()=>typewrite(txt,reading,()=>{
+        // auto-scroll gently as reading completes
+      }),500);
     },600);
   },3000);
 }
 
 function typewrite(el,text,cb){const paras=text.split(/\n\n+/).filter(Boolean);let pi=0,ci=0,curP=null;const cur=document.createElement("span");cur.className="cursor";function next(){if(pi>=paras.length){if(cur.parentNode)cur.parentNode.removeChild(cur);if(cb)cb();return;}if(ci===0){curP=document.createElement("p");el.appendChild(curP);}const p=paras[pi];if(ci<p.length){curP.textContent=p.slice(0,ci+1);curP.appendChild(cur);ci++;setTimeout(next,18+Math.random()*14);}else{if(cur.parentNode)cur.parentNode.removeChild(cur);pi++;ci=0;if(pi<paras.length)setTimeout(next,380);else if(cb)cb();}}next();}
 
-function goHome(){focus="default";revealCount=0;drawThree();document.querySelectorAll(".focus-pill").forEach(p=>p.classList.remove("on"));document.getElementById("note-wrap").classList.remove("open");document.getElementById("btn-continue").classList.remove("ready");document.getElementById("note-text").value="";[0,1,2,3,4].forEach(i=>{const c=document.getElementById("sh"+i);c.style.transition="none";c.style.transform="translate(-50%,-50%)";});clearTimeout(shuffleTO);document.getElementById("reading-body").style.display="none";document.getElementById("reading-hold").style.cssText="display:flex;opacity:1;";document.getElementById("reading-text").innerHTML="";document.getElementById("mini-spread").innerHTML="";document.getElementById("home-btn").classList.remove("visible");goTo("s1",1);}
+function goHome(){focus="default";revealCount=0;drawThree();document.querySelectorAll(".focus-pill").forEach(p=>p.classList.remove("on"));document.getElementById("note-wrap").classList.remove("open");document.getElementById("btn-continue").classList.remove("ready");document.getElementById("note-text").value="";[0,1,2,3,4].forEach(i=>{const c=document.getElementById("sh"+i);c.style.transition="none";c.style.transform="translate(-50%,-50%)";});clearTimeout(shuffleTO);document.getElementById("s6-scroll").style.display="none";document.getElementById("s6-bottom").style.display="none";document.getElementById("reading-hold").style.cssText="display:flex;opacity:1;";document.getElementById("reading-text").innerHTML="";document.getElementById("mini-spread").innerHTML="";document.getElementById("home-btn").classList.remove("visible");goTo("s1",1);}
 
 function shareReading(){
   try{
