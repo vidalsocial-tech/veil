@@ -239,12 +239,12 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   padding:32px 22px 0;
   width:100%;
 }
-.mini-spread{display:flex;gap:18px;justify-content:center;margin-bottom:20px;}
+.mini-spread{display:flex;gap:14px;justify-content:center;margin-bottom:16px;}
 .mini-card-wrap{display:flex;flex-direction:column;align-items:center;gap:7px;opacity:0;animation:rise .7s both;}
-.mini-card{width:66px;height:106px;border-radius:8px;border:1.5px solid rgba(160,120,48,.35);background:rgba(255,255,255,.7);box-shadow:0 4px 14px rgba(44,31,14,.12),0 0 12px rgba(160,120,48,.08);overflow:hidden;flex-shrink:0;}
+.mini-card{width:88px;height:141px;border-radius:9px;border:1.5px solid rgba(160,120,48,.35);background:rgba(255,255,255,.7);box-shadow:0 4px 18px rgba(44,31,14,.15),0 0 16px rgba(160,120,48,.1);overflow:hidden;flex-shrink:0;}
 .mini-card img{width:100%;height:100%;object-fit:cover;display:block;}
-.mini-pos{font-family:"Inter",sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
-.mini-name{font-family:"Cinzel",serif;font-size:.54rem;letter-spacing:.06em;color:var(--ink);text-align:center;max-width:80px;line-height:1.4;}
+.mini-pos{font-family:"Inter",sans-serif;font-size:.55rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
+.mini-name{font-family:"Cinzel",serif;font-size:.58rem;letter-spacing:.06em;color:var(--ink);text-align:center;max-width:100px;line-height:1.4;}
 .reading-hold{font-family:"Inter",sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;margin-bottom:0;display:flex;align-items:center;gap:10px;background:var(--paper);}
 .dp span{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--gold);animation:dp 1.3s ease-in-out infinite;margin:0 2px;}
 .dp span:nth-child(2){animation-delay:.2s}.dp span:nth-child(3){animation-delay:.4s}
@@ -763,9 +763,30 @@ async function runReading(){
   const note=document.getElementById("note-text").value.trim();
   const crossNote=getCrossCardNote(drawn);
 
+  // Build a dynamic fallback using the actual drawn cards
+  function buildFallback(){
+    const c0=drawn[0].name, c1=drawn[1].name, c2=drawn[2].name;
+    const fb={
+      love:[
+        `Three cards walked in with something they needed to say,\nAbout a love you have been holding in a complicated way.\n\n${c0} arrived first — it means what has been quietly shaping this,\nThe thing beneath the thing, the part you haven\'t named, the part you miss.\nYou\'ve been managing from a distance instead of arriving here.\nThe card is not unkind. It just wants the real thing to appear.\n\n${c1} came next — it names what\'s alive right now, unresolved, awake,\nSomething in this moment is asking more than you\'ve been willing to take.\nNot asking you to fix it. Asking you to actually be there.\nThe presence is the thing. The presence is the answer. The presence is the care.\n\n${c2} at the end is gentler than the two that came before,\nIt means something soft is possible — you don\'t have to prop the door.\nLet something in.`,
+        `${c0} sat in the past and it was holding something down,\nA grief that came dressed up as 'fine' and never wore its gown.\n\n${c1} is where you are right now — a threshold, not a place,\nNot inside what\'s ending yet, not inside the open space.\nThe card is honest: you are in the middle. That\'s allowed.\nThe middle is not failure. Walk into it. Be loud.\n\n${c2} is the path ahead, and it is gentler than you\'d think,\nSomething is becoming possible right at the edge, the brink.\nLet yourself be loved the way that\'s actually being offered now.\nNot the version you rehearsed. The real one. Take the bow.`
+      ],
+      clarity:[
+        `${c0} came first and it is naming what you\'ve been circling for a while,\nThe thing you keep arriving at and then walking past with style.\nYou have the information. What you\'re missing is the nerve.\nThe fog is not confusion — it\'s the answer\'s warning curve.\n\n${c1} is what\'s alive right now beneath the surface question here,\nNot just this situation — a pattern that\'s been building year by year.\nThe card is pointing at the layer underneath the layer you\'re in.\nThe complexity you\'re feeling has a simpler origin.\n\n${c2} opens toward a more direct relationship with what you know,\nThe certainty you\'re waiting for will come after you go.\nYou already know. You\'re just deciding whether to know out loud.`,
+        `The thing about ${c0} is it doesn\'t soften what it sees,\nIt means the situation is clearer than your worry lets it be.\n\n${c1} holds the present — something\'s been building, pressing, near,\nStop trying to resolve it from the outside. Come here.\nThe answer isn\'t more input. The answer is the quiet.\nLet the second card do what it does. Don\'t riot.\n\n${c2} points the way ahead, and it is simpler than you\'ve planned,\nNot easy — simple. Those are different. Understand?\nYou already know. You\'re just waiting to be ready.`
+      ],
+      change:[
+        `${c0} arrived and it was matter-of-fact about the fall,\nSomething that was built for an old version isn\'t standing tall.\nThat\'s not punishment. That\'s what things do when the ground has shifted under them.\nThe card is not dramatic. It\'s just clearing out the problem stem.\n\n${c1} sits in the present — something\'s in motion, turning slow,\nYou\'re not at a place of choosing. You\'re at a place of letting go.\nThe transition is happening in the part of you that\'s below the view.\nTrust the process you can\'t see. It\'s already working through.\n\n${c2} at the end is not arrival — it\'s direction, light, and more,\nSomething is forming in the dark that wasn\'t possible before.\nYou\'re closer to the other side than you think. Keep going.`,
+        `${c0} walked in and it was dry about the whole affair,\nSomething is genuinely over. You know which thing. It\'s there.\n\n${c1} is the present — patient, waiting, not in any rush,\nThe change is metabolic. You\'re becoming. Hush.\nThis transition is gradual and that is not a flaw.\nThe sustainable version builds without the awe.\n\n${c2} dances at the end — complete, arrived, the journey done,\nSomething in this passage has been genuinely won.\nSet down what didn\'t hold. What holds is still here.`
+      ]
+    };
+    const pool=fb[focusKey]||fb.clarity;
+    return pool[Math.floor(Math.random()*pool.length)];
+  }
+
   let reading='';
   let lastFrameUsed=null;
-  const storedFrame=sessionStorage.getItem('veil_last_frame')||null;
+  const storedFrames=JSON.parse(sessionStorage.getItem('veil_last_frames')||'[]');
   try{
     const res=await fetch('/api/reading',{
       method:'POST',
@@ -779,17 +800,19 @@ async function runReading(){
           element:c.element||'',
           crossNote:crossNote||''
         })),
-        focus,question:note,lastFrame:storedFrame,
+        focus,question:note,lastFrames:storedFrames,
       })
     });
     if(!res.ok)throw new Error('API error');
     const d=await res.json();
     reading=d.reading||'';
-    if(d.frameUsed){lastFrameUsed=d.frameUsed;sessionStorage.setItem('veil_last_frame',lastFrameUsed);}
+    if(d.frameUsed){
+      lastFrameUsed=d.frameUsed;
+      const updated=[d.frameUsed,...storedFrames].slice(0,3);
+      sessionStorage.setItem('veil_last_frames',JSON.stringify(updated));
+    }
   }catch{
-    const pool=READINGS[focusKey]||READINGS.clarity;
-    const idx=crossNote?1:Math.floor(Math.random()*pool.length);
-    reading=pool[Math.min(idx,pool.length-1)];
+    reading=buildFallback();
   }
 
   setTimeout(()=>{
