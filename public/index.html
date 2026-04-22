@@ -631,19 +631,19 @@ const CARDS = [
     clarity:"The situation is clearer than your worry has been suggesting. The light that is available right now is real. Look at what is actually here.",
     change:"The change is working. Not 'things are getting better in a vague future sense' — right now, something has genuinely shifted. Feel it." },
 
-  { slug:"the-world", emoji:"🌍", num:"XXI", name:"The World", element:"Earth",
-    archetype:"A dancing figure at the center of a laurel wreath holds two wands — an echo of The Magician, but now with all the wisdom of the complete journey. In the four corners, the same creatures that appeared on the Wheel of Fortune watch over this culmination. The Fool's Journey is complete. Not because there is nothing left to learn but because this chapter, in all its weight and grace, has been fully lived.",
-    shadow:"The arrival that cannot be received. The person who completes something and immediately minimizes it, or who reaches the World and feels the Fool's anxiety about what comes next before they have fully arrived here.",
-    love:"Something in this connection has reached a genuine milestone — or you have arrived at a wholeness within yourself that changes the terms of how you love. Both are real.",
-    clarity:"The long arc of this situation is finally visible. You have more perspective than you have been giving yourself credit for. Trust what you can now see.",
-    change:"This is arrival, not destination. Completion is the threshold to the next beginning. The Fool is already forming on the other side of The World." },
-
   { slug:"judgement", emoji:"📯", num:"XX", name:"Judgement", element:"Fire",
     archetype:"An angel sounds a trumpet from the clouds. Below, figures rise from coffins with their arms spread wide, faces lifted — not in fear but in recognition. Judgement is not about punishment. It is about the specific moment when a person hears the call that is meant for them and can no longer pretend they don't. Not a verdict handed down from outside. A summons from the deepest part of the self.",
     shadow:"The person who hears the call clearly and intellectualizes their way into not answering. Or the one who confuses personal ambition with sacred calling and uses the card's energy to justify expansion rather than integration.",
     love:"Something in this connection is asking to be seen more fully than it has been — or you are being asked to see yourself more fully than you have allowed.",
     clarity:"You already know the answer. The reckoning you have been avoiding is also the clarity you have been seeking. They are the same thing.",
-    change:"This is not just an outer change. Something that has been forming in you for a long time is finally audible. Answer it." }
+    change:"This is not just an outer change. Something that has been forming in you for a long time is finally audible. Answer it." },
+
+  { slug:"the-world", emoji:"🌍", num:"XXI", name:"The World", element:"Earth",
+    archetype:"A dancing figure at the center of a laurel wreath holds two wands — an echo of The Magician, but now with all the wisdom of the complete journey. In the four corners, the same creatures that appeared on the Wheel of Fortune watch over this culmination. The Fool's Journey is complete. Not because there is nothing left to learn but because this chapter, in all its weight and grace, has been fully lived.",
+    shadow:"The arrival that cannot be received. The person who completes something and immediately minimizes it, or who reaches the World and feels the Fool's anxiety about what comes next before they have fully arrived here.",
+    love:"Something in this connection has reached a genuine milestone — or you have arrived at a wholeness within yourself that changes the terms of how you love. Both are real.",
+    clarity:"The long arc of this situation is finally visible. You have more perspective than you have been giving yourself credit for. Trust what you can now see.",
+    change:"This is arrival, not destination. Completion is the threshold to the next beginning. The Fool is already forming on the other side of The World." }
 ];
 
 // ── CROSS-CARD LOGIC ──
@@ -743,13 +743,20 @@ function setupDraw(){revealCount=0;drawn.forEach((card,i)=>{const img=document.g
 function reveal(i){const w=document.getElementById("fw"+i);if(w.classList.contains("done"))return;w.classList.add("done");document.getElementById("fi"+i).classList.add("flipped");document.getElementById("cs"+i).classList.add("revealed");revealCount++;if(revealCount===3)setTimeout(()=>step(6),1000);}
 
 async function runReading(){
+  // Lock the drawn cards for this reading at the moment of commitment.
+  // `drawn` is a module-level variable that can be reassigned by goHome()/drawThree()
+  // if the user navigates home mid-fetch. `readingCards` is the stable snapshot
+  // used for the mini-spread, the API payload, and the fallback — guaranteeing
+  // the text always names the cards the user actually sees.
+  const readingCards = drawn.slice();
+
   const holdEl=document.getElementById("reading-hold");
   const scrollEl=document.getElementById("s6-scroll");
   const bottomEl=document.getElementById("s6-bottom");
   holdEl.style.display="flex";holdEl.style.opacity="1";
   scrollEl.style.display="none";bottomEl.style.display="none";
   const ms=document.getElementById("mini-spread");ms.innerHTML="";
-  drawn.forEach((c,i)=>{
+  readingCards.forEach((c,i)=>{
     const wrap=document.createElement("div");wrap.className="mini-card-wrap";wrap.style.animationDelay=(i*.14)+"s";
     const mc=document.createElement("div");mc.className="mini-card";
     const img=document.createElement("img");img.src=CARD_IMAGES[c.slug]||"";img.alt=c.name;
@@ -761,11 +768,11 @@ async function runReading(){
 
   const focusKey=(focus||"").toLowerCase();
   const note=document.getElementById("note-text").value.trim();
-  const crossNote=getCrossCardNote(drawn);
+  const crossNote=getCrossCardNote(readingCards);
 
   // Build a dynamic fallback using the actual drawn cards
   function buildFallback(){
-    const c0=drawn[0].name, c1=drawn[1].name, c2=drawn[2].name;
+    const c0=readingCards[0].name, c1=readingCards[1].name, c2=readingCards[2].name;
     const fb={
       love:[
         `Three cards walked in with something they needed to say,\nAbout a love you have been holding in a complicated way.\n\n${c0} arrived first — it means what has been quietly shaping this,\nThe thing beneath the thing, the part you haven\'t named, the part you miss.\nYou\'ve been managing from a distance instead of arriving here.\nThe card is not unkind. It just wants the real thing to appear.\n\n${c1} came next — it names what\'s alive right now, unresolved, awake,\nSomething in this moment is asking more than you\'ve been willing to take.\nNot asking you to fix it. Asking you to actually be there.\nThe presence is the thing. The presence is the answer. The presence is the care.\n\n${c2} at the end is gentler than the two that came before,\nIt means something soft is possible — you don\'t have to prop the door.\nLet something in.`,
@@ -792,7 +799,7 @@ async function runReading(){
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        cards:drawn.map((c,i)=>({
+        cards:readingCards.map((c,i)=>({
           name:c.name,position:POS_LABELS[i],
           archetype:c.archetype||'',
           shadow:c.shadow||'',
@@ -836,6 +843,9 @@ function goHome(){focus="default";revealCount=0;drawThree();document.querySelect
 
 function shareReading(){
   try{
+    // Snapshot the current draw so the share image can't drift if the user
+    // starts a new reading mid-generation.
+    const shareCards=drawn.slice();
     const canvas=document.createElement('canvas');
     const W=1080,H=1920;canvas.width=W;canvas.height=H;
     const ctx=canvas.getContext('2d');
@@ -846,7 +856,7 @@ function shareReading(){
     ctx.font='500 40px Cinzel,Georgia,serif';ctx.fillText('VEIL READS',W/2,110);
     const cW=260,cH=430,gap=28,startX=(W-(cW*3+gap*2))/2,cY=200;
     const loadImg=src=>new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});
-    const imgs=Promise.all(drawn.map(c=>loadImg(CARD_IMAGES[c.slug]||'')));
+    const imgs=Promise.all(shareCards.map(c=>loadImg(CARD_IMAGES[c.slug]||'')));
     imgs.then(cardImgs=>{
       for(let i=0;i<3;i++){
         const x=startX+i*(cW+gap);
@@ -855,7 +865,7 @@ function shareReading(){
         ctx.shadowColor='rgba(201,162,82,.3)';ctx.shadowBlur=30;ctx.clip();
         if(cardImgs[i])ctx.drawImage(cardImgs[i],x,cY,cW,cH);ctx.restore();
         ctx.font='400 22px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.7)';ctx.fillText(POS_LABELS[i].toUpperCase(),x+cW/2,cY+cH+36);
-        ctx.font='500 28px Cinzel,Georgia,serif';ctx.fillStyle='rgba(201,162,82,.9)';ctx.fillText(drawn[i].name,x+cW/2,cY+cH+68);
+        ctx.font='500 28px Cinzel,Georgia,serif';ctx.fillStyle='rgba(201,162,82,.9)';ctx.fillText(shareCards[i].name,x+cW/2,cY+cH+68);
       }
       ctx.font='500 20px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.3)';ctx.fillText('VEILREADS.COM',W/2,H-80);
       canvas.toBlob(async blob=>{

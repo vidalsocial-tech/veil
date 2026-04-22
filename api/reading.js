@@ -352,7 +352,7 @@ ABSOLUTE RULES — no exceptions:
         'anthropic-version': '2023-06-01',
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-20250514',
+        model: 'claude-sonnet-4-5',
         max_tokens: 700,
         temperature: 0.88,
         top_p: 0.95,
