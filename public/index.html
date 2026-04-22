@@ -210,17 +210,17 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 #s5{justify-content:flex-start;padding-top:52px;}
 .draw-instruction{font-size:clamp(.82rem,2.2vw,.9rem);color:var(--mist);text-align:center;line-height:1.8;margin-bottom:22px;max-width:300px;}
 .spread-legend{font-family:"Inter",sans-serif;font-size:.57rem;letter-spacing:.14em;color:var(--mist);text-align:center;text-transform:uppercase;opacity:.45;margin-bottom:22px;}
-.spread{display:flex;gap:16px;justify-content:center;align-items:flex-start;}
+.spread{display:flex;gap:10px;justify-content:center;align-items:flex-start;}
 .cslot{display:flex;flex-direction:column;align-items:center;gap:8px;}
 .pos-num{font-family:"Inter",sans-serif;font-size:.52rem;font-weight:600;letter-spacing:.14em;color:var(--mist);text-transform:uppercase;opacity:.5;}
 .flip-wrap{perspective:900px;cursor:pointer;}
-.flip-inner{width:88px;height:148px;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.4,0,.2,1);position:relative;}
+.flip-inner{width:118px;height:198px;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.4,0,.2,1);position:relative;}
 .flip-inner.flipped{transform:rotateY(180deg)!important;}
-.card-back,.card-front{position:absolute;inset:0;border-radius:9px;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
-.card-back{background:linear-gradient(155deg,#1e1836,#0e0c1c);border:1px solid rgba(201,162,82,.28);box-shadow:0 8px 28px rgba(0,0,0,.7);display:flex;align-items:center;justify-content:center;}
-.card-back::before{content:"";position:absolute;inset:5px;border:1px solid rgba(201,162,82,.1);border-radius:4px;}
-.card-back::after{content:"✦";font-size:1.1rem;color:rgba(201,162,82,.2);}
-.card-front{transform:rotateY(180deg);border:1.5px solid rgba(201,162,82,.5);box-shadow:0 0 36px rgba(201,162,82,.22),0 12px 36px rgba(0,0,0,.85);overflow:hidden;background:#0e0c1c;}
+.card-back,.card-front{position:absolute;inset:0;border-radius:11px;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.card-back{background:linear-gradient(155deg,#3a2617,#1f140a);border:1px solid rgba(201,162,82,.3);box-shadow:0 6px 20px rgba(44,31,14,.28);display:flex;align-items:center;justify-content:center;}
+.card-back::before{content:"";position:absolute;inset:6px;border:1px solid rgba(201,162,82,.12);border-radius:5px;}
+.card-back::after{content:"✦";font-size:1.35rem;color:rgba(201,162,82,.22);}
+.card-front{transform:rotateY(180deg);border:1.5px solid rgba(201,162,82,.5);box-shadow:0 6px 22px rgba(44,31,14,.32);overflow:hidden;background:#1f140a;}
 .card-front img{width:100%;height:100%;object-fit:cover;display:block;}
 .pos-label{font-family:"Cinzel",serif;font-size:.5rem;letter-spacing:.1em;color:var(--mist);text-align:center;opacity:0;transition:opacity .6s .7s;max-width:90px;line-height:1.5;}
 .cslot.revealed .pos-label{opacity:.75;}
@@ -799,7 +799,7 @@ async function runReading(){
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        cards:readingCards.map((c,i)=>({
+        cards:drawn.map((c,i)=>({
           name:c.name,position:POS_LABELS[i],
           archetype:c.archetype||'',
           shadow:c.shadow||'',
@@ -843,9 +843,6 @@ function goHome(){focus="default";revealCount=0;drawThree();document.querySelect
 
 function shareReading(){
   try{
-    // Snapshot the current draw so the share image can't drift if the user
-    // starts a new reading mid-generation.
-    const shareCards=drawn.slice();
     const canvas=document.createElement('canvas');
     const W=1080,H=1920;canvas.width=W;canvas.height=H;
     const ctx=canvas.getContext('2d');
@@ -856,7 +853,7 @@ function shareReading(){
     ctx.font='500 40px Cinzel,Georgia,serif';ctx.fillText('VEIL READS',W/2,110);
     const cW=260,cH=430,gap=28,startX=(W-(cW*3+gap*2))/2,cY=200;
     const loadImg=src=>new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});
-    const imgs=Promise.all(shareCards.map(c=>loadImg(CARD_IMAGES[c.slug]||'')));
+    const imgs=Promise.all(drawn.map(c=>loadImg(CARD_IMAGES[c.slug]||'')));
     imgs.then(cardImgs=>{
       for(let i=0;i<3;i++){
         const x=startX+i*(cW+gap);
@@ -865,7 +862,7 @@ function shareReading(){
         ctx.shadowColor='rgba(201,162,82,.3)';ctx.shadowBlur=30;ctx.clip();
         if(cardImgs[i])ctx.drawImage(cardImgs[i],x,cY,cW,cH);ctx.restore();
         ctx.font='400 22px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.7)';ctx.fillText(POS_LABELS[i].toUpperCase(),x+cW/2,cY+cH+36);
-        ctx.font='500 28px Cinzel,Georgia,serif';ctx.fillStyle='rgba(201,162,82,.9)';ctx.fillText(shareCards[i].name,x+cW/2,cY+cH+68);
+        ctx.font='500 28px Cinzel,Georgia,serif';ctx.fillStyle='rgba(201,162,82,.9)';ctx.fillText(drawn[i].name,x+cW/2,cY+cH+68);
       }
       ctx.font='500 20px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.3)';ctx.fillText('VEILREADS.COM',W/2,H-80);
       canvas.toBlob(async blob=>{
