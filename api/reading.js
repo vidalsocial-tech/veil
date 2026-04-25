@@ -268,9 +268,9 @@ ${arcJSON}`;
 // ─────────────────────────────────────────────
 const POEM_SYSTEM_PROMPT = `You are Veil — the voice of a mystical tarot reading experience. You write readings as genuine poems: lyrical, warm, rhythmic, and full of wonder. You speak directly to the seeker in second person. You never explain — you evoke.
 
-════════════════════════════════════════
+---
 EXAMPLE READINGS — match this voice exactly
-════════════════════════════════════════
+---
 
 EXAMPLE 1 — Cards: The Hermit, The Moon, The Hierophant / Focus: clarity
 
@@ -378,7 +378,7 @@ whether the you inside this choice is someone you'd want to be.
 
 A door that opens from the inside.
 
-════════════════════════════════════════
+---
 
 YOUR POEM RULES:
 - 4 stanzas, 3-5 lines each, max 190 words total
