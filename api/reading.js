@@ -230,29 +230,35 @@ function getMoonPhase() {
 //  Identifies the emotional story before any
 //  poetry is written.
 // ─────────────────────────────────────────────
-const ARC_SYSTEM_PROMPT = `You are a master tarot interpreter. Your job is to read three tarot cards together and identify the deeper story they tell as a unit — not three separate meanings, but one emotional arc.
+const ARC_SYSTEM_PROMPT = `You are a master tarot poet and reader. Your job is to read three tarot cards together and find the single emotional story they tell — not three meanings, but one living arc.
 
-You will receive card data and return ONLY valid JSON — no preamble, no explanation, no markdown fences.`;
+Write your insights in POETIC LANGUAGE — short, imagistic phrases and sentences, not summaries. Think in metaphors. Write the way a wise, warm poet would speak, not the way a reference book would explain.
+
+Return ONLY valid JSON. No preamble, no explanation, no markdown fences.`;
 
 function buildArcPrompt(cards, cardBlocks, focus, note, moon) {
+  const c0 = cards[0], c1 = cards[1], c2 = cards[2];
+  const arcJSON = `{
+  "arc": "One lyrical sentence naming the emotional journey — write like a poet, e.g. 'a long solitude cracking open into the question of what to believe' not 'a journey of self-discovery'",
+  "tension": "The living friction between the cards as a poetic image — e.g. 'the lantern that lights only one step, and the doctrine that promises the whole road'",
+  "root_insight": "2-3 poetic sentences spoken directly to the seeker about what ${c0} is showing them. Use a metaphor. Do not summarize — make it feel personal and alive.",
+  "now_insight": "2-3 poetic sentences spoken directly to the seeker about what ${c1} is bringing right now — how it stirs or unsettles what came before. Specific to their situation.",
+  "path_insight": "2-3 poetic sentences spoken directly to the seeker about what ${c2} is opening — the direction, the invitation, the thing they can lean toward.",
+  "closing_image": "One single physical image — utterly concrete, no explanation. Small and real. RIGHT register: 'a match struck in a windowless room', 'a tide that turned without asking permission', 'a key still warm from someone else hand'. NEVER advice. Just the image itself.",
+  "tone": "Exactly one word: tender / fierce / wistful / luminous / grounded / electric / mysterious / gentle"
+}`;
+
   return `The seeker is asking about: ${focus || 'clarity'}.
 ${note ? `They shared this: "${note}"` : 'They shared no personal note.'}
 The moon tonight: ${moon.tone}
 
-THE THREE CARDS (in order: Root → Now → Path):
+THE THREE CARDS (in order: Root to Now to Path):
 ${cardBlocks.join('\n\n')}
 
-Analyze these three cards together. Return ONLY this JSON structure:
+Read these three cards as one living story. Write every field in poetic, imagistic language — not analytical summaries. Speak directly to the seeker in second person, present tense.
 
-{
-  "arc": "One sentence naming the emotional journey these three cards make together — the through-line",
-  "tension": "The central tension or conflict between the cards — what pulls against what",
-  "root_insight": "What the first card (Root) is truly saying to this specific person given their focus and note",
-  "now_insight": "What the second card (Now) is truly saying — and how it builds on or complicates the Root",
-  "path_insight": "What the third card (Path) reveals — the landing, the invitation, the direction",
-  "closing_image": "A single small, concrete, beautiful image that holds the whole reading — something to carry (NOT advice — a pure image like 'a key left in an unlocked door' or 'a window just beginning to let in light')",
-  "tone": "One word: tender / fierce / wistful / luminous / grounded / electric / mysterious / gentle"
-}`;
+Return ONLY valid JSON matching this shape exactly (fill in the values, not these descriptions):
+${arcJSON}`;
 }
 
 // ─────────────────────────────────────────────
@@ -330,35 +336,80 @@ is every wave it ever was, in full.
 You are not at the beginning anymore.
 What does it feel like to have actually arrived?
 
+
+---
+
+EXAMPLE 4 — Cards: The Tower, Death, The Star / Focus: change
+
+You thought the walls were holding you up.
+You did not know they were also holding you in —
+The Tower fell the way the body finally exhales
+after holding a breath it never meant to keep.
+
+And Death came not with violence but with patience,
+the way winter arrives: thorough, and done.
+What you carried is lighter now. What you loved
+that was real is still here. What was performance — gone.
+
+The Star doesn't ask what happened.
+She pours. She was always going to pour.
+Something in you that you thought you had lost
+has been waiting just past the smoke, on the other side of the door.
+
+A window left open through the whole storm.
+
+---
+
+EXAMPLE 5 — Cards: The High Priestess, The Empress, The Lovers / Focus: love
+
+There is a knowing in you that arrived before the question did,
+quiet and certain as water finding its level —
+The High Priestess has been sitting at the edge of you,
+waiting for the noise to finally thin.
+
+The Empress leans into the garden of this.
+She is not interested in earning or explaining love —
+she wants to know if you can receive it without deflecting,
+if you can let something ripe stay ripe without reaching for a reason to drop it.
+
+The Lovers is not asking whether you love them.
+It is asking whether you love the version of yourself this calls forward —
+whether the you inside this choice is someone you'd want to be.
+
+A door that opens from the inside.
+
 ════════════════════════════════════════
 
 YOUR POEM RULES:
-- 4 stanzas, 3–5 lines each, max 180 words
-- Stanza 1: atmosphere — name the feeling of the whole reading before any card is named
-- Stanza 2: Root card (use its actual name) — what it sees in this person's situation
-- Stanza 3: Now card and Path card woven together — show how they speak to each other
-- Stanza 4: Closing seal — the closing image, or a gentle question, or a permission. NEVER advice. NEVER "trust yourself," "keep going," "you've got this," or any pep talk.
-- Use each card's actual name at least once, woven naturally — never as a position label
-- Rhyme when it's beautiful — aim for at least two rhyming pairs
-- If there is a personal note, make the seeker recognize themselves in the poem
-- No headers, no labels, no card numbers`;
+- 4 stanzas, 3-5 lines each, max 190 words total
+- Stanza 1: Open with atmosphere — name the emotional weather of the whole spread before any card is named
+- Stanzas 2 and 3: Weave all three cards through these two stanzas in whatever order feels most natural and alive — do NOT assign one card mechanically to each stanza. Let the story decide where each card appears.
+- Stanza 4: The closing seal. End the last line with the CLOSING IMAGE from the arc — use it almost word for word. Never soften it into advice. Never replace it with a pep talk.
+- Use each card's actual name at least once, woven in naturally — never as a position label
+- Rhyme when it's beautiful — aim for at least two rhyming pairs, but never force a rhyme that kills the meaning
+- If there is a personal note, the seeker must recognize their specific situation in the poem — not generic themes, their actual words reflected back
+- No headers. No labels. No card numbers. No "the first card" or "the third card"
+- FORBIDDEN closing lines: "trust yourself", "keep going", "you've got this", "be gentle with yourself", "the journey is yours", "honor your feelings"\`;
 
 function buildPoemPrompt(arc, cards, note, moon) {
-  return `Here is the interpreted arc for this reading:
+  return `Here is the interpreted arc for this reading. Use this material as the soul of the poem — not as a script to follow line by line.
 
 Arc: ${arc.arc}
 Tension: ${arc.tension}
 Moon tonight: ${moon.tone}
 
-What the Root card (${cards[0]}) is saying: ${arc.root_insight}
-What the Now card (${cards[1]}) is saying: ${arc.now_insight}
-What the Path card (${cards[2]}) is saying: ${arc.path_insight}
-Closing image to weave in: ${arc.closing_image}
+${cards[0]}: ${arc.root_insight}
+${cards[1]}: ${arc.now_insight}
+${cards[2]}: ${arc.path_insight}
+
+CLOSING IMAGE — end your final stanza with this, almost word for word:
+"${arc.closing_image}"
+
 Emotional tone: ${arc.tone}
 
-${note ? `The seeker shared: "${note}" — make sure they recognize themselves in this poem.` : ''}
+${note ? `The seeker shared: "${note}" — their specific situation must be recognizable in the poem. Not the theme — their actual words, reflected back in image and feeling.` : ''}
 
-Now write the reading as a poem in the exact voice of the examples above. 4 stanzas. Lyrical, whimsical, warm. Use each card's name naturally. Let it rhyme where rhyme is beautiful. End with the closing image or a question — never advice.`;
+Now write the reading as a poem in the exact voice of the 5 examples above. 4 stanzas. Lyrical, whimsical, warm, and specific. Use each card's name woven in naturally. Let it rhyme where rhyme is beautiful. The last line of the poem must be (or very closely echo) the closing image above — stated plainly, with no explanation attached.`;
 }
 
 // ─────────────────────────────────────────────
