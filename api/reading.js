@@ -399,7 +399,7 @@ Tension: ${arc.tension}
 Moon tonight: ${moon.tone}
 
 ${cards[0]}: ${arc.root_insight}
-PLACEHOLDER
+${cards[1]}: ${arc.now_insight}
 ${cards[2]}: ${arc.path_insight}
 
 CLOSING IMAGE — end your final stanza with this, almost word for word:
