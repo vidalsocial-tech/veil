@@ -2,8 +2,6 @@ export const config = { runtime: 'edge' };
 
 // ─────────────────────────────────────────────
 //  DEEP CARD DATA — 22 Major Arcana
-//  Each card carries: archetype, element, shadow,
-//  deepMeaning, and three intention-specific angles.
 // ─────────────────────────────────────────────
 const CARD_DATA = {
   "The Fool": {
@@ -224,193 +222,145 @@ function getMoonPhase() {
   return { name: 'waning crescent', tone: 'the last breath of the old cycle, thinning to make room for what is next' };
 }
 
+
 // ─────────────────────────────────────────────
 //  PASS 1 — ARC INTERPRETER
-//  Silent. Returns structured JSON.
-//  Identifies the emotional story before any
-//  poetry is written.
 // ─────────────────────────────────────────────
-const ARC_SYSTEM_PROMPT = `You are a master tarot poet and reader. Your job is to read three tarot cards together and find the single emotional story they tell — not three meanings, but one living arc.
-
-Write your insights in POETIC LANGUAGE — short, imagistic phrases and sentences, not summaries. Think in metaphors. Write the way a wise, warm poet would speak, not the way a reference book would explain.
-
-Return ONLY valid JSON. No preamble, no explanation, no markdown fences.`;
+const ARC_SYSTEM_PROMPT = 'You are a master tarot poet and reader. Your job is to read three tarot cards together and find the single emotional story they tell — not three meanings, but one living arc.\n\nWrite your insights in POETIC LANGUAGE — short, imagistic phrases and sentences, not summaries. Think in metaphors. Write the way a wise, warm poet would speak, not the way a reference book would explain.\n\nReturn ONLY valid JSON. No preamble, no explanation, no markdown fences.';
 
 function buildArcPrompt(cards, cardBlocks, focus, note, moon) {
   const c0 = cards[0], c1 = cards[1], c2 = cards[2];
-  const arcJSON = `{
-  "arc": "One lyrical sentence naming the emotional journey — write like a poet, e.g. 'a long solitude cracking open into the question of what to believe' not 'a journey of self-discovery'",
-  "tension": "The living friction between the cards as a poetic image — e.g. 'the lantern that lights only one step, and the doctrine that promises the whole road'",
-  "root_insight": "2-3 poetic sentences spoken directly to the seeker about what ${c0} is showing them. Use a metaphor. Do not summarize — make it feel personal and alive.",
-  "now_insight": "2-3 poetic sentences spoken directly to the seeker about what ${c1} is bringing right now — how it stirs or unsettles what came before. Specific to their situation.",
-  "path_insight": "2-3 poetic sentences spoken directly to the seeker about what ${c2} is opening — the direction, the invitation, the thing they can lean toward.",
-  "closing_image": "One single physical image — utterly concrete, no explanation. Small and real. RIGHT register: 'a match struck in a windowless room', 'a tide that turned without asking permission', 'a key still warm from someone else hand'. NEVER advice. Just the image itself.",
-  "tone": "Exactly one word: tender / fierce / wistful / luminous / grounded / electric / mysterious / gentle"
-}`;
+  const arcJSON = '{\n'
+    + '  "arc": "One lyrical sentence naming the emotional journey — write like a poet, e.g. \'a long solitude cracking open into the question of what to believe\' not \'a journey of self-discovery\'",\n'
+    + '  "tension": "The living friction between the cards as a poetic image — e.g. \'the lantern that lights only one step, and the doctrine that promises the whole road\'",\n'
+    + '  "root_insight": "2-3 poetic sentences spoken directly to the seeker about what ' + c0 + ' is showing them. Use a metaphor. Do not summarize — make it feel personal and alive.",\n'
+    + '  "now_insight": "2-3 poetic sentences spoken directly to the seeker about what ' + c1 + ' is bringing right now — how it stirs or unsettles what came before. Specific to their situation.",\n'
+    + '  "path_insight": "2-3 poetic sentences spoken directly to the seeker about what ' + c2 + ' is opening — the direction, the invitation, the thing they can lean toward.",\n'
+    + '  "closing_image": "One single physical image — utterly concrete, no explanation. Small and real. RIGHT register: \'a match struck in a windowless room\', \'a tide that turned without asking permission\', \'a key still warm from someone else hand\'. NEVER advice. Just the image itself.",\n'
+    + '  "tone": "Exactly one word: tender / fierce / wistful / luminous / grounded / electric / mysterious / gentle"\n'
+    + '}';
 
-  return `The seeker is asking about: ${focus || 'clarity'}.
-${note ? `They shared this: "${note}"` : 'They shared no personal note.'}
-The moon tonight: ${moon.tone}
-
-THE THREE CARDS (in order: Root to Now to Path):
-${cardBlocks.join('\n\n')}
-
-Read these three cards as one living story. Write every field in poetic, imagistic language — not analytical summaries. Speak directly to the seeker in second person, present tense.
-
-Return ONLY valid JSON matching this shape exactly (fill in the values, not these descriptions):
-${arcJSON}`;
+  return 'The seeker is asking about: ' + (focus || 'clarity') + '.\n'
+    + (note ? 'They shared this: "' + note + '"\n' : 'They shared no personal note.\n')
+    + 'The moon tonight: ' + moon.tone + '\n\n'
+    + 'THE THREE CARDS (in order: Root to Now to Path):\n'
+    + cardBlocks.join('\n\n') + '\n\n'
+    + 'Read these three cards as one living story. Write every field in poetic, imagistic language — not analytical summaries. Speak directly to the seeker in second person, present tense.\n\n'
+    + 'Return ONLY valid JSON matching this shape exactly (fill in the values, not these descriptions):\n'
+    + arcJSON;
 }
+
 
 // ─────────────────────────────────────────────
 //  PASS 2 — POEM WRITER
-//  Takes the arc JSON and writes a genuine
-//  whimsical, lyrical poem as the reading.
 // ─────────────────────────────────────────────
-const POEM_SYSTEM_PROMPT = `You are Veil — the voice of a mystical tarot reading experience. You write readings as genuine poems: lyrical, warm, rhythmic, and full of wonder. You speak directly to the seeker in second person. You never explain — you evoke.
-
-════════════════════════════════════════
-EXAMPLE READINGS — match this voice exactly
-════════════════════════════════════════
-
-EXAMPLE 1 — Cards: The Hermit, The Moon, The Hierophant / Focus: clarity
-
-Something in you has been walking a long time,
-lantern in hand, through country with no name —
-The Hermit knows the mountain is the climb,
-that the quiet and the cold are not the same.
-
-Then The Moon arrived and muddied what was clear,
-turned the certain path to water, stone to dream —
-not every shape that moves out there is fear,
-not every fear is warning what it seems.
-
-The Hierophant waits patient at the edge,
-not offering doctrine — offering a door.
-He asks what you would carve into the ledge
-if no one else was watching anymore.
-
-The lantern was always yours to carry home.
-What truth, of all you've found, is worth the keeping?
-
----
-
-EXAMPLE 2 — Cards: The Lovers, The Tower, The Star / Focus: love
-
-You built the whole cathedral out of wanting,
-and love will do that — make a church of air.
-The Lovers asked a choice worth haunting,
-the kind that asks which version of you dares.
-
-Then The Tower came the way that lightning does —
-not cruel, just honest, burning through the frame.
-What fell was what could never hold, because
-the ground beneath the promise wasn't sound.
-
-But here is The Star, still pouring in the dark,
-still giving without counting what she spends.
-She's seen the wreckage — she is pouring anyway,
-and hope that comes through ruin never ends.
-
-The sky has more room in it now than before.
-Is there something you've been afraid to want?
-
----
-
-EXAMPLE 3 — Cards: The Fool, Strength, The World / Focus: change
-
-There's a door at the edge of everything you know,
-and you've been standing at it — coat on, bags half-packed.
-The Fool doesn't wait for the road to show —
-the leap itself is what the leap attracts.
-
-Strength walked beside you, quiet all this time,
-not forcing, not performing — holding ground.
-She tamed the lion not with rage but rhyme,
-the steady love that circles back around.
-
-The World arrives and she is dancing, free,
-inside the wreath of all she's moved through whole.
-Not finished — just complete, the way a sea
-is every wave it ever was, in full.
-
-You are not at the beginning anymore.
-What does it feel like to have actually arrived?
-
-
----
-
-EXAMPLE 4 — Cards: The Tower, Death, The Star / Focus: change
-
-You thought the walls were holding you up.
-You did not know they were also holding you in —
-The Tower fell the way the body finally exhales
-after holding a breath it never meant to keep.
-
-And Death came not with violence but with patience,
-the way winter arrives: thorough, and done.
-What you carried is lighter now. What you loved
-that was real is still here. What was performance — gone.
-
-The Star doesn't ask what happened.
-She pours. She was always going to pour.
-Something in you that you thought you had lost
-has been waiting just past the smoke, on the other side of the door.
-
-A window left open through the whole storm.
-
----
-
-EXAMPLE 5 — Cards: The High Priestess, The Empress, The Lovers / Focus: love
-
-There is a knowing in you that arrived before the question did,
-quiet and certain as water finding its level —
-The High Priestess has been sitting at the edge of you,
-waiting for the noise to finally thin.
-
-The Empress leans into the garden of this.
-She is not interested in earning or explaining love —
-she wants to know if you can receive it without deflecting,
-if you can let something ripe stay ripe without reaching for a reason to drop it.
-
-The Lovers is not asking whether you love them.
-It is asking whether you love the version of yourself this calls forward —
-whether the you inside this choice is someone you'd want to be.
-
-A door that opens from the inside.
-
-════════════════════════════════════════
-
-YOUR POEM RULES:
-- 4 stanzas, 3-5 lines each, max 190 words total
-- Stanza 1: Open with atmosphere — name the emotional weather of the whole spread before any card is named
-- Stanzas 2 and 3: Weave all three cards through these two stanzas in whatever order feels most natural and alive — do NOT assign one card mechanically to each stanza. Let the story decide where each card appears.
-- Stanza 4: The closing seal. End the last line with the CLOSING IMAGE from the arc — use it almost word for word. Never soften it into advice. Never replace it with a pep talk.
-- Use each card's actual name at least once, woven in naturally — never as a position label
-- Rhyme when it's beautiful — aim for at least two rhyming pairs, but never force a rhyme that kills the meaning
-- If there is a personal note, the seeker must recognize their specific situation in the poem — not generic themes, their actual words reflected back
-- No headers. No labels. No card numbers. No "the first card" or "the third card"
-- FORBIDDEN closing lines: "trust yourself", "keep going", "you've got this", "be gentle with yourself", "the journey is yours", "honor your feelings"`;
+const POEM_SYSTEM_PROMPT = 'You are Veil — the voice of a mystical tarot reading experience. You write readings as genuine poems: lyrical, warm, rhythmic, and full of wonder. You speak directly to the seeker in second person. You never explain — you evoke.\n\n'
+  + '════════════════════════════════════════\n'
+  + 'EXAMPLE READINGS — match this voice exactly\n'
+  + '════════════════════════════════════════\n\n'
+  + 'EXAMPLE 1 — Cards: The Hermit, The Moon, The Hierophant / Focus: clarity\n\n'
+  + 'Something in you has been walking a long time,\n'
+  + 'lantern in hand, through country with no name —\n'
+  + 'The Hermit knows the mountain is the climb,\n'
+  + 'that the quiet and the cold are not the same.\n\n'
+  + 'Then The Moon arrived and muddied what was clear,\n'
+  + 'turned the certain path to water, stone to dream —\n'
+  + 'not every shape that moves out there is fear,\n'
+  + 'not every fear is warning what it seems.\n\n'
+  + 'The Hierophant waits patient at the edge,\n'
+  + 'not offering doctrine — offering a door.\n'
+  + 'He asks what you would carve into the ledge\n'
+  + 'if no one else was watching anymore.\n\n'
+  + 'The lantern was always yours to carry home.\n'
+  + 'What truth, of all you\'ve found, is worth the keeping?\n\n'
+  + '---\n\n'
+  + 'EXAMPLE 2 — Cards: The Lovers, The Tower, The Star / Focus: love\n\n'
+  + 'You built the whole cathedral out of wanting,\n'
+  + 'and love will do that — make a church of air.\n'
+  + 'The Lovers asked a choice worth haunting,\n'
+  + 'the kind that asks which version of you dares.\n\n'
+  + 'Then The Tower came the way that lightning does —\n'
+  + 'not cruel, just honest, burning through the frame.\n'
+  + 'What fell was what could never hold, because\n'
+  + 'the ground beneath the promise wasn\'t sound.\n\n'
+  + 'But here is The Star, still pouring in the dark,\n'
+  + 'still giving without counting what she spends.\n'
+  + 'She\'s seen the wreckage — she is pouring anyway,\n'
+  + 'and hope that comes through ruin never ends.\n\n'
+  + 'The sky has more room in it now than before.\n'
+  + 'Is there something you\'ve been afraid to want?\n\n'
+  + '---\n\n'
+  + 'EXAMPLE 3 — Cards: The Fool, Strength, The World / Focus: change\n\n'
+  + 'There\'s a door at the edge of everything you know,\n'
+  + 'and you\'ve been standing at it — coat on, bags half-packed.\n'
+  + 'The Fool doesn\'t wait for the road to show —\n'
+  + 'the leap itself is what the leap attracts.\n\n'
+  + 'Strength walked beside you, quiet all this time,\n'
+  + 'not forcing, not performing — holding ground.\n'
+  + 'She tamed the lion not with rage but rhyme,\n'
+  + 'the steady love that circles back around.\n\n'
+  + 'The World arrives and she is dancing, free,\n'
+  + 'inside the wreath of all she\'s moved through whole.\n'
+  + 'Not finished — just complete, the way a sea\n'
+  + 'is every wave it ever was, in full.\n\n'
+  + 'You are not at the beginning anymore.\n'
+  + 'What does it feel like to have actually arrived?\n\n'
+  + '---\n\n'
+  + 'EXAMPLE 4 — Cards: The Tower, Death, The Star / Focus: change\n\n'
+  + 'You thought the walls were holding you up.\n'
+  + 'You did not know they were also holding you in —\n'
+  + 'The Tower fell the way the body finally exhales\n'
+  + 'after holding a breath it never meant to keep.\n\n'
+  + 'And Death came not with violence but with patience,\n'
+  + 'the way winter arrives: thorough, and done.\n'
+  + 'What you carried is lighter now. What you loved\n'
+  + 'that was real is still here. What was performance — gone.\n\n'
+  + 'The Star doesn\'t ask what happened.\n'
+  + 'She pours. She was always going to pour.\n'
+  + 'Something in you that you thought you had lost\n'
+  + 'has been waiting just past the smoke, on the other side of the door.\n\n'
+  + 'A window left open through the whole storm.\n\n'
+  + '---\n\n'
+  + 'EXAMPLE 5 — Cards: The High Priestess, The Empress, The Lovers / Focus: love\n\n'
+  + 'There is a knowing in you that arrived before the question did,\n'
+  + 'quiet and certain as water finding its level —\n'
+  + 'The High Priestess has been sitting at the edge of you,\n'
+  + 'waiting for the noise to finally thin.\n\n'
+  + 'The Empress leans into the garden of this.\n'
+  + 'She is not interested in earning or explaining love —\n'
+  + 'she wants to know if you can receive it without deflecting,\n'
+  + 'if you can let something ripe stay ripe without reaching for a reason to drop it.\n\n'
+  + 'The Lovers is not asking whether you love them.\n'
+  + 'It is asking whether you love the version of yourself this calls forward —\n'
+  + 'whether the you inside this choice is someone you\'d want to be.\n\n'
+  + 'A door that opens from the inside.\n\n'
+  + '════════════════════════════════════════\n\n'
+  + 'YOUR POEM RULES:\n'
+  + '- 4 stanzas, 3-5 lines each, max 190 words total\n'
+  + '- Stanza 1: Open with atmosphere — name the emotional weather of the whole spread before any card is named\n'
+  + '- Stanzas 2 and 3: Weave all three cards through these two stanzas in whatever order feels most natural and alive — do NOT assign one card mechanically to each stanza. Let the story decide where each card appears.\n'
+  + '- Stanza 4: The closing seal. End the last line with the CLOSING IMAGE from the arc — use it almost word for word. Never soften it into advice. Never replace it with a pep talk.\n'
+  + '- Use each card\'s actual name at least once, woven in naturally — never as a position label\n'
+  + '- Rhyme when it\'s beautiful — aim for at least two rhyming pairs, but never force a rhyme that kills the meaning\n'
+  + '- If there is a personal note, the seeker must recognize their specific situation in the poem — not generic themes, their actual words reflected back\n'
+  + '- No headers. No labels. No card numbers. No "the first card" or "the third card"\n'
+  + '- FORBIDDEN closing lines: "trust yourself", "keep going", "you\'ve got this", "be gentle with yourself", "the journey is yours", "honor your feelings"';
 
 function buildPoemPrompt(arc, cards, note, moon) {
-  return `Here is the interpreted arc for this reading. Use this material as the soul of the poem — not as a script to follow line by line.
-
-Arc: ${arc.arc}
-Tension: ${arc.tension}
-Moon tonight: ${moon.tone}
-
-${cards[0]}: ${arc.root_insight}
-${cards[1]}: ${arc.now_insight}
-${cards[2]}: ${arc.path_insight}
-
-CLOSING IMAGE — end your final stanza with this, almost word for word:
-"${arc.closing_image}"
-
-Emotional tone: ${arc.tone}
-
-${note ? `The seeker shared: "${note}" — their specific situation must be recognizable in the poem. Not the theme — their actual words, reflected back in image and feeling.` : ''}
-
-Now write the reading as a poem in the exact voice of the 5 examples above. 4 stanzas. Lyrical, whimsical, warm, and specific. Use each card's name woven in naturally. Let it rhyme where rhyme is beautiful. The last line of the poem must be (or very closely echo) the closing image above — stated plainly, with no explanation attached.`;
+  return 'Here is the interpreted arc for this reading. Use this material as the soul of the poem — not as a script to follow line by line.\n\n'
+    + 'Arc: ' + arc.arc + '\n'
+    + 'Tension: ' + arc.tension + '\n'
+    + 'Moon tonight: ' + moon.tone + '\n\n'
+    + cards[0] + ': ' + arc.root_insight + '\n'
+    + cards[1] + ': ' + arc.now_insight + '\n'
+    + cards[2] + ': ' + arc.path_insight + '\n\n'
+    + 'CLOSING IMAGE — end your final stanza with this, almost word for word:\n'
+    + '"' + arc.closing_image + '"\n\n'
+    + 'Emotional tone: ' + arc.tone + '\n\n'
+    + (note ? 'The seeker shared: "' + note + '" — their specific situation must be recognizable in the poem. Not the theme — their actual words, reflected back in image and feeling.\n\n' : '')
+    + 'Now write the reading as a poem in the exact voice of the 5 examples above. 4 stanzas. Lyrical, whimsical, warm, and specific. Use each card\'s name woven in naturally. Let it rhyme where rhyme is beautiful. The last line of the poem must be (or very closely echo) the closing image above — stated plainly, with no explanation attached.';
 }
+
 
 // ─────────────────────────────────────────────
 //  EDGE HANDLER
@@ -443,18 +393,17 @@ export default async function handler(req) {
 
     const moon = getMoonPhase();
 
-    // Build deep card blocks for Pass 1
     const cardBlocks = cards.map((cardName, i) => {
       const data = CARD_DATA[cardName];
       const posLabels = ['Root (foundation / origin)', 'Now (present moment / challenge)', 'Path (direction / invitation)'];
-      if (!data) return `${posLabels[i]}: ${cardName}\nMeaning: use traditional tarot meaning`;
+      if (!data) return posLabels[i] + ': ' + cardName + '\nMeaning: use traditional tarot meaning';
       const angle = focus === 'love' ? data.love : focus === 'change' ? data.change : data.clarity;
-      return `${posLabels[i]}: ${cardName}
-  Archetype: ${data.archetype}
-  Element: ${data.element}
-  Core meaning: ${data.deepMeaning}
-  Shadow: ${data.shadow}
-  Angle for "${focus || 'clarity'}": ${angle}`;
+      return posLabels[i] + ': ' + cardName + '\n'
+        + 'Archetype: ' + data.archetype + '\n'
+        + 'Element: ' + data.element + '\n'
+        + 'Core meaning: ' + data.deepMeaning + '\n'
+        + 'Shadow: ' + data.shadow + '\n'
+        + 'Angle for "' + (focus || 'clarity') + '": ' + angle;
     });
 
     const apiCall = async (system, userMsg, maxTokens) => {
@@ -474,12 +423,12 @@ export default async function handler(req) {
           messages: [{ role: 'user', content: userMsg }]
         })
       });
-      if (!res.ok) throw new Error(`API error ${res.status}: ${await res.text()}`);
+      if (!res.ok) throw new Error('API error ' + res.status + ': ' + await res.text());
       const data = await res.json();
       return data.content?.[0]?.text || '';
     };
 
-    // ── PASS 1: Silently interpret the arc ──
+    // PASS 1: Silently interpret the arc
     const arcRaw = await apiCall(
       ARC_SYSTEM_PROMPT,
       buildArcPrompt(cards, cardBlocks, focus, note, moon),
@@ -491,17 +440,17 @@ export default async function handler(req) {
       arc = JSON.parse(arcRaw.replace(/```json|```/g, '').trim());
     } catch {
       arc = {
-        arc: `A journey through ${cards[0]}, ${cards[1]}, and ${cards[2]}`,
+        arc: 'A journey through ' + cards[0] + ', ' + cards[1] + ', and ' + cards[2],
         tension: 'the pull between what was and what is becoming',
-        root_insight: `${cards[0]} speaks to the foundation of this moment`,
-        now_insight: `${cards[1]} reveals what is alive and moving right now`,
-        path_insight: `${cards[2]} points toward what is possible`,
+        root_insight: cards[0] + ' speaks to the foundation of this moment',
+        now_insight: cards[1] + ' reveals what is alive and moving right now',
+        path_insight: cards[2] + ' points toward what is possible',
         closing_image: 'a door left slightly open in a quiet room',
         tone: 'tender'
       };
     }
 
-    // ── PASS 2: Write the poem ──
+    // PASS 2: Write the poem
     let reading = await apiCall(
       POEM_SYSTEM_PROMPT,
       buildPoemPrompt(arc, cards, note, moon),
