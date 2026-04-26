@@ -389,7 +389,7 @@ YOUR POEM RULES:
 - Rhyme when it's beautiful — aim for at least two rhyming pairs, but never force a rhyme that kills the meaning
 - If there is a personal note, the seeker must recognize their specific situation in the poem — not generic themes, their actual words reflected back
 - No headers. No labels. No card numbers. No "the first card" or "the third card"
-- FORBIDDEN closing lines: "trust yourself", "keep going", "you've got this", "be gentle with yourself", "the journey is yours", "honor your feelings"\`;
+- FORBIDDEN closing lines: "trust yourself", "keep going", "you've got this", "be gentle with yourself", "the journey is yours", "honor your feelings"`;
 
 function buildPoemPrompt(arc, cards, note, moon) {
   return `Here is the interpreted arc for this reading. Use this material as the soul of the poem — not as a script to follow line by line.
