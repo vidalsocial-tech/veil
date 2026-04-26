@@ -43,8 +43,8 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   .reading-box{padding:16px 18px;}
   .hero-title{font-size:clamp(2.4rem,12vw,3.6rem);}
   .section-title{font-size:clamp(1rem,5vw,1.3rem);}
-  .mini-spread{gap:12px;margin-bottom:20px;}
-  .mini-card{width:58px;height:93px;}
+  .mini-spread{gap:10px;margin-bottom:20px;}
+  .mini-card{width:72px;height:115px;}
   .det-hero{gap:14px;}
   .det-card-face{width:90px;min-width:90px;height:144px;}
   .det-name{font-size:1.05rem;}
@@ -239,7 +239,6 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 /* S5 */
 #s5{justify-content:flex-start;padding-top:52px;}
 .draw-instruction{font-size:clamp(.92rem,2.4vw,1rem);color:var(--mist);text-align:center;line-height:1.8;margin-bottom:22px;max-width:300px;}
-.spread-legend{font-family:"Inter",sans-serif;font-size:.64rem;letter-spacing:.14em;color:var(--mist);text-align:center;text-transform:uppercase;opacity:.45;margin-bottom:22px;}
 .spread{display:flex;gap:10px;justify-content:center;align-items:flex-start;}
 .cslot{display:flex;flex-direction:column;align-items:center;gap:8px;}
 .pos-num{font-family:"Inter",sans-serif;font-size:.64rem;font-weight:600;letter-spacing:.14em;color:var(--mist);text-transform:uppercase;opacity:.5;}
@@ -269,12 +268,13 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   padding:32px 22px 0;
   width:100%;
 }
+/* CHANGE 1: Increased card size from 88x141 to 116x186 */
 .mini-spread{display:flex;gap:14px;justify-content:center;margin-bottom:16px;}
 .mini-card-wrap{display:flex;flex-direction:column;align-items:center;gap:7px;opacity:0;animation:rise .7s both;}
-.mini-card{width:88px;height:141px;border-radius:9px;border:1.5px solid rgba(160,120,48,.35);background:rgba(255,255,255,.7);box-shadow:0 4px 18px rgba(44,31,14,.15),0 0 16px rgba(160,120,48,.1);overflow:hidden;flex-shrink:0;}
+.mini-card{width:116px;height:186px;border-radius:9px;border:1.5px solid rgba(160,120,48,.35);background:rgba(255,255,255,.7);box-shadow:0 4px 18px rgba(44,31,14,.15),0 0 16px rgba(160,120,48,.1);overflow:hidden;flex-shrink:0;}
 .mini-card img{width:100%;height:100%;object-fit:cover;display:block;}
 .mini-pos{font-family:"Inter",sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);}
-.mini-name{font-family:"Cinzel",serif;font-size:.64rem;letter-spacing:.06em;color:var(--ink);text-align:center;max-width:100px;line-height:1.4;}
+.mini-name{font-family:"Cinzel",serif;font-size:.64rem;letter-spacing:.06em;color:var(--ink);text-align:center;max-width:120px;line-height:1.4;}
 .reading-hold{font-family:"Inter",sans-serif;font-size:.72rem;font-weight:500;letter-spacing:.2em;color:var(--mist);text-align:center;text-transform:uppercase;margin-bottom:0;display:flex;align-items:center;gap:10px;background:var(--paper);}
 .dp span{display:inline-block;width:4px;height:4px;border-radius:50%;background:var(--gold);animation:dp 1.3s ease-in-out infinite;margin:0 2px;}
 .dp span:nth-child(2){animation-delay:.2s}.dp span:nth-child(3){animation-delay:.4s}
@@ -385,13 +385,12 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
     <div class="sh-card" id="sh2"></div><div class="sh-card" id="sh3"></div>
     <div class="sh-card" id="sh4"></div>
   </div>
-  <div class="shuffle-label">The cards are listening …</div>
+  <div class="shuffle-label">The cards are listening …</div>
 </div>
 
 <div class="screen" id="s5">
   <div class="logo" style="margin-bottom:24px">Veil<em>Reads</em></div>
   <p class="draw-instruction">Three cards have been drawn.<br>Tap each one to reveal.</p>
-  <div class="spread-legend">The Root · The Now · The Path</div>
   <div class="spread">
     <div class="cslot" id="cs0"><span class="pos-num">I</span>
       <div class="flip-wrap" id="fw0" onclick="reveal(0)"><div class="flip-inner" id="fi0">
@@ -773,11 +772,6 @@ function setupDraw(){revealCount=0;drawn.forEach((card,i)=>{const img=document.g
 function reveal(i){const w=document.getElementById("fw"+i);if(w.classList.contains("done"))return;w.classList.add("done");document.getElementById("fi"+i).classList.add("flipped");document.getElementById("cs"+i).classList.add("revealed");revealCount++;if(revealCount===3)setTimeout(()=>step(6),1000);}
 
 async function runReading(){
-  // Lock the drawn cards for this reading at the moment of commitment.
-  // `drawn` is a module-level variable that can be reassigned by goHome()/drawThree()
-  // if the user navigates home mid-fetch. `readingCards` is the stable snapshot
-  // used for the mini-spread, the API payload, and the fallback — guaranteeing
-  // the text always names the cards the user actually sees.
   const readingCards = drawn.slice();
 
   const holdEl=document.getElementById("reading-hold");
@@ -786,14 +780,15 @@ async function runReading(){
   holdEl.style.display="flex";holdEl.style.opacity="1";
   scrollEl.style.display="none";bottomEl.style.display="none";
   const ms=document.getElementById("mini-spread");ms.innerHTML="";
+
+  // CHANGE 2: mini-spread renders card name only — no position label
   readingCards.forEach((c,i)=>{
     const wrap=document.createElement("div");wrap.className="mini-card-wrap";wrap.style.animationDelay=(i*.14)+"s";
     const mc=document.createElement("div");mc.className="mini-card";
     const img=document.createElement("img");img.src=CARD_IMAGES[c.slug]||"";img.alt=c.name;
     mc.appendChild(img);
-    const pos=document.createElement("div");pos.className="mini-pos";pos.textContent=POS_LABELS[i];
     const nm=document.createElement("div");nm.className="mini-name";nm.textContent=c.name;
-    wrap.appendChild(mc);wrap.appendChild(pos);wrap.appendChild(nm);ms.appendChild(wrap);
+    wrap.appendChild(mc);wrap.appendChild(nm);ms.appendChild(wrap);
   });
 
   const focusKey=(focus||"").toLowerCase();
@@ -871,38 +866,120 @@ function typewrite(el,text,cb){const paras=text.split(/\n\n+/).filter(Boolean);l
 
 function goHome(){focus="default";revealCount=0;drawThree();document.querySelectorAll(".focus-pill").forEach(p=>p.classList.remove("on"));document.getElementById("note-wrap").classList.remove("open");document.getElementById("btn-continue").classList.remove("ready");document.getElementById("note-text").value="";[0,1,2,3,4].forEach(i=>{const c=document.getElementById("sh"+i);c.style.transition="none";c.style.transform="translate(-50%,-50%)";});clearTimeout(shuffleTO);document.getElementById("s6-scroll").style.display="none";document.getElementById("s6-bottom").style.display="none";document.getElementById("reading-hold").style.cssText="display:flex;opacity:1;";document.getElementById("reading-text").innerHTML="";document.getElementById("mini-spread").innerHTML="";document.getElementById("home-btn").classList.remove("visible");goTo("s1",1);}
 
+// CHANGE 3: New share function — branded image, big cards, tagline, veilreads.com, no reading text
 function shareReading(){
   try{
+    const W=1080,H=1620;
     const canvas=document.createElement('canvas');
-    const W=1080,H=1920;canvas.width=W;canvas.height=H;
+    canvas.width=W;canvas.height=H;
     const ctx=canvas.getContext('2d');
-    const bg=ctx.createLinearGradient(0,0,0,H);
-    bg.addColorStop(0,'#1c1530');bg.addColorStop(.5,'#0b0910');bg.addColorStop(1,'#13101c');
+
+    // Background: warm parchment matching app aesthetic
+    const bg=ctx.createRadialGradient(W/2,0,0,W/2,0,H*.9);
+    bg.addColorStop(0,'#f5ece0');
+    bg.addColorStop(.45,'#f0e8d8');
+    bg.addColorStop(1,'#e8dcc8');
     ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
-    ctx.textAlign='center';ctx.fillStyle='rgba(201,162,82,.8)';
-    ctx.font='500 40px Cinzel,Georgia,serif';ctx.fillText('VEIL READS',W/2,110);
-    const cW=260,cH=430,gap=28,startX=(W-(cW*3+gap*2))/2,cY=200;
-    const loadImg=src=>new Promise(res=>{const i=new Image();i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;});
-    const imgs=Promise.all(drawn.map(c=>loadImg(CARD_IMAGES[c.slug]||'')));
-    imgs.then(cardImgs=>{
+
+    // Subtle gold glow at top
+    const glow=ctx.createRadialGradient(W/2,0,0,W/2,0,W*.7);
+    glow.addColorStop(0,'rgba(180,148,90,.18)');
+    glow.addColorStop(1,'rgba(180,148,90,0)');
+    ctx.fillStyle=glow;ctx.fillRect(0,0,W,H*.5);
+
+    // Logo
+    ctx.textAlign='center';
+    ctx.fillStyle='rgba(160,120,48,.9)';
+    ctx.font='600 52px Cinzel,Georgia,serif';
+    ctx.fillText('VEILREADS',W/2,128);
+
+    // Sigil ornament
+    ctx.strokeStyle='rgba(160,120,48,.18)';ctx.lineWidth=1;
+    ctx.beginPath();ctx.arc(W/2,172,22,0,Math.PI*2);ctx.stroke();
+    ctx.beginPath();ctx.arc(W/2,172,14,0,Math.PI*2);ctx.stroke();
+    ctx.fillStyle='rgba(160,120,48,.45)';
+    ctx.beginPath();ctx.arc(W/2,172,4,0,Math.PI*2);ctx.fill();
+    ctx.strokeStyle='rgba(160,120,48,.1)';ctx.lineWidth=.8;
+    ctx.beginPath();ctx.moveTo(W/2,150);ctx.lineTo(W/2,194);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(W/2-22,172);ctx.lineTo(W/2+22,172);ctx.stroke();
+
+    // Three large cards
+    const cW=294,cH=490,gap=22;
+    const totalW=cW*3+gap*2;
+    const startX=(W-totalW)/2;
+    const cY=224;
+
+    const loadImg=src=>new Promise(res=>{
+      const i=new Image();i.crossOrigin='anonymous';
+      i.onload=()=>res(i);i.onerror=()=>res(null);i.src=src;
+    });
+
+    Promise.all(drawn.map(c=>loadImg(CARD_IMAGES[c.slug]||''))).then(cardImgs=>{
       for(let i=0;i<3;i++){
         const x=startX+i*(cW+gap);
-        ctx.save();const r=12;
+        const r=14;
+
+        // Shadow
+        ctx.save();
+        ctx.shadowColor='rgba(44,31,14,.18)';ctx.shadowBlur=36;ctx.shadowOffsetY=10;
+        ctx.fillStyle='rgba(245,239,226,1)';
         ctx.beginPath();ctx.moveTo(x+r,cY);ctx.lineTo(x+cW-r,cY);ctx.quadraticCurveTo(x+cW,cY,x+cW,cY+r);ctx.lineTo(x+cW,cY+cH-r);ctx.quadraticCurveTo(x+cW,cY+cH,x+cW-r,cY+cH);ctx.lineTo(x+r,cY+cH);ctx.quadraticCurveTo(x,cY+cH,x,cY+cH-r);ctx.lineTo(x,cY+r);ctx.quadraticCurveTo(x,cY,x+r,cY);ctx.closePath();
-        ctx.shadowColor='rgba(201,162,82,.3)';ctx.shadowBlur=30;ctx.clip();
-        if(cardImgs[i])ctx.drawImage(cardImgs[i],x,cY,cW,cH);ctx.restore();
-        ctx.font='400 22px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.7)';ctx.fillText(POS_LABELS[i].toUpperCase(),x+cW/2,cY+cH+36);
-        ctx.font='500 28px Cinzel,Georgia,serif';ctx.fillStyle='rgba(201,162,82,.9)';ctx.fillText(drawn[i].name,x+cW/2,cY+cH+68);
+        ctx.fill();ctx.restore();
+
+        // Card image
+        ctx.save();
+        ctx.beginPath();ctx.moveTo(x+r,cY);ctx.lineTo(x+cW-r,cY);ctx.quadraticCurveTo(x+cW,cY,x+cW,cY+r);ctx.lineTo(x+cW,cY+cH-r);ctx.quadraticCurveTo(x+cW,cY+cH,x+cW-r,cY+cH);ctx.lineTo(x+r,cY+cH);ctx.quadraticCurveTo(x,cY+cH,x,cY+cH-r);ctx.lineTo(x,cY+r);ctx.quadraticCurveTo(x,cY,x+r,cY);ctx.closePath();
+        ctx.clip();
+        if(cardImgs[i])ctx.drawImage(cardImgs[i],x,cY,cW,cH);
+        ctx.restore();
+
+        // Card border
+        ctx.save();
+        ctx.strokeStyle='rgba(160,120,48,.38)';ctx.lineWidth=2;
+        ctx.beginPath();ctx.moveTo(x+r,cY);ctx.lineTo(x+cW-r,cY);ctx.quadraticCurveTo(x+cW,cY,x+cW,cY+r);ctx.lineTo(x+cW,cY+cH-r);ctx.quadraticCurveTo(x+cW,cY+cH,x+cW-r,cY+cH);ctx.lineTo(x+r,cY+cH);ctx.quadraticCurveTo(x,cY+cH,x,cY+cH-r);ctx.lineTo(x,cY+r);ctx.quadraticCurveTo(x,cY,x+r,cY);ctx.closePath();
+        ctx.stroke();ctx.restore();
+
+        // Card name
+        ctx.textAlign='center';
+        ctx.fillStyle='rgba(44,31,14,.75)';
+        ctx.font='400 26px Cinzel,Georgia,serif';
+        ctx.fillText(drawn[i].name,x+cW/2,cY+cH+48);
       }
-      ctx.font='500 20px Inter,sans-serif';ctx.fillStyle='rgba(148,136,168,.3)';ctx.fillText('VEILREADS.COM',W/2,H-80);
+
+      // Divider ornament
+      const divY=cY+cH+100;
+      ctx.strokeStyle='rgba(160,120,48,.15)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(W/2-120,divY);ctx.lineTo(W/2-18,divY);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(W/2+18,divY);ctx.lineTo(W/2+120,divY);ctx.stroke();
+      ctx.fillStyle='rgba(160,120,48,.5)';
+      ctx.font='600 22px serif';ctx.textAlign='center';
+      ctx.fillText('✦',W/2,divY+8);
+
+      // Tagline
+      const tagY=divY+72;
+      ctx.fillStyle='rgba(44,31,14,.72)';
+      ctx.font='400 38px Libre Baskerville,Georgia,serif';
+      ctx.fillText('A daily tarot reading.',W/2,tagY);
+      ctx.fillText('Three cards. One story.',W/2,tagY+58);
+
+      // URL
+      ctx.fillStyle='rgba(160,120,48,.65)';
+      ctx.font='400 28px Cinzel,Georgia,serif';
+      ctx.fillText('veilreads.com',W/2,tagY+132);
+
+      // Export
       canvas.toBlob(async blob=>{
         const file=new File([blob],'veil-reading.png',{type:'image/png'});
-        if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'My Veil Reads reading'});}
-        else{const a=document.createElement('a');a.href=canvas.toDataURL();a.download='veil-reading.png';a.click();}
+        if(navigator.canShare&&navigator.canShare({files:[file]})){
+          await navigator.share({files:[file],title:'My Veil Reads reading',text:'A daily tarot reading. Three cards. One story.'});
+        }else{
+          const a=document.createElement('a');a.href=canvas.toDataURL();a.download='veil-reading.png';a.click();
+        }
       },'image/png',.95);
     });
   }catch(e){console.error(e);}
 }
+
 function restart(){loader(()=>{goHome();setTimeout(()=>goTo("s2",1),100);});}
 // ── LIBRARY ──
 let libFilter='all',detCardIdx=0,detOrigin='library';
