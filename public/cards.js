@@ -287,6 +287,32 @@ const cards = [
   }
 ];
 
+// Image map keyed by slug — used by index.html
+const CARD_IMAGES = {
+  "the-fool":           "/cards/The_Fool_Final.png",
+  "the-magician":       "/cards/The_Magician_Final.png",
+  "the-high-priestess": "/cards/The_High_Priestess_Final.png",
+  "the-empress":        "/cards/The_Empress_Final.png",
+  "the-emperor":        "/cards/The_Emperor_Final.png",
+  "the-hierophant":     "/cards/The_Heirophant_Final.png",
+  "the-lovers":         "/cards/The_Lovers_Final.png",
+  "the-chariot":        "/cards/The_Chariot_Final.png",
+  "strength":           "/cards/Strength_Final.png",
+  "the-hermit":         "/cards/The_Hermit_Final.png",
+  "wheel-of-fortune":   "/cards/Wheel_Of_Fortune_Final.png",
+  "justice":            "/cards/Justice_Final.png",
+  "the-hanged-man":     "/cards/The_Hanged_Man_Final.png",
+  "death":              "/cards/Death_Final.png",
+  "temperance":         "/cards/Temperance_Final.png",
+  "the-devil":          "/cards/The_Devil_Final.png",
+  "the-tower":          "/cards/The_Tower_Final.png",
+  "the-star":           "/cards/The_Star_Final.png",
+  "the-moon":           "/cards/The_Moon_Final.png",
+  "the-sun":            "/cards/The_Sun_Final.png",
+  "judgement":          "/cards/Judgement_Final.png",
+  "the-world":          "/cards/The_World_Final.png"
+};
+
 // Export for use in the app
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = cards;
