@@ -56,7 +56,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   .det-angle{font-size:.98rem;}
   .reading-box{padding:26px 32px;}
 }
-#s-library{justify-content:flex-start;padding-top:0;padding-bottom:0;overflow:hidden;}
+#s-library{justify-content:flex-start;padding:0;overflow:hidden;}
 #s-detail{justify-content:flex-start;padding-top:0;padding-bottom:0;overflow:hidden;}
 
 /* Library header */
@@ -110,6 +110,52 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .lib-thumb-roman{position:absolute;top:5px;left:50%;transform:translateX(-50%);font-family:"Cinzel",serif;font-size:.42rem;letter-spacing:.1em;color:rgba(201,162,82,.5);}
 .lib-thumb-name{position:absolute;bottom:5px;left:0;right:0;font-family:"Cinzel",serif;font-size:.36rem;letter-spacing:.08em;text-transform:uppercase;color:rgba(201,162,82,.7);text-align:center;padding:0 3px;}
 .lib-thumb-elem{font-family:"Inter",sans-serif;font-size:.5rem;color:var(--mist);}
+
+/* ── LIB CAROUSEL ── */
+.lib-carousel-wrap{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;}
+.lib-carousel-vp{overflow:hidden;cursor:grab;padding:8px 0 12px;}
+.lib-carousel-vp:active{cursor:grabbing;}
+.lib-carousel-track{display:flex;gap:12px;transition:transform .42s cubic-bezier(.25,.46,.45,.94);will-change:transform;user-select:none;-webkit-user-select:none;}
+.lib-slide{flex:0 0 240px;perspective:1000px;transition:transform .42s ease,opacity .42s ease;}
+.lib-slide:not(.active){transform:scale(.88);opacity:.38;pointer-events:none;}
+.lib-slide.active{transform:scale(1);opacity:1;cursor:pointer;}
+.lib-flipper{width:240px;height:384px;position:relative;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.45,.05,.55,.95);}
+.lib-flipper.flipped{transform:rotateY(180deg);}
+.lib-face{position:absolute;inset:0;border-radius:10px;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;}
+.lib-face-front{background:linear-gradient(155deg,#1e1836,#0e0c1c);border:1px solid rgba(201,162,82,.28);}
+.lib-face-front img{width:100%;height:100%;object-fit:cover;display:block;}
+.lib-front-roman{position:absolute;top:8px;left:50%;transform:translateX(-50%);font-family:"Cinzel",serif;font-size:.44rem;letter-spacing:.12em;color:rgba(201,162,82,.55);z-index:2;}
+.lib-front-name{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(14,12,28,.88) 0%,transparent 100%);padding:28px 10px 11px;text-align:center;z-index:2;}
+.lib-front-name-text{font-family:"Cinzel",serif;font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(201,162,82,.82);}
+.lib-face-back{background:var(--paper);border:1px solid rgba(201,162,82,.22);transform:rotateY(180deg);display:flex;flex-direction:column;padding:22px 18px 14px;}
+.lib-back-corner{position:absolute;width:22px;height:22px;border-color:rgba(201,162,82,.22);border-style:solid;}
+.lib-back-corner.tl{top:9px;left:9px;border-width:1px 0 0 1px;}
+.lib-back-corner.br{bottom:9px;right:9px;border-width:0 1px 1px 0;}
+.lib-back-roman{font-family:"Cinzel",serif;font-size:.62rem;letter-spacing:.16em;color:var(--mist);text-align:center;margin-bottom:6px;}
+.lib-back-rule{width:28px;height:1px;background:rgba(201,162,82,.28);margin:0 auto 12px;}
+.lib-back-name{font-family:"Cinzel",serif;font-size:1.12rem;font-weight:400;color:var(--ink);text-align:center;line-height:1.3;letter-spacing:.04em;margin-bottom:4px;}
+.lib-back-elem{font-family:"Inter",sans-serif;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mist);text-align:center;margin-bottom:14px;}
+.lib-back-divider{width:100%;height:.5px;background:rgba(201,162,82,.1);margin-bottom:12px;}
+.lib-back-section-label{font-family:"Cinzel",serif;font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(160,120,48,.55);margin-bottom:7px;}
+.lib-back-meaning{font-family:"Libre Baskerville",serif;font-size:.74rem;line-height:1.78;color:rgba(44,31,14,.8);font-style:italic;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;}
+.lib-back-cta{margin-top:12px;background:rgba(201,162,82,.06);border:1px solid rgba(201,162,82,.18);border-radius:8px;padding:9px 13px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.lib-back-cta:hover{background:rgba(201,162,82,.13);}
+.lib-back-cta-text{font-family:"Inter",sans-serif;font-size:.6rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:rgba(201,162,82,.75);}
+.lib-back-cta svg{width:12px;height:12px;stroke:rgba(201,162,82,.6);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+.lib-back-hint{margin-top:8px;text-align:center;font-family:"Cinzel",serif;font-size:.46rem;letter-spacing:.1em;color:rgba(160,120,48,.35);}
+.lib-card-meta{text-align:center;padding:0 60px;min-height:26px;transition:opacity .25s;flex-shrink:0;}
+.lib-card-meta.hidden{opacity:0;pointer-events:none;}
+.lib-meta-name{font-family:"Cinzel",serif;font-size:.78rem;font-weight:500;color:rgba(44,31,14,.68);letter-spacing:.1em;}
+.lib-meta-el{font-family:"Inter",sans-serif;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mist);margin-top:2px;}
+.lib-nav{display:flex;align-items:center;justify-content:center;gap:18px;padding:8px 22px 20px;flex-shrink:0;}
+.lib-nav-btn{width:36px;height:36px;border-radius:50%;border:1px solid rgba(201,162,82,.2);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--mist);transition:background .2s;}
+.lib-nav-btn:hover{background:rgba(201,162,82,.07);}
+.lib-nav-btn:disabled{opacity:.18;pointer-events:none;}
+.lib-nav-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+.lib-nav-center{text-align:center;}
+.lib-progress{width:80px;height:1px;background:rgba(201,162,82,.12);border-radius:1px;margin:0 auto 4px;overflow:hidden;}
+.lib-progress-fill{height:100%;background:var(--gold);border-radius:1px;transition:width .4s ease;}
+.lib-nav-counter{font-family:"Cinzel",serif;font-size:.6rem;letter-spacing:.1em;color:rgba(44,31,14,.42);}
 
 /* ── DETAIL SCREEN ── */
 .det-scroll{flex:1;overflow-y:auto;width:100%;padding:0 20px 40px;}
@@ -436,11 +482,11 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   </div>
 </div>
 
-<!-- S-LIBRARY: Card grid -->
+<!-- S-LIBRARY: Card carousel -->
 <div class="screen" id="s-library">
   <div class="lib-header">
     <div class="lib-title">The Major Arcana</div>
-    <div class="lib-sub">22 cards · Tap any card to explore</div>
+    <div class="lib-sub">22 cards · swipe to explore · tap to reveal</div>
     <div class="lib-banner">
       <div class="lib-banner-text">
         <strong>Ready for a reading?</strong>
@@ -456,8 +502,26 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
       <button class="lib-filter" onclick="filterLib('earth',this)">Earth</button>
     </div>
   </div>
-  <div class="lib-grid-wrap">
-    <div class="lib-grid" id="lib-grid"></div>
+  <div class="lib-carousel-wrap">
+    <div class="lib-carousel-vp" id="lib-carousel-vp">
+      <div class="lib-carousel-track" id="lib-carousel-track"></div>
+    </div>
+    <div class="lib-card-meta" id="lib-card-meta">
+      <div class="lib-meta-name" id="lib-meta-name"></div>
+      <div class="lib-meta-el" id="lib-meta-el"></div>
+    </div>
+  </div>
+  <div class="lib-nav">
+    <button class="lib-nav-btn" id="lib-btn-prev" aria-label="Previous card">
+      <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="lib-nav-center">
+      <div class="lib-progress"><div class="lib-progress-fill" id="lib-progress-fill"></div></div>
+      <div class="lib-nav-counter" id="lib-nav-counter"></div>
+    </div>
+    <button class="lib-nav-btn" id="lib-btn-next" aria-label="Next card">
+      <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
   </div>
 </div>
 
@@ -981,38 +1045,152 @@ function shareReading(){
 }
 
 function restart(){loader(()=>{goHome();setTimeout(()=>goTo("s2",1),100);});}
-// ── LIBRARY ──
-let libFilter='all',detCardIdx=0,detOrigin='library';
+// ── LIBRARY CAROUSEL ──
+let detCardIdx=0,detOrigin='library';
+let libPool=[],libPos=0,libFlipped=false,libDragging=false,libDragStart=0,libDragDelta=0;
+
+function libVW(){return document.getElementById('lib-carousel-vp').offsetWidth||window.innerWidth;}
+function libOffset(p){return(libVW()-240)/2-p*(240+12);}
+
+function libMoveTrack(animate,extra){
+  extra=extra||0;
+  const t=document.getElementById('lib-carousel-track');
+  t.style.transition=animate?'transform .42s cubic-bezier(.25,.46,.45,.94)':'none';
+  t.style.transform='translateX('+(libOffset(libPos)+extra)+'px)';
+}
+
+function libUnflip(){
+  if(!libFlipped)return;
+  const slides=document.getElementById('lib-carousel-track').children;
+  if(slides[libPos])slides[libPos].querySelector('.lib-flipper').classList.remove('flipped');
+  libFlipped=false;
+  document.getElementById('lib-card-meta').classList.remove('hidden');
+}
+
+function libActivate(newPos,animate){
+  animate=(animate===undefined)?true:animate;
+  libUnflip();
+  libPos=Math.max(0,Math.min(libPool.length-1,newPos));
+  libMoveTrack(animate);
+  const slides=document.getElementById('lib-carousel-track').children;
+  Array.from(slides).forEach((s,i)=>s.classList.toggle('active',i===libPos));
+  const c=CARDS[libPool[libPos]];
+  document.getElementById('lib-meta-name').textContent=c.name;
+  document.getElementById('lib-meta-el').textContent=c.element;
+  document.getElementById('lib-nav-counter').textContent=(libPos+1)+' / '+libPool.length;
+  document.getElementById('lib-progress-fill').style.width=((libPos+1)/libPool.length*100)+'%';
+  document.getElementById('lib-btn-prev').disabled=(libPos===0);
+  document.getElementById('lib-btn-next').disabled=(libPos===libPool.length-1);
+}
+
+function buildLibCarousel(filter){
+  libPool=CARDS.map(function(_,i){return i;}).filter(function(i){
+    return filter==='all'||CARDS[i].element.toLowerCase()===filter;
+  });
+  const track=document.getElementById('lib-carousel-track');
+  track.innerHTML='';
+  libPool.forEach(function(ci,si){
+    const c=CARDS[ci];
+    const img=CARD_IMAGES[c.slug]||'';
+    const meaning=(c.archetype||'').split(/(?<=[.!?])\s/)[0]||c.archetype||'';
+    const s=document.createElement('div');
+    s.className='lib-slide';
+    s.innerHTML=
+      '<div class="lib-flipper">'+
+        '<div class="lib-face lib-face-front">'+
+          (img?'<img src="'+img+'" alt="'+c.name+'">':'')+
+          '<div class="lib-front-roman">'+c.num+'</div>'+
+          '<div class="lib-front-name"><div class="lib-front-name-text">'+c.name.toUpperCase()+'</div></div>'+
+        '</div>'+
+        '<div class="lib-face lib-face-back">'+
+          '<div class="lib-back-corner tl"></div>'+
+          '<div class="lib-back-corner br"></div>'+
+          '<div class="lib-back-roman">'+c.num+'</div>'+
+          '<div class="lib-back-rule"></div>'+
+          '<div class="lib-back-name">'+c.name+'</div>'+
+          '<div class="lib-back-elem">'+c.element+'</div>'+
+          '<div class="lib-back-divider"></div>'+
+          '<div class="lib-back-section-label">Meaning</div>'+
+          '<div class="lib-back-meaning">'+meaning+'</div>'+
+          '<div class="lib-back-cta" id="lib-cta-'+si+'">'+
+            '<span class="lib-back-cta-text">View Full Card</span>'+
+            '<svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>'+
+          '</div>'+
+          '<div class="lib-back-hint">tap card to turn back</div>'+
+        '</div>'+
+      '</div>';
+    // CTA button — navigate to detail, don't propagate to card flip
+    (function(cardIdx){
+      s.querySelector('#lib-cta-'+si).addEventListener('click',function(e){
+        e.stopPropagation();
+        openCard(cardIdx,'library');
+      });
+    })(ci);
+    // Card tap — flip active card, activate non-active card
+    (function(slideIdx){
+      s.addEventListener('click',function(){
+        if(libDragging)return;
+        if(slideIdx!==libPos){libActivate(slideIdx);return;}
+        libFlipped=!libFlipped;
+        s.querySelector('.lib-flipper').classList.toggle('flipped',libFlipped);
+        document.getElementById('lib-card-meta').classList.toggle('hidden',libFlipped);
+      });
+    })(si);
+    track.appendChild(s);
+  });
+}
 
 function openLibrary(){
-  renderLibGrid('all');
-  document.querySelectorAll('.lib-filter').forEach((f,i)=>f.classList.toggle('on',i===0));
+  document.querySelectorAll('.lib-filter').forEach(function(f,i){f.classList.toggle('on',i===0);});
+  libPos=0;libFlipped=false;
+  buildLibCarousel('all');
   goTo('s-library',7);
+  setTimeout(function(){libActivate(0,false);},220);
 }
 
 function filterLib(f,btn){
-  libFilter=f;
-  document.querySelectorAll('.lib-filter').forEach(x=>x.classList.remove('on'));
+  document.querySelectorAll('.lib-filter').forEach(function(x){x.classList.remove('on');});
   btn.classList.add('on');
-  renderLibGrid(f);
+  libPos=0;libFlipped=false;
+  buildLibCarousel(f);
+  libActivate(0,false);
 }
 
-function renderLibGrid(filter){
-  const grid=document.getElementById('lib-grid');
-  const list=filter==='all'?CARDS:CARDS.filter(c=>c.element.toLowerCase()===filter);
-  grid.innerHTML=list.map(c=>{
-    const idx=CARDS.indexOf(c);
-    const src=CARD_IMAGES[c.slug]||'';
-    return `<div class="lib-card-thumb" onclick="openCard(${idx},'library')">
-      <div class="lib-thumb-face">
-        ${src?`<img class="lib-thumb-img" src="${src}" alt="${c.name}">`:''}
-        <div class="lib-thumb-roman">${c.num}</div>
-        <div class="lib-thumb-name">${c.name}</div>
-      </div>
-      <div class="lib-thumb-elem">${c.element}</div>
-    </div>`;
-  }).join('');
-}
+// Touch + mouse drag for library carousel
+(function(){
+  function initLibDrag(){
+    const vp=document.getElementById('lib-carousel-vp');
+    if(!vp)return;
+    vp.addEventListener('touchstart',function(e){libDragStart=e.touches[0].clientX;libDragDelta=0;libDragging=false;},{passive:true});
+    vp.addEventListener('touchmove',function(e){
+      libDragDelta=e.touches[0].clientX-libDragStart;
+      if(Math.abs(libDragDelta)>8)libDragging=true;
+      libMoveTrack(false,libDragDelta);
+    },{passive:true});
+    vp.addEventListener('touchend',function(){
+      if(Math.abs(libDragDelta)>52)libActivate(libPos+(libDragDelta<0?1:-1));
+      else libMoveTrack(true);
+      setTimeout(function(){libDragging=false;},60);
+    });
+    vp.addEventListener('mousedown',function(e){
+      libDragStart=e.clientX;libDragDelta=0;libDragging=false;
+      function onMove(e){libDragDelta=e.clientX-libDragStart;if(Math.abs(libDragDelta)>8)libDragging=true;libMoveTrack(false,libDragDelta);}
+      function onUp(){
+        window.removeEventListener('mousemove',onMove);
+        if(Math.abs(libDragDelta)>52)libActivate(libPos+(libDragDelta<0?1:-1));
+        else libMoveTrack(true);
+        setTimeout(function(){libDragging=false;},60);
+      }
+      window.addEventListener('mousemove',onMove);
+      window.addEventListener('mouseup',onUp,{once:true});
+    });
+    document.getElementById('lib-btn-prev').addEventListener('click',function(){libActivate(libPos-1);});
+    document.getElementById('lib-btn-next').addEventListener('click',function(){libActivate(libPos+1);});
+    window.addEventListener('resize',function(){libMoveTrack(false);});
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',initLibDrag);}
+  else{initLibDrag();}
+})();
 
 function openCard(idx,origin){
   detCardIdx=idx;detOrigin=origin||'library';
