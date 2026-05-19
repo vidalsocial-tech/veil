@@ -214,7 +214,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .det-nav-counter{font-family:"Cinzel",serif;font-size:.72rem;color:rgba(44,31,14,.55);letter-spacing:.08em;}
 
 /* S1 */
-.sigil{width:54px;height:54px;margin-bottom:30px;animation:sg 4s ease-in-out infinite;}
+.sigil{width:72px;height:72px;margin-bottom:30px;animation:sg 4s ease-in-out infinite;}
 @keyframes sg{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.9;transform:scale(1.06)}}
 .hero-title{font-family:"Cinzel",serif;font-size:clamp(2.8rem,10vw,5rem);font-weight:400;letter-spacing:.06em;text-align:center;line-height:1;margin-bottom:16px;opacity:0;color:var(--ink);}
 .hero-title em{font-style:normal;color:var(--gold-lt);}
@@ -374,18 +374,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 </button>
 
 <div class="screen active" id="s1">
-  <svg class="sigil" viewBox="0 0 54 54" fill="none">
-    <circle cx="27" cy="27" r="25" stroke="rgba(201,162,82,.22)" stroke-width=".8"/>
-    <circle cx="27" cy="27" r="16" stroke="rgba(201,162,82,.14)" stroke-width=".6"/>
-    <circle cx="27" cy="27" r="7" stroke="rgba(201,162,82,.18)" stroke-width=".7"/>
-    <line x1="27" y1="2" x2="27" y2="52" stroke="rgba(201,162,82,.09)" stroke-width=".6"/>
-    <line x1="2" y1="27" x2="52" y2="27" stroke="rgba(201,162,82,.09)" stroke-width=".6"/>
-    <circle cx="27" cy="27" r="2.5" fill="rgba(201,162,82,.55)"/>
-    <circle cx="27" cy="2" r="1.4" fill="rgba(201,162,82,.28)"/>
-    <circle cx="27" cy="52" r="1.4" fill="rgba(201,162,82,.28)"/>
-    <circle cx="2" cy="27" r="1.4" fill="rgba(201,162,82,.28)"/>
-    <circle cx="52" cy="27" r="1.4" fill="rgba(201,162,82,.28)"/>
-  </svg>
+  <svg id="moon-sigil" class="sigil" viewBox="-36 -36 72 72" fill="none" width="72" height="72"></svg>
   <h1 class="hero-title" id="hero-title">Veil<em>Reads</em></h1>
   <p class="hero-sub" id="hero-sub">A daily tarot reading.<br>Three cards. One story.</p>
   <div class="hero-cta" id="hero-cta">
@@ -1264,6 +1253,40 @@ function detBack(){
   else goTo('s-library',7);
 }
 
+</script>
+<script>
+(function(){
+  function getMoonPct(){
+    var base=new Date('2000-01-06T18:14:00Z').getTime();
+    var cycle=29.53058867*24*3600*1000;
+    return(((Date.now()-base)%cycle)+cycle)%cycle/cycle;
+  }
+  function renderMoon(pct){
+    var R=32,el=document.getElementById('moon-sigil');
+    if(!el)return;
+    var LIT='#c8922a';
+    var h='<circle cx="0" cy="0" r="'+R+'" fill="rgba(201,162,82,.07)" stroke="rgba(201,162,82,.22)" stroke-width="0.7"/>';
+    if(pct>0.02&&pct<0.98){
+      var path;
+      if(pct>=0.48&&pct<=0.52){
+        h+='<circle cx="0" cy="0" r="'+R+'" fill="'+LIT+'"/>';
+      } else {
+        var rx=Math.abs(Math.cos(pct*2*Math.PI))*R;
+        if(pct<0.5){
+          var ts=pct<0.25?0:1;
+          path='M 0 '+(-R)+' A '+R+' '+R+' 0 1 1 0 '+R+' A '+rx+' '+R+' 0 1 '+ts+' 0 '+(-R)+' Z';
+        } else {
+          var lp=pct-0.5;
+          var ts=lp<0.25?0:1;
+          path='M 0 '+(-R)+' A '+R+' '+R+' 0 1 0 0 '+R+' A '+rx+' '+R+' 0 1 '+ts+' 0 '+(-R)+' Z';
+        }
+        h+='<path d="'+path+'" fill="'+LIT+'"/>';
+      }
+    }
+    el.innerHTML=h;
+  }
+  renderMoon(getMoonPct());
+})();
 </script>
 </body>
 </html>
