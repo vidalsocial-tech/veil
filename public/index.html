@@ -462,7 +462,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
   <!-- pinned action buttons -->
   <div class="s6-bottom" id="s6-bottom" style="display:none;">
     <div class="action-row">
-      <button class="btn-gold" onclick="restart()">Draw Again</button>
+      <button class="btn-gold" onclick="reshuffle()">Reshuffle</button>
       <button class="btn-ghost" onclick="shareReading()">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         Share Reading
@@ -1060,7 +1060,18 @@ function shareReading(){
   }catch(e){console.error(e);}
 }
 
-function restart(){loader(()=>{goHome();setTimeout(()=>goTo("s2",1),100);});}
+function reshuffle(){
+  drawThree();
+  revealCount=0;
+  [0,1,2,3,4].forEach(i=>{const c=document.getElementById('sh'+i);c.style.transition='none';c.style.transform='translate(-50%,-50%)';});
+  clearTimeout(shuffleTO);
+  document.getElementById('s6-scroll').style.display='none';
+  document.getElementById('s6-bottom').style.display='none';
+  document.getElementById('reading-hold').style.cssText='display:flex;opacity:1;';
+  document.getElementById('reading-text').innerHTML='';
+  document.getElementById('mini-spread').innerHTML='';
+  loader(()=>{goTo('s4',3);runShuffle();});
+}
 // ── LIBRARY CAROUSEL ──
 let detCardIdx=0,detOrigin='library';
 let libPool=[],libPos=0,libFlipped=false,libDragging=false,libDragStart=0,libDragDelta=0;
