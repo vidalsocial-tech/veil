@@ -24,10 +24,10 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 #lf{height:100%;width:0%;opacity:0;background:linear-gradient(90deg,transparent,var(--gold),var(--gold-lt),var(--gold),transparent);box-shadow:0 0 10px var(--gold);transition:width .55s cubic-bezier(.4,0,.2,1),opacity .3s;}
 #lf.on{opacity:1;}
 /* HOME BTN */
-#home-btn{position:fixed;top:18px;right:18px;z-index:150;width:38px;height:38px;border-radius:50%;background:rgba(160,120,48,.06);border:1px solid rgba(160,120,48,.22);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;opacity:0;pointer-events:none;}
+#home-btn{position:fixed;top:18px;right:18px;z-index:150;width:38px;height:38px;border-radius:50%;background:#2C1A0E;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .25s;opacity:0;pointer-events:none;}
 #home-btn.visible{opacity:1;pointer-events:all;}
-#home-btn:hover{background:rgba(160,120,48,.12);border-color:rgba(160,120,48,.5);transform:scale(1.08);}
-#home-btn svg{width:16px;height:16px;}
+#home-btn:hover{background:#3d2510;transform:scale(1.08);}
+#home-btn svg{width:16px;height:16px;stroke:#f0e6d3;}
 .logo{font-family:"Cinzel",serif;font-size:.82rem;letter-spacing:.34em;color:var(--gold);opacity:.9;margin-bottom:44px;}
 .logo em{font-style:normal;color:var(--gold-lt);}
 .btn-gold{font-family:"Inter",sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.2em;color:var(--ink);background:linear-gradient(135deg,var(--gold),var(--gold-lt));border:none;border-radius:60px;padding:15px 50px;cursor:pointer;transition:transform .25s,box-shadow .25s;box-shadow:0 4px 26px rgba(201,162,82,.28);text-transform:uppercase;}
@@ -370,7 +370,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 <div id="bg"></div><canvas id="stars"></canvas><div id="grain"></div>
 <div id="lb"><div id="lf"></div></div>
 <button id="home-btn" onclick="goHome()" aria-label="Home">
-  <svg viewBox="0 0 24 24" fill="none" stroke="rgba(201,162,82,.75)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H15v-5h-6v5H4a1 1 0 0 1-1-1V9.5z"/></svg>
+  <svg viewBox="0 0 24 24" fill="none" stroke="#f0e6d3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H15v-5h-6v5H4a1 1 0 0 1-1-1V9.5z"/></svg>
 </button>
 
 <div class="screen active" id="s1">
