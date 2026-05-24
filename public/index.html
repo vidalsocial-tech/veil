@@ -784,7 +784,7 @@ const POS_LABELS = ["The Root","The Now","The Path"];
 let focus="default", drawn=[], revealCount=0, shuffleTO=null;
 
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
-function drawThree(){drawn=shuffle(CARDS).slice(0,3);}
+function drawThree(){drawn=shuffle(CARDS).slice(0,3).map(function(c){return Object.assign({},c,{rev:Math.random()<0.5});});}
 
 (function(){const c=document.getElementById("stars"),ctx=c.getContext("2d");let W,H,stars;function init(){W=c.width=window.innerWidth;H=c.height=window.innerHeight;stars=Array.from({length:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.1+.2,a:Math.random(),da:(Math.random()-.5)*.003}));}function draw(){ctx.clearRect(0,0,W,H);stars.forEach(s=>{s.a=Math.max(.05,Math.min(1,s.a+s.da));if(Math.random()<.002)s.da*=-1;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${s.a})`;ctx.fill();});requestAnimationFrame(draw);}window.addEventListener("resize",init);init();draw();})();
 
@@ -878,7 +878,9 @@ async function runReading(){
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         cards:drawn.map((c,i)=>({
-          name:c.name,position:POS_LABELS[i],
+          name:c.name,
+          reversed:c.rev===true,
+          position:POS_LABELS[i],
           archetype:c.archetype||'',
           shadow:c.shadow||'',
           angle:c[focusKey]||'',
