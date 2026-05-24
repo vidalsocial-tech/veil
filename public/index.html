@@ -820,7 +820,7 @@ document.getElementById("note-text").addEventListener("input",function(){this.st
 
 function runShuffle(){const cards=[0,1,2,3,4].map(i=>document.getElementById("sh"+i));const pos=[{x:-88,y:0,r:-6},{x:-44,y:6,r:-3},{x:0,y:10,r:0},{x:44,y:6,r:3},{x:88,y:0,r:6}];cards.forEach((c,i)=>setTimeout(()=>{c.style.transition="transform 480ms cubic-bezier(.23,1,.32,1)";c.style.transform=`translate(calc(-50% + ${pos[i].x}px),calc(-50% + ${pos[i].y}px)) rotate(${pos[i].r}deg)`;},i*70));let phase=0;function doShuffle(){phase++;const order=shuffle([0,1,2,3,4]);cards.forEach((c,i)=>{const to=pos[order[i]];setTimeout(()=>{c.style.transition=`transform ${280+Math.random()*180}ms cubic-bezier(.23,1,.32,1)`;c.style.transform=`translate(calc(-50% + ${to.x}px),calc(-50% + ${to.y}px)) rotate(${to.r+(Math.random()-.5)*10}deg)`;},i*55);});if(phase<5)shuffleTO=setTimeout(doShuffle,480);else{setTimeout(()=>cards.forEach((c,i)=>setTimeout(()=>{c.style.transition="transform 380ms cubic-bezier(.23,1,.32,1)";c.style.transform=`translate(-50%,-50%) translateX(${(i-2)*3}px) translateY(${Math.abs(i-2)*-2}px)`;},i*50)),360);setTimeout(()=>step(5),1300);}}shuffleTO=setTimeout(doShuffle,750);}
 
-function setupDraw(){revealCount=0;drawn.forEach((card,i)=>{const img=document.getElementById("cimg"+i);img.src=CARD_IMAGES[card.slug]||"";img.alt=card.name;document.getElementById("fi"+i).classList.remove("flipped");document.getElementById("cs"+i).classList.remove("revealed");document.getElementById("fw"+i).classList.remove("done");});}
+function setupDraw(){revealCount=0;drawn.forEach((card,i)=>{const img=document.getElementById("cimg"+i);img.src=CARD_IMAGES[card.slug]||"";img.alt=card.name;img.style.transform=card.rev?"rotate(180deg)":"";const pl=document.getElementById("pl"+i);if(pl)pl.textContent=["The Root","The Now","The Path"][i]+(card.rev?" · ℞":"");document.getElementById("fi"+i).classList.remove("flipped");document.getElementById("cs"+i).classList.remove("revealed");document.getElementById("fw"+i).classList.remove("done");});}
 
 function reveal(i){const w=document.getElementById("fw"+i);if(w.classList.contains("done"))return;w.classList.add("done");document.getElementById("fi"+i).classList.add("flipped");document.getElementById("cs"+i).classList.add("revealed");revealCount++;if(revealCount===3)setTimeout(()=>step(6),1000);}
 
@@ -838,9 +838,9 @@ async function runReading(){
   readingCards.forEach((c,i)=>{
     const wrap=document.createElement("div");wrap.className="mini-card-wrap";wrap.style.animationDelay=(i*.14)+"s";
     const mc=document.createElement("div");mc.className="mini-card";
-    const img=document.createElement("img");img.src=CARD_IMAGES[c.slug]||"";img.alt=c.name;
+    const img=document.createElement("img");img.src=CARD_IMAGES[c.slug]||"";img.alt=c.name;img.style.transform=c.rev?"rotate(180deg)":"";
     mc.appendChild(img);
-    const nm=document.createElement("div");nm.className="mini-name";nm.textContent=c.name;
+    const nm=document.createElement("div");nm.className="mini-name";nm.textContent=c.name+(c.rev?" · ℞":"");
     wrap.appendChild(mc);wrap.appendChild(nm);ms.appendChild(wrap);
   });
 
@@ -972,7 +972,7 @@ function shareReading(){
 
     function rrPath(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath();}
 
-    function drawCard(img,cx,cy,angle,isCenter){
+    function drawCard(img,cx,cy,angle,isCenter,isReversed){
       const hw=cW/2,hh=cH/2;
       ctx.save();ctx.translate(cx,cy);ctx.rotate(angle);
       // Shadow
@@ -981,7 +981,7 @@ function shareReading(){
       if(isCenter){const halo=ctx.createRadialGradient(0,0,cH*.1,0,0,cH*.85);halo.addColorStop(0,'rgba(210,168,55,.24)');halo.addColorStop(1,'rgba(210,168,55,0)');ctx.fillStyle=halo;ctx.fillRect(-hw-65,-hh-65,cW+130,cH+130);}
       // Card image clipped
       ctx.save();rrPath(-hw,-hh,cW,cH,cR);ctx.clip();
-      if(img){ctx.drawImage(img,-hw,-hh,cW,cH);}else{ctx.fillStyle='#ede0c8';rrPath(-hw,-hh,cW,cH,cR);ctx.fill();}
+      if(img){if(isReversed){ctx.save();ctx.rotate(Math.PI);ctx.drawImage(img,-hw,-hh,cW,cH);ctx.restore();}else{ctx.drawImage(img,-hw,-hh,cW,cH);}}else{ctx.fillStyle='#ede0c8';rrPath(-hw,-hh,cW,cH,cR);ctx.fill();}
       ctx.restore();
       // Border
       ctx.strokeStyle=isCenter?'rgba(190,150,55,.72)':G+'.4)';ctx.lineWidth=isCenter?2.8:1.8;rrPath(-hw,-hh,cW,cH,cR);ctx.stroke();
@@ -992,9 +992,9 @@ function shareReading(){
 
     Promise.all(drawn.map(c=>loadImg(CARD_IMAGES[c.slug]||''))).then(imgs=>{
       // Draw order: left, right, center (center on top)
-      drawCard(imgs[0],LCX,LCY,ANG,false);
-      drawCard(imgs[2],RCX,RCY,-ANG,false);
-      drawCard(imgs[1],CCX,CCY,0,true);
+      drawCard(imgs[0],LCX,LCY,ANG,false,drawn[0].rev);
+      drawCard(imgs[2],RCX,RCY,-ANG,false,drawn[2].rev);
+      drawCard(imgs[1],CCX,CCY,0,true,drawn[1].rev);
 
       // ── "+" CONNECTOR NODES ──
       const nodeY=CCY+22;
