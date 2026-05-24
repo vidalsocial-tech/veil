@@ -421,7 +421,7 @@ function buildCrossCardNote(cards, cardData) {
 // ─────────────────────────────────────────────
 //  BUILD POEM PROMPT
 // ─────────────────────────────────────────────
-function buildPoemPrompt(cards, cardData, focus, note, moon) {
+function buildPoemPrompt(cards, cardData, focus, note, moon, isReshuffle, lastReadingSnippet) {
   // Normalize: accept plain strings (legacy) or {name, reversed} objects
   var normalizedCards = cards.map(function(c) {
     if (typeof c === 'string') return { name: c, reversed: false };
@@ -454,6 +454,11 @@ function buildPoemPrompt(cards, cardData, focus, note, moon) {
     + 'FOCUS: ' + (focus || 'clarity') + '\n'
     + 'MOON TONIGHT: ' + moon.tone + '\n'
     + (note ? 'THE SEEKER SHARED: "' + note + '" — their specific situation must be recognizable in the poem. Not the theme — their actual words, reflected back in image and feeling.\n\n' : '\n')
+    + (isReshuffle
+        ? 'RESHUFFLE — the seeker has drawn again and needs a completely different reading. '
+          + 'Your poem MUST open with a different first line, use a different structural approach, and arrive at a different emotional place than before. '
+          + (lastReadingSnippet ? 'The previous reading began: "' + lastReadingSnippet + '" — do not echo this opening, this imagery, or this tone in any way.\n\n' : '\n\n')
+        : '')
     + 'Now write the reading as a poem in the exact voice of the 5 examples above. 4 stanzas. Lyrical, whimsical, warm, and specific. Let card names surface at most once each, like echoes. Rhyme ABAB. End with a single, concrete image — no advice, no explanation. Just the image.';
 }
 
@@ -478,7 +483,7 @@ export default async function handler(req) {
 
   try {
     const body = await req.json();
-    const { cards: rawCards, focus, note } = body;
+    const { cards: rawCards, focus, note, isReshuffle, lastReadingSnippet } = body;
 
     if (!rawCards || !Array.isArray(rawCards) || rawCards.length !== 3) {
       return new Response(JSON.stringify({ error: 'Three cards required' }), {
@@ -513,10 +518,10 @@ export default async function handler(req) {
       body: JSON.stringify({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 900,
-        temperature: 0.92,
+        temperature: isReshuffle ? 1.0 : 0.92,
         top_p: 0.95,
         system: POEM_SYSTEM_PROMPT,
-        messages: [{ role: 'user', content: buildPoemPrompt(cards, CARD_DATA, focus, note, moon) }]
+        messages: [{ role: 'user', content: buildPoemPrompt(cards, CARD_DATA, focus, note, moon, isReshuffle, lastReadingSnippet) }]
       })
     });
 
@@ -537,10 +542,10 @@ export default async function handler(req) {
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 900,
-          temperature: 0.92,
+          temperature: isReshuffle ? 1.0 : 0.92,
           top_p: 0.95,
           system: POEM_SYSTEM_PROMPT,
-          messages: [{ role: 'user', content: buildPoemPrompt(cards, CARD_DATA, focus, note, moon) }]
+          messages: [{ role: 'user', content: buildPoemPrompt(cards, CARD_DATA, focus, note, moon, isReshuffle, lastReadingSnippet) }]
         })
       });
       if (retry.ok) {

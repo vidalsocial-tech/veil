@@ -781,7 +781,7 @@ const READINGS = {
 };
 
 const POS_LABELS = ["The Root","The Now","The Path"];
-let focus="default", drawn=[], revealCount=0, shuffleTO=null;
+let focus="default", drawn=[], revealCount=0, shuffleTO=null, isReshuffle=false, lastReadingSnippet='';
 
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
 function drawThree(){drawn=shuffle(CARDS).slice(0,3).map(function(c){return Object.assign({},c,{rev:Math.random()<0.5});});}
@@ -887,7 +887,7 @@ async function runReading(){
           element:c.element||'',
           crossNote:crossNote||''
         })),
-        focus,question:note,lastFrames:storedFrames,
+        focus,question:note,lastFrames:storedFrames,isReshuffle,lastReadingSnippet,
       })
     });
     if(!res.ok)throw new Error('API error');
@@ -909,6 +909,8 @@ async function runReading(){
       scrollEl.style.display="block";
       bottomEl.style.display="flex";
       scrollEl.scrollTop=0;
+      isReshuffle=false;
+      lastReadingSnippet='';
       const txt=document.getElementById("reading-text");txt.innerHTML="";
       setTimeout(()=>typewrite(txt,reading,()=>{
         // auto-scroll gently as reading completes
@@ -919,7 +921,7 @@ async function runReading(){
 
 function typewrite(el,text,cb){const paras=text.split(/\n\n+/).filter(Boolean);let pi=0,ci=0,curP=null;const cur=document.createElement("span");cur.className="cursor";function next(){if(pi>=paras.length){if(cur.parentNode)cur.parentNode.removeChild(cur);if(cb)cb();return;}if(ci===0){curP=document.createElement("p");el.appendChild(curP);}const p=paras[pi];if(ci<p.length){curP.textContent=p.slice(0,ci+1);curP.appendChild(cur);ci++;setTimeout(next,18+Math.random()*14);}else{if(cur.parentNode)cur.parentNode.removeChild(cur);pi++;ci=0;if(pi<paras.length)setTimeout(next,380);else if(cb)cb();}}next();}
 
-function goHome(){focus="default";revealCount=0;drawThree();document.querySelectorAll(".focus-pill").forEach(p=>p.classList.remove("on"));document.getElementById("note-wrap").classList.remove("open");document.getElementById("btn-continue").classList.remove("ready");document.getElementById("note-text").value="";[0,1,2,3,4].forEach(i=>{const c=document.getElementById("sh"+i);c.style.transition="none";c.style.transform="translate(-50%,-50%)";});clearTimeout(shuffleTO);document.getElementById("s6-scroll").style.display="none";document.getElementById("s6-bottom").style.display="none";document.getElementById("reading-hold").style.cssText="display:flex;opacity:1;";document.getElementById("reading-text").innerHTML="";document.getElementById("mini-spread").innerHTML="";document.getElementById("home-btn").classList.remove("visible");goTo("s1",1);}
+function goHome(){focus="default";isReshuffle=false;lastReadingSnippet='';revealCount=0;drawThree();document.querySelectorAll(".focus-pill").forEach(p=>p.classList.remove("on"));document.getElementById("note-wrap").classList.remove("open");document.getElementById("btn-continue").classList.remove("ready");document.getElementById("note-text").value="";[0,1,2,3,4].forEach(i=>{const c=document.getElementById("sh"+i);c.style.transition="none";c.style.transform="translate(-50%,-50%)";});clearTimeout(shuffleTO);document.getElementById("s6-scroll").style.display="none";document.getElementById("s6-bottom").style.display="none";document.getElementById("reading-hold").style.cssText="display:flex;opacity:1;";document.getElementById("reading-text").innerHTML="";document.getElementById("mini-spread").innerHTML="";document.getElementById("home-btn").classList.remove("visible");goTo("s1",1);}
 
 // Fan spread share — v2
 function shareReading(){
@@ -1061,6 +1063,11 @@ function shareReading(){
 }
 
 function reshuffle(){
+  const readingEl=document.getElementById('reading-text');
+  const firstPara=readingEl?readingEl.querySelector('p'):null;
+  lastReadingSnippet=firstPara?firstPara.textContent.slice(0,120):'';
+  isReshuffle=true;
+  document.getElementById('note-text').value='';
   drawThree();
   revealCount=0;
   [0,1,2,3,4].forEach(i=>{const c=document.getElementById('sh'+i);c.style.transition='none';c.style.transform='translate(-50%,-50%)';});
