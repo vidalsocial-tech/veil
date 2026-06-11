@@ -245,7 +245,636 @@ const CARD_DATA = {
     love: "Something in this connection has reached its full expression. The World in love marks a completion — whether that is a relationship coming into its fullest form or a chapter of love that has genuinely run its course.",
     clarity: "You have more than enough to work with. The World says: stop searching for the missing piece — it isn't missing. You are already whole. Act from that wholeness.",
     change: "A major cycle is completing. The World asks you to honor what this chapter has made of you before you rush into the next one. Integration is part of the change."
+  },
+
+  // ── SUIT OF WANDS ──
+
+  "Ace of Wands": {
+    archetype: "The Spark / The First Flame",
+    element: "Fire",
+    shadow: "creative energy ignited but not yet directed — the match that lights everything without knowing what it's building",
+    essence: "the moment before the thing has a name — pure generative impulse, the body's yes before the mind has reviewed the proposal",
+    reversalRegister: "SUPPRESSION",
+    reversed: "Something wants to begin but hasn't been given permission. The creative spark is alive in the seeker — they can feel it — but something is holding the hand back from the page, the voice back from the room. The Ace of Wands reversed asks what the seeker is waiting for before they let themselves begin.",
+    love: "Something new is asking to be kindled. The Ace of Wands in love is the first honest interest — not yet a story, just a heat. Follow it before you decide what it means.",
+    clarity: "The idea you've been circling is real. It doesn't need to be fully formed to be started. The Ace of Wands says: move toward the thing that lights you up, even one step.",
+    change: "A new chapter is available. The energy is here — raw, directional, ready. The Ace of Wands doesn't ask you to see the whole path, only to strike the match."
+  },
+  "Two of Wands": {
+    archetype: "The Planner / The Horizon-Gazer",
+    element: "Fire",
+    shadow: "mistaking the map for the journey — holding the globe of possibility without ever setting foot on the ground",
+    essence: "standing at the edge of what you've built and looking toward what you haven't yet reached — the future is genuinely available, and you are the one who will decide which part of it",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The vision is real but the seeker is reluctant to commit to it. They can see the horizon but keep finding reasons not to move toward it. The Two of Wands reversed asks what it would cost to stop deliberating and start choosing.",
+    love: "You are weighing what you want against what you have. The Two of Wands in love asks: what kind of connection are you actually building toward, and are you choosing it — or waiting for it to choose you?",
+    clarity: "The question isn't whether the plan is good — it's whether you're willing to act on it. You have already done the thinking. The Two of Wands says: commit.",
+    change: "You can see exactly where you want to go. The distance between here and there is real but crossable. The Two of Wands asks you to stop surveying and start walking."
+  },
+  "Three of Wands": {
+    archetype: "The Visionary / The Long View",
+    element: "Fire",
+    shadow: "expansion without roots — ambition that has left the ground it grew in, momentum that outpaces integrity",
+    essence: "ships already on the water, vision already in motion — the satisfaction of watching what you dared to start actually moving toward its destination",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "Something the seeker set in motion has stalled partway. The ships were sent but haven't returned. The Three of Wands reversed asks for the patience to let what is already underway arrive, and the honesty to see whether what is delayed needs more time or a different course.",
+    love: "What you have sent out into the world of this relationship is returning with information. The Three of Wands in love says: the growth you hoped for is possible — keep watching the horizon.",
+    clarity: "You are further along than you feel. The Three of Wands asks you to look back at where you started before you decide the progress has been insufficient.",
+    change: "The foundations you laid are working. Stay with the long view. The Three of Wands says this is not the moment for course correction — it is the moment for trust in what you've already put in motion."
+  },
+  "Four of Wands": {
+    archetype: "The Celebrant / The Homecoming",
+    element: "Fire",
+    shadow: "a celebration that is premature, or one the seeker can't fully enter because they're still watching for what might go wrong",
+    essence: "genuine arrival — something has been completed or begun that deserves to be marked; you are allowed to feel this",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The celebration is real but the seeker can't quite receive it. There is something — comparison, old grief, the habit of waiting for the other shoe — that keeps them one step outside the joy that is genuinely available. The Four of Wands reversed asks the seeker to step inside the garland and let themselves feel what has actually been earned.",
+    love: "Something worth marking is here — a milestone, a deepening, a genuine arrival. Let yourself acknowledge it. The Four of Wands in love asks for the willingness to feel happy.",
+    clarity: "There is something stable and good here that you keep looking past. The Four of Wands asks you to stand still for a moment in what is working, before moving on.",
+    change: "A phase has concluded and deserves a breath before the next one begins. The Four of Wands says: let yourself arrive before you start planning the departure."
+  },
+  "Five of Wands": {
+    archetype: "The Combatant / The Friction-Field",
+    element: "Fire",
+    shadow: "conflict for its own sake — the energy that can't be at rest, that manufactures opposition when none is needed",
+    essence: "the productive friction of multiple strong wills that have not yet found their synthesis — not all conflict is wrong, but this one needs direction",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The conflict has moved inside. The battle is no longer with the situation but within the seeker — competing desires, competing voices, competing versions of what they want. The Five of Wands reversed asks which voice actually belongs to the seeker, and which ones are inherited noise.",
+    love: "There is tension here that isn't necessarily negative — it may be the honest friction of two people who are both fully present. The Five of Wands asks: is this conflict revealing something real, or just filling the air?",
+    clarity: "Multiple perspectives are pulling at you right now. The Five of Wands says the confusion is not the problem — the problem is trying to win the argument instead of listening to what each position is actually saying.",
+    change: "The chaos you're moving through isn't random — it's the pressure of something trying to reorganize. The Five of Wands asks you to stay in the friction long enough to find what it's teaching."
+  },
+  "Six of Wands": {
+    archetype: "The Victor / The Recognized",
+    element: "Fire",
+    shadow: "the identity that cannot exist without applause — victory that has become a requirement rather than a moment",
+    essence: "a moment of genuine, earned recognition — you did something and it worked, and the world has noticed; you are allowed to ride through the gate",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The success is real but the seeker cannot fully claim it. They minimize it, deflect the recognition, or find the achievement insufficient before the ink is dry. The Six of Wands reversed asks the seeker to let themselves be seen in their success — not from ego, but from the honest acknowledgment that something went right.",
+    love: "You are being seen — perhaps for the first time in a while. The Six of Wands in love asks whether you can receive appreciation without immediately making yourself smaller.",
+    clarity: "Trust the validation you've received. The Six of Wands says: you were right about this, and the evidence is arriving. Stop looking for the footnote.",
+    change: "A turning point has been reached. The effort has paid off and the path ahead has opened. The Six of Wands asks for the confidence to keep moving from the place you've arrived."
+  },
+  "Seven of Wands": {
+    archetype: "The Defender / The Stand-Taker",
+    element: "Fire",
+    shadow: "defensiveness that has become permanent posture — the seeker who fights long after the threat has passed because combat has become their identity",
+    essence: "holding the high ground under real pressure — staying with your position not from stubbornness but from the knowledge that it is genuinely yours",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The seeker is fighting battles that belong to old versions of this situation. What they are defending may no longer need defending, or may not have been theirs to defend in the first place. The Seven of Wands reversed asks: what are you actually protecting, and is it still worth the cost?",
+    love: "There is some defensiveness operating in this dynamic that is worth examining. The Seven of Wands in love asks: are you protecting something real, or are you just waiting to be attacked?",
+    clarity: "You are being challenged and the challenge is real. Hold your position — but do it from clarity, not from the reflex of being under siege. The Seven of Wands asks you to know why you're standing your ground.",
+    change: "This is a moment to stay with what you believe in, even under pressure. The Seven of Wands says: don't abandon your position just because someone is pushing on it."
+  },
+  "Eight of Wands": {
+    archetype: "The Arrow / The Swift Current",
+    element: "Fire",
+    shadow: "speed without aim — the excitement of movement that mistakes velocity for direction",
+    essence: "everything moving at once, all of it in the same direction — the rare alignment when the conditions and the intention and the momentum are all present simultaneously; now is the time to move",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The momentum has hit resistance. Something that should be moving freely has stalled — in transit, in communication, in execution. The Eight of Wands reversed asks the seeker to find the specific blockage rather than pushing harder against everything.",
+    love: "Things are moving quickly in this connection. The Eight of Wands in love says: let the speed carry you for now. This is not the moment for careful deliberation.",
+    clarity: "The window is open. The time to act is now — not after more research, not after more preparation. The Eight of Wands says: release the arrow.",
+    change: "This change has its own momentum and it is asking you to move with it. The Eight of Wands says: stop managing the pace and let the current take you."
+  },
+  "Nine of Wands": {
+    archetype: "The Last Stand / The Weary Guardian",
+    element: "Fire",
+    shadow: "the seeker who cannot put the staff down — resilience that has become its own prison, vigilance that cannot find rest even when the threat has passed",
+    essence: "one more step from the end — you have been through the gauntlet and still you are standing; this is not weakness, it is the real thing",
+    reversalRegister: "SUPPRESSION",
+    reversed: "Exhaustion has reached the point where the seeker can no longer tell resilience from stubbornness. They are holding a position past the point of usefulness, unable to rest because rest feels like surrender. The Nine of Wands reversed asks what the seeker would be allowed to put down if finishing was not the same as failing.",
+    love: "There is some guardedness here that was earned and is now costing more than it protects. The Nine of Wands in love asks: what would it mean to let this person in past the last barrier?",
+    clarity: "You are closer to the end than you know. The Nine of Wands says: this is not the moment to give up. One more careful step.",
+    change: "The hardest part is behind you. The Nine of Wands asks for the specific kind of courage required at the very end — the ability to stay when every part of you is tired."
+  },
+  "Ten of Wands": {
+    archetype: "The Overburdened / The One Who Carries",
+    element: "Fire",
+    shadow: "mistaking the burden for identity — the seeker who cannot put the wands down because carrying them has become who they are",
+    essence: "a weight that is genuinely heavy and has been carried a long way — the question is not whether the wands are real, but whether all of them still need to be carried, and whether all of them belong to the seeker",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The weight has become invisible — the seeker no longer feels the burden because it has been normalized. They have built their life around carrying it. The Ten of Wands reversed asks the seeker to put the wands down one at a time and see which ones they actually choose to pick back up.",
+    love: "Something is being carried alone that could be shared, or set down entirely. The Ten of Wands in love asks: what burden in this relationship are you maintaining out of habit rather than necessity?",
+    clarity: "You have taken on more than can be carried well. The Ten of Wands asks not for heroics but for an honest audit: which of these responsibilities are actually yours, and which ones were never yours to carry?",
+    change: "The first act of this change is putting something down. The Ten of Wands says: you cannot move freely while carrying everything. Decide what gets left here."
+  },
+  "Page of Wands": {
+    archetype: "The Enthusiast / The First Fire",
+    element: "Fire",
+    shadow: "the beginning that never becomes a middle — perpetual enthusiasm without the follow-through that turns a spark into a craft",
+    essence: "unfiltered excitement at the edge of something new — this energy doesn't know enough to be cautious yet, and that is precisely its gift",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The enthusiasm is real but it has been discouraged — by past failures, by the voices of people who were more cautious, by the seeker's own inner critic. The Page of Wands reversed asks what the seeker would start today if they gave themselves permission to be a beginner without apology.",
+    love: "Something new and exciting is available in this connection. The Page of Wands in love says: let yourself be playful. Let yourself be moved by the feeling before you categorize it.",
+    clarity: "The new idea or direction deserves a real chance. The Page of Wands says: give it your honest attention — not to evaluate it to death, but to actually explore it.",
+    change: "This is the beginning of something. The Page of Wands asks you to bring fresh eyes to it — not your expertise, not your history, just your honest curiosity."
+  },
+  "Knight of Wands": {
+    archetype: "The Charger / The Bold Mover",
+    element: "Fire",
+    shadow: "action as avoidance — constant motion that never has to sit with consequences because it's always already on to the next thing",
+    essence: "fearless forward motion with enormous energy and genuine courage — the question is not whether to move but whether to give the movement a true direction",
+    reversalRegister: "DISTORTION",
+    reversed: "The energy has become reckless. The Knight is charging but has stopped caring where. The Knight of Wands reversed asks the seeker to hold the reins for a moment — not to stop, but to point the horse somewhere real before it bolts again.",
+    love: "There is excitement here — maybe too much of it moving too fast. The Knight of Wands in love asks: is the momentum carrying you toward something you genuinely want, or is this speed a way of not having to feel?",
+    clarity: "The energy is good. The direction needs work. The Knight of Wands says: before you move, name where you are actually going — then move with everything you have.",
+    change: "This is a moment that calls for bold action. The Knight of Wands says: trust your instincts and go. But check once — once — that you've aimed before you release."
+  },
+  "Queen of Wands": {
+    archetype: "The Warm Fire / The Magnetic One",
+    element: "Fire",
+    shadow: "the charisma that has become performance — warmth that is conditional on being admired, confidence that curdles into jealousy when not mirrored back",
+    essence: "fully alive in herself and genuinely generous with it — she doesn't make a room warmer by performing warmth; she is simply that warm, and the room responds",
+    reversalRegister: "DISTORTION",
+    reversed: "The confidence has slipped into performance. The seeker is working harder to appear certain than to actually be centered. The Queen of Wands reversed asks the seeker to come home to themselves — not to the version they project, but to the one they actually are.",
+    love: "You are at your most magnetic when you are most genuinely yourself. The Queen of Wands in love asks: are you showing up as you actually are, or as who you think you should be?",
+    clarity: "The creative power is yours. Don't look for permission to use it. The Queen of Wands says: trust your instincts, bring your full warmth, and proceed.",
+    change: "Lead with your actual self, not with a strategy. The Queen of Wands says: the most powerful thing you can offer this situation is your genuine, uncurated presence."
+  },
+  "King of Wands": {
+    archetype: "The Visionary Leader / The Purposeful Fire",
+    element: "Fire",
+    shadow: "vision without patience for those who move more slowly — the leader whose ambition outpaces his ability to bring anyone with him",
+    essence: "mastery in service of something larger than the self — the fire that builds rather than consumes, the leader who knows that the vision is only as good as the people who can carry it",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The vision is real but is being undermined by impatience or ego. The King of Wands reversed asks: is the ambition still in service of the vision, or has it started to serve the King's need to be right?",
+    love: "Leadership in love means being willing to own your choices — not just the exciting ones, but the ones that require staying. The King of Wands in love asks: are you leading this relationship or just dominating it?",
+    clarity: "The direction is clear. The challenge is execution — specifically, whether you can carry others with you without outrunning them. The King of Wands asks for vision and patience in equal measure.",
+    change: "You have the power to direct this change. The King of Wands asks you to use it honorably — with the long view, with honesty, and with enough humility to receive input without treating it as challenge."
+  },
+
+  // ── SUIT OF CUPS ──
+
+  "Ace of Cups": {
+    archetype: "The Overflowing / The Opened Heart",
+    element: "Water",
+    shadow: "emotional overwhelm that has not yet found form — all feeling, no vessel",
+    essence: "the heart cracking open in the right direction — love or compassion or creative feeling offered without condition, the source that does not calculate what it gives",
+    reversalRegister: "SUPPRESSION",
+    reversed: "Feeling is present but blocked from expression. The seeker is aware of something opening but keeps redirecting it, intellectualizing it, or deciding it is too much. The Ace of Cups reversed asks what the seeker is afraid will happen if they let the feeling all the way through.",
+    love: "Something is beginning — tenderly, genuinely. The Ace of Cups in love asks you to open toward it without immediately assessing its potential. Let the feeling arrive before you name it.",
+    clarity: "The most important information here is not logical. The Ace of Cups asks you to let what you feel speak first — what is this situation doing to your heart?",
+    change: "Something emotionally new is available. The Ace of Cups says: don't think your way into this change. Let yourself feel your way in."
+  },
+  "Two of Cups": {
+    archetype: "The Meeting / The Recognized Other",
+    element: "Water",
+    shadow: "merging as avoidance — connection that requires each person to be slightly less than themselves",
+    essence: "the moment two people genuinely see each other — equally, cleanly, without either one diminishing — the cup raised and met",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "Something is imbalanced in this connection. One person gives more than they receive, or the attraction is real but the values beneath it are not aligned. The Two of Cups reversed asks the seeker to be honest about whether this is a genuine meeting of equals, or whether someone has been made smaller to make the connection work.",
+    love: "This is genuine connection — the real kind. The Two of Cups asks you to meet this person as they actually are, not as you need them to be.",
+    clarity: "The relationship to examine here is about reciprocity. The Two of Cups asks: is this exchange equal? Are you both actually here?",
+    change: "A significant connection is part of this change — either a new one entering, or an existing one deepening into something more honest. The Two of Cups asks you to show up fully."
+  },
+  "Three of Cups": {
+    archetype: "The Circle / The Shared Joy",
+    element: "Water",
+    shadow: "the in-group that keeps others out, celebration that turns into a closed door, community that requires conformity for entry",
+    essence: "the particular joy that only exists when it is shared — the table where everyone present makes each other more, not less",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The community or celebration is present but the seeker is standing slightly outside it. Something — comparison, an old wound, the sense of not quite belonging — is keeping them from stepping into the circle. The Three of Cups reversed asks what the seeker is waiting for before they let themselves be received.",
+    love: "Allow the joy that's here. The Three of Cups in love says: let yourself celebrate this, with the people who love you both. Not everything needs to be a private project.",
+    clarity: "You do not have to figure this out alone. The Three of Cups asks: who in your circle holds wisdom that would help here? Let them in.",
+    change: "Community is part of the answer. The Three of Cups says: the change you're making is stronger when it's witnessed and supported. Let people in."
+  },
+  "Four of Cups": {
+    archetype: "The Discontented / The Inward-Turned",
+    element: "Water",
+    shadow: "apathy mistaken for wisdom — the seeker who has withdrawn from the world and calls it discernment",
+    essence: "genuine introspection at a crossroads — not depression, but the necessary pause before a real reorientation; however, the cup being offered from the cloud is real",
+    reversalRegister: "HIDDEN POTENTIAL",
+    reversed: "What was needed has been done — the withdrawal, the reflection, the quiet stocktaking. Now the seeker is ready to re-engage, but hasn't fully turned toward what is being offered. The Four of Cups reversed says: the answer has been knocking. Open the door.",
+    love: "There is a feeling of disconnection or disinterest in this area. The Four of Cups asks: is this withdrawal a necessary pause, or have you been so focused inward that you've missed something reaching out to you?",
+    clarity: "A new perspective is being offered — literally right in front of you — but something is keeping your gaze inward. The Four of Cups asks you to look up.",
+    change: "The contemplation has served its purpose. The Four of Cups says: you have spent enough time inside this. The path forward is not in more reflection — it is in engaging with what is actually being offered."
+  },
+  "Five of Cups": {
+    archetype: "The Mourner / The One Facing the Spillage",
+    element: "Water",
+    shadow: "grief that has become a permanent address — the seeker who remains facing the three spilled cups and never turns to see the two that are still standing",
+    essence: "real loss, genuinely felt — this is not self-pity but honest grief, and it deserves to be honored; the two standing cups are there, and they are real, and they will still be there when the mourning has been given its full time",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The worst of the grief has passed and the seeker is beginning — slowly, unevenly — to turn. The Five of Cups reversed doesn't ask for forced positivity; it asks for the small movement of the head that acknowledges what remains.",
+    love: "There has been a loss here — recent or old — that is still coloring how you see this. The Five of Cups asks: are you seeing this relationship clearly, or through the filter of what you've lost before?",
+    clarity: "Not everything is lost. The Five of Cups asks you to let the grief be real — and then, when you're ready, to count what remains. Both things are true.",
+    change: "You cannot move forward without first acknowledging what was genuinely lost. The Five of Cups says: grieve it fully. Then, when the mourning has had its time, turn around."
+  },
+  "Six of Cups": {
+    archetype: "The Memory / The Innocent Return",
+    element: "Water",
+    shadow: "the past used as escape from the present — nostalgia as a place to live rather than visit",
+    essence: "the warmth of what was genuinely good — innocent, tender, full of the sweetness that only exists at a distance; the past has a gift for the present, if the present does not try to become the past",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The seeker is more invested in the past than the present. They are measuring current experiences against remembered ones, and nothing in the present can compete with the gilded version of what was. The Six of Cups reversed asks the seeker to let the memory be a touchstone rather than a residence.",
+    love: "An old connection — or an old feeling — is present here. The Six of Cups asks: is this nostalgia offering something genuinely nourishing, or is it keeping you from what is actually in front of you?",
+    clarity: "The past holds a clue. Something you knew or felt before carries information that is relevant now. The Six of Cups says: visit it — don't move back in.",
+    change: "There is something from your history that is asking to be released rather than revisited. The Six of Cups says: honor it, and then let it be the past."
+  },
+  "Seven of Cups": {
+    archetype: "The Dreamer / The Overwhelmed Chooser",
+    element: "Water",
+    shadow: "fantasy as a full-time occupation — the seeker who prefers possibility to any particular reality, because reality can disappoint but a dream never has to be tested",
+    essence: "more real options than can be held — not a problem of scarcity but of abundance; the gift and the challenge of this card is the requirement to choose",
+    reversalRegister: "HIDDEN POTENTIAL",
+    reversed: "The fog of options is clearing. The seeker is beginning to see which of the cups actually holds what they want versus what they imagined. The Seven of Cups reversed says: clarity is available now — and with it comes the responsibility to actually choose.",
+    love: "Are you in love with the person or with the idea of the person? The Seven of Cups asks you to see this relationship clearly — without projection, without fantasy, without the version you've constructed in your imagination.",
+    clarity: "There are too many options on the table right now. The Seven of Cups says: narrow the field. Not every possibility deserves equal weight. Which one is real?",
+    change: "Choose one path and commit to it. The Seven of Cups says: you cannot change in seven directions simultaneously. The change will only work when you pick one."
+  },
+  "Eight of Cups": {
+    archetype: "The Walker-Away / The One Who Leaves at Midnight",
+    element: "Water",
+    shadow: "leaving as a lifestyle — the seeker who departs before arrival, who exits things before they can go wrong or require more depth",
+    essence: "the courageous walk into the unknown — leaving not from defeat but from the honest recognition that what was once enough is no longer; the moon lights the path, but only just",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The seeker knows they should leave or let go, but can't bring themselves to take the step. The Eight of Cups reversed asks: what is the one real thing keeping you here, and is it enough?",
+    love: "Something in this connection may have been outgrown. The Eight of Cups asks the hardest question: not whether you love this person, but whether this relationship is taking you toward who you are becoming, or away from them.",
+    clarity: "The path forward requires leaving something behind. The Eight of Cups says: you already know what needs to be released. The question is whether you are willing to walk toward the next thing without knowing yet what it is.",
+    change: "This change is a departure. The Eight of Cups says: the stack of cups you've built here is real — it held you. But it is not what you are walking toward. Move."
+  },
+  "Nine of Cups": {
+    archetype: "The Fulfilled / The Satisfied One",
+    element: "Water",
+    shadow: "contentment that has become complacency — the satisfaction that stops growth because it's too comfortable to risk",
+    essence: "the rarest thing in a reading: genuine satisfaction — the wish already granted, the feeling of having arrived; the only question is whether the seeker will let themselves fully receive it",
+    reversalRegister: "SUPPRESSION",
+    reversed: "Something is blocking the seeker from receiving what is genuinely available. They have the satisfaction in front of them — maybe a wish that has actually come true — but they can't feel it fully. The Nine of Cups reversed asks: what would it mean to actually be content here? What is the obstacle to just letting this be good?",
+    love: "Let this be good. The Nine of Cups in love says: the happiness that is available here is real. Stop auditing it and start receiving it.",
+    clarity: "The answer to this question is better than you expected. The Nine of Cups says: what you hoped for is closer than you think, and possibly already here.",
+    change: "Before you want the next thing, the Nine of Cups asks you to acknowledge what you already have. Gratitude is not delay — it is the ground the next thing grows from."
+  },
+  "Ten of Cups": {
+    archetype: "The Fulfilled Home / The Real Happiness",
+    element: "Water",
+    shadow: "the domestic ideal that papers over what is actually happening — the performance of happiness that makes it impossible to name the unhappiness underneath",
+    essence: "the emotional inheritance you always deserved — belonging, warmth, people who are genuinely glad you exist; this is not a dream, it is a real destination",
+    reversalRegister: "DISTORTION",
+    reversed: "The picture looks complete from the outside but something essential is missing or misaligned. The Ten of Cups reversed asks the seeker to name honestly what is not working before the gap becomes a fracture.",
+    love: "This is the card of genuine home — the real kind, built from honesty and mutual care. The Ten of Cups asks: is this what is actually here, or is this what you are hoping is here?",
+    clarity: "What kind of life are you actually building? The Ten of Cups asks you to measure your current choices against your deepest image of belonging and ask honestly: does this take me there?",
+    change: "The change you're navigating is ultimately about finding — or building — your version of this card. The Ten of Cups asks: what would real emotional fulfillment look like, and are you moving toward it?"
+  },
+  "Page of Cups": {
+    archetype: "The Dreamy Messenger / The Emotional Beginner",
+    element: "Water",
+    shadow: "feeling as performance — the emotional sensitivity that has learned to be displayed rather than genuinely felt",
+    essence: "the surprise of the heart — a fish in the cup, a feeling that arrives from nowhere and speaks — the willingness to be moved without knowing why",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The emotional sensitivity is real but is being managed rather than felt. The seeker has learned to process feelings at a safe distance — analyzing them, narrating them, performing them — without actually letting them land. The Page of Cups reversed asks what it would feel like to just be moved, without a story attached.",
+    love: "Something tender and a little unexpected is trying to get your attention. The Page of Cups says: let it. Not every feeling needs to be understood before it's allowed.",
+    clarity: "The message you've been waiting for may not be logical. The Page of Cups says: pay attention to what moves you, what catches your breath, what arrives in dreams. That is data.",
+    change: "This change will have an emotional texture. The Page of Cups asks you to stay curious and open — let the feeling arrive and speak before you decide what to do with it."
+  },
+  "Knight of Cups": {
+    archetype: "The Romantic / The One Who Follows the Heart",
+    element: "Water",
+    shadow: "idealism that cannot survive contact with reality — the beautiful arrival that has no plan for what comes after the gesture",
+    essence: "riding toward what is beautiful and true — the courage of the romantic is real, even when the romance is impractical; the question is whether the heart's direction is genuine or performed",
+    reversalRegister: "DISTORTION",
+    reversed: "The idealism has curdled into moodiness or withdrawal. The Knight came toward the beautiful thing but it was harder than expected, and now he is retreating into feeling rather than engaging with it. The Knight of Cups reversed asks: is the withdrawal honest, or is it a way of protecting the ideal from being tested?",
+    love: "Genuine feeling is present here — possibly arriving in a gesture, a declaration, or a turning toward. The Knight of Cups says: take it seriously. The heart that rides toward something is doing so at real cost.",
+    clarity: "The emotional intelligence available to you right now is real. Trust the feeling that is pointing clearly in one direction. The Knight of Cups asks you to follow it, even if it doesn't make full sense yet.",
+    change: "This change is being driven by what you feel, not what you think — and that is not a problem. The Knight of Cups says: let the heart lead for once. Check in with the head after."
+  },
+  "Queen of Cups": {
+    archetype: "The Emotional Depth / The Compassionate Container",
+    element: "Water",
+    shadow: "empathy without boundaries — the person who absorbs everyone's feelings and calls it love, until there is nothing of themselves left",
+    essence: "the rarest kind of listening — the presence that makes others feel genuinely heard and seen, held without judgment, by someone who is also deeply connected to their own interior life",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The seeker's emotional depths are present but they are not trusting them. Either the feelings are being suppressed for the sake of others, or the seeker has spent so long attending to everyone else's emotional world that they have lost track of their own. The Queen of Cups reversed asks: when did you last check in with how you actually feel?",
+    love: "Your emotional attunement is your greatest gift in this connection. The Queen of Cups says: bring your full depth — but stay connected to yourself while you do. You cannot give what you don't have.",
+    clarity: "The answer is in the feeling, not the analysis. The Queen of Cups asks you to sit with the emotional reality of this situation — not what you think you should feel, but what you actually feel.",
+    change: "This change calls for the full depth of your emotional intelligence. The Queen of Cups says: trust what you feel, hold what you know, and lead from compassion — including for yourself."
+  },
+  "King of Cups": {
+    archetype: "The Feeling Authority / The Master of the Interior",
+    element: "Water",
+    shadow: "emotional control that has become manipulation — the person who has mastered feeling so completely they use it to manage others",
+    essence: "maturity in the realm of feeling — the ability to feel deeply without being swept away, to hold others' emotions with steadiness, to lead from a place that is both warm and clear",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The emotional control is slipping, or it has become rigidity. Either the seeker is suppressing so much that something is leaking through, or they have used emotional mastery as a way of never being vulnerable. The King of Cups reversed asks: is the steadiness genuine, or is it a way of never having to be affected?",
+    love: "The emotional steadiness you bring to this relationship is a real gift. The King of Cups asks you to stay in contact with your own feeling while providing that stability — leadership in love means being present, not managed.",
+    clarity: "You have the emotional capacity to handle this. The King of Cups says: don't let the complexity of what you're feeling prevent you from moving through it clearly.",
+    change: "Lead this transition with emotional intelligence. The King of Cups says: the most powerful thing you can bring to this change is your ability to stay present and clear, even when what you feel is complicated."
+  },
+
+  // ── SUIT OF SWORDS ──
+
+  "Ace of Swords": {
+    archetype: "The Breakthrough / The First Truth",
+    element: "Air",
+    shadow: "truth deployed without compassion — the sword that cuts because it can, not because it should",
+    essence: "the clarity that arrives like a blade parting fog — sudden, total, uncommissioned; the kind of knowing that cannot be unknown",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The clarity is available but the seeker is not ready to receive it — or is afraid of what it will require them to do once it has arrived. The Ace of Swords reversed asks what the seeker is protecting by staying in the fog.",
+    love: "Something true is trying to become clear — about this person, about this dynamic, about what you actually want. The Ace of Swords asks for the courage to let the truth arrive, even if it complicates things.",
+    clarity: "The mental breakthrough you've been waiting for is here or very close. The Ace of Swords says: cut through the noise. What is the one true thing at the center of this?",
+    change: "The change begins with a thought that cannot be unthought. The Ace of Swords says: let the clarity arrive. Then build from what is actually true."
+  },
+  "Two of Swords": {
+    archetype: "The Stalemate / The Blindfolded One",
+    element: "Air",
+    shadow: "the decision delayed until it makes itself — the seeker who would rather be blindfolded than see something they cannot unsee",
+    essence: "holding two impossibilities in balance because neither can be put down without cost — the real question is not which sword to drop but whether the seeker can bear to look",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The blindfold is off — or coming off. The seeker can now see the choice, and it is not easier than they feared. The Two of Swords reversed asks: now that you can see clearly, what are you waiting for?",
+    love: "There is a choice here that cannot be avoided by refusing to choose. The Two of Swords asks: what are you protecting yourself from by not deciding? And is that protection still serving you?",
+    clarity: "The information to make this decision is already present — the delay is not about data, it is about willingness. The Two of Swords asks you to remove the blindfold and choose.",
+    change: "This change is waiting for a decision. The Two of Swords says: the stalemate is not a neutral position. Not choosing is itself a choice, and it has consequences."
+  },
+  "Three of Swords": {
+    archetype: "The Heartbreak / The Honest Wound",
+    element: "Air",
+    shadow: "grief made permanent — the three swords left in place because removing them would require admitting the wound was real",
+    essence: "the clean cut of genuine heartbreak — there is nothing wrong with this pain; it means something real was here; the swords in the heart are not a punishment but a record",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The acute pain has passed but the grief is lingering. The seeker is in the slow work of recovery — not over it, but moving through it. The Three of Swords reversed asks for patience with the process, and for the recognition that healing is not linear.",
+    love: "Something painful is either here or just behind you. The Three of Swords does not ask you to feel better — it asks you to let the pain be what it is, so it can move through rather than lodge.",
+    clarity: "A truth has arrived that hurts. The Three of Swords says: don't try to manage this or make it make sense yet. First, let yourself feel it.",
+    change: "This change has grief in it. The Three of Swords says: that is not a sign you have done something wrong. It is a sign that what is being left behind was real."
+  },
+  "Four of Swords": {
+    archetype: "The Resting Sword / The Necessary Retreat",
+    element: "Air",
+    shadow: "rest that becomes hiding — the retreat that never ends because re-entry feels harder than staying still",
+    essence: "deliberate, strategic stillness — not the absence of movement but the choice of rest as an act of self-knowledge; the swords are set aside, not abandoned",
+    reversalRegister: "HIDDEN POTENTIAL",
+    reversed: "The period of rest has done its work. The seeker has recovered enough to begin re-engaging. The Four of Swords reversed says: it is safe to return now. Reach for the sword.",
+    love: "Something here needs a pause, not a conclusion. The Four of Swords asks: can you let things rest — genuinely, without using the quiet to catastrophize — and trust that stillness is part of the process?",
+    clarity: "Before any more thinking, rest the mind. The Four of Swords says: the clarity you're looking for will not come from more analysis. It will come after you stop.",
+    change: "The change that is needed right now is internal and quiet. The Four of Swords asks for the discipline of rest — to let the body and the mind recover before the next move."
+  },
+  "Five of Swords": {
+    archetype: "The Hollow Win / The Cost of Conquest",
+    element: "Air",
+    shadow: "winning as an end in itself — the sword still raised after the battle even when the other people have long since walked away",
+    essence: "the price of victory when it has come at the cost of something that mattered — the swords on the ground belong to people who were real; what exactly has been won here?",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The conflict is resolving, slowly and imperfectly. Reconciliation is available — not full, not clean, but real. The Five of Swords reversed asks the seeker to decide whether they are more interested in being right or in being in relationship.",
+    love: "Something unkind has happened here — words used as weapons, a need to win that has cost connection. The Five of Swords asks: is this relationship worth more than the argument?",
+    clarity: "Not every battle needs to be fought to its conclusion. The Five of Swords asks: what would you be giving up to walk away from this one? And is that a real loss, or just the ego's objection?",
+    change: "Some conflicts need to be ended before they finish. The Five of Swords asks: do you want to win this, or do you want to move forward? Name which one is true."
+  },
+  "Six of Swords": {
+    archetype: "The Crossing / The One Moving Through",
+    element: "Air",
+    shadow: "departure without closure — leaving one shore and arriving at the other carrying everything that wasn't resolved",
+    essence: "the slow ferry across difficult water — the passage is not triumphant, but it is real; you are being carried away from what was hard and toward what comes next, even if neither shore is fully visible",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The passage is stalled. The seeker has stepped into the boat but the boat will not move — because something from the old shore is still being held onto. The Six of Swords reversed asks: what would you have to release to allow the crossing to complete?",
+    love: "Something difficult is being left behind — a pattern, a pain, a version of this dynamic. The Six of Swords asks for the willingness to make the passage, even when the water is still rough.",
+    clarity: "You are in transition. The Six of Swords says: don't try to see the destination clearly right now. Focus on the movement — on the fact that you are leaving, and that is enough.",
+    change: "This change is already underway — you are in the boat. The Six of Swords says: keep rowing. You don't need to see the other side to know you are moving toward it."
+  },
+  "Seven of Swords": {
+    archetype: "The Strategist / The One Slipping Away",
+    element: "Air",
+    shadow: "the intelligence that has given up on honesty — cleverness deployed in service of avoidance, the seeker who would rather outmaneuver than confront",
+    essence: "strategic action in a situation where direct confrontation would cost too much — sometimes stealth is wisdom; the question is what the seeker is actually trying to get away with, and whether they can live with the answer",
+    reversalRegister: "DISTORTION",
+    reversed: "The strategy has collapsed, or the seeker's conscience is making itself heard. Something that was concealed is becoming visible. The Seven of Swords reversed asks: what would it cost to just be honest about this?",
+    love: "Something in this dynamic is not being said — or not being admitted. The Seven of Swords asks: is there a deception operating here, even a small one? And what would honesty require?",
+    clarity: "The clever approach to this situation may be working against you. The Seven of Swords asks: what are you avoiding by being indirect? What would it look like to just say the thing?",
+    change: "The change requires honesty — with yourself first, then with whoever else is involved. The Seven of Swords says: the strategy is costing you more than the truth would."
+  },
+  "Eight of Swords": {
+    archetype: "The Self-Bound / The One Who Can Leave",
+    element: "Air",
+    shadow: "the prison that requires the prisoner's cooperation — the seeker who has become so skilled at their limitations that they have stopped testing them",
+    essence: "bound by perception, not by fact — the blindfold is on, the swords surround, and yet the ground is solid and the swords are not as close as they feel; the bindings loosen the moment the seeker stops believing they are permanent",
+    reversalRegister: "HIDDEN POTENTIAL",
+    reversed: "The blindfold is beginning to slip. The seeker is starting to see — tentatively, but genuinely — that the constraints they believed were external are at least partly constructed. The Eight of Swords reversed says: the way out is already present. Take one step toward it.",
+    love: "You are feeling more constrained in this connection than you may actually be. The Eight of Swords asks: what would you do if you truly believed you had more choices here than you think?",
+    clarity: "The limitations you are experiencing are real — but they are not all real. The Eight of Swords asks you to test one. Just one. And see if it holds.",
+    change: "The first step of this change is believing it is possible. The Eight of Swords says: remove the blindfold and look at the situation as it actually is, not as fear has been describing it."
+  },
+  "Nine of Swords": {
+    archetype: "The Night Mind / The 3am Voice",
+    element: "Air",
+    shadow: "the catastrophe that lives only in the mind — but feels completely real at 3am, and the seeker's absolute certainty that it is real is part of the pattern",
+    essence: "the gap between the fear and the fact — the suffering here is genuine, but its source is the mind feeding on itself; the cruelty of this card is that the swords are above the figure, not inside them",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The anxiety is lifting, slowly. The worst of the mental anguish is beginning to ease, or the seeker is starting to find the thoughts manageable. The Nine of Swords reversed asks for gentleness in this recovery — the mind has been through something, and healing is not immediate.",
+    love: "The anxiety you are feeling about this relationship may be more about your own fears than about what is actually happening. The Nine of Swords asks: what does the fear believe? And is there evidence that it's right?",
+    clarity: "Separate the thought from the fact. The Nine of Swords says: the story your mind is telling you at its most anxious is not analysis — it is fear. Name the fear precisely, and then test whether it is true.",
+    change: "The resistance to this change is operating primarily in the mind. The Nine of Swords asks: what is the worst thing you believe will happen? Name it exactly. Then ask whether it is as certain as it feels."
+  },
+  "Ten of Swords": {
+    archetype: "The Final Collapse / The Bottom That Holds",
+    element: "Air",
+    shadow: "the seeker who stays fallen — who chooses to remain at the point of maximum suffering because getting up would mean it actually happened",
+    essence: "the bottom has been reached — this is as bad as this gets; the sun is rising in the background, which is not comfort but it is fact; what is over is completely over, and that is the ground the next thing grows from",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The worst has passed, or is passing. The seeker is beginning to lift their head from the ground — not triumphant, not healed, but alive and no longer falling. The Ten of Swords reversed says: the bottom held you. Now, slowly, rise.",
+    love: "Something has ended — decisively, completely, perhaps painfully. The Ten of Swords in love does not offer consolation, but it does offer clarity: this is the end of something. What you build next begins from here.",
+    clarity: "The situation has reached its conclusion. The Ten of Swords asks you to resist the urge to keep analyzing what is already finished. The answer is: it is over. Now what?",
+    change: "This is the change — this is the bottom. The Ten of Swords says: the ending is complete. The sun is rising. Not yet, not all at once, but it is rising."
+  },
+  "Page of Swords": {
+    archetype: "The Curious Mind / The Vigilant Beginner",
+    element: "Air",
+    shadow: "intelligence in service of surveillance — the quick mind that monitors everything and commits to nothing, using information as a way of staying one step above trust",
+    essence: "the delight of a new idea — sharp, fast, irreverent, unafraid to ask the question that no one else has thought to ask; intellectual courage without the weight of experience",
+    reversalRegister: "DISTORTION",
+    reversed: "The mental energy is scattered or is being used in service of anxiety rather than curiosity. The seeker is gathering information without integrating it, or using their intelligence to build a case rather than reach a truth. The Page of Swords reversed asks: what is all this thinking actually in service of?",
+    love: "Stay curious about this person — about who they actually are, not who you have decided they must be. The Page of Swords in love asks for genuine inquiry rather than a verdict already reached.",
+    clarity: "Ask the uncomfortable question. The Page of Swords says: the one thing you've been avoiding putting into words is probably the one thing worth saying.",
+    change: "Approach this change with intellectual openness — not with the conclusions already formed. The Page of Swords says: the new idea is worth actually thinking through, not just cataloguing."
+  },
+  "Knight of Swords": {
+    archetype: "The Charger / The Relentless Mind",
+    element: "Air",
+    shadow: "the sword arm that forgot to check whether the cause was worth the charge — speed and force without the moment's pause that separates courage from recklessness",
+    essence: "absolute commitment to a direction — the Knight of Swords is on the horse and moving and the wind is against them and that is fine; the question is always whether the destination has been named before the charge began",
+    reversalRegister: "DISTORTION",
+    reversed: "The force is present but it has become aggression rather than drive. The seeker is pushing hard without checking whether the direction is still right. The Knight of Swords reversed asks: what are you charging toward, and what would you do if you arrived and found it wasn't what you expected?",
+    love: "The directness and intensity you bring to this is real — and can be overwhelming. The Knight of Swords in love asks: are you moving toward this person, or at them?",
+    clarity: "You are capable of cutting to the truth here with real precision. The Knight of Swords says: do it — but consider once whether the moment calls for the sword or for patience before the sword.",
+    change: "Move on this — decisively, quickly, with full commitment. The Knight of Swords says: the window is open. The only adjustment: make sure the direction is yours, not just the fastest one available."
+  },
+  "Queen of Swords": {
+    archetype: "The Clear Eye / The One Who Will Not Be Fooled",
+    element: "Air",
+    shadow: "clarity that has become coldness — the precision that cuts even when cutting is not what is needed, the independence that has hardened into isolation",
+    essence: "sees without distortion, speaks without cruelty, holds her own without apology — the Queen of Swords has been through enough that she will not pretend; her gift is the truth delivered with just enough warmth to be received",
+    reversalRegister: "DISTORTION",
+    reversed: "The clarity has sharpened into bitterness. Past pain is distorting current perception. The Queen of Swords reversed asks: is the harshness protecting you, or is it running you?",
+    love: "Honesty is necessary here, but so is tenderness. The Queen of Swords in love asks: can you bring your full clarity to this dynamic without weaponizing it? The truth, offered with care, will land.",
+    clarity: "You already know. The Queen of Swords says: trust your own perception without second-guessing it. What you see clearly is what is actually there.",
+    change: "Call this situation what it is. The Queen of Swords asks you to name it precisely, without softening it — and then to decide what you want to do with the truth you've just named."
+  },
+  "King of Swords": {
+    archetype: "The Intellectual Authority / The Ethical Mind",
+    element: "Air",
+    shadow: "law without mercy — the authority that uses logic as a weapon, precision deployed to dominate rather than clarify",
+    essence: "the mind that has earned its authority — through rigor, through honesty, through the willingness to hold himself to the same standard he holds others; justice and intelligence in alignment",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The authority has become tyranny, or the rigorous mind has turned against the seeker themselves. The King of Swords reversed asks: who is the authority in this situation actually serving?",
+    love: "Intellectual clarity is a gift in a relationship — until it becomes the only language. The King of Swords in love asks: can you bring your precision without making your partner feel judged?",
+    clarity: "Think this through to its conclusion, clearly and without sentiment. The King of Swords says: the answer is knowable if you apply real rigor to it. Set emotion aside long enough to see the facts.",
+    change: "Lead this change with principle, not preference. The King of Swords asks for the kind of intellectual honesty that makes the hard call because it is the right one, not because it is comfortable."
+  },
+
+  // ── SUIT OF PENTACLES ──
+
+  "Ace of Pentacles": {
+    archetype: "The Seed of Form / The Material Beginning",
+    element: "Earth",
+    shadow: "opportunity mistaken for certainty — the seed that becomes a plan before it has been planted",
+    essence: "a real, tangible opportunity — held in the hand, present in the body, solid; this is not a dream but a seed with actual growing potential, if it is planted in real ground",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The opportunity is real but the conditions are not yet right — or the seeker is not yet ready to receive it. The Ace of Pentacles reversed asks whether the timing is genuinely off, or whether the seeker is finding reasons to delay because starting something real requires real accountability.",
+    love: "Something is being offered here that is genuinely substantive — not a feeling but a foundation. The Ace of Pentacles in love asks: are you ready to build something real?",
+    clarity: "A concrete opportunity is present. The Ace of Pentacles says: engage with the practical reality of this — it is not just an idea, it is a real thing that requires real action.",
+    change: "The change has a material dimension. The Ace of Pentacles says: what needs to be planted, funded, or practically committed to in order to make this real?"
+  },
+  "Two of Pentacles": {
+    archetype: "The Juggler / The One Keeping Everything Moving",
+    element: "Earth",
+    shadow: "the permanent juggle that substitutes for a decision — all plates spinning so that none can be set down and examined",
+    essence: "the genuine skill of holding competing demands in motion — adaptive, responsive, never quite stable but never quite falling; the question is whether the seeker is juggling toward something or just to avoid dropping",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "Something has been dropped, or is about to be. The juggle is no longer sustainable. The Two of Pentacles reversed asks the seeker to look honestly at which balls are actually worth catching, and which ones can be allowed to fall.",
+    love: "There is an imbalance in how this relationship is being resourced against everything else. The Two of Pentacles asks: what in this dynamic keeps being the thing that gets less when everything else demands more?",
+    clarity: "The solution to overwhelm is not better juggling. The Two of Pentacles asks: which of the things you are managing actually requires your hands on it right now?",
+    change: "Before adding another thing, the Two of Pentacles asks you to set one down. The change you're making requires one fewer ball in the air, not a more impressive performance."
+  },
+  "Three of Pentacles": {
+    archetype: "The Craftsperson / The Collaborative Builder",
+    element: "Earth",
+    shadow: "the skilled person who cannot accept input — mastery that has become an ego, craft that cannot be touched by other perspectives",
+    essence: "skill meets structure meets collaboration — the three figures in the cathedral know that what they are building is larger than any one of them, and that is the point",
+    reversalRegister: "DISTORTION",
+    reversed: "The collaboration has broken down, or the seeker's skill is not being applied with integrity. The Three of Pentacles reversed asks: what would it take to get all three figures working from the same plan again?",
+    love: "What are you building together? The Three of Pentacles in love asks about shared effort — not just shared feeling, but the actual work of constructing a life or a project side by side.",
+    clarity: "This cannot be done alone, and trying to do it alone is slowing it down. The Three of Pentacles says: who are the right collaborators, and are you actually letting them contribute?",
+    change: "The change will be more durable if it is built with others. The Three of Pentacles asks: who needs to be at the table, and are you willing to share the blueprint?"
+  },
+  "Four of Pentacles": {
+    archetype: "The Holder / The One Who Will Not Let Go",
+    element: "Earth",
+    shadow: "security as hoarding — the seeker who has mistaken the act of holding for the feeling of having, and cannot tell the difference anymore",
+    essence: "the reasonable, understandable desire for stability — the question is whether the grip has become so tight that the held thing cannot breathe, and neither can the one holding it",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The grip is loosening — either by choice or by necessity. The Four of Pentacles reversed asks the seeker to decide whether they are releasing from fear or from wisdom, and then to release deliberately.",
+    love: "Something in this dynamic is being held too tightly. The Four of Pentacles asks: are you protecting this relationship or controlling it? The tighter the grip, the less room for the real thing to breathe.",
+    clarity: "The security you are trying to maintain may be costing more than the thing you're securing is worth. The Four of Pentacles asks: what are you protecting, and is the protection proportionate?",
+    change: "This change asks you to release something you have been holding. The Four of Pentacles says: the security you are trying to maintain by not changing is already compromised. Loosen the grip."
+  },
+  "Five of Pentacles": {
+    archetype: "The Excluded / The One in the Cold",
+    element: "Earth",
+    shadow: "hardship as identity — the seeker who has learned to live around the suffering so completely that they have stopped seeing the lighted window behind them",
+    essence: "real difficulty, genuinely felt — not metaphor, but the body's experience of scarcity or exclusion or cold; the window of the church is lit and the door is not locked, but the two figures in the snow have not yet looked up",
+    reversalRegister: "HIDDEN POTENTIAL",
+    reversed: "The worst of the material or emotional hardship is passing. The light that was always there is becoming visible. The Five of Pentacles reversed asks the seeker to look up — to notice what support, resource, or warmth has been available that fear or shame had made invisible.",
+    love: "Something of scarcity or exclusion is operating here. The Five of Pentacles asks: who or what feels outside the warmth right now, and what would it take to come in from the cold?",
+    clarity: "You are not as alone in this as you feel. The Five of Pentacles says: help exists. The first step is being willing to ask for it.",
+    change: "The hardship has real material dimensions and they deserve to be named honestly. The Five of Pentacles says: look up. The resources you need may be closer than the suffering has let you see."
+  },
+  "Six of Pentacles": {
+    archetype: "The Giver / The Balance of Exchange",
+    element: "Earth",
+    shadow: "generosity with conditions attached — the gift that creates debt, the charity that requires gratitude as payment",
+    essence: "the genuine movement of resources from where there is more to where there is less — but the scales in the hand ask always: is this freely given, and freely received, without the weight of obligation?",
+    reversalRegister: "DISTORTION",
+    reversed: "The exchange is unequal or conditional. Generosity has become leverage, or the seeker is giving so much that they have created an imbalance that serves no one. The Six of Pentacles reversed asks: what are the strings attached to this exchange, and whose hands are they in?",
+    love: "Who holds the resources in this relationship — financial, emotional, or practical? The Six of Pentacles asks whether the exchange here is genuinely balanced, or whether one person's generosity has become the other's dependency.",
+    clarity: "What is flowing toward you, and what is flowing away? The Six of Pentacles asks for an honest accounting of the exchange — not judgment, just clarity about who gives what and what it costs.",
+    change: "This change has something to do with resources — what you give, what you receive, and whether the balance is right. The Six of Pentacles asks for generosity without martyrdom and receiving without shame."
+  },
+  "Seven of Pentacles": {
+    archetype: "The Assessor / The Long-View Tender",
+    element: "Earth",
+    shadow: "the work done but the satisfaction deferred — the seeker who has leaned on the staff and started asking whether any of it has been worth it before the harvest has actually arrived",
+    essence: "the honest pause midway through a long effort — not to quit, but to look at what has grown and calibrate; the work has been real and it is showing; the question now is what the harvest is actually for",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The investment has not returned what was hoped, or the seeker is questioning whether the effort is aligned with what they actually want. The Seven of Pentacles reversed asks not for more effort, but for an honest reassessment — was this the right crop to plant?",
+    love: "What have you invested in this connection, and what has grown? The Seven of Pentacles asks for the honest assessment — not what you hoped to find, but what is actually there.",
+    clarity: "Pause and assess before proceeding. The Seven of Pentacles says: look at the work you have done and ask whether you are growing the right thing, before you invest the next season.",
+    change: "This change asks you to evaluate what you've been building and make a deliberate choice about whether to continue. The Seven of Pentacles says: be honest with yourself about the return before committing the next round."
+  },
+  "Eight of Pentacles": {
+    archetype: "The Apprentice / The One Doing the Work",
+    element: "Earth",
+    shadow: "perfectionism as avoidance — the endless refinement that never releases the work because releasing it means being seen",
+    essence: "skill built through repetition rather than inspiration — sitting down and doing the thing again today, even when it is not transcendent; craft is the accumulated honesty of showing up",
+    reversalRegister: "DISTORTION",
+    reversed: "The diligence has lost its meaning. The seeker is going through the motions without engagement, or has become so focused on perfect execution that they have lost sight of what the work is for. The Eight of Pentacles reversed asks: do you still care about what you are making?",
+    love: "Love is a practice, not a state. The Eight of Pentacles in love asks: are you actually putting in the work, in the small repeated ways that make a connection real over time?",
+    clarity: "The answer here is in the doing, not the thinking. The Eight of Pentacles says: sit down and work on it. The clarity will come through the process, not before it.",
+    change: "This change requires sustained effort over time — not a dramatic gesture but the repeated, honest work of showing up. The Eight of Pentacles says: begin the practice."
+  },
+  "Nine of Pentacles": {
+    archetype: "The Self-Made / The One Who Has Arrived in Themselves",
+    element: "Earth",
+    shadow: "independence that has become loneliness — the self-sufficiency that makes receiving help or love feel like a threat to the identity of having needed no one",
+    essence: "the genuine pleasure of a life built by one's own hand — not wealth for its own sake, but the specific satisfaction of having made something real and standing inside it",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The self-sufficiency is real but it is costing the seeker connection or joy. They have built something good and are unable to enjoy it because receiving pleasure, help, or love feels like acknowledging need. The Nine of Pentacles reversed asks: what would it mean to let yourself have what you've actually built?",
+    love: "You have built enough in yourself to love from a full place rather than from need. The Nine of Pentacles in love asks: can you let someone in without requiring them to fill a gap — because the gaps have been filled by your own making?",
+    clarity: "You have more resources, skill, and autonomy here than you are acknowledging. The Nine of Pentacles says: the answer to this question is one you already have the means to reach.",
+    change: "The foundation for this change is your own self-sufficiency. The Nine of Pentacles says: you have built the ground you are standing on. Now decide what you want to grow on it."
+  },
+  "Ten of Pentacles": {
+    archetype: "The Legacy / The Enduring Structure",
+    element: "Earth",
+    shadow: "security that becomes rigidity — the inheritance that cannot be questioned, the structure that endures past the point of serving anyone",
+    essence: "the multigenerational view — what is being built here that will outlast the building of it; not just wealth, but the feeling of knowing that your people and your work will be held by something that lasts",
+    reversalRegister: "DISTORTION",
+    reversed: "The legacy is cracking. What was meant to provide security has become a source of conflict or constraint. The Ten of Pentacles reversed asks whether the structure being maintained was built for the people currently inside it, or for a version of the family or the institution that no longer exists.",
+    love: "What are you building together that will outlast today? The Ten of Pentacles in love asks about the long game — the shared vision, the accumulated life, the thing being constructed through all the ordinary days.",
+    clarity: "Measure this against the long view. The Ten of Pentacles asks: in ten years, will the decision you are making now have contributed to the life you are trying to build?",
+    change: "This change has implications for your legacy — the life you will have built, the things you will leave behind. The Ten of Pentacles asks you to make this decision with the long view in mind."
+  },
+  "Page of Pentacles": {
+    archetype: "The Student / The Practical Dreamer",
+    element: "Earth",
+    shadow: "ambition that studies but never acts — perpetual preparation as a way of avoiding the risk of actually beginning",
+    essence: "holding the coin of a new opportunity up to the light — not yet an expert, not yet committed, but genuinely curious and willing to learn; the beginning of mastery",
+    reversalRegister: "SUPPRESSION",
+    reversed: "The curiosity and the ambition are present but the seeker is stuck in preparation. They are studying instead of doing, planning instead of starting. The Page of Pentacles reversed asks: at what point does the preparation become more comfortable than the thing being prepared for?",
+    love: "Something new is being considered — a commitment, a direction, a practical step toward a different kind of connection. The Page of Pentacles asks: are you willing to actually take it?",
+    clarity: "The idea is sound. The Page of Pentacles says: stop researching and start doing. The first step doesn't need to be perfect — it just needs to be real.",
+    change: "The change begins with a single practical act. The Page of Pentacles says: put the coin in your hand and take the first step. Everything else is built from here."
+  },
+  "Knight of Pentacles": {
+    archetype: "The Reliable One / The Slow and Certain Mover",
+    element: "Earth",
+    shadow: "reliability that has become stagnation — the Knight who never changes because change feels like unreliability, and whose thoroughness has become an excuse for never finishing",
+    essence: "the long, unglamorous, entirely necessary work of showing up in the same direction every day — not the hero, but the one who gets there",
+    reversalRegister: "DELAYED TRANSFORMATION",
+    reversed: "The methodical approach has become a standstill. The Knight is not moving, or is moving so slowly that the destination has stopped mattering. The Knight of Pentacles reversed asks: is this patience, or is it the avoidance of a change that is genuinely being resisted?",
+    love: "Reliability is an undervalued form of love. The Knight of Pentacles says: the steady, consistent showing up is not less romantic — it may be the most real thing you can offer.",
+    clarity: "Keep going. The Knight of Pentacles says: this is not the moment for a dramatic change of direction — it is the moment for the patient, unglamorous next step on the path already chosen.",
+    change: "This change requires sustained consistency more than a dramatic gesture. The Knight of Pentacles says: commit to the daily practice and trust that it is building toward something."
+  },
+  "Queen of Pentacles": {
+    archetype: "The Practical Nurturer / The One Who Makes Things Real",
+    element: "Earth",
+    shadow: "provision without presence — making everything comfortable for everyone while being nowhere near actually met by anyone",
+    essence: "the abundant, grounded intelligence of care that makes itself felt in real and physical ways — the warm home, the well-tended thing, the practical love that asks what is actually needed and then provides it",
+    reversalRegister: "DISTORTION",
+    reversed: "The care has been misdirected or overextended. The seeker is giving so much of their practical energy to others that they have nothing left for themselves, or the care has become control — managing the environment as a substitute for actual presence. The Queen of Pentacles reversed asks: who is taking care of you?",
+    love: "The practical, earthy, grounded care you provide is a real expression of love. The Queen of Pentacles asks: are you receiving the same kind of tangible care in return?",
+    clarity: "Ground this in the practical. The Queen of Pentacles says: what does this look like in material terms — in real action, in actual resources, in the body's experience of daily life?",
+    change: "Tend to the practical foundations first. The Queen of Pentacles says: the change will be more sustainable if the soil it grows in is properly prepared."
+  },
+  "King of Pentacles": {
+    archetype: "The Builder / The Reliable Provider",
+    element: "Earth",
+    shadow: "wealth as identity — the provider who cannot stop providing because without the resources and the role, they do not know who they are",
+    essence: "mastery in the material world — the person who has built something real and durable, who knows how resources move and how to steward them, who leads from a place of genuine competence and earned security",
+    reversalRegister: "INTERNAL CONFLICT",
+    reversed: "The ambition has become possession. The King is holding his kingdom too tightly — using resources, security, or material success as a way of controlling what cannot be controlled. The King of Pentacles reversed asks: what are you holding that doesn't actually belong to you?",
+    love: "Security and provision are genuine gifts. The King of Pentacles in love asks: are you providing the life, or are you present for it? Both matter.",
+    clarity: "Apply your full practical intelligence to this. The King of Pentacles says: you have the resources, the experience, and the competence. What is the most strategically sound decision here?",
+    change: "Build it properly from the beginning. The King of Pentacles says: the shortcut will cost more in the long run than the right foundation costs now."
   }
+
 };
 
 
@@ -351,6 +980,20 @@ const POEM_SYSTEM_PROMPT = 'You are Veil — the voice of a mystical tarot readi
   + 'It is asking whether you love the version of yourself this calls forward —\n'
   + 'whether the you inside this choice is someone you\'d want to be.\n\n'
   + 'A door that opens from the inside.\n\n'
+  + 'EXAMPLE 6 — Cards: Three of Cups, Eight of Pentacles, Five of Swords / Focus: clarity\n\n'
+  + 'Something has been shifting in the room where your people gather —\n'
+  + 'Three of Cups once poured freely; lately you\'ve held the cup alone.\n'
+  + 'The celebration didn\'t end, but something in it scattered,\n'
+  + 'and the warmth you used to find there has gone somewhere of its own.\n\n'
+  + 'So you came back to the work. Eight of Pentacles: the daily returning,\n'
+  + 'the seat pulled up, the hands re-learning what the hands already know.\n'
+  + 'Not because the work explains the loss — just because the doing\n'
+  + 'gives the body somewhere honest it can go.\n\n'
+  + 'Five of Swords on the table, and the swords are real —\n'
+  + 'something sharp was said, or done, and it landed where it aimed.\n'
+  + 'The question underneath the question is not who was right.\n'
+  + 'It\'s whether what was broken is the kind of thing that can be named.\n\n'
+  + 'A coin balanced on its edge, mid-fall, still spinning.\n\n'
   + '════════════════════════════════════════\n\n'
   + 'YOUR POEM RULES:\n'
   + '- 4 stanzas, 3-5 lines each, max 190 words total\n'
@@ -435,7 +1078,13 @@ function buildPoemPrompt(cards, cardData, focus, note, moon, isReshuffle, lastRe
     var name = card.name;
     var isReversed = card.reversed;
     var d = cardData[name];
-    if (!d) return name + (isReversed ? ' — REVERSED' : ' — upright') + ': use traditional tarot meaning';
+    if (!d) {
+      var parts = name.split(' ');
+      var suit = parts[parts.length - 1];
+      var num  = parts.slice(0, -1).join(' ');
+      return name + (isReversed ? ' — REVERSED' : ' — upright')
+        + ': draw on traditional tarot meaning. Suit: ' + suit + '. Number/rank: ' + num + '. Use suit energy and number stage as your guide.';
+    }
     var angle = focus === 'love' ? d.love : focus === 'change' ? d.change : d.clarity;
     return name + (isReversed ? ' — REVERSED' : ' — upright') + '\n'
       + '  Archetype: ' + d.archetype + '\n'
@@ -459,7 +1108,7 @@ function buildPoemPrompt(cards, cardData, focus, note, moon, isReshuffle, lastRe
           + 'Your poem MUST open with a different first line, use a different structural approach, and arrive at a different emotional place than before. '
           + (lastReadingSnippet ? 'The previous reading began: "' + lastReadingSnippet + '" — do not echo this opening, this imagery, or this tone in any way.\n\n' : '\n\n')
         : '')
-    + 'Now write the reading as a poem in the exact voice of the 5 examples above. 4 stanzas. Lyrical, whimsical, warm, and specific. Let card names surface at most once each, like echoes. Rhyme ABAB. End with a single, concrete image — no advice, no explanation. Just the image.';
+    + 'Now write the reading as a poem in the exact voice of the 6 examples above. 4 stanzas. Lyrical, whimsical, warm, and specific. Let card names surface at most once each, like echoes. Rhyme ABAB. End with a single, concrete image — no advice, no explanation. Just the image.';
 }
 
 

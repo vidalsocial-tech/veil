@@ -382,7 +382,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
     <button class="btn-gold" onclick="step(2)">Begin Your Reading</button>
     <button class="btn-ghost" onclick="openLibrary()">Explore the Deck</button>
   </div>
-  <p class="hero-hint">22 Major Arcana · The Fool's Journey</p>
+  <p class="hero-hint">78 Cards · The Complete Tarot</p>
 </div>
 
 <div class="screen" id="s2">
@@ -475,8 +475,8 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 <!-- S-LIBRARY: Card carousel -->
 <div class="screen" id="s-library">
   <div class="lib-header">
-    <div class="lib-title">The Major Arcana</div>
-    <div class="lib-sub">22 cards · swipe to explore · tap to reveal</div>
+    <div class="lib-title">The Full Tarot</div>
+    <div class="lib-sub">78 cards · swipe to explore · tap to reveal</div>
     <div class="lib-banner">
       <div class="lib-banner-text">
         <strong>Ready for a reading?</strong>
@@ -485,7 +485,7 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
       <button class="lib-banner-btn" onclick="goTo('s2',1)">Begin →</button>
     </div>
     <div class="lib-filters">
-      <button class="lib-filter on" onclick="filterLib('all',this)">All 22</button>
+      <button class="lib-filter on" onclick="filterLib('all',this)">All 78</button>
       <button class="lib-filter" onclick="filterLib('fire',this)">Fire</button>
       <button class="lib-filter" onclick="filterLib('water',this)">Water</button>
       <button class="lib-filter" onclick="filterLib('air',this)">Air</button>
@@ -727,6 +727,403 @@ const CARDS = [
     love:"Something in this connection has reached a genuine milestone — or you have arrived at a wholeness within yourself that changes the terms of how you love. Both are real.",
     clarity:"The long arc of this situation is finally visible. You have more perspective than you have been giving yourself credit for. Trust what you can now see.",
     change:"This is arrival, not destination. Completion is the threshold to the next beginning. The Fool is already forming on the other side of The World." }
+,
+
+  // ── SUIT OF WANDS ──
+  { slug:"ace-of-wands", emoji:"🔥", num:"I", name:"Ace of Wands", element:"Fire",
+    archetype:"The unmistakable feeling of something beginning — raw, electric, a little unruly. The Ace of Wands is not a plan; it is the impulse that precedes a plan. It asks you to move toward the heat before you've had time to be cautious about it.",
+    shadow:"Inspiration that never lands. The perpetual new beginning that avoids the harder work of the middle. All spark, no fuel.",
+    love:"Something new is alive here — a first interest, a rekindled feeling, a genuine pull. The Ace of Wands says: follow the heat before you over-examine it.",
+    clarity:"The idea you've been circling is real. Move toward the thing that lights you up, even if it's just one step.",
+    change:"A new chapter is genuinely available. The energy is here — raw and ready. Strike the match." },
+
+  { slug:"two-of-wands", emoji:"🌍", num:"II", name:"Two of Wands", element:"Fire",
+    archetype:"Standing on the parapet of what you've already built, globe in hand, watching the horizon. The Two of Wands is the moment between achievement and ambition — the pause before the next reach.",
+    shadow:"Mistaking the map for the journey. Endless planning as a way of avoiding commitment.",
+    love:"What kind of connection are you actually building toward? The Two of Wands asks whether you're choosing this or waiting for it to choose you.",
+    clarity:"The question isn't whether the plan is good — it's whether you're willing to act on it. You've done the thinking. Commit.",
+    change:"You can see where you want to go. The distance is crossable. Stop surveying and start walking." },
+
+  { slug:"three-of-wands", emoji:"⛵", num:"III", name:"Three of Wands", element:"Fire",
+    archetype:"Ships already on the water — not launched just now, but sailing. The Three of Wands is the satisfaction of watching what you dared to start actually moving toward its destination.",
+    shadow:"Expansion without roots. Ambition that has left the ground it grew in.",
+    love:"What you sent out into this relationship is returning with information. The growth you hoped for is possible — keep watching the horizon.",
+    clarity:"You are further along than you feel. Look back at where you started before deciding the progress is insufficient.",
+    change:"Stay with the long view. This is not the moment for course correction — it is the moment for trust in what you've already put in motion." },
+
+  { slug:"four-of-wands", emoji:"🎊", num:"IV", name:"Four of Wands", element:"Fire",
+    archetype:"Garlands strung between posts. A gathering. A moment worth marking. The Four of Wands says: something has been completed, and you are allowed to feel it.",
+    shadow:"A celebration you can't quite enter because you're still watching for what might go wrong.",
+    love:"Something worth marking is here — a milestone, a deepening, a genuine arrival. Let yourself feel happy.",
+    clarity:"There is something stable and good here that you keep looking past. Stand still in what is working for a moment.",
+    change:"A phase has concluded and deserves a breath. Let yourself arrive before you start planning the departure." },
+
+  { slug:"five-of-wands", emoji:"⚔️", num:"V", name:"Five of Wands", element:"Fire",
+    archetype:"Five figures with five wands, all apparently in conflict — but on closer inspection, no one is quite hitting anyone. This is the friction of strong wills that haven't yet found their synthesis.",
+    shadow:"Conflict for its own sake. The energy that manufactures opposition when none is needed.",
+    love:"This tension isn't necessarily negative — it may be the honest friction of two people who are both fully present. Is it revealing something real?",
+    clarity:"Multiple perspectives are pulling at you. The confusion is not the problem — trying to win the argument instead of listening is.",
+    change:"The chaos you're in isn't random — it's pressure from something trying to reorganize. Stay in the friction long enough to find what it's teaching." },
+
+  { slug:"six-of-wands", emoji:"🏆", num:"VI", name:"Six of Wands", element:"Fire",
+    archetype:"The rider coming through the gate with a laurel crown. The crowd watching. Victory that is genuinely earned and publicly witnessed. You did something. It worked.",
+    shadow:"The identity that cannot exist without applause. Victory that has become a requirement rather than a moment.",
+    love:"You are being seen — perhaps for the first time in a while. Can you receive appreciation without immediately making yourself smaller?",
+    clarity:"Trust the validation you've received. You were right about this. Stop looking for the footnote.",
+    change:"The turning point has been reached. The effort paid off. Move forward from the place you've arrived." },
+
+  { slug:"seven-of-wands", emoji:"🛡️", num:"VII", name:"Seven of Wands", element:"Fire",
+    archetype:"One figure on a rise, six staves coming from below. Standing your ground — not from aggression but from the knowledge that the position is genuinely yours.",
+    shadow:"Defensiveness that has become permanent posture. Still fighting long after the threat has passed.",
+    love:"Are you protecting something real, or just waiting to be attacked?",
+    clarity:"The challenge is real. Hold your position — but from clarity, not from siege reflex. Know why you're standing your ground.",
+    change:"Stay with what you believe in under pressure. Don't abandon the position just because someone is pushing on it." },
+
+  { slug:"eight-of-wands", emoji:"💨", num:"VIII", name:"Eight of Wands", element:"Fire",
+    archetype:"Eight wands flying through clear air, all in the same direction. Everything moving at once. The rare alignment when conditions, intention, and momentum are all present simultaneously.",
+    shadow:"Speed without aim. The excitement of movement that mistakes velocity for direction.",
+    love:"Things are moving quickly in this connection. Let the speed carry you — this is not the moment for careful deliberation.",
+    clarity:"The window is open. Act now — not after more research, not after more preparation. Release the arrow.",
+    change:"This change has its own momentum. Stop managing the pace and let the current take you." },
+
+  { slug:"nine-of-wands", emoji:"🩹", num:"IX", name:"Nine of Wands", element:"Fire",
+    archetype:"A battered figure leaning on a staff, eight more wands arrayed behind them. One more challenge is coming and they will meet it — not because they aren't tired, but because they've come too far to stop.",
+    shadow:"Resilience that has become its own prison. Vigilance that cannot find rest even when the threat has passed.",
+    love:"There is some guardedness here that was earned and is now costing more than it protects. What would it mean to let this person in past the last barrier?",
+    clarity:"You are closer to the end than you know. This is not the moment to give up. One more careful step.",
+    change:"The hardest part is behind you. Stay when every part of you is tired — that is what this kind of strength looks like." },
+
+  { slug:"ten-of-wands", emoji:"😓", num:"X", name:"Ten of Wands", element:"Fire",
+    archetype:"A figure hunched forward, carrying ten wands bundled in their arms — struggling, not quite seeing over the load. The question is not whether the wands are heavy. They are. The question is whether all of them belong to this person.",
+    shadow:"Mistaking the burden for identity. Carrying things because putting them down would require admitting they were never yours.",
+    love:"Something is being carried alone that could be shared, or simply set down. What are you maintaining out of habit rather than necessity?",
+    clarity:"Which of these responsibilities are actually yours, and which ones were never yours to carry? That's the audit this card asks for.",
+    change:"You cannot move freely while carrying everything. The first act of this change is deciding what gets left here." },
+
+  { slug:"page-of-wands", emoji:"✨", num:"Page", name:"Page of Wands", element:"Fire",
+    archetype:"A young figure studying a wand with complete attention — not a weapon, not a tool yet, just an object of total fascination. The Page of Wands is pure enthusiasm before it knows what it's for.",
+    shadow:"The beginning that never becomes a middle. Perpetual enthusiasm without the follow-through that turns a spark into a craft.",
+    love:"Something new and exciting is available here. Let yourself be playful. Be moved by the feeling before you categorize it.",
+    clarity:"Give the new idea a real chance — not to evaluate it to death, but to actually explore it.",
+    change:"Bring fresh eyes. Not your expertise, not your history — just honest curiosity." },
+
+  { slug:"knight-of-wands", emoji:"🚀", num:"Knight", name:"Knight of Wands", element:"Fire",
+    archetype:"The Knight is already moving — fast, bold, slightly heedless, not waiting for anyone's approval. He might be going the wrong way and it would take him a while to notice. That is both his gift and his risk.",
+    shadow:"Action as avoidance. Constant motion that never has to sit with consequences because it's always on to the next thing.",
+    love:"Is this momentum carrying you toward something you genuinely want, or is the speed a way of not having to feel?",
+    clarity:"The energy is good. The direction needs work. Name where you're going first — then move with everything you have.",
+    change:"Bold action is called for. Trust your instincts. But check once — once — that you've aimed before you release." },
+
+  { slug:"queen-of-wands", emoji:"🌻", num:"Queen", name:"Queen of Wands", element:"Fire",
+    archetype:"The Queen of Wands has a sunflower and a black cat and she is completely at home in herself. She doesn't perform warmth — she simply is warm, and the room adjusts around her.",
+    shadow:"The charisma that has become performance. Warmth that is conditional on being admired.",
+    love:"You are at your most magnetic when you are most genuinely yourself. Are you showing up as you actually are?",
+    clarity:"The creative power is yours. Don't look for permission to use it. Trust your instincts and proceed.",
+    change:"Lead with your actual self, not with a strategy. Your genuine, uncurated presence is the most powerful thing you can offer." },
+
+  { slug:"king-of-wands", emoji:"🦁", num:"King", name:"King of Wands", element:"Fire",
+    archetype:"He holds the wand like it's already doing something. The King of Wands has the vision and the will and the charisma to move other people toward it — the question is always whether he has the patience to bring them with him.",
+    shadow:"Vision without patience for those who move more slowly. The leader whose ambition outpaces his ability to bring anyone along.",
+    love:"Are you leading this relationship or just dominating it?",
+    clarity:"The direction is clear. The challenge is carrying others with you without outrunning them. Vision and patience in equal measure.",
+    change:"Use the power you have honorably — with the long view, with honesty, and with enough humility to receive input." },
+
+  // ── SUIT OF CUPS ──
+  { slug:"ace-of-cups", emoji:"💧", num:"I", name:"Ace of Cups", element:"Water",
+    archetype:"The cup overflowing before anyone has asked it to. The Ace of Cups is the heart cracking open in the right direction — love, compassion, or creative feeling offered without condition.",
+    shadow:"Emotional overwhelm that has not yet found form. All feeling, no vessel.",
+    love:"Something is beginning — tenderly, genuinely. Open toward it without immediately assessing its potential. Let the feeling arrive before you name it.",
+    clarity:"The most important information here is not logical. What is this situation doing to your heart? Let that speak first.",
+    change:"Don't think your way into this change. Let yourself feel your way in." },
+
+  { slug:"two-of-cups", emoji:"🥂", num:"II", name:"Two of Cups", element:"Water",
+    archetype:"Two figures facing each other, cups raised. The Two of Cups is the moment two people genuinely see each other — equally, cleanly, without either one diminishing.",
+    shadow:"Merging as avoidance. Connection that requires each person to be slightly less than themselves.",
+    love:"This is genuine connection — the real kind. Meet this person as they actually are, not as you need them to be.",
+    clarity:"Is this exchange equal? Are you both actually here?",
+    change:"A significant connection is part of this change — show up fully." },
+
+  { slug:"three-of-cups", emoji:"🎉", num:"III", name:"Three of Cups", element:"Water",
+    archetype:"Three figures dancing with raised cups. The particular joy that only exists when it is shared — the table where everyone present makes each other more, not less.",
+    shadow:"The in-group that keeps others out. Community that requires conformity for entry.",
+    love:"Let yourself celebrate this, with the people who love you both. Not everything needs to be a private project.",
+    clarity:"You do not have to figure this out alone. Who in your circle holds wisdom that would help?",
+    change:"The change you're making is stronger when it's witnessed and supported. Let people in." },
+
+  { slug:"four-of-cups", emoji:"😶", num:"IV", name:"Four of Cups", element:"Water",
+    archetype:"A figure seated under a tree, arms crossed, three cups before them — and a fourth cup offered from a cloud, which they have not yet noticed. The Four of Cups is genuine contemplation, but it misses things.",
+    shadow:"Apathy mistaken for wisdom. The withdrawal that calls itself discernment.",
+    love:"Is this withdrawal a necessary pause, or have you been so focused inward that you've missed something reaching out?",
+    clarity:"A new perspective is being offered — right in front of you — but something is keeping your gaze inward. Look up.",
+    change:"You have spent enough time inside this. The path forward is in engaging with what is actually being offered." },
+
+  { slug:"five-of-cups", emoji:"😢", num:"V", name:"Five of Cups", element:"Water",
+    archetype:"A cloaked figure facing three spilled cups, back turned to two standing ones. Real loss, genuinely felt. The two standing cups are there and they are real — but the figure hasn't turned to see them yet.",
+    shadow:"Grief that has become a permanent address.",
+    love:"Are you seeing this relationship clearly, or through the filter of what you've lost before?",
+    clarity:"Not everything is lost. Let the grief be real — and then, when you're ready, count what remains.",
+    change:"Grieve it fully. Then, when the mourning has had its time, turn around." },
+
+  { slug:"six-of-cups", emoji:"🌸", num:"VI", name:"Six of Cups", element:"Water",
+    archetype:"A child offering a cup of flowers to another. The sweetness of what was genuinely good — innocent, tender, full of warmth that only exists at a distance. The past has a gift for the present, if the present does not try to become the past.",
+    shadow:"The past used as escape from the present. Nostalgia as a place to live rather than visit.",
+    love:"Is this nostalgia offering something genuinely nourishing, or is it keeping you from what is actually in front of you?",
+    clarity:"The past holds a clue. Visit it — don't move back in.",
+    change:"Honor what was, and then let it be the past." },
+
+  { slug:"seven-of-cups", emoji:"🌈", num:"VII", name:"Seven of Cups", element:"Water",
+    archetype:"A silhouette facing seven clouds, each containing something different — castle, jewels, serpent, laurel wreath, face, shrouded figure, dragon. More options than can be held. The gift and the challenge here is the requirement to actually choose.",
+    shadow:"Fantasy as a full-time occupation. The seeker who prefers possibility to any particular reality.",
+    love:"Are you in love with the person or with the idea of the person?",
+    clarity:"Too many options on the table. Narrow the field. Which one is real?",
+    change:"Choose one path and commit to it. You cannot change in seven directions simultaneously." },
+
+  { slug:"eight-of-cups", emoji:"🌙", num:"VIII", name:"Eight of Cups", element:"Water",
+    archetype:"A figure walking away from eight carefully stacked cups by moonlight. Leaving not from defeat but from the honest recognition that what was once enough is no longer. The moon lights the path, but only just.",
+    shadow:"Leaving as a lifestyle. The seeker who exits things before they can go wrong or require more depth.",
+    love:"Not whether you love this person, but whether this relationship is taking you toward who you are becoming, or away from them.",
+    clarity:"You already know what needs to be released. The question is whether you're willing to walk toward the next thing without knowing yet what it is.",
+    change:"The stack of cups you built here was real — it held you. But it is not what you are walking toward. Move." },
+
+  { slug:"nine-of-cups", emoji:"😊", num:"IX", name:"Nine of Cups", element:"Water",
+    archetype:"A satisfied figure seated before a curved row of nine cups. The wish card. Something has actually come true. The question is whether the seeker will let themselves receive it fully.",
+    shadow:"Contentment that has become complacency. The satisfaction that stops growth.",
+    love:"The happiness that is available here is real. Stop auditing it and start receiving it.",
+    clarity:"The answer to this question is better than you expected. What you hoped for is closer than you think.",
+    change:"Acknowledge what you already have before you want the next thing. Gratitude is not delay — it is the ground the next thing grows from." },
+
+  { slug:"ten-of-cups", emoji:"🌈", num:"X", name:"Ten of Cups", element:"Water",
+    archetype:"Two figures with arms raised beneath a rainbow arc of ten cups, two children dancing nearby. The emotional inheritance you always deserved — belonging, warmth, people who are genuinely glad you exist.",
+    shadow:"The domestic ideal that papers over what is actually happening. The performance of happiness.",
+    love:"Is this what is actually here, or is this what you are hoping is here?",
+    clarity:"Does your current path take you toward your deepest image of belonging?",
+    change:"What would real emotional fulfillment look like, and are you moving toward it?" },
+
+  { slug:"page-of-cups", emoji:"🐟", num:"Page", name:"Page of Cups", element:"Water",
+    archetype:"A young figure looking in surprise at a fish that has appeared in their cup. The willingness to be moved without knowing why — the heart's capacity for surprise before it learns to protect itself.",
+    shadow:"Feeling as performance. The emotional sensitivity that has learned to be displayed rather than genuinely felt.",
+    love:"Something tender and unexpected is trying to get your attention. Let it. Not every feeling needs to be understood before it's allowed.",
+    clarity:"Pay attention to what moves you, what catches your breath, what arrives in dreams. That is data.",
+    change:"Let the feeling arrive and speak before you decide what to do with it." },
+
+  { slug:"knight-of-cups", emoji:"🌹", num:"Knight", name:"Knight of Cups", element:"Water",
+    archetype:"The Knight rides toward something beautiful, cup extended. The courage of the romantic is real, even when the romance is impractical.",
+    shadow:"Idealism that cannot survive contact with reality. The beautiful arrival with no plan for what comes after the gesture.",
+    love:"Take it seriously. The heart that rides toward something is doing so at real cost.",
+    clarity:"The emotional intelligence available to you right now is real. Trust the feeling pointing clearly in one direction.",
+    change:"Let the heart lead for once. Check in with the head after." },
+
+  { slug:"queen-of-cups", emoji:"🌊", num:"Queen", name:"Queen of Cups", element:"Water",
+    archetype:"She holds a covered cup — the only cup in the deck whose contents are not shown. The Queen of Cups knows things that cannot be explained, and her knowing makes others feel genuinely held.",
+    shadow:"Empathy without boundaries. The person who absorbs everyone's feelings and calls it love, until there is nothing of themselves left.",
+    love:"Bring your full depth — but stay connected to yourself while you do. You cannot give what you don't have.",
+    clarity:"The answer is in the feeling, not the analysis. What do you actually feel about this situation?",
+    change:"Trust what you feel, hold what you know, and lead from compassion — including for yourself." },
+
+  { slug:"king-of-cups", emoji:"🌊", num:"King", name:"King of Cups", element:"Water",
+    archetype:"He sits on a throne in the middle of the sea, stable while the water moves around him. The King of Cups has learned to feel deeply without being swept away — maturity in the realm of emotion.",
+    shadow:"Emotional control that has become manipulation. Mastery of feeling used to manage others.",
+    love:"Leadership in love means being present, not managed. Stay in contact with your own feeling while providing stability.",
+    clarity:"You have the emotional capacity to handle this. Don't let complexity prevent you from moving through it clearly.",
+    change:"Stay present and clear, even when what you feel is complicated." },
+
+  // ── SUIT OF SWORDS ──
+  { slug:"ace-of-swords", emoji:"⚡", num:"I", name:"Ace of Swords", element:"Air",
+    archetype:"A hand emerging from cloud, holding a sword upright. The clarity that arrives like a blade parting fog — sudden, total, uncommissioned. The kind of knowing that cannot be unknown.",
+    shadow:"Truth deployed without compassion. The sword that cuts because it can, not because it should.",
+    love:"Something true is trying to become clear. The courage to let the truth arrive, even if it complicates things.",
+    clarity:"Cut through the noise. What is the one true thing at the center of this?",
+    change:"The change begins with a thought that cannot be unthought. Let the clarity arrive. Build from what is actually true." },
+
+  { slug:"two-of-swords", emoji:"🙈", num:"II", name:"Two of Swords", element:"Air",
+    archetype:"A blindfolded figure holding two swords crossed before them, seated with the sea behind. The stalemate of two options that cannot both be chosen and cannot both be put down.",
+    shadow:"The decision delayed until it makes itself. The seeker who would rather be blindfolded than see something they cannot unsee.",
+    love:"What are you protecting yourself from by not deciding? And is that protection still serving you?",
+    clarity:"The information to make this decision is already present — the delay is not about data, it is about willingness. Remove the blindfold.",
+    change:"Not choosing is itself a choice, and it has consequences." },
+
+  { slug:"three-of-swords", emoji:"💔", num:"III", name:"Three of Swords", element:"Air",
+    archetype:"A heart pierced by three swords, rain and clouds behind. Real pain, honestly depicted. The swords in the heart are not a punishment — they are a record of something that was real enough to hurt.",
+    shadow:"Grief made permanent. The three swords left in place because removing them would require admitting the wound was real.",
+    love:"The Three of Swords does not ask you to feel better — it asks you to let the pain be what it is, so it can move through rather than lodge.",
+    clarity:"A truth has arrived that hurts. Don't manage it or make it make sense yet. First, let yourself feel it.",
+    change:"This change has grief in it. That is not a sign something went wrong. It is a sign that what is being left behind was real." },
+
+  { slug:"four-of-swords", emoji:"🛌", num:"IV", name:"Four of Swords", element:"Air",
+    archetype:"A figure lying in effigy, three swords above, one below. Deliberate, strategic stillness — not the absence of movement but the choice of rest as an act of self-knowledge.",
+    shadow:"Rest that becomes hiding. The retreat that never ends.",
+    love:"Something here needs a pause, not a conclusion. Can you let things rest without using the quiet to catastrophize?",
+    clarity:"The clarity you're looking for will not come from more analysis. It will come after you stop.",
+    change:"Let the body and the mind recover before the next move." },
+
+  { slug:"five-of-swords", emoji:"😤", num:"V", name:"Five of Swords", element:"Air",
+    archetype:"One figure collects swords while two others walk away, heads bowed. The price of victory when it has come at the cost of something that mattered. What exactly has been won here?",
+    shadow:"Winning as an end in itself. The sword still raised after the battle when the other people have long since walked away.",
+    love:"Something unkind has happened. Is this relationship worth more than the argument?",
+    clarity:"Not every battle needs to be fought to its conclusion. What would you be giving up to walk away from this one?",
+    change:"Do you want to win this, or do you want to move forward? Name which one is true." },
+
+  { slug:"six-of-swords", emoji:"⛵", num:"VI", name:"Six of Swords", element:"Air",
+    archetype:"A ferryman poles a boat carrying a figure and a child, six swords standing in the bow. The slow crossing from what was hard toward what comes next — the passage is not triumphant, but it is real.",
+    shadow:"Departure without closure. Leaving one shore carrying everything that wasn't resolved.",
+    love:"Something difficult is being left behind. The willingness to make the passage, even when the water is still rough.",
+    clarity:"You are in transition. Focus on the movement — on the fact that you are leaving, and that is enough.",
+    change:"You are in the boat. Keep rowing. You don't need to see the other side to know you are moving toward it." },
+
+  { slug:"seven-of-swords", emoji:"🤫", num:"VII", name:"Seven of Swords", element:"Air",
+    archetype:"A figure tiptoeing away from a camp, carrying five swords, two left behind. Strategic. Careful. Getting away with something — the question is what, and whether the seeker can live with the answer.",
+    shadow:"The intelligence that has given up on honesty. Cleverness in service of avoidance.",
+    love:"Is there a deception operating here, even a small one? What would honesty require?",
+    clarity:"What are you avoiding by being indirect? What would it look like to just say the thing?",
+    change:"The strategy is costing you more than the truth would." },
+
+  { slug:"eight-of-swords", emoji:"🔒", num:"VIII", name:"Eight of Swords", element:"Air",
+    archetype:"A figure bound and blindfolded, swords arranged around them. The ground is solid. The swords are not touching them. The bindings are not tight. The prison requires the prisoner's cooperation.",
+    shadow:"The seeker who has become so skilled at their limitations that they have stopped testing them.",
+    love:"What would you do if you truly believed you had more choices here than you think?",
+    clarity:"The limitations are real — but they are not all real. Test one. Just one. See if it holds.",
+    change:"Remove the blindfold and look at the situation as it actually is, not as fear has been describing it." },
+
+  { slug:"nine-of-swords", emoji:"😰", num:"IX", name:"Nine of Swords", element:"Air",
+    archetype:"A figure sits upright in bed, hands over face, nine swords on the wall behind them. The swords are on the wall — not inside the person. The suffering is genuine; the source is the mind feeding on itself.",
+    shadow:"The catastrophe that lives only in the mind. The 3am certainty that feels completely real.",
+    love:"The anxiety about this relationship may be more about your own fears than about what is actually happening.",
+    clarity:"Separate the thought from the fact. Name the fear precisely. Then test whether it is true.",
+    change:"What is the worst thing you believe will happen? Name it exactly. Then ask whether it is as certain as it feels." },
+
+  { slug:"ten-of-swords", emoji:"🌅", num:"X", name:"Ten of Swords", element:"Air",
+    archetype:"A figure face-down with ten swords in their back. The sun is rising in the background. This is as bad as this gets. The ending is complete, which means it is over. The dawn is real.",
+    shadow:"The seeker who stays fallen. Who remains at maximum suffering because getting up would mean it actually happened.",
+    love:"This is the end of something. What you build next begins from here.",
+    clarity:"It is over. Resist the urge to keep analyzing what is already finished. Now what?",
+    change:"The ending is complete. The sun is rising. Not yet, not all at once, but it is rising." },
+
+  { slug:"page-of-swords", emoji:"🔍", num:"Page", name:"Page of Swords", element:"Air",
+    archetype:"A young figure with a sword raised, hair whipping in the wind. Sharp, fast, curious, alert — the delight of a new idea, the intellectual courage that hasn't yet acquired the weight of experience.",
+    shadow:"Intelligence in service of surveillance. The quick mind that monitors everything and commits to nothing.",
+    love:"Stay curious about this person — about who they actually are, not who you have decided they must be.",
+    clarity:"Ask the uncomfortable question. The thing you've been avoiding putting into words is probably the thing worth saying.",
+    change:"Approach this with intellectual openness. The new idea is worth actually thinking through." },
+
+  { slug:"knight-of-swords", emoji:"⚡", num:"Knight", name:"Knight of Swords", element:"Air",
+    archetype:"The Knight charges directly into the wind — sword raised, horse at full gallop, not waiting for conditions to improve. Absolute commitment to a direction.",
+    shadow:"The sword arm that forgot to check whether the cause was worth the charge.",
+    love:"Are you moving toward this person, or at them?",
+    clarity:"You can cut to the truth here with real precision. Consider once whether the moment calls for the sword or for patience before the sword.",
+    change:"Move decisively. The window is open. Just make sure the direction is yours, not just the fastest one available." },
+
+  { slug:"queen-of-swords", emoji:"🗡️", num:"Queen", name:"Queen of Swords", element:"Air",
+    archetype:"She sits elevated, sword raised, one hand open in reception. She has been through enough that she will not pretend. Her gift is the truth delivered with just enough warmth to be received.",
+    shadow:"Clarity that has become coldness. Precision that cuts even when cutting is not what is needed.",
+    love:"Bring your full clarity without weaponizing it. The truth, offered with care, will land.",
+    clarity:"You already know. Trust your own perception without second-guessing it.",
+    change:"Name it precisely, without softening it — and then decide what you want to do with the truth you've just named." },
+
+  { slug:"king-of-swords", emoji:"⚖️", num:"King", name:"King of Swords", element:"Air",
+    archetype:"He sits straight, sword raised, looking directly outward. The mind that has earned its authority — through rigor, honesty, and the willingness to hold himself to the same standard he holds others.",
+    shadow:"Law without mercy. Logic used as a weapon to dominate rather than clarify.",
+    love:"Can you bring your precision without making your partner feel judged?",
+    clarity:"The answer is knowable if you apply real rigor to it. Set emotion aside long enough to see the facts.",
+    change:"Make the hard call because it is the right one, not because it is comfortable." },
+
+  // ── SUIT OF PENTACLES ──
+  { slug:"ace-of-pentacles", emoji:"🪙", num:"I", name:"Ace of Pentacles", element:"Earth",
+    archetype:"A hand emerging from cloud, holding a single gold coin. A real, tangible opportunity — held in the hand, present in the body, solid. Not a dream but a seed with actual growing potential.",
+    shadow:"Opportunity mistaken for certainty. The seed that becomes a plan before it has been planted.",
+    love:"Something substantive is being offered — not a feeling but a foundation. Are you ready to build something real?",
+    clarity:"A concrete opportunity is present. Engage with the practical reality — it requires real action.",
+    change:"What needs to be planted, funded, or practically committed to in order to make this real?" },
+
+  { slug:"two-of-pentacles", emoji:"🤹", num:"II", name:"Two of Pentacles", element:"Earth",
+    archetype:"A figure dancing while juggling two pentacles connected in an infinity loop. The genuine skill of holding competing demands in motion — never quite stable but never quite falling.",
+    shadow:"The permanent juggle that substitutes for a decision. All plates spinning so none can be examined.",
+    love:"What keeps being the thing that gets less when everything else demands more?",
+    clarity:"The solution to overwhelm is not better juggling. Which things actually require your hands on them right now?",
+    change:"Set one thing down before adding another. This change requires one fewer ball in the air." },
+
+  { slug:"three-of-pentacles", emoji:"🏛️", num:"III", name:"Three of Pentacles", element:"Earth",
+    archetype:"Three figures in a cathedral — an architect, a monk, a stonemason — sharing a plan. What they are building is larger than any one of them, and that is exactly the point.",
+    shadow:"The skilled person who cannot accept input. Mastery that has become an ego.",
+    love:"What are you building together — not just shared feeling, but the actual work of constructing something side by side?",
+    clarity:"This cannot be done alone. Who are the right collaborators, and are you actually letting them contribute?",
+    change:"The change will be more durable if it is built with others. Who needs to be at the table?" },
+
+  { slug:"four-of-pentacles", emoji:"🤲", num:"IV", name:"Four of Pentacles", element:"Earth",
+    archetype:"A figure sitting with a pentacle on his head, one under each foot, one clutched to his chest. The grip is complete. The question is whether the holding has become hoarding — and whether the thing being held can still breathe.",
+    shadow:"Security as hoarding. The seeker who has mistaken the act of holding for the feeling of having.",
+    love:"Are you protecting this relationship or controlling it? The tighter the grip, the less room for the real thing to breathe.",
+    clarity:"What are you protecting, and is the protection proportionate to what it costs?",
+    change:"Loosen the grip. The security you're trying to maintain by not changing is already compromised." },
+
+  { slug:"five-of-pentacles", emoji:"❄️", num:"V", name:"Five of Pentacles", element:"Earth",
+    archetype:"Two figures in the snow, passing a lit church window they have not looked up to see. Real difficulty, genuinely felt. The window is lit. The door is not locked. They haven't looked up yet.",
+    shadow:"Hardship as identity. The seeker who has learned to live around the suffering so completely they've stopped seeing the lighted window.",
+    love:"Who or what feels outside the warmth right now, and what would it take to come in from the cold?",
+    clarity:"You are not as alone in this as you feel. Help exists. The first step is being willing to ask.",
+    change:"Look up. The resources you need may be closer than the suffering has let you see." },
+
+  { slug:"six-of-pentacles", emoji:"⚖️", num:"VI", name:"Six of Pentacles", element:"Earth",
+    archetype:"A merchant with scales weighing coins, giving to two figures kneeling before him. The genuine movement of resources from where there is more to where there is less — the scales ask always: is this freely given, freely received?",
+    shadow:"Generosity with conditions attached. The gift that creates debt.",
+    love:"Is the exchange here genuinely balanced, or has one person's generosity become the other's dependency?",
+    clarity:"What is flowing toward you, and what is flowing away? Who gives what, and what does it cost?",
+    change:"Generosity without martyrdom, receiving without shame." },
+
+  { slug:"seven-of-pentacles", emoji:"🌱", num:"VII", name:"Seven of Pentacles", element:"Earth",
+    archetype:"A figure leaning on a hoe, surveying a vine heavy with pentacles. The honest pause midway through a long effort — not to quit, but to look at what has grown and calibrate.",
+    shadow:"The work done but the satisfaction perpetually deferred. Asking whether it's been worth it before the harvest has arrived.",
+    love:"What have you invested in this connection, and what has actually grown?",
+    clarity:"Look at the work you have done and ask honestly: am I growing the right thing?",
+    change:"Evaluate what you've been building before committing the next round. Be honest about the return." },
+
+  { slug:"eight-of-pentacles", emoji:"⚒️", num:"VIII", name:"Eight of Pentacles", element:"Earth",
+    archetype:"A figure sitting at a workbench, carving a pentacle, six finished pieces hung behind them. Skill built through repetition rather than inspiration — the accumulated honesty of showing up.",
+    shadow:"Perfectionism as avoidance. The endless refinement that never releases the work because releasing means being seen.",
+    love:"Are you putting in the work, in the small repeated ways that make a connection real over time?",
+    clarity:"The clarity will come through the process, not before it. Sit down and work on it.",
+    change:"This change requires the repeated, honest work of showing up. Begin the practice." },
+
+  { slug:"nine-of-pentacles", emoji:"🌿", num:"IX", name:"Nine of Pentacles", element:"Earth",
+    archetype:"A woman in a garden, falcon on her gloved hand, vines heavy with coins around her. The genuine pleasure of a life built by one's own hand — not wealth for its own sake, but the specific satisfaction of having made something real.",
+    shadow:"Independence that has become loneliness. The self-sufficiency that makes receiving help or love feel like a threat.",
+    love:"Can you let someone in without requiring them to fill a gap — because the gaps have been filled by your own making?",
+    clarity:"You have more resources, skill, and autonomy here than you are acknowledging.",
+    change:"You have built the ground you are standing on. Now decide what you want to grow on it." },
+
+  { slug:"ten-of-pentacles", emoji:"🏡", num:"X", name:"Ten of Pentacles", element:"Earth",
+    archetype:"An elder under an archway hung with ten pentacles, two figures and children nearby, dogs at his feet. The multigenerational view — what is being built here that will outlast the building of it.",
+    shadow:"Security that becomes rigidity. The inheritance that cannot be questioned, the structure that endures past the point of serving anyone.",
+    love:"What are you building together that will outlast today?",
+    clarity:"In ten years, will the decision you are making now have contributed to the life you are trying to build?",
+    change:"Make this decision with the long view in mind." },
+
+  { slug:"page-of-pentacles", emoji:"📚", num:"Page", name:"Page of Pentacles", element:"Earth",
+    archetype:"A young figure holding a single pentacle up to the light, studying it with complete attention. The beginning of mastery — holding the coin of a new opportunity up to see what it actually is.",
+    shadow:"Ambition that studies but never acts. Perpetual preparation as a way of avoiding the risk of beginning.",
+    love:"Are you willing to actually take the practical step being considered here?",
+    clarity:"Stop researching and start doing. The first step just needs to be real — not perfect.",
+    change:"The change begins with a single practical act. Put the coin in your hand." },
+
+  { slug:"knight-of-pentacles", emoji:"🐂", num:"Knight", name:"Knight of Pentacles", element:"Earth",
+    archetype:"The Knight sits still on a heavy horse, studying a pentacle. He is going to get there — just slowly, reliably, without drama. The long, unglamorous, entirely necessary work of showing up in the same direction every day.",
+    shadow:"Reliability that has become stagnation. The Knight who never changes because change feels like unreliability.",
+    love:"The steady, consistent showing up is not less romantic — it may be the most real thing you can offer.",
+    clarity:"This is not the moment for a dramatic change of direction. It is the moment for the patient, unglamorous next step.",
+    change:"Commit to the daily practice and trust that it is building toward something." },
+
+  { slug:"queen-of-pentacles", emoji:"🌺", num:"Queen", name:"Queen of Pentacles", element:"Earth",
+    archetype:"A queen surrounded by lush garden, a rabbit at her feet, a pentacle in her lap. The practical love that asks what is actually needed and then provides it — the warm home, the well-tended thing.",
+    shadow:"Provision without presence. Making everything comfortable for everyone while never being actually met.",
+    love:"Are you receiving the same kind of tangible care you provide?",
+    clarity:"What does this look like in material terms — in real action, in actual resources, in the body's daily experience?",
+    change:"Tend to the practical foundations first. The change will be more sustainable if the soil is properly prepared." },
+
+  { slug:"king-of-pentacles", emoji:"👑", num:"King", name:"King of Pentacles", element:"Earth",
+    archetype:"A king whose throne is carved with bulls, vines growing around him, a castle behind. He has built something real and durable. He knows how resources move and how to steward them.",
+    shadow:"Wealth as identity. The provider who cannot stop providing because without the resources and the role, he does not know who he is.",
+    love:"Are you providing the life, or are you present for it? Both matter.",
+    clarity:"You have the resources, the experience, and the competence. What is the most strategically sound decision here?",
+    change:"Build it properly from the beginning. The shortcut will cost more in the long run than the right foundation costs now." }
 ];
 
 // ── CROSS-CARD LOGIC ──

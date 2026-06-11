@@ -310,7 +310,71 @@ const CARD_IMAGES = {
   "the-moon":           "/cards/The_Moon_Final.png",
   "the-sun":            "/cards/The_Sun_Final.png",
   "judgement":          "/cards/Judgement_Final.png",
-  "the-world":          "/cards/The_World_Final.png"
+  "the-world":          "/cards/The_World_Final.png",
+
+  // ── Wands ──
+  "ace-of-wands":       "/cards/Ace_Of_Wands_Final.png",
+  "two-of-wands":       "/cards/Two_Of_Wands_Final.png",
+  "three-of-wands":     "/cards/Three_Of_Wands_Final.png",
+  "four-of-wands":      "/cards/Four_Of_Wands_Final.png",
+  "five-of-wands":      "/cards/Five_Of_Wands_Final.png",
+  "six-of-wands":       "/cards/Six_Of_Wands_Final.png",
+  "seven-of-wands":     "/cards/Seven_Of_Wands_Final.png",
+  "eight-of-wands":     "/cards/Eight_Of_Wands_Final.png",
+  "nine-of-wands":      "/cards/Nine_Of_Wands_Final.png",
+  "ten-of-wands":       "/cards/Ten_Of_Wands_Final.png",
+  "page-of-wands":      "/cards/Page_Of_Wands_Final.png",
+  "knight-of-wands":    "/cards/Knight_Of_Wands_Final.png",
+  "queen-of-wands":     "/cards/Queen_Of_Wands_Final.png",
+  "king-of-wands":      "/cards/King_Of_Wands_Final.png",
+
+  // ── Cups ──
+  "ace-of-cups":        "/cards/Ace_Of_Cups_Final.png",
+  "two-of-cups":        "/cards/Two_Of_Cups_Final.png",
+  "three-of-cups":      "/cards/Three_Of_Cups_Final.png",
+  "four-of-cups":       "/cards/Four_Of_Cups_Final.png",
+  "five-of-cups":       "/cards/Five_Of_Cups_Final.png",
+  "six-of-cups":        "/cards/Six_Of_Cups_Final.png",
+  "seven-of-cups":      "/cards/Seven_Of_Cups_Final.png",
+  "eight-of-cups":      "/cards/Eight_Of_Cups_Final.png",
+  "nine-of-cups":       "/cards/Nine_Of_Cups_Final.png",
+  "ten-of-cups":        "/cards/Ten_Of_Cups_Final.png",
+  "page-of-cups":       "/cards/Page_Of_Cups_Final.png",
+  "knight-of-cups":     "/cards/Knight_Of_Cups_Final.png",
+  "queen-of-cups":      "/cards/Queen_Of_Cups_Final.png",
+  "king-of-cups":       "/cards/King_Of_Cups_Final.png",
+
+  // ── Swords ──
+  "ace-of-swords":      "/cards/Ace_Of_Swords_Final.png",
+  "two-of-swords":      "/cards/Two_Of_Swords_Final.png",
+  "three-of-swords":    "/cards/Three_Of_Swords_Final.png",
+  "four-of-swords":     "/cards/Four_Of_Swords_Final.png",
+  "five-of-swords":     "/cards/Five_Of_Swords_Final.png",
+  "six-of-swords":      "/cards/Six_Of_Swords_Final.png",
+  "seven-of-swords":    "/cards/Seven_Of_Swords_Final.png",
+  "eight-of-swords":    "/cards/Eight_Of_Swords_Final.png",
+  "nine-of-swords":     "/cards/Nine_Of_Swords_Final.png",
+  "ten-of-swords":      "/cards/Ten_Of_Swords_Final.png",
+  "page-of-swords":     "/cards/Page_Of_Swords_Final.png",
+  "knight-of-swords":   "/cards/Knight_Of_Swords_Final.png",
+  "queen-of-swords":    "/cards/Queen_Of_Swords_Final.png",
+  "king-of-swords":     "/cards/King_Of_Swords_Final.png",
+
+  // ── Pentacles ──
+  "ace-of-pentacles":   "/cards/Ace_Of_Pentacles_Final.png",
+  "two-of-pentacles":   "/cards/Two_Of_Pentacles_Final.png",
+  "three-of-pentacles": "/cards/Three_Of_Pentacles_Final.png",
+  "four-of-pentacles":  "/cards/Four_Of_Pentacles_Final.png",
+  "five-of-pentacles":  "/cards/Five_Of_Pentacles_Final.png",
+  "six-of-pentacles":   "/cards/Six_Of_Pentacles_Final.png",
+  "seven-of-pentacles": "/cards/Seven_Of_Pentacles_Final.png",
+  "eight-of-pentacles": "/cards/Eight_Of_Pentacles_Final.png",
+  "nine-of-pentacles":  "/cards/Nine_Of_Pentacles_Final.png",
+  "ten-of-pentacles":   "/cards/Ten_Of_Pentacles_Final.png",
+  "page-of-pentacles":  "/cards/Page_Of_Pentacles_Final.png",
+  "knight-of-pentacles":"/cards/Knight_Of_Pentacles_Final.png",
+  "queen-of-pentacles": "/cards/Queen_Of_Pentacles_Final.png",
+  "king-of-pentacles":  "/cards/King_Of_Pentacles_Final.png"
 };
 
 // Export for use in the app
