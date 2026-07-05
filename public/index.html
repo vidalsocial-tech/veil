@@ -354,6 +354,13 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .direction-block.visible{opacity:1;}
 .direction-label{font-family:"Cinzel Decorative","Cinzel",serif;font-size:.6rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
 .direction-body{font-size:clamp(.82rem,2vw,.92rem);line-height:1.85;color:rgba(44,31,14,.72);font-style:italic;}
+.card-lightbox{position:fixed;inset:0;z-index:200;background:rgba(44,31,14,.88);display:flex;flex-direction:column;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .35s ease;padding:28px 24px;}
+.card-lightbox.open{opacity:1;pointer-events:all;}
+.card-lightbox-img{max-height:62vh;max-width:min(320px,90vw);border-radius:12px;box-shadow:0 8px 48px rgba(0,0,0,.6),0 0 40px rgba(160,120,48,.18);object-fit:contain;}
+.card-lightbox-placeholder{max-height:62vh;width:min(220px,60vw);aspect-ratio:2/3;border-radius:12px;border:1px solid rgba(160,120,48,.3);background:rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;color:rgba(160,120,48,.5);font-size:2rem;}
+.card-lightbox-name{font-family:"Cinzel",serif;font-size:.72rem;letter-spacing:.22em;color:rgba(249,244,234,.75);margin-top:1.4rem;text-transform:uppercase;}
+.card-lightbox-back{margin-top:1.8rem;font-family:"Cinzel",serif;font-size:.62rem;letter-spacing:.18em;color:rgba(160,120,48,.7);border:1px solid rgba(160,120,48,.3);background:transparent;padding:9px 22px;border-radius:20px;cursor:pointer;transition:all .2s;}
+.card-lightbox-back:hover{border-color:rgba(160,120,48,.7);color:rgba(160,120,48,1);}
 .cursor{display:inline-block;width:1px;height:1em;background:var(--gold);margin-left:1px;vertical-align:middle;animation:bl .8s steps(1) infinite;}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
 /* action buttons pinned at bottom */
@@ -1243,7 +1250,7 @@ async function runReading(){
     const img=document.createElement("img");img.src=CARD_IMAGES[c.slug]||"";img.alt=c.name;img.style.transform=c.rev?"rotate(180deg)":"";
     mc.appendChild(img);
     const nm=document.createElement("div");nm.className="mini-name";nm.textContent=c.name+(c.rev?" · ℞":"");
-    wrap.appendChild(mc);wrap.appendChild(nm);ms.appendChild(wrap);
+    mc.style.cursor="pointer";mc.onclick=()=>openLightbox(c);wrap.appendChild(mc);wrap.appendChild(nm);ms.appendChild(wrap);
   });
 
   const focusKey=(focus||"").toLowerCase();
@@ -1719,6 +1726,36 @@ function detBack(){
   }
   renderMoon(getMoonPct());
 })();
+
+function openLightbox(card){
+  const lb=document.getElementById('card-lightbox');
+  const wrap=document.getElementById('clb-img-wrap');
+  const src=CARD_IMAGES[card.slug]||'';
+  wrap.innerHTML='';
+  if(src){
+    const img=document.createElement('img');
+    img.src=src;
+    img.className='card-lightbox-img';
+    img.style.transform=card.rev?'rotate(180deg)':'';
+    wrap.appendChild(img);
+  } else {
+    const ph=document.createElement('div');
+    ph.className='card-lightbox-placeholder';
+    ph.textContent='✦';
+    wrap.appendChild(ph);
+  }
+  document.getElementById('clb-name').textContent=card.name+(card.rev?' · ℞':'');
+  lb.classList.add('open');
+}
+
+function closeLightbox(){
+  document.getElementById('card-lightbox').classList.remove('open');
+}
 </script>
+<div id="card-lightbox" class="card-lightbox" onclick="closeLightbox()">
+  <div id="clb-img-wrap"></div>
+  <div id="clb-name" class="card-lightbox-name"></div>
+  <button class="card-lightbox-back" onclick="closeLightbox();event.stopPropagation()">← BACK TO READING</button>
+</div>
 </body>
 </html>
