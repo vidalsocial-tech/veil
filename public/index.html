@@ -350,6 +350,10 @@ canvas#stars{position:fixed;inset:0;z-index:1;pointer-events:none;}
 .reading-text{font-size:clamp(.875rem,2.2vw,.98rem);line-height:clamp(1.85,3vw,2.05);color:var(--ink);}
 .reading-text p{margin-bottom:1.25em;}
 .reading-text p:last-child{margin-bottom:0;}
+.direction-block{margin-top:2rem;padding-top:1.4rem;border-top:1px solid rgba(201,162,82,.18);opacity:0;transition:opacity .9s ease;}
+.direction-block.visible{opacity:1;}
+.direction-label{font-family:"Cinzel Decorative","Cinzel",serif;font-size:.6rem;letter-spacing:.22em;color:var(--gold);text-transform:uppercase;margin-bottom:.7rem;}
+.direction-body{font-size:clamp(.82rem,2vw,.92rem);line-height:1.85;color:rgba(44,31,14,.72);font-style:italic;}
 .cursor{display:inline-block;width:1px;height:1em;background:var(--gold);margin-left:1px;vertical-align:middle;animation:bl .8s steps(1) infinite;}
 @keyframes bl{0%,100%{opacity:1}50%{opacity:0}}
 /* action buttons pinned at bottom */
@@ -1310,8 +1314,18 @@ async function runReading(){
       isReshuffle=false;
       lastReadingSnippet='';
       const txt=document.getElementById("reading-text");txt.innerHTML="";
-      setTimeout(()=>typewrite(txt,reading,()=>{
-        // auto-scroll gently as reading completes
+      const dirMarker="Direction to Lean Into";
+      const dirIdx=reading.indexOf(dirMarker);
+      const poem=dirIdx>-1?reading.slice(0,dirIdx).trim():reading;
+      const dirText=dirIdx>-1?reading.slice(dirIdx+dirMarker.length).trim():'';
+      setTimeout(()=>typewrite(txt,poem,()=>{
+        if(dirText){
+          const block=document.createElement("div");
+          block.className="direction-block";
+          block.innerHTML=`<div class="direction-label">Direction to Lean Into</div><div class="direction-body">${dirText.replace(/\n/g,'<br>')}</div>`;
+          txt.appendChild(block);
+          setTimeout(()=>block.classList.add("visible"),120);
+        }
       }),500);
     },600);
   },3000);
