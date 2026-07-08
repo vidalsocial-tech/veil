@@ -1088,33 +1088,33 @@ function buildPoemPrompt(cards, cardData, focus, note, moon, isReshuffle, lastRe
 
 
 // ─────────────────────────────────────────────
-//  EDGE HANDLER
-// ─────────────────────────────────────────────
-export default async function handler(req) {
+//  API HANDLER (Node runtime, @vercel/node)
+// ──────────────────────────────
+export default async function handler(req, res) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
   if (req.method === 'OPTIONS') {
-    return new Response(null, {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type'
-      }
-    });
+    return res.status(200).end();
   }
 
   if (req.method !== 'POST') {
-    return new Response('Method not allowed', { status: 405 });
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   try {
-    const body = await req.json();
+    let body = req.body;
+    if (typeof body === 'string') {
+      try { body = JSON.parse(body); } catch (e) { body = {}; }
+    }
+    body = body || {};
+
     const { cards: rawCards, focus, isReshuffle, lastReadingSnippet } = body;
     const note = body.note || body.question || '';
 
     if (!rawCards || !Array.isArray(rawCards) || rawCards.length !== 3) {
-      return new Response(JSON.stringify({ error: 'Three cards required' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-      });
+      return res.status(400).json({ error: 'Three cards required' });
     }
 
     // Normalize: accept plain strings or {name, reversed} objects
@@ -1125,15 +1125,12 @@ export default async function handler(req) {
     }).filter(Boolean);
 
     if (cards.length !== 3) {
-      return new Response(JSON.stringify({ error: 'Invalid card data' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-      });
+      return res.status(400).json({ error: 'Invalid card data' });
     }
 
     const moon = getMoonPhase();
 
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const apiRes = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -1150,9 +1147,9 @@ export default async function handler(req) {
       })
     });
 
-    if (!res.ok) throw new Error('API error ' + res.status + ': ' + await res.text());
+    if (!apiRes.ok) throw new Error('API error ' + apiRes.status + ': ' + await apiRes.text());
 
-    const data = await res.json();
+    const data = await apiRes.json();
     let reading = data.content?.[0]?.text || '';
 
     // Retry once if too short
@@ -1179,20 +1176,11 @@ export default async function handler(req) {
       }
     }
 
-    return new Response(JSON.stringify({ reading, moon: moon.name }), {
-      status: 200,
-      headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Cache-Control': 'no-store'
-      }
-    });
+    res.setHeader('Cache-Control', 'no-store');
+    return res.status(200).json({ reading, moon: moon.name });
 
   } catch (err) {
     console.error('Veil reading error:', err);
-    return new Response(JSON.stringify({ error: 'The cards are quiet right now. Please try again.' }), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
-    });
+    return res.status(500).json({ error: 'The cards are quiet right now. Please try again.' });
   }
 }
