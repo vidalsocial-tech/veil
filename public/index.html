@@ -1167,29 +1167,147 @@ function getCrossCardNote(cards) {
   return null;
 }
 
-// ── NEW PHILOSOPHY SAMPLE READINGS ──
-const READINGS = {
-  love: [
-    // Trickster + Couplet Storm (AABB)
-    "Three cards walked in and they had some things to say,\nAbout a love you have been handling a complicated way.\n\nThe Fool showed up first — eager, cliff-edge, ready to leap before the ground,\nHe means the part of you that wants this but won't make a sound.\nYou've been waiting for love to be safe before you let it start.\nThere's no safe version. That's his whole point. That's the art.\n\nThe Lovers arrived next — they mean a real choice, not a feeling in the air,\nNot 'do I love this person' but 'am I choosing to be fully there?'\nSomething in you is still rehearsing instead of actually arriving.\nThe card is not impatient. It is just watching you surviving.\n\nThe Star at the end is gentle. She means: after the hard things, light.\nShe tends without grasping. She pours. She's been doing this all night.\n\nLet something in.",
-    // Elder + Ballad Verse (ABCB)
-    "The old ones said: what you won't name, you can't put down.\nAnd the cards tonight agree.\n\nThe High Priestess sat in the past position, evasive and still,\nShe means the thing you've been sensing but won't say out loud.\nYou've been interpreting feeling as noise instead of knowing.\nSomething beneath the surface has been trying to be allowed.\n\nStrength arrived in the present — not force, the gentle kind,\nThe woman who opens the lion's mouth by staying calm and near.\nThe move being asked of you right now is not more effort.\nIt's more presence. Close the gap. The love you want is here.\n\nThe World came last, and she is slow, and she is whole,\nShe dances at the center of what's been fully lived.\nSomething in this connection has arrived at something real.\nLet yourself receive what's being given.\n\nSet down the rehearsal. What's here is enough."
+// ── FALLBACK READING ENGINE ──
+// Assembles a reading from card-level stanzas keyed by element × orientation.
+// No card is ever "first", "now", or "the path" — the structure has no positions.
+const FB_STANZAS = {
+  "Fire:up": [
+    "${N} kicked the door in — no knock, no note, no shame,\nand you saw that crack in the wall a long time back.\nWhat burned was scaffolding. It was never the frame.\nThe floor is still there. It's the story that took the smack.",
+    "${N} came in hot and it isn't here to negotiate,\nit's here to hand you the match and step back from the pile.\nYou've been asking permission from people who show up late.\nNobody's coming to light it. That's been true a while.",
+    "${N} walks in with its sleeves already rolled,\nand honey, it has opinions about your careful little plan.\nThe heat is not the problem. The heat is what you withhold.\nYou keep rehearsing the leap. Just go. You already can.",
+    "${N} arrives with the volume already turned up,\nno dimmer switch, no apology folded in the sleeve.\nYou've been shrinking to fit a room you outgrew, and enough —\ntake up the space. Take all of it. Don't ask for leave."
   ],
-  clarity: [
-    // Oracle + Rubaiyat (AABA)
-    "The cards were drawn. The question underneath your question was heard.\n\nJustice held her scales and they were not what you preferred,\nShe means the situation is clearer than you have been letting it be.\nYou have the information. You simply find it absurd.\nSomething is true whether or not you've given it word.\n\nThe Hermit stood alone on his mountain, lantern in hand,\nHe means the answer lives in quiet, not in plan.\nMore searching outward will not find what stillness holds.\nOne step at a time. He's been doing this since before the land.\nThe clarity you want arrives exactly where you stand.\n\nThe Moon came last — dreamy, circular, uncertain light,\nShe means you're in the middle of something that hasn't shown its shape.\nDon't resolve it prematurely. Walk the path between the towers at night.\n\nThe fog will lift when you stop asking it to hurry.",
-    // Friend + Ballad Verse (ABCB)
-    "Okay, here's what the cards actually said.\n\nThe Chariot showed up in the past — urgent, two sphinxes pulling apart,\nHe means you've been moving fast without checking the direction.\nYou know enough to commit. The certainty you're waiting for\ncomes after the decision, not before.\n\nThe Hanged Man sits in the present, serene and upside down,\nHe means stop. Not forever. Just long enough to look at this from another angle.\nThe answer is available — just not from where you're currently standing.\nThe wait is not the obstacle. The wait is the thing.\n\nThe Wheel of Fortune points ahead, wry as always, turning slow,\nIt means the situation is in motion even when it looks like it's not.\nStay calibrated. What feels stuck is actually in a phase.\n\nYou already know. You're just waiting to be ready."
+  "Fire:rev": [
+    "${N} is banked coals, not ash — get that straight,\nthere's heat under there you keep insisting is gone.\nYou call it burnout. Sometimes it's just a gate.\nSomething in you is still lit. It went quiet. It's not done.",
+    "${N} has the fire pointed the wrong way round,\nall that drive spent proving something to a ghost.\nWho are you racing? Say the name out loud.\nYou're winning a race nobody entered. That's the cost.",
+    "${N} stalls with its hand on the ignition, engine cold,\nthe want is there. The wanting just won't move.\nYou've rehearsed this so many times it's gone old.\nYou don't need more heat. You need out of neutral, love.",
+    "${N} keeps its want locked behind the teeth,\ntoo loud in your chest and too polite in the room.\nYou've been so reasonable. Look what's underneath.\nSomething is pacing in there. It didn't ask for the tomb."
   ],
-  change: [
-    // Sprite + Couplet Storm (AABB)
-    "Three cards tumbled out and they are very pleased to see you here!\nLet's talk about the enormous thing that's happening this year.\n\nDeath arrived — don't panic, it just means something's actually done,\nNot you, not love, just the version of the story that was spun.\nThe butterfly on Death's flag is the whole point of the card.\nEndings make room. That's not consolation. That's the yard.\n\nTemperance poured between her cups — patient, never rushing, always true,\nShe means the change you're in is gradual and that's okay for you.\nThis transition is metabolic. You're becoming. That takes time.\nThere's no dramatic moment coming. You're already in the climb.\n\nThe World danced at the end — complete, arrived, the whole thing done,\nShe means the journey you've been on has genuinely been won.\n\nYou're closer to the other side than you think. Keep going.",
-    // Seer + The Echo (Free + Refrain)
-    "Three cards were drawn before the drawing.\n\nThe Tower stood in what has shaped things — matter-of-fact about the fall,\nLightning came for what was false, not for you.\nThe figures tumbling from the crown are not your self.\nThey are the borrowed versions. You already knew.\n\nThe Star kneels in the present at the edge of the water,\nShe has been here before. She tends the wreckage without comment.\nSomething nourishing is available in the aftermath.\nYou already knew.\n\nJudgement sounds the horn in the direction you are heading —\nnot a verdict from outside, a summons from within.\nSomething that has been forming in you is audible now.\nYou already knew.\n\nThe moon keeps its secrets. You keep yours. Both are allowed."
+  "Water:up": [
+    "${N} comes in like the tide and doesn't ask,\njust fills the low places you forgot that you had.\nYou've been treating your own feeling like a task.\nIt isn't a chore. It's weather. And it isn't bad.",
+    "${N} pours in warm and does it in the open,\nno strategy, no hedge, no clever little wall.\nYou keep editing the feeling instead of leaving it spoken.\nSay it badly. Say it now. Say it at all.",
+    "${N} shows up soft and it is not a weakness,\nit's the part of you that still knows how to be moved.\nYou armor up at the very first sign of sweetness.\nNothing's coming for you. You're allowed to be soothed.",
+    "${N} arrives already knowing, doesn't need the proof,\nyour gut got there weeks ago and left a note.\nYou read it. You filed it. You climbed back on the roof.\nCome down. The thing you sensed is the thing you wrote."
+  ],
+  "Water:rev": [
+    "${N} turns its face to the wall and says nothing at all,\nthe tide pulled back so far you called the sand a fact.\nSomething's still moving under there, past the light's fall.\nIt didn't go quiet. It went under. Those aren't the same act.",
+    "${N} holds the feeling down with both its hands,\nand calls the ache maturity, and calls the numbness okay.\nYou've gotten so good at 'fine' that nobody understands.\nThe dam is doing something. It's just not going away.",
+    "${N} runs the whole thing as an undertow,\nsmooth on the surface, dragging hard underneath.\nYou look composed. You've had a lot of practice. It shows.\nYou are not fine. You're holding your breath through your teeth.",
+    "${N} is a letter written and never mailed,\nit lives in a drawer in your chest, addressed and sealed.\nYou told yourself the timing is what failed.\nIt wasn't the timing, love. It was the cost of being revealed."
+  ],
+  "Earth:up": [
+    "${N} just puts its head down and works,\nsame bench, same hands, same honest repetitive sound.\nThat isn't avoidance. That's where the answer lurks.\nYou think best with your hands. You always have. Look down.",
+    "${N} lays the brick and doesn't need the applause,\nit just wants the wall to hold when you finally lean.\nYou keep chasing the leap. Try the boring cause.\nFoundations are dull. They're also the whole machine.",
+    "${N} shows up with a body and a bill,\nand honey, both of them have been waiting on you.\nSleep. Eat. Pay it. Answer it. Sit still.\nThe mystical thing right now is the mundane thing you do.",
+    "${N} makes it real, makes it solid, makes it land,\ntakes the beautiful idea and gives it a floor.\nYou've been living in the blueprint. Come stand.\nThe thing exists once you build it. Not before."
+  ],
+  "Earth:rev": [
+    "${N} grinds the same gear and calls the noise devotion,\nyou've been busy so long you mistake it for a life.\nEffort isn't the currency. Neither is your exhaustion.\nYou're sawing at the same board with the back of the knife.",
+    "${N} holds it all so tight the thing can't breathe,\nthe grip that kept you safe is what's keeping you small.\nNothing grows inside a fist. Loosen it. Believe.\nYou're allowed to have enough. You're allowed to have it all.",
+    "${N} left the body out of the whole equation,\nyou've been running the machine and skipping the fuel.\nYour back knows the truth before your explanation.\nDrink some water, you feral genius. That's the rule.",
+    "${N} stalls out halfway up the build,\nhalf a house, half a plan, half a life on a shelf.\nYou didn't fail. You just stopped, and the quiet filled.\nPick one board back up. That's all. Just one, yourself."
+  ],
+  "Air:up": [
+    "${N} says the true thing with the lights on,\nno cushion, no preamble, no soft little lie.\nYou already knew. You just wanted it gone.\nIt won't go. So name it. Out loud. Let it fly.",
+    "${N} cuts, and it cuts where it counts,\nnot cruel — just done pretending the fog was profound.\nThe confusion was cover. Here's the actual amount.\nYou knew the shape of this. You just wouldn't say it aloud.",
+    "${N} opens the window and lets the room think,\nit's the first honest air you've had in a while.\nYou've been marinating in a story right up to the brink.\nStep out of it. Look at it. It's just a pile.",
+    "${N} hands you the one sentence you keep circling,\nand it's shorter than you wanted. Barely a line.\nYou wanted an essay to keep the truth from surfacing.\nIt's one sentence. Say it. Then you're free. Then you're fine."
+  ],
+  "Air:rev": [
+    "${N} spirals and calls the spiral thinking,\nsame loop, same 3am, same tired little track.\nThat is not analysis. That's a ship slowly sinking.\nYou've solved it eleven times. It keeps crawling back.",
+    "${N} keeps the sentence lodged behind the tongue,\nyou drafted it, deleted it, drafted it again.\nThe unsaid thing gets heavier the longer it's unsung.\nYou're not sparing them a thing. You're rehearsing the pain.",
+    "${N} fogs the glass and calls the fog a reason,\nyou can't see, so you don't move, so you can't see.\nThe clarity's not coming. Not this year, not this season.\nMove first. The view shows up after. That's the fee.",
+    "${N} argues with a person who isn't in the room,\nyou've won that fight nine times, in the shower, in your head.\nNobody heard it. Nothing changed. Nothing left the tomb.\nSay the small true version to a real face instead."
   ]
 };
 
-const POS_LABELS = ["The Root","The Now","The Path"];
+const FB_CONNECTORS = [
+  ["Okay, so ", "Look — ", "So "],
+  ["Then ", "And then ", "Meanwhile "],
+  ["And ", "Then ", "But look — "]
+];
+
+const FB_IMAGES = {
+  outward: [
+    "A coffee cup left on the windowsill, still warm, still yours.",
+    "A door propped open with a shoe. Nobody's closing it.",
+    "The kitchen light left on for you, down the dark hall.",
+    "A receipt in a coat pocket from a good day you forgot you had.",
+    "Your own handwriting on a list you actually finished.",
+    "A window open two inches. That's enough. That's all it takes.",
+    "Somebody saved you a seat. It's been empty a while."
+  ],
+  inward: [
+    "A stone in your shoe you've been walking on for miles.",
+    "A letter in a drawer — stamped, addressed, never mailed.",
+    "A light under a door down the hall. Someone is still awake.",
+    "The dish left soaking overnight. It'll come clean. Give it time.",
+    "A phone face-down on the table, buzzing. You know exactly who.",
+    "Your own name in your own mouth, said quietly, like a fact.",
+    "A drawer that sticks, that you've opened a thousand times anyway."
+  ]
+};
+
+const FB_DIRECTIONS = {
+  love: [
+    "There's room to stop auditioning for a place you already have. Lean into being known rather than being impressive.",
+    "This might be the season to say the small true thing before you've perfected it. The other person can handle a first draft.",
+    "There's room to let one good thing be simple instead of bracing for the catch. You don't have to earn the ease.",
+    "Lean into presence over performance — showing up plainly is more than enough here, and it always has been.",
+    "This could be the moment to stop managing the distance and close it by an inch. Just an inch. See what happens."
+  ],
+  clarity: [
+    "There's room to stop interrogating the wreckage and let your hands hold the question for a while. Clarity tends to show up in the doing, not the deciding.",
+    "Lean into the answer you already have instead of the certainty you're waiting for. The certainty usually arrives afterward.",
+    "This might be the season to say one honest thing out loud and see what softens. You don't have to say all of it.",
+    "There's room to stop gathering information and start trusting what you noticed first. That instinct has a track record.",
+    "Lean into the quiet on purpose — not as hiding, but as listening. The thing you're circling will surface if you stop chasing it."
+  ],
+  change: [
+    "There's room to pick one board back up rather than rebuilding the whole house today. One is a real number.",
+    "Lean into the version of this that's already underway. You're further into the change than you're giving yourself credit for.",
+    "This might be the season to let something be genuinely over without needing it to make sense yet. The meaning can come later.",
+    "There's room to move before you feel ready — readiness is usually something you find on the way, not before you go.",
+    "Lean into the slow, unremarkable middle of this. It's not a stall. It's the part where it actually takes."
+  ]
+};
+
+function fbPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+function buildFallback(readingCards, focusKey) {
+  const used = {};
+  const usedConn = [];
+  const stanzas = readingCards.map(function (c, i) {
+    const key = (c.element || 'Air') + ':' + (c.rev ? 'rev' : 'up');
+    const pool = FB_STANZAS[key] || FB_STANZAS['Air:up'];
+
+    // dedupe: two cards sharing element+orientation never draw the same template
+    if (!used[key]) used[key] = [];
+    let choices = pool.map(function (_, n) { return n; })
+                      .filter(function (n) { return used[key].indexOf(n) < 0; });
+    if (!choices.length) choices = pool.map(function (_, n) { return n; });
+    const pick = choices[Math.floor(Math.random() * choices.length)];
+    used[key].push(pick);
+
+    const cPool = FB_CONNECTORS[i] || FB_CONNECTORS[2];
+    const head = function (x) { return x.trim().split(/[\s,]/)[0].toLowerCase(); };
+    let cOpts = cPool.filter(function (x) { return usedConn.indexOf(head(x)) < 0; });
+    if (!cOpts.length) cOpts = cPool;
+    const connector = fbPick(cOpts);
+    usedConn.push(head(connector));
+
+    return connector + pool[pick].replace(/\$\{N\}/g, c.name);
+  });
+
+  const revCount = readingCards.filter(function (c) { return c.rev; }).length;
+  const image = fbPick(revCount >= 2 ? FB_IMAGES.inward : FB_IMAGES.outward);
+  const dirPool = FB_DIRECTIONS[focusKey] || FB_DIRECTIONS.clarity;
+
+  return stanzas.join('\n\n')
+    + '\n\n' + image
+    + '\n\nDirection to Lean Into\n\n' + fbPick(dirPool);
+}
+
 let focus="default", drawn=[], revealCount=0, shuffleTO=null, isReshuffle=false, lastReadingSnippet='';
 
 function shuffle(a){const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
@@ -1257,39 +1375,15 @@ async function runReading(){
   const note=document.getElementById("note-text").value.trim();
   const crossNote=getCrossCardNote(readingCards);
 
-  // Build a dynamic fallback using the actual drawn cards
-  function buildFallback(){
-    const c0=readingCards[0].name, c1=readingCards[1].name, c2=readingCards[2].name;
-    const fb={
-      love:[
-        `Three cards walked in with something they needed to say,\nAbout a love you have been holding in a complicated way.\n\n${c0} arrived first — it means what has been quietly shaping this,\nThe thing beneath the thing, the part you haven\'t named, the part you miss.\nYou\'ve been managing from a distance instead of arriving here.\nThe card is not unkind. It just wants the real thing to appear.\n\n${c1} came next — it names what\'s alive right now, unresolved, awake,\nSomething in this moment is asking more than you\'ve been willing to take.\nNot asking you to fix it. Asking you to actually be there.\nThe presence is the thing. The presence is the answer. The presence is the care.\n\n${c2} at the end is gentler than the two that came before,\nIt means something soft is possible — you don\'t have to prop the door.\nLet something in.`,
-        `${c0} sat in the past and it was holding something down,\nA grief that came dressed up as 'fine' and never wore its gown.\n\n${c1} is where you are right now — a threshold, not a place,\nNot inside what\'s ending yet, not inside the open space.\nThe card is honest: you are in the middle. That\'s allowed.\nThe middle is not failure. Walk into it. Be loud.\n\n${c2} is the path ahead, and it is gentler than you\'d think,\nSomething is becoming possible right at the edge, the brink.\nLet yourself be loved the way that\'s actually being offered now.\nNot the version you rehearsed. The real one. Take the bow.`
-      ],
-      clarity:[
-        `${c0} came first and it is naming what you\'ve been circling for a while,\nThe thing you keep arriving at and then walking past with style.\nYou have the information. What you\'re missing is the nerve.\nThe fog is not confusion — it\'s the answer\'s warning curve.\n\n${c1} is what\'s alive right now beneath the surface question here,\nNot just this situation — a pattern that\'s been building year by year.\nThe card is pointing at the layer underneath the layer you\'re in.\nThe complexity you\'re feeling has a simpler origin.\n\n${c2} opens toward a more direct relationship with what you know,\nThe certainty you\'re waiting for will come after you go.\nYou already know. You\'re just deciding whether to know out loud.`,
-        `The thing about ${c0} is it doesn\'t soften what it sees,\nIt means the situation is clearer than your worry lets it be.\n\n${c1} holds the present — something\'s been building, pressing, near,\nStop trying to resolve it from the outside. Come here.\nThe answer isn\'t more input. The answer is the quiet.\nLet the second card do what it does. Don\'t riot.\n\n${c2} points the way ahead, and it is simpler than you\'ve planned,\nNot easy — simple. Those are different. Understand?\nYou already know. You\'re just waiting to be ready.`
-      ],
-      change:[
-        `${c0} arrived and it was matter-of-fact about the fall,\nSomething that was built for an old version isn\'t standing tall.\nThat\'s not punishment. That\'s what things do when the ground has shifted under them.\nThe card is not dramatic. It\'s just clearing out the problem stem.\n\n${c1} sits in the present — something\'s in motion, turning slow,\nYou\'re not at a place of choosing. You\'re at a place of letting go.\nThe transition is happening in the part of you that\'s below the view.\nTrust the process you can\'t see. It\'s already working through.\n\n${c2} at the end is not arrival — it\'s direction, light, and more,\nSomething is forming in the dark that wasn\'t possible before.\nYou\'re closer to the other side than you think. Keep going.`,
-        `${c0} walked in and it was dry about the whole affair,\nSomething is genuinely over. You know which thing. It\'s there.\n\n${c1} is the present — patient, waiting, not in any rush,\nThe change is metabolic. You\'re becoming. Hush.\nThis transition is gradual and that is not a flaw.\nThe sustainable version builds without the awe.\n\n${c2} dances at the end — complete, arrived, the journey done,\nSomething in this passage has been genuinely won.\nSet down what didn\'t hold. What holds is still here.`
-      ]
-    };
-    const pool=fb[focusKey]||fb.clarity;
-    return pool[Math.floor(Math.random()*pool.length)];
-  }
 
   let reading='';
   let lastFrameUsed=null;
   const storedFrames=JSON.parse(sessionStorage.getItem('veil_last_frames')||'[]');
   try{
-    const res=await fetch('/api/reading',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        cards:drawn.map((c,i)=>({
+    const payload=JSON.stringify({
+        cards:drawn.map((c)=>({
           name:c.name,
           reversed:c.rev===true,
-          position:POS_LABELS[i],
           archetype:c.archetype||'',
           shadow:c.shadow||'',
           angle:c[focusKey]||'',
@@ -1297,18 +1391,27 @@ async function runReading(){
           crossNote:crossNote||''
         })),
         focus,question:note,lastFrames:storedFrames,isReshuffle,lastReadingSnippet,
-      })
     });
-    if(!res.ok)throw new Error('API error');
-    const d=await res.json();
-    reading=d.reading||'';
+    // two attempts before we fall back — covers network error, bad status, and empty body
+    let d=null;
+    for(let attempt=0;attempt<2;attempt++){
+      try{
+        const res=await fetch('/api/reading',{method:'POST',headers:{'Content-Type':'application/json'},body:payload});
+        if(res.ok){
+          const j=await res.json();
+          if(j&&j.reading&&j.reading.trim()){d=j;break;}
+        }
+      }catch(e){/* swallow and retry */}
+    }
+    if(!d)throw new Error('no reading');
+    reading=d.reading;
     if(d.frameUsed){
       lastFrameUsed=d.frameUsed;
       const updated=[d.frameUsed,...storedFrames].slice(0,3);
       sessionStorage.setItem('veil_last_frames',JSON.stringify(updated));
     }
   }catch{
-    reading=buildFallback();
+    reading=buildFallback(readingCards,focusKey);
   }
 
   setTimeout(()=>{
