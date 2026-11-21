@@ -1,0 +1,163 @@
+{
+  "_source": "Figma 'Moon Phases · Closing slide' (135:888), sections '0N <phase> · all 40 variations'. Each frame's body = pattern[phase][pattern] + ' ' + reversal[phase][reversedCount].",
+  "patterns": {
+    "OEC": "Odd + Even + Court",
+    "OOE": "2 Odd + 1 Even",
+    "EEO": "2 Even + 1 Odd",
+    "OOC": "2 Odd + 1 Court",
+    "EEC": "2 Even + 1 Court",
+    "OOO": "3 Odd",
+    "EEE": "3 Even",
+    "CCO": "2 Court + 1 Odd",
+    "CCE": "2 Court + 1 Even",
+    "CCC": "3 Court"
+  },
+  "pattern": {
+    "new-moon": {
+      "OEC": "Something new wants to move, something wants to stay steady, and someone is part of it. Set an intention that makes room for all three.",
+      "OOE": "Most of your cards want to move. The new start is ready, and one steady thing will keep it grounded.",
+      "EEO": "Most of your cards want stability. Start small, with one gentle push forward.",
+      "OOC": "Action is calling, and a person is at the center of it. Begin with them in mind.",
+      "EEC": "Things are calm, and someone is shaping what comes next. Plant the seed together.",
+      "OOO": "Every card is in motion. This fresh start wants to happen fast. Let it.",
+      "EEE": "Every card is still. Your new beginning is a quiet one. No rush.",
+      "CCO": "This start is mostly about people, and one of them is ready to make a move.",
+      "CCE": "This start is about the people around you, and it begins with steadiness.",
+      "CCC": "All three cards are people. Tonight's new beginning is a relationship, maybe with yourself."
+    },
+    "waxing-crescent": {
+      "OEC": "Growth is coming from motion, patience, and a person who cares. Keep all three close.",
+      "OOE": "Things are picking up speed. Keep one routine steady while it grows.",
+      "EEO": "Growth is slow and steady, with one bright spark. Feed the spark.",
+      "OOC": "Someone is helping this grow fast. Let them.",
+      "EEC": "Someone is helping this grow gently. Lean on them.",
+      "OOO": "It's all momentum. Keep showing up and it'll take off.",
+      "EEE": "It's all patience. Tiny steps are enough right now.",
+      "CCO": "People are what's growing here, and one connection is gaining speed.",
+      "CCE": "Your relationships are growing quietly and steadily.",
+      "CCC": "Every card is a person. What's growing tonight is your circle."
+    },
+    "first-quarter": {
+      "OEC": "You're weighing change against comfort, and someone's opinion matters. Decide what's yours to choose.",
+      "OOE": "Most of you wants to act. Make the call, then hold one thing steady.",
+      "EEO": "Most of you wants to stay put, but one part is pushing. Listen to it.",
+      "OOC": "Someone is pushing you to decide. Make sure the choice is yours.",
+      "EEC": "Someone wants you to stay steady. Ask if that's what you want too.",
+      "OOO": "Everything is urging you forward. Decide and go.",
+      "EEE": "Everything says hold. The decision might be to wait.",
+      "CCO": "This choice is about people, and one of them is ready to move.",
+      "CCE": "This choice is about people and keeping the peace. Be honest anyway.",
+      "CCC": "All people, no plan. The decision is really about who you trust."
+    },
+    "waxing-gibbous": {
+      "OEC": "You're close, with motion, steadiness, and a helper on your side. Fine-tune, don't overhaul.",
+      "OOE": "You're moving fast toward the finish. Slow down just enough to get it right.",
+      "EEO": "You're nearly done and steady. One last push will finish it.",
+      "OOC": "Someone is helping you finish strong. Take their notes.",
+      "EEC": "Someone is helping you finish carefully. Trust the pace.",
+      "OOO": "Everything is racing toward the end. Don't skip the details.",
+      "EEE": "Everything is settled. Polish what you have.",
+      "CCO": "The people around you are almost aligned. One more conversation.",
+      "CCE": "Your relationships are close to steady. Keep tending them.",
+      "CCC": "It's all about people now. Check in before you finish."
+    },
+    "full-moon": {
+      "OEC": "Tonight shows you what's moving, what's holding, and who's involved. See all of it clearly.",
+      "OOE": "Big energy is lit up tonight. Let it move, but keep your footing.",
+      "EEO": "What's steady is in full view, with one thing stirring. Notice it.",
+      "OOC": "Someone's actions are in the spotlight tonight. Watch before you react.",
+      "EEC": "Someone's steady presence is lit up tonight. Appreciate it.",
+      "OOO": "Everything is moving at once under a full moon. Ride it, carefully.",
+      "EEE": "Everything is still and clear tonight. Look closely.",
+      "CCO": "People are center stage tonight, and one of them is making waves.",
+      "CCE": "Tonight lights up the people who keep you steady.",
+      "CCC": "All three cards are people under a full moon. Feelings about them run high."
+    },
+    "waning-gibbous": {
+      "OEC": "You've learned something about change, patience, and people. Share it.",
+      "OOE": "The momentum taught you something. Pass it on.",
+      "EEO": "The steadiness taught you something. Thank whoever helped.",
+      "OOC": "Someone showed you how to move. Tell them.",
+      "EEC": "Someone showed you how to stay steady. Tell them.",
+      "OOO": "All that motion has a lesson in it. Write it down.",
+      "EEE": "All that stillness has a lesson in it. Share it gently.",
+      "CCO": "The people in your life taught you to move. Give a little back.",
+      "CCE": "The people in your life taught you patience. Thank them.",
+      "CCC": "Every card is a person. Tonight is for gratitude toward your people."
+    },
+    "last-quarter": {
+      "OEC": "Let go of what's rushing you, what's holding you back, or who's weighing on you. Pick one.",
+      "OOE": "Release some of the pressure to keep moving.",
+      "EEO": "Release one thing that's keeping you stuck.",
+      "OOC": "Let go of someone else's urgency. It isn't yours.",
+      "EEC": "Let go of someone's expectations of you.",
+      "OOO": "Too much motion. Drop something before it drops you.",
+      "EEE": "Too much holding still. Release what's gone stale.",
+      "CCO": "Let go of a dynamic that keeps pulling you around.",
+      "CCE": "Let go of a relationship habit that keeps you small.",
+      "CCC": "All three cards are people. Release what you've been carrying for them."
+    },
+    "waning-crescent": {
+      "OEC": "Rest from the motion, from the effort of staying steady, and from other people's needs.",
+      "OOE": "You've been moving a lot. Let yourself stop.",
+      "EEO": "You've been holding steady. Rest, then take one small step.",
+      "OOC": "Someone has kept you busy. Take a night away from it.",
+      "EEC": "Someone has been your anchor. Let them hold you tonight.",
+      "OOO": "Everything's been in motion. Rest is the bravest move now.",
+      "EEE": "Everything is still. Let it be. Sleep.",
+      "CCO": "People have kept you going. Take a night for yourself.",
+      "CCE": "Your people are steady. You can rest knowing that.",
+      "CCC": "All three cards are people. Rest from everyone, including yourself."
+    }
+  },
+  "reversal": {
+    "new-moon": [
+      "Every card is upright, so the beginning is out in the open and ready to act on.",
+      "One card is reversed, so part of this fresh start is still waiting inside you.",
+      "Two cards are reversed, so most of this beginning is happening internally first.",
+      "All three are reversed, so the new start begins in private, long before anyone sees it."
+    ],
+    "waxing-crescent": [
+      "Every card is upright, so the growth is visible if you look for it.",
+      "One card is reversed, so a little doubt is slowing the sprout. That's okay.",
+      "Two cards are reversed, so the roots are growing before the leaves.",
+      "All three are reversed, so the growth is underground for now. Trust it."
+    ],
+    "first-quarter": [
+      "Every card is upright, so the choice is clear, even if it's hard.",
+      "One card is reversed, so part of you is still resisting the decision.",
+      "Two cards are reversed, so the real tension is inside you, not out there.",
+      "All three are reversed, so you're wrestling with yourself more than the situation."
+    ],
+    "waxing-gibbous": [
+      "Every card is upright, so the finish line is in plain sight.",
+      "One card is reversed, so one thing still needs adjusting.",
+      "Two cards are reversed, so the refining is mostly inner work.",
+      "All three are reversed, so you're polishing something only you can see yet."
+    ],
+    "full-moon": [
+      "Everything's upright, so it's out in the open, nothing hidden.",
+      "One card is reversed, so part of what's lit up is still happening quietly inside you.",
+      "Two cards are reversed, so the brightest light is on what you feel, not what you see.",
+      "All three are reversed, so tonight's full moon is shining inward."
+    ],
+    "waning-gibbous": [
+      "Every card is upright, so the lesson is clear and easy to name.",
+      "One card is reversed, so part of the lesson is still sinking in.",
+      "Two cards are reversed, so the lesson is mostly about you.",
+      "All three are reversed, so the wisdom here is private for now."
+    ],
+    "last-quarter": [
+      "Every card is upright, so you can see clearly what to release.",
+      "One card is reversed, so one part is still hard to let go of.",
+      "Two cards are reversed, so the letting go is mostly emotional.",
+      "All three are reversed, so you're releasing something no one else can see."
+    ],
+    "waning-crescent": [
+      "Every card is upright, so the rest is simple. Just take it.",
+      "One card is reversed, so part of you is still restless.",
+      "Two cards are reversed, so rest your mind as well as your body.",
+      "All three are reversed, so the quiet you need is deep and inward."
+    ]
+  }
+}

@@ -1,99 +1,65 @@
-# Veil — Daily Tarot App
+# VeilReads
 
-A daily emotional companion disguised as tarot. AI-powered readings, personal journal, ritual UX.
+Prototype rebuild of [veilreads.com](https://veilreads.com), a daily three-card tarot reading ("Three cards. One story."), following the **Figma prototype "Exp - VeilReads"**.
 
----
-
-## Project Structure
-
-```
-veil/
-├── api/
-│   └── reading.js       ← Serverless function (keeps API key secret)
-├── public/
-│   └── index.html       ← The full frontend app
-├── vercel.json          ← Vercel routing config
-└── README.md
-```
-
----
-
-## Deploy in 5 Steps
-
-### 1. Get your Anthropic API key
-- Go to [console.anthropic.com](https://console.anthropic.com)
-- Sign up / log in → API Keys → Create Key
-- Copy the key (starts with `sk-ant-...`)
-
-### 2. Push to GitHub
-```bash
-git init
-git add .
-git commit -m "Initial commit"
-# Create a new repo on github.com, then:
-git remote add origin https://github.com/YOUR_USERNAME/veil.git
-git push -u origin main
-```
-
-### 3. Deploy to Vercel
-- Go to [vercel.com](https://vercel.com) and sign up (free)
-- Click **"Add New Project"** → Import your GitHub repo
-- Leave all settings as default → click **Deploy**
-
-### 4. Add your API key as an Environment Variable
-- In your Vercel project dashboard → **Settings** → **Environment Variables**
-- Add:
-  - **Name:** `ANTHROPIC_API_KEY`
-  - **Value:** `sk-ant-...` (your key)
-  - Environment: Production + Preview + Development
-- Click **Save** → go to **Deployments** → **Redeploy**
-
-### 5. Add your domain (optional but recommended)
-- In Vercel → **Settings** → **Domains**
-- Add your custom domain (e.g. `veil.app`)
-- Follow the DNS instructions (point your domain registrar's nameservers to Vercel)
-- Then update `api/reading.js` line 12 to include your domain:
-  ```js
-  'https://veil.app',
-  ```
-- Redeploy once more
-
----
-
-## Local Development
+## Run it
 
 ```bash
-npm i -g vercel
-vercel dev
+npm install
+npm run dev          # http://localhost:5175 (also on your network IP)
 ```
 
-Then open `http://localhost:3000`
+Everything is hand-written in Figma and needs no API key. (`server/` still holds an optional Claude endpoint from an earlier design; the app no longer calls it.)
 
-Set your env variable locally:
-```bash
-echo "ANTHROPIC_API_KEY=sk-ant-..." > .env.local
-```
+## The flow (Figma frame names)
 
----
+1. **P01 Home**: tonight's moon, Begin / Explore.
+2. **P02–P03 Focus**: Love · Clarity · Change.
+3. **PQ ×3**: three questions for that focus (`Love · 1 of 3`…), with Back.
+4. **P04 Prep**: tonight's moon phase pulses, then
+5. **P05–P06 Shuffle**, followed by
+6. **P07 Draw**: tap each card to reveal it.
+7. **PR1–PR6 Reading**: a stack of six pages you swipe, tap, arrow-key or click through:
+   - Your cards
+   - Where you are
+   - Card I
+   - Card II
+   - Card III
+   - Tonight's moon: the closing slide, chosen by tonight's phase × the spread's odd/even/court pattern × how many cards are reversed (8 × 10 × 4 = 320 endings), with Reshuffle.
 
-## Cost Estimate
+Each card's four-line stanza comes from the Figma **Readings** pages. Line 1 is picked by card × orientation × focus, and lines 2–4 by your three answers. That's 4,680 lines in `src/data/stanzas.json`.
 
-Each reading uses ~300 tokens. At Claude Sonnet pricing:
-- 1,000 readings/month ≈ $0.90
-- 10,000 readings/month ≈ $9.00
+## Where to tweak things
 
-Vercel hosting: **Free** on the Hobby plan (up to 100GB bandwidth/month).
+| Want to change… | Edit |
+|---|---|
+| Colours, fonts, radii, shadows | `src/styles/tokens.css` |
+| Layout and styling of any screen | `src/styles/app.css` |
+| Questions, answers, "Where you are" sentences | `src/data/questions.ts` |
+| Card subtitles ("Upright · what's arriving"), copy, timings, reversal rate | `src/config.ts` |
+| Stanza text | `src/data/stanzas.json` (regenerate from Figma, see below) |
+| Closing moon slide copy (pattern lines, reversal lines) | `src/data/moonClosing.json` |
+| How a spread is classified (odd / even / court, The Fool) | `src/data/moonReading.ts`, `CONFIG.foolGroup` |
+| Flow and screen order | `src/App.tsx` |
 
----
+Figma assets (moon phases, answer icons, chevrons, glow) are in `public/figma/`.
 
-## What's Next (after launch)
+## Not in Figma yet, so drafted here (marked in code)
 
-- [ ] Add user accounts (Clerk.dev is easiest)
-- [ ] Email / push reminders for daily readings
-- [ ] Streak tracking
-- [ ] Shareable reading cards (image export)
-- [ ] Paid tier with unlimited readings
+- The "Where you are" sentence for each answer. Figma shows only the three love sentences: Taken, Unsure, Their side.
+- "You came here for clarity / change."
+- Card subtitles for Root·upright, Now·reversed and Path·reversed.
 
----
+## Publish (veilreads.com)
 
-Built with HTML, CSS, Vanilla JS + Anthropic Claude API + Vercel Edge Functions.
+veilreads.com is a Vercel project that deploys the GitHub repo `vidalsocial-tech/veil`:
+
+- A push to any **other branch** gets a private Vercel **preview** URL. The live site doesn't change.
+- A merge or push to **`main`** goes **live** on veilreads.com.
+- To roll back, go to Vercel → Deployments, pick an earlier one, and choose **Promote to Production**.
+
+`vercel.json` tells Vercel to run `npm ci && npm run build` and serve `dist/`, with every path falling back to `index.html`. The app is fully static, so it needs no API key.
+
+Carried over from the old site: Google Analytics (`G-DVEBR4RVF5`), the AdSense loader, `public/ads.txt` and `public/privacy.html` (linked top-right on Home). Link previews use `https://veilreads.com/og-image.png`. Override with `SITE_URL=… npm run build`.
+
+`server/` holds an older optional Claude endpoint that the app doesn't call, and it isn't deployed.

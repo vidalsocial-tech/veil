@@ -1,1 +1,9 @@
+node_modules/
+dist/
+.env*
+!.env.example
+.vercel/
+reference/*.psd
+reference/card-art-original/
+*.tsbuildinfo
 .DS_Store

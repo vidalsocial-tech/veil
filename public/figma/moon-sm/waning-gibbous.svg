@@ -1,0 +1,26 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="45.2682" height="50" viewBox="0 0 45.2682 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Moon">
+<g id="Disk">
+<circle cx="25" cy="25" r="15" fill="#C9A352" fill-opacity="0.08"/>
+<circle cx="25" cy="25" r="14.6" stroke-width="0.8" stroke="#C9A352" stroke-opacity="0.28"/>
+</g>
+<g id="Lit" filter="url(#filter0_d_0_90)">
+<path d="M25 10C21.0218 10 17.2064 11.5804 14.3934 14.3934C11.5804 17.2064 10 21.0218 10 25C10 28.9782 11.5804 32.7936 14.3934 35.6066C17.2064 38.4196 21.0218 40 25 40C27.7233 40 30.3351 38.4196 32.2607 35.6066C34.1864 32.7936 35.2682 28.9782 35.2682 25C35.2682 21.0218 34.1864 17.2064 32.2607 14.3934C30.3351 11.5804 27.7233 10 25 10Z" fill="url(#paint0_radial_0_90)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_90" x="0" y="0" width="45.2682" height="50" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset/>
+<feGaussianBlur stdDeviation="5"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.79 0 0 0 0 0.64 0 0 0 0 0.32 0 0 0 0.45 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_90"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_90" result="shape"/>
+</filter>
+<radialGradient id="paint0_radial_0_90" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(22.6341 25) scale(12.6341 15)">
+<stop stop-color="#F5DE9E"/>
+<stop offset="1" stop-color="#C7912B"/>
+</radialGradient>
+</defs>
+</svg>

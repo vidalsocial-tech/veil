@@ -1,0 +1,43 @@
+/*
+ * VeilReads design tokens — change the whole look from here.
+ * Values are taken from the live veilreads.com stylesheet (2026-11-07).
+ */
+:root {
+  /* palette */
+  --ink: #2c1f0e;          /* primary text */
+  --gold: #a07830;         /* accent */
+  --gold-lt: #c49a48;      /* accent highlight */
+  --mist: #5a4a33;         /* secondary text */
+  --parchment: #f5efe2;
+  --paper: #f9f4ea;        /* page background */
+  --paper-2: #ede4d0;
+  --surface: #fdfaf3;      /* tiles and reading pages (Figma) */
+  --card-back-1: #3a2617;  /* face-down card gradient */
+  --card-back-2: #1f140a;
+  --home-btn: #2c1a0e;
+  --home-btn-icon: #f0e6d3;
+  --overlay: rgba(44, 31, 14, 0.88);
+  --gold-a: 201, 162, 82;  /* rgb triplet for translucent gold */
+  --bronze-a: 160, 120, 48;
+
+  /* type */
+  --font-display: 'Cinzel', serif;
+  --font-body: 'Libre Baskerville', serif;
+  --font-ui: 'Inter', sans-serif;
+
+  /* shape & motion */
+  --radius-pill: 60px;
+  --radius-card: 11px;
+  --radius-panel: 14px;
+  --radius-page: 20px;     /* reading pages */
+  --shadow-card: 0 6px 20px rgba(44, 31, 14, 0.28);
+  --shadow-gold: 0 4px 26px rgba(201, 162, 82, 0.28);
+  --ease-screen: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-soft: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-rise: cubic-bezier(0.2, 0, 0.1, 1);
+  --screen-fade: 0.7s;
+
+  /* atmosphere */
+  --grain-opacity: 0.018;
+  --glow-top: rgba(180, 148, 90, 0.18);
+}

@@ -1,0 +1,470 @@
+{
+ "the-fool": {
+  "line": "0 · Major Arcana · Air",
+  "title": "The Innocent / The Beginner",
+  "meaning": "Pure potential before the story begins — courage wearing casual clothes, the willingness to move before you’re ready.",
+  "shadow": "Recklessness, avoidance of consequence, refusing to grow up."
+ },
+ "the-magician": {
+  "line": "I · Major Arcana · Air / Mercury",
+  "title": "The Alchemist / The Craftsman",
+  "meaning": "Mastery over mystery — what exists inside you is sufficient for what is required outside you; nothing was ever absent.",
+  "shadow": "Manipulation, using power to control others, all skill and no soul."
+ },
+ "the-high-priestess": {
+  "line": "II · Major Arcana · Water / Moon",
+  "title": "The Oracle / The Keeper of Secrets",
+  "meaning": "The space between words, the pause before the answer — wisdom deposited quietly in the body, in dreams, in the moments just before sleep.",
+  "shadow": "Secrets kept to maintain power, withdrawal as avoidance, coldness mistaken for wisdom."
+ },
+ "the-empress": {
+  "line": "III · Major Arcana · Earth / Venus",
+  "title": "The Mother / The Creative Force",
+  "meaning": "Abundance as a state of being, not a reward — sensual, generous, completely at home in the body; stop earning your ease and simply inhabit it.",
+  "shadow": "Smothering, over-giving until empty, mistaking abundance for love."
+ },
+ "the-emperor": {
+  "line": "IV · Major Arcana · Fire / Aries",
+  "title": "The Father / The Architect",
+  "meaning": "Power earned through showing up and living with consequences — not dominance, but reliability; the structure that lets others move freely within it.",
+  "shadow": "Rigidity, control masquerading as protection, love expressed only through authority."
+ },
+ "the-hierophant": {
+  "line": "V · Major Arcana · Earth / Taurus",
+  "title": "The Teacher / The Tradition-Keeper",
+  "meaning": "The long memory of what has been learned — the difference between inherited belief and chosen belief; what do you actually know to be true?",
+  "shadow": "Dogma, following rules out of fear, teaching what you don’t believe."
+ },
+ "the-lovers": {
+  "line": "VI · Major Arcana · Air / Gemini",
+  "title": "The Union / The Choice",
+  "meaning": "A crossroads between versions of yourself — every real choice asks which self this path calls forward, and whether that is the one you want to be.",
+  "shadow": "Choosing based on fear, giving yourself up to keep the peace, mistaking chemistry for compatibility."
+ },
+ "the-chariot": {
+  "line": "VII · Major Arcana · Water / Cancer",
+  "title": "The Victor / The Willful One",
+  "meaning": "Directed force — holding opposing tensions long enough to drive them forward together; victory is not the absence of conflict but its intelligent use.",
+  "shadow": "Forcing outcomes, confusing momentum with direction, winning the wrong thing."
+ },
+ "strength": {
+  "line": "VIII · Major Arcana · Fire / Leo",
+  "title": "The Gentle Brave / The Tamer",
+  "meaning": "Befriending the lion, not subduing it — the quiet, consistent refusal to be ruled by fear or rage; power that doesn’t grip, it holds.",
+  "shadow": "Repression disguised as strength, enduring what should be refused, losing yourself to keep others comfortable."
+ },
+ "the-hermit": {
+  "line": "IX · Major Arcana · Earth / Virgo",
+  "title": "The Seeker / The Lantern-Bearer",
+  "meaning": "A lantern that lights only a few steps ahead — internal reckoning, the deep solitude that is not loneliness but discernment.",
+  "shadow": "Isolation as avoidance, wisdom hoarded rather than shared, mistaking withdrawal for enlightenment."
+ },
+ "wheel-of-fortune": {
+  "line": "X · Major Arcana · Fire / Jupiter",
+  "title": "The Turning / The Cyclic Truth",
+  "meaning": "You are not stuck — you are in motion; fate is real, but so is the stance you take toward it.",
+  "shadow": "Fatalism, abdicating responsibility by calling everything fate, refusing to act because it’s all up to the universe."
+ },
+ "justice": {
+  "line": "XI · Major Arcana · Air / Libra",
+  "title": "The Adjudicator / The Honest Mirror",
+  "meaning": "Seeing clearly, not cruelly — the scales are there to calibrate, not condemn; the truth, when you let it land, is usually less terrible than the effort of avoiding it.",
+  "shadow": "Harsh judgment without mercy, using fairness as a weapon, holding others to standards you won’t hold yourself."
+ },
+ "the-hanged-man": {
+  "line": "XII · Major Arcana · Water / Neptune",
+  "title": "The Willing Sacrifice / The Perspective Shifter",
+  "meaning": "Hanging by choice — the pause that is not passivity but the most active kind of stillness; the world rearranges into a shape only visible from upside down.",
+  "shadow": "Martyrdom, suffering that has become an identity, refusing to act because waiting feels like wisdom."
+ },
+ "death": {
+  "line": "XIII · Major Arcana · Water / Scorpio",
+  "title": "The Transformer / The Threshold",
+  "meaning": "The courage to let something end completely so something new can begin completely — not a villain but a liberator; underneath the grief is spaciousness.",
+  "shadow": "Refusing necessary endings, clinging to what is already gone, mistaking the ending for the loss."
+ },
+ "temperance": {
+  "line": "XIV · Major Arcana · Fire / Sagittarius",
+  "title": "The Alchemist / The Integration",
+  "meaning": "Perfectly calibrated, not merely tame — blending opposites into something neither container could hold alone.",
+  "shadow": "Endless moderation as avoidance of real commitment, blending everything until nothing has flavor."
+ },
+ "the-devil": {
+  "line": "XV · Major Arcana · Earth / Capricorn",
+  "title": "The Shadow / The Enchainer",
+  "meaning": "The chains hang loosely — the comfortable prison, the habit that offers relief while it takes; not shame but honesty: is the transaction actually worth it?",
+  "shadow": "Addiction, self-deception, the chain that could be slipped but hasn’t been because the comfort is familiar."
+ },
+ "the-tower": {
+  "line": "XVI · Major Arcana · Fire / Mars",
+  "title": "The Liberator / The Necessary Collapse",
+  "meaning": "Built on a false foundation — the lightning comes to clarify, not destroy; let it fall, build from here.",
+  "shadow": "Chaos for its own sake, destruction without the willingness to rebuild, the ego that falls but refuses to learn."
+ },
+ "the-star": {
+  "line": "XVII · Major Arcana · Air / Aquarius",
+  "title": "The Healer / The Renewed",
+  "meaning": "Pouring without calculating after the storm has passed — genuine hope that exists on the other side of pain, not in spite of it.",
+  "shadow": "False hope, spiritual bypassing, using optimism to avoid the hard work of recovery."
+ },
+ "the-moon": {
+  "line": "XVIII · Major Arcana · Water / Pisces",
+  "title": "The Dreamer / The Illusionist",
+  "meaning": "Illuminates without explaining — dream logic that knows more than it can say; not everything that is true can be proven, not every fear is a warning.",
+  "shadow": "Confusion mistaken for depth, fear that pretends to be intuition, the subconscious running the show unexamined."
+ },
+ "the-sun": {
+  "line": "XIX · Major Arcana · Fire / Sun",
+  "title": "The Child / The Radiant",
+  "meaning": "Does not ask permission to shine — pure joy that comes not from circumstances being perfect but from the self being fully expressed.",
+  "shadow": "Performance of joy, the need for constant validation, brightness that refuses to acknowledge shadow."
+ },
+ "judgement": {
+  "line": "XX · Major Arcana · Fire / Pluto",
+  "title": "The Awakening / The Call",
+  "meaning": "Being called, not judged — rising not because of a sentence but because the summons has finally been heard; the old story releases its grip.",
+  "shadow": "Guilt that won’t release, holding others to an accounting that serves resentment more than justice."
+ },
+ "the-world": {
+  "line": "XXI · Major Arcana · Earth / Saturn",
+  "title": "The Integrator / The Complete",
+  "meaning": "The end of the journey and the beginning of a new spiral — earned lightness; whole, capable, free within the circle that used to be a cage.",
+  "shadow": "Resting on past achievement instead of continuing, confusing completion with arrival."
+ },
+ "ace-of-wands": {
+  "line": "Ace · Wands · Fire",
+  "title": "The Spark / The First Flame",
+  "meaning": "The moment before the thing has a name — pure generative impulse, the body’s yes before the mind has reviewed the proposal.",
+  "shadow": "Creative energy ignited but not yet directed — the match that lights everything without knowing what it’s building."
+ },
+ "two-of-wands": {
+  "line": "II · Wands · Fire",
+  "title": "The Planner / The Horizon-Gazer",
+  "meaning": "Standing at the edge of what you’ve built and looking toward what you haven’t yet reached — the future is genuinely available.",
+  "shadow": "Mistaking the map for the journey — holding the globe of possibility without ever setting foot on the ground."
+ },
+ "three-of-wands": {
+  "line": "III · Wands · Fire",
+  "title": "The Visionary / The Long View",
+  "meaning": "Ships already on the water, vision already in motion — the satisfaction of watching what you dared to start actually move.",
+  "shadow": "Expansion without roots — ambition that has left the ground it grew in."
+ },
+ "four-of-wands": {
+  "line": "IV · Wands · Fire",
+  "title": "The Celebrant / The Homecoming",
+  "meaning": "Genuine arrival — something has been completed or begun that deserves to be marked; you are allowed to feel this.",
+  "shadow": "A celebration you can’t fully enter because you’re still watching for what might go wrong."
+ },
+ "five-of-wands": {
+  "line": "V · Wands · Fire",
+  "title": "The Combatant / The Friction-Field",
+  "meaning": "The productive friction of strong wills that have not yet found their synthesis — not all conflict is wrong, but this one needs direction.",
+  "shadow": "Conflict for its own sake — the energy that manufactures opposition when none is needed."
+ },
+ "six-of-wands": {
+  "line": "VI · Wands · Fire",
+  "title": "The Victor / The Recognized",
+  "meaning": "A moment of genuine, earned recognition — you did something and it worked; you are allowed to ride through the gate.",
+  "shadow": "The identity that cannot exist without applause."
+ },
+ "seven-of-wands": {
+  "line": "VII · Wands · Fire",
+  "title": "The Defender / The Stand-Taker",
+  "meaning": "Holding the high ground under real pressure — staying with your position because it is genuinely yours.",
+  "shadow": "Defensiveness that has become permanent posture."
+ },
+ "eight-of-wands": {
+  "line": "VIII · Wands · Fire",
+  "title": "The Arrow / The Swift Current",
+  "meaning": "Everything moving at once, all in the same direction — the rare alignment of conditions, intention and momentum; now is the time to move.",
+  "shadow": "Speed without aim — mistaking velocity for direction."
+ },
+ "nine-of-wands": {
+  "line": "IX · Wands · Fire",
+  "title": "The Last Stand / The Weary Guardian",
+  "meaning": "One more step from the end — you have been through the gauntlet and still you are standing.",
+  "shadow": "Resilience that has become its own prison, vigilance that cannot rest."
+ },
+ "ten-of-wands": {
+  "line": "X · Wands · Fire",
+  "title": "The Overburdened / The One Who Carries",
+  "meaning": "A weight carried a long way — the question is whether all of it still needs carrying, and whether all of it is yours.",
+  "shadow": "Mistaking the burden for identity."
+ },
+ "page-of-wands": {
+  "line": "Page · Wands · Fire",
+  "title": "The Enthusiast / The First Fire",
+  "meaning": "Unfiltered excitement at the edge of something new — this energy doesn’t know enough to be cautious yet, and that is its gift.",
+  "shadow": "The beginning that never becomes a middle."
+ },
+ "knight-of-wands": {
+  "line": "Knight · Wands · Fire",
+  "title": "The Charger / The Bold Mover",
+  "meaning": "Fearless forward motion with genuine courage — the question is not whether to move but whether to give the movement a true direction.",
+  "shadow": "Action as avoidance — always already on to the next thing."
+ },
+ "queen-of-wands": {
+  "line": "Queen · Wands · Fire",
+  "title": "The Warm Fire / The Magnetic One",
+  "meaning": "Fully alive in herself and generous with it — she doesn’t perform warmth; she is warm, and the room responds.",
+  "shadow": "Charisma that has become performance, warmth conditional on being admired."
+ },
+ "king-of-wands": {
+  "line": "King · Wands · Fire",
+  "title": "The Visionary Leader / The Purposeful Fire",
+  "meaning": "Mastery in service of something larger than the self — the fire that builds rather than consumes.",
+  "shadow": "Vision without patience for those who move more slowly."
+ },
+ "ace-of-cups": {
+  "line": "Ace · Cups · Water",
+  "title": "The Overflowing / The Opened Heart",
+  "meaning": "The heart cracking open in the right direction — love or compassion offered without condition, the source that does not calculate what it gives.",
+  "shadow": "Emotional overwhelm that has not yet found form — all feeling, no vessel."
+ },
+ "two-of-cups": {
+  "line": "II · Cups · Water",
+  "title": "The Meeting / The Recognized Other",
+  "meaning": "The moment two people genuinely see each other — equally, cleanly, without either one diminishing.",
+  "shadow": "Merging as avoidance — connection that requires each person to be slightly less than themselves."
+ },
+ "three-of-cups": {
+  "line": "III · Cups · Water",
+  "title": "The Circle / The Shared Joy",
+  "meaning": "The particular joy that only exists when it is shared — the table where everyone present makes each other more.",
+  "shadow": "The in-group that keeps others out, community that requires conformity."
+ },
+ "four-of-cups": {
+  "line": "IV · Cups · Water",
+  "title": "The Discontented / The Inward-Turned",
+  "meaning": "Genuine introspection at a crossroads — the necessary pause before a reorientation; the cup being offered is real.",
+  "shadow": "Apathy mistaken for wisdom, withdrawal that calls itself discernment."
+ },
+ "five-of-cups": {
+  "line": "V · Cups · Water",
+  "title": "The Mourner / The One Facing the Spillage",
+  "meaning": "Real loss, genuinely felt — honest grief that deserves to be honored; the two standing cups will still be there when the mourning has had its time.",
+  "shadow": "Grief that has become a permanent address."
+ },
+ "six-of-cups": {
+  "line": "VI · Cups · Water",
+  "title": "The Memory / The Innocent Return",
+  "meaning": "The warmth of what was genuinely good — the past has a gift for the present, if the present does not try to become the past.",
+  "shadow": "The past used as escape from the present."
+ },
+ "seven-of-cups": {
+  "line": "VII · Cups · Water",
+  "title": "The Dreamer / The Overwhelmed Chooser",
+  "meaning": "More real options than can be held — not scarcity but abundance; the gift and the challenge is the requirement to choose.",
+  "shadow": "Fantasy as a full-time occupation, preferring possibility to any particular reality."
+ },
+ "eight-of-cups": {
+  "line": "VIII · Cups · Water",
+  "title": "The Walker-Away / The One Who Leaves at Midnight",
+  "meaning": "The courageous walk into the unknown — leaving not from defeat but because what was once enough is no longer.",
+  "shadow": "Leaving as a lifestyle, exiting before things can require more depth."
+ },
+ "nine-of-cups": {
+  "line": "IX · Cups · Water",
+  "title": "The Fulfilled / The Satisfied One",
+  "meaning": "Genuine satisfaction — the wish already granted; the only question is whether you will let yourself receive it.",
+  "shadow": "Contentment that has become complacency."
+ },
+ "ten-of-cups": {
+  "line": "X · Cups · Water",
+  "title": "The Fulfilled Home / The Real Happiness",
+  "meaning": "The emotional inheritance you always deserved — belonging, warmth, people who are genuinely glad you exist.",
+  "shadow": "The performance of happiness that papers over what is actually happening."
+ },
+ "page-of-cups": {
+  "line": "Page · Cups · Water",
+  "title": "The Dreamy Messenger / The Emotional Beginner",
+  "meaning": "The surprise of the heart — a feeling that arrives from nowhere and speaks; the willingness to be moved without knowing why.",
+  "shadow": "Feeling as performance, sensitivity displayed rather than felt."
+ },
+ "knight-of-cups": {
+  "line": "Knight · Cups · Water",
+  "title": "The Romantic / The One Who Follows the Heart",
+  "meaning": "Riding toward what is beautiful and true — the courage of the romantic is real, even when the romance is impractical.",
+  "shadow": "Idealism that cannot survive contact with reality."
+ },
+ "queen-of-cups": {
+  "line": "Queen · Cups · Water",
+  "title": "The Emotional Depth / The Compassionate Container",
+  "meaning": "The rarest kind of listening — a presence that makes others feel held, by someone deeply connected to her own interior life.",
+  "shadow": "Empathy without boundaries, absorbing everyone’s feelings until nothing of yourself is left."
+ },
+ "king-of-cups": {
+  "line": "King · Cups · Water",
+  "title": "The Feeling Authority / The Master of the Interior",
+  "meaning": "Maturity in the realm of feeling — the ability to feel deeply without being swept away, to lead from a place both warm and clear.",
+  "shadow": "Emotional control that has become manipulation."
+ },
+ "ace-of-swords": {
+  "line": "Ace · Swords · Air",
+  "title": "The Breakthrough / The First Truth",
+  "meaning": "The clarity that arrives like a blade parting fog — sudden, total, uncommissioned; the kind of knowing that cannot be unknown.",
+  "shadow": "Truth deployed without compassion."
+ },
+ "two-of-swords": {
+  "line": "II · Swords · Air",
+  "title": "The Stalemate / The Blindfolded One",
+  "meaning": "Holding two impossibilities in balance — the real question is not which sword to drop but whether you can bear to look.",
+  "shadow": "The decision delayed until it makes itself."
+ },
+ "three-of-swords": {
+  "line": "III · Swords · Air",
+  "title": "The Heartbreak / The Honest Wound",
+  "meaning": "The clean cut of genuine heartbreak — nothing is wrong with this pain; it means something real was here.",
+  "shadow": "Grief made permanent, the swords left in place."
+ },
+ "four-of-swords": {
+  "line": "IV · Swords · Air",
+  "title": "The Resting Sword / The Necessary Retreat",
+  "meaning": "Deliberate, strategic stillness — rest as an act of self-knowledge; the swords are set aside, not abandoned.",
+  "shadow": "Rest that becomes hiding."
+ },
+ "five-of-swords": {
+  "line": "V · Swords · Air",
+  "title": "The Hollow Win / The Cost of Conquest",
+  "meaning": "The price of victory when it has cost something that mattered — what exactly has been won here?",
+  "shadow": "Winning as an end in itself."
+ },
+ "six-of-swords": {
+  "line": "VI · Swords · Air",
+  "title": "The Crossing / The One Moving Through",
+  "meaning": "The slow ferry across difficult water — not triumphant, but real; you are being carried toward what comes next.",
+  "shadow": "Departure without closure."
+ },
+ "seven-of-swords": {
+  "line": "VII · Swords · Air",
+  "title": "The Strategist / The One Slipping Away",
+  "meaning": "Strategic action where direct confrontation would cost too much — the question is what you are trying to get away with.",
+  "shadow": "Cleverness in service of avoidance."
+ },
+ "eight-of-swords": {
+  "line": "VIII · Swords · Air",
+  "title": "The Self-Bound / The One Who Can Leave",
+  "meaning": "Bound by perception, not by fact — the bindings loosen the moment you stop believing they are permanent.",
+  "shadow": "The prison that requires the prisoner’s cooperation."
+ },
+ "nine-of-swords": {
+  "line": "IX · Swords · Air",
+  "title": "The Night Mind / The 3am Voice",
+  "meaning": "The gap between the fear and the fact — the suffering is genuine, but its source is the mind feeding on itself.",
+  "shadow": "The catastrophe that lives only in the mind."
+ },
+ "ten-of-swords": {
+  "line": "X · Swords · Air",
+  "title": "The Final Collapse / The Bottom That Holds",
+  "meaning": "The bottom has been reached — what is over is completely over, and that is the ground the next thing grows from.",
+  "shadow": "Staying fallen because getting up would mean it actually happened."
+ },
+ "page-of-swords": {
+  "line": "Page · Swords · Air",
+  "title": "The Curious Mind / The Vigilant Beginner",
+  "meaning": "The delight of a new idea — sharp, fast, unafraid to ask the question no one else has thought to ask.",
+  "shadow": "Intelligence in service of surveillance."
+ },
+ "knight-of-swords": {
+  "line": "Knight · Swords · Air",
+  "title": "The Charger / The Relentless Mind",
+  "meaning": "Absolute commitment to a direction — the question is whether the destination was named before the charge began.",
+  "shadow": "Speed and force without the pause that separates courage from recklessness."
+ },
+ "queen-of-swords": {
+  "line": "Queen · Swords · Air",
+  "title": "The Clear Eye / The One Who Will Not Be Fooled",
+  "meaning": "Sees without distortion, speaks without cruelty — the truth delivered with just enough warmth to be received.",
+  "shadow": "Clarity that has become coldness."
+ },
+ "king-of-swords": {
+  "line": "King · Swords · Air",
+  "title": "The Intellectual Authority / The Ethical Mind",
+  "meaning": "The mind that has earned its authority — holding himself to the same standard he holds others.",
+  "shadow": "Law without mercy, logic used as a weapon."
+ },
+ "ace-of-pentacles": {
+  "line": "Ace · Pentacles · Earth",
+  "title": "The Seed of Form / The Material Beginning",
+  "meaning": "A real, tangible opportunity — not a dream but a seed with actual growing potential, if it is planted in real ground.",
+  "shadow": "Opportunity mistaken for certainty."
+ },
+ "two-of-pentacles": {
+  "line": "II · Pentacles · Earth",
+  "title": "The Juggler / The One Keeping Everything Moving",
+  "meaning": "The skill of holding competing demands in motion — the question is whether you are juggling toward something or just to avoid dropping.",
+  "shadow": "The permanent juggle that substitutes for a decision."
+ },
+ "three-of-pentacles": {
+  "line": "III · Pentacles · Earth",
+  "title": "The Craftsperson / The Collaborative Builder",
+  "meaning": "Skill meets structure meets collaboration — what is being built is larger than any one person, and that is the point.",
+  "shadow": "Mastery that has become an ego."
+ },
+ "four-of-pentacles": {
+  "line": "IV · Pentacles · Earth",
+  "title": "The Holder / The One Who Will Not Let Go",
+  "meaning": "The understandable desire for stability — the question is whether the grip has become so tight the held thing cannot breathe.",
+  "shadow": "Security as hoarding."
+ },
+ "five-of-pentacles": {
+  "line": "V · Pentacles · Earth",
+  "title": "The Excluded / The One in the Cold",
+  "meaning": "Real difficulty, genuinely felt — the window is lit and the door is not locked, but you have not yet looked up.",
+  "shadow": "Hardship as identity."
+ },
+ "six-of-pentacles": {
+  "line": "VI · Pentacles · Earth",
+  "title": "The Giver / The Balance of Exchange",
+  "meaning": "Resources moving from where there is more to where there is less — is this freely given, and freely received?",
+  "shadow": "Generosity with conditions attached."
+ },
+ "seven-of-pentacles": {
+  "line": "VII · Pentacles · Earth",
+  "title": "The Assessor / The Long-View Tender",
+  "meaning": "The honest pause midway through a long effort — not to quit, but to look at what has grown and calibrate.",
+  "shadow": "Satisfaction perpetually deferred."
+ },
+ "eight-of-pentacles": {
+  "line": "VIII · Pentacles · Earth",
+  "title": "The Apprentice / The One Doing the Work",
+  "meaning": "Skill built through repetition rather than inspiration — craft is the accumulated honesty of showing up.",
+  "shadow": "Perfectionism as avoidance."
+ },
+ "nine-of-pentacles": {
+  "line": "IX · Pentacles · Earth",
+  "title": "The Self-Made / The One Who Has Arrived in Themselves",
+  "meaning": "The pleasure of a life built by your own hand — the satisfaction of having made something real and standing inside it.",
+  "shadow": "Independence that has become loneliness."
+ },
+ "ten-of-pentacles": {
+  "line": "X · Pentacles · Earth",
+  "title": "The Legacy / The Enduring Structure",
+  "meaning": "The multigenerational view — what is being built here that will outlast the building of it.",
+  "shadow": "Security that becomes rigidity."
+ },
+ "page-of-pentacles": {
+  "line": "Page · Pentacles · Earth",
+  "title": "The Student / The Practical Dreamer",
+  "meaning": "Holding the coin of a new opportunity up to the light — genuinely curious and willing to learn; the beginning of mastery.",
+  "shadow": "Perpetual preparation as a way of avoiding beginning."
+ },
+ "knight-of-pentacles": {
+  "line": "Knight · Pentacles · Earth",
+  "title": "The Reliable One / The Slow and Certain Mover",
+  "meaning": "The unglamorous, necessary work of showing up in the same direction every day — not the hero, but the one who gets there.",
+  "shadow": "Reliability that has become stagnation."
+ },
+ "queen-of-pentacles": {
+  "line": "Queen · Pentacles · Earth",
+  "title": "The Practical Nurturer / The One Who Makes Things Real",
+  "meaning": "Care that makes itself felt in real and physical ways — the practical love that asks what is needed and then provides it.",
+  "shadow": "Provision without presence."
+ },
+ "king-of-pentacles": {
+  "line": "King · Pentacles · Earth",
+  "title": "The Builder / The Reliable Provider",
+  "meaning": "Mastery in the material world — someone who has built something durable and knows how to steward it.",
+  "shadow": "Wealth as identity."
+ }
+}
