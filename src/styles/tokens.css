@@ -16,6 +16,11 @@
   --card-back-2: #1f140a;
   --home-btn: #2c1a0e;
   --home-btn-icon: #f0e6d3;
+  /* buttons (Figma "Button": Primary = solid ink + white, Ghost = ink outline) */
+  --btn-primary: var(--ink);
+  --btn-primary-hover: #3d2c16;
+  --on-primary: #ffffff;   /* Figma variable "on-gold" */
+  --btn-outline: var(--ink);
   --overlay: rgba(44, 31, 14, 0.88);
   --gold-a: 201, 162, 82;  /* rgb triplet for translucent gold */
   --bronze-a: 160, 120, 48;
@@ -32,6 +37,7 @@
   --radius-page: 20px;     /* reading pages */
   --shadow-card: 0 6px 20px rgba(44, 31, 14, 0.28);
   --shadow-gold: 0 4px 26px rgba(201, 162, 82, 0.28);
+  --shadow-button: 0 6px 18px rgba(44, 31, 14, 0.22);  /* Figma effect style "Shadow/Button" */
   --ease-screen: cubic-bezier(0.4, 0, 0.2, 1);
   --ease-soft: cubic-bezier(0.23, 1, 0.32, 1);
   --ease-rise: cubic-bezier(0.2, 0, 0.1, 1);

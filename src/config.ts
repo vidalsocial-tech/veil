@@ -45,6 +45,12 @@ export const CONFIG = {
   /** The closing moon slide's Share button — hidden in the Figma closing-slide frames. */
   showShare: false,
 
+  /** Explore the deck (Figma "Explore - Deck Flow" M01–M07, H01). */
+  explore: {
+    /** Open the full deck on a title card that credits the artist and creator (Figma M07). */
+    titleCard: true,
+  },
+
   positions: ['The Root', 'The Now', 'The Path'] as const,
   numerals: ['I', 'II', 'III'] as const,
 

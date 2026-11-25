@@ -3,468 +3,546 @@
   "line": "0 · Major Arcana · Air",
   "title": "The Innocent / The Beginner",
   "meaning": "Pure potential before the story begins — courage wearing casual clothes, the willingness to move before you’re ready.",
-  "shadow": "Recklessness, avoidance of consequence, refusing to grow up."
+  "shadow": "Recklessness, avoidance of consequence, refusing to grow up.",
+  "reversed": "The leap is available but something is holding you back. Not recklessness but paralysis: the cliff is there, the shoes are on, the bag is packed, and the foot won't lift. The Fool reversed asks what you are waiting for permission to begin."
  },
  "the-magician": {
   "line": "I · Major Arcana · Air / Mercury",
   "title": "The Alchemist / The Craftsman",
   "meaning": "Mastery over mystery — what exists inside you is sufficient for what is required outside you; nothing was ever absent.",
-  "shadow": "Manipulation, using power to control others, all skill and no soul."
+  "shadow": "Manipulation, using power to control others, all skill and no soul.",
+  "reversed": "The tools are being misused: misdirected toward control, toward performance, toward impressing rather than creating. Or the skill is real but the soul is absent — execution without meaning. The Magician reversed asks whose vision you are actually serving."
  },
  "the-high-priestess": {
   "line": "II · Major Arcana · Water / Moon",
   "title": "The Oracle / The Keeper of Secrets",
   "meaning": "The space between words, the pause before the answer — wisdom deposited quietly in the body, in dreams, in the moments just before sleep.",
-  "shadow": "Secrets kept to maintain power, withdrawal as avoidance, coldness mistaken for wisdom."
+  "shadow": "Secrets kept to maintain power, withdrawal as avoidance, coldness mistaken for wisdom.",
+  "reversed": "The inner voice is present but you have learned not to trust it. External noise, others' opinions, or the demand for logical proof has trained you to dismiss what you already know. The High Priestess reversed asks what you would believe if you stopped requiring it to be verifiable."
  },
  "the-empress": {
   "line": "III · Major Arcana · Earth / Venus",
   "title": "The Mother / The Creative Force",
   "meaning": "Abundance as a state of being, not a reward — sensual, generous, completely at home in the body; stop earning your ease and simply inhabit it.",
-  "shadow": "Smothering, over-giving until empty, mistaking abundance for love."
+  "shadow": "Smothering, over-giving until empty, mistaking abundance for love.",
+  "reversed": "The nourishing impulse has curdled into over-giving, smothering, or the compulsive need to produce. Creativity that punishes rather than replenishes. The Empress reversed asks what you are making from depletion rather than fullness, and whether you have given yourself the same care you give everything else."
  },
  "the-emperor": {
   "line": "IV · Major Arcana · Fire / Aries",
   "title": "The Father / The Architect",
   "meaning": "Power earned through showing up and living with consequences — not dominance, but reliability; the structure that lets others move freely within it.",
-  "shadow": "Rigidity, control masquerading as protection, love expressed only through authority."
+  "shadow": "Rigidity, control masquerading as protection, love expressed only through authority.",
+  "reversed": "Authority and rigidity are at war inside the same person. The capacity to build structure is real, but it keeps calcifying into control. Or the opposite: the architecture exists but you refuse to inhabit it, mistaking structure for confinement. The Emperor reversed asks whether the rules being followed were ever actually chosen."
  },
  "the-hierophant": {
   "line": "V · Major Arcana · Earth / Taurus",
   "title": "The Teacher / The Tradition-Keeper",
   "meaning": "The long memory of what has been learned — the difference between inherited belief and chosen belief; what do you actually know to be true?",
-  "shadow": "Dogma, following rules out of fear, teaching what you don’t believe."
+  "shadow": "Dogma, following rules out of fear, teaching what you don’t believe.",
+  "reversed": "Belief has become dogma. You are following rules handed to you unexamined, and the cost of that compliance is accumulating. Or the reverse: a reflexive rejection of all tradition that throws away genuine wisdom in the name of independence. The Hierophant reversed asks what you actually knows to be true versus what you were told to believe."
  },
  "the-lovers": {
   "line": "VI · Major Arcana · Air / Gemini",
   "title": "The Union / The Choice",
   "meaning": "A crossroads between versions of yourself — every real choice asks which self this path calls forward, and whether that is the one you want to be.",
-  "shadow": "Choosing based on fear, giving yourself up to keep the peace, mistaking chemistry for compatibility."
+  "shadow": "Choosing based on fear, giving yourself up to keep the peace, mistaking chemistry for compatibility.",
+  "reversed": "The choice is real but you are choosing from fear rather than alignment. Or you are staying in a dynamic that serves comfort over truth — giving yourself up piece by piece to avoid the discomfort of choosing. The Lovers reversed asks what you are keeping alive because ending it would require you to change."
  },
  "the-chariot": {
   "line": "VII · Major Arcana · Water / Cancer",
   "title": "The Victor / The Willful One",
   "meaning": "Directed force — holding opposing tensions long enough to drive them forward together; victory is not the absence of conflict but its intelligent use.",
-  "shadow": "Forcing outcomes, confusing momentum with direction, winning the wrong thing."
+  "shadow": "Forcing outcomes, confusing momentum with direction, winning the wrong thing.",
+  "reversed": "Momentum has become its own destination. You are moving fast, but the direction is wrong or unconscious. Winning the wrong race. The Chariot reversed asks where you are going, and whether you chose that destination or inherited it."
  },
  "strength": {
   "line": "VIII · Major Arcana · Fire / Leo",
   "title": "The Gentle Brave / The Tamer",
   "meaning": "Befriending the lion, not subduing it — the quiet, consistent refusal to be ruled by fear or rage; power that doesn’t grip, it holds.",
-  "shadow": "Repression disguised as strength, enduring what should be refused, losing yourself to keep others comfortable."
+  "shadow": "Repression disguised as strength, enduring what should be refused, losing yourself to keep others comfortable.",
+  "reversed": "Your real power is being withheld, performed away, or given up to keep the peace. What looks like patience may be fear of conflict. What looks like strength may be endurance of what should be refused. Strength reversed asks what you would stop tolerating if you trusted that your actual power was enough."
  },
  "the-hermit": {
   "line": "IX · Major Arcana · Earth / Virgo",
   "title": "The Seeker / The Lantern-Bearer",
   "meaning": "A lantern that lights only a few steps ahead — internal reckoning, the deep solitude that is not loneliness but discernment.",
-  "shadow": "Isolation as avoidance, wisdom hoarded rather than shared, mistaking withdrawal for enlightenment."
+  "shadow": "Isolation as avoidance, wisdom hoarded rather than shared, mistaking withdrawal for enlightenment.",
+  "reversed": "The wisdom is already there — earned, deep, genuinely present — but it hasn't been allowed to surface yet. Whether through isolation, through the habit of keeping it inward, or through the quiet belief that it isn't ready to be offered. The Hermit reversed asks what it would look like to finally let the lantern be seen."
  },
  "wheel-of-fortune": {
   "line": "X · Major Arcana · Fire / Jupiter",
   "title": "The Turning / The Cyclic Truth",
   "meaning": "You are not stuck — you are in motion; fate is real, but so is the stance you take toward it.",
-  "shadow": "Fatalism, abdicating responsibility by calling everything fate, refusing to act because it’s all up to the universe."
+  "shadow": "Fatalism, abdicating responsibility by calling everything fate, refusing to act because it’s all up to the universe.",
+  "reversed": "The turn is coming but hasn't arrived yet. You are in a between-moment — the old configuration has released but the new one hasn't declared itself. The Wheel reversed asks for the active patience of someone who knows the wheel always turns, not the passivity of someone waiting to be carried."
  },
  "justice": {
   "line": "XI · Major Arcana · Air / Libra",
   "title": "The Adjudicator / The Honest Mirror",
   "meaning": "Seeing clearly, not cruelly — the scales are there to calibrate, not condemn; the truth, when you let it land, is usually less terrible than the effort of avoiding it.",
-  "shadow": "Harsh judgment without mercy, using fairness as a weapon, holding others to standards you won’t hold yourself."
+  "shadow": "Harsh judgment without mercy, using fairness as a weapon, holding others to standards you won’t hold yourself.",
+  "reversed": "Fairness has become a weapon. You are applying standards to others you don't apply to yourself, or so committed to being right that you can no longer see your own role in the situation. Justice reversed asks you to put yourself on the same scale you've been using on everyone else."
  },
  "the-hanged-man": {
   "line": "XII · Major Arcana · Water / Neptune",
   "title": "The Willing Sacrifice / The Perspective Shifter",
   "meaning": "Hanging by choice — the pause that is not passivity but the most active kind of stillness; the world rearranges into a shape only visible from upside down.",
-  "shadow": "Martyrdom, suffering that has become an identity, refusing to act because waiting feels like wisdom."
+  "shadow": "Martyrdom, suffering that has become an identity, refusing to act because waiting feels like wisdom.",
+  "reversed": "The pause has become an identity. Suspension that was meant to produce perspective has calcified into inertia. You have confused waiting with wisdom, and the sacrifice has become a comfortable story rather than a purposeful act. The Hanged Man reversed asks what you would do if you stopped waiting for the right conditions to act."
  },
  "death": {
   "line": "XIII · Major Arcana · Water / Scorpio",
   "title": "The Transformer / The Threshold",
   "meaning": "The courage to let something end completely so something new can begin completely — not a villain but a liberator; underneath the grief is spaciousness.",
-  "shadow": "Refusing necessary endings, clinging to what is already gone, mistaking the ending for the loss."
+  "shadow": "Refusing necessary endings, clinging to what is already gone, mistaking the ending for the loss.",
+  "reversed": "The ending is real and necessary, but you have not yet crossed the threshold. You are standing at the door of what needs to be released, aware but not yet willing. Death reversed is not refusal — it is the moment just before surrender, asking for the small additional courage needed to complete what has already begun."
  },
  "temperance": {
   "line": "XIV · Major Arcana · Fire / Sagittarius",
   "title": "The Alchemist / The Integration",
   "meaning": "Perfectly calibrated, not merely tame — blending opposites into something neither container could hold alone.",
-  "shadow": "Endless moderation as avoidance of real commitment, blending everything until nothing has flavor."
+  "shadow": "Endless moderation as avoidance of real commitment, blending everything until nothing has flavor.",
+  "reversed": "The integration is already underway — deeper than you can perceive. What looks like imbalance or irresolution is actually two things finding their proportion at a level below the visible. Temperance reversed asks for the patience to trust a process that is working even when it cannot yet be felt."
  },
  "the-devil": {
   "line": "XV · Major Arcana · Earth / Capricorn",
   "title": "The Shadow / The Enchainer",
   "meaning": "The chains hang loosely — the comfortable prison, the habit that offers relief while it takes; not shame but honesty: is the transaction actually worth it?",
-  "shadow": "Addiction, self-deception, the chain that could be slipped but hasn’t been because the comfort is familiar."
+  "shadow": "Addiction, self-deception, the chain that could be slipped but hasn’t been because the comfort is familiar.",
+  "reversed": "You are closer to freedom than you believe. What looks like a fixed condition is actually a choice that hasn't yet been named as such. The Devil reversed doesn't announce escape — it reveals that the door was never locked. The work is recognizing that the hand on the chain is your own."
  },
  "the-tower": {
   "line": "XVI · Major Arcana · Fire / Mars",
   "title": "The Liberator / The Necessary Collapse",
   "meaning": "Built on a false foundation — the lightning comes to clarify, not destroy; let it fall, build from here.",
-  "shadow": "Chaos for its own sake, destruction without the willingness to rebuild, the ego that falls but refuses to learn."
+  "shadow": "Chaos for its own sake, destruction without the willingness to rebuild, the ego that falls but refuses to learn.",
+  "reversed": "The collapse is coming but hasn't arrived yet. You can feel the instability in the structure but is holding it together through sheer effort. The Tower reversed asks whether delaying the inevitable is wisdom or avoidance — and what it would free you to do if you stopped maintaining what is already broken."
  },
  "the-star": {
   "line": "XVII · Major Arcana · Air / Aquarius",
   "title": "The Healer / The Renewed",
   "meaning": "Pouring without calculating after the storm has passed — genuine hope that exists on the other side of pain, not in spite of it.",
-  "shadow": "False hope, spiritual bypassing, using optimism to avoid the hard work of recovery."
+  "shadow": "False hope, spiritual bypassing, using optimism to avoid the hard work of recovery.",
+  "reversed": "Hope is present but you don't trust it yet. After difficulty, you have learned to protect yourself from hope — because hope that has been disappointed before feels like a risk. The Star reversed asks you to notice the hope that is already alive in you, and to let yourself believe in it a little longer than feels safe."
  },
  "the-moon": {
   "line": "XVIII · Major Arcana · Water / Pisces",
   "title": "The Dreamer / The Illusionist",
   "meaning": "Illuminates without explaining — dream logic that knows more than it can say; not everything that is true can be proven, not every fear is a warning.",
-  "shadow": "Confusion mistaken for depth, fear that pretends to be intuition, the subconscious running the show unexamined."
+  "shadow": "Confusion mistaken for depth, fear that pretends to be intuition, the subconscious running the show unexamined.",
+  "reversed": "You are so submerged in the unclear thing that you cannot distinguish between intuition and anxiety. Fear is being mistaken for guidance. Confusion is being mistaken for depth. The Moon reversed asks you to find one thing you know for certain and stand on it — not to force clarity, but to find solid ground from which to approach the uncertain."
  },
  "the-sun": {
   "line": "XIX · Major Arcana · Fire / Sun",
   "title": "The Child / The Radiant",
   "meaning": "Does not ask permission to shine — pure joy that comes not from circumstances being perfect but from the self being fully expressed.",
-  "shadow": "Performance of joy, the need for constant validation, brightness that refuses to acknowledge shadow."
+  "shadow": "Performance of joy, the need for constant validation, brightness that refuses to acknowledge shadow.",
+  "reversed": "Your genuine joy is present but being dimmed — by self-consciousness, by comparison, or by the belief that full expression is somehow too much. The Sun reversed is not depression; it is radiance that has been turned down out of politeness or protection. It asks what you would let yourself feel if you stopped managing how you appear."
  },
  "judgement": {
   "line": "XX · Major Arcana · Fire / Pluto",
   "title": "The Awakening / The Call",
   "meaning": "Being called, not judged — rising not because of a sentence but because the summons has finally been heard; the old story releases its grip.",
-  "shadow": "Guilt that won’t release, holding others to an accounting that serves resentment more than justice."
+  "shadow": "Guilt that won’t release, holding others to an accounting that serves resentment more than justice.",
+  "reversed": "The call is being heard but something is arguing against answering. Old guilt, old identity, old definitions of what you are allowed to become — these are pushing back against the summons. Judgement reversed asks what you believe you need to earn before you are allowed to rise, and whether that belief was ever true."
  },
  "the-world": {
   "line": "XXI · Major Arcana · Earth / Saturn",
   "title": "The Integrator / The Complete",
   "meaning": "The end of the journey and the beginning of a new spiral — earned lightness; whole, capable, free within the circle that used to be a cage.",
-  "shadow": "Resting on past achievement instead of continuing, confusing completion with arrival."
+  "shadow": "Resting on past achievement instead of continuing, confusing completion with arrival.",
+  "reversed": "Completion is available but you haven't claimed it. You are at the end of something real and significant, but you cannot feel it — either because you are moving too fast to pause and receive it, or because you don't believe you are allowed to be done. The World reversed asks you to stop and acknowledge what you have actually become."
  },
  "ace-of-wands": {
   "line": "Ace · Wands · Fire",
   "title": "The Spark / The First Flame",
   "meaning": "The moment before the thing has a name — pure generative impulse, the body’s yes before the mind has reviewed the proposal.",
-  "shadow": "Creative energy ignited but not yet directed — the match that lights everything without knowing what it’s building."
+  "shadow": "Creative energy ignited but not yet directed — the match that lights everything without knowing what it’s building.",
+  "reversed": "Something wants to begin but hasn't been given permission. The creative spark is alive in you — you can feel it — but something is holding the hand back from the page, the voice back from the room. The Ace of Wands reversed asks what you are waiting for before you let yourself begin."
  },
  "two-of-wands": {
   "line": "II · Wands · Fire",
   "title": "The Planner / The Horizon-Gazer",
   "meaning": "Standing at the edge of what you’ve built and looking toward what you haven’t yet reached — the future is genuinely available.",
-  "shadow": "Mistaking the map for the journey — holding the globe of possibility without ever setting foot on the ground."
+  "shadow": "Mistaking the map for the journey — holding the globe of possibility without ever setting foot on the ground.",
+  "reversed": "The vision is real but you are reluctant to commit to it. You can see the horizon but keep finding reasons not to move toward it. The Two of Wands reversed asks what it would cost to stop deliberating and start choosing."
  },
  "three-of-wands": {
   "line": "III · Wands · Fire",
   "title": "The Visionary / The Long View",
   "meaning": "Ships already on the water, vision already in motion — the satisfaction of watching what you dared to start actually move.",
-  "shadow": "Expansion without roots — ambition that has left the ground it grew in."
+  "shadow": "Expansion without roots — ambition that has left the ground it grew in.",
+  "reversed": "Something you set in motion has stalled partway. The ships were sent but haven't returned. The Three of Wands reversed asks for the patience to let what is already underway arrive, and the honesty to see whether what is delayed needs more time or a different course."
  },
  "four-of-wands": {
   "line": "IV · Wands · Fire",
   "title": "The Celebrant / The Homecoming",
   "meaning": "Genuine arrival — something has been completed or begun that deserves to be marked; you are allowed to feel this.",
-  "shadow": "A celebration you can’t fully enter because you’re still watching for what might go wrong."
+  "shadow": "A celebration you can’t fully enter because you’re still watching for what might go wrong.",
+  "reversed": "The celebration is real but you can't quite receive it. There is something — comparison, old grief, the habit of waiting for the other shoe — that keeps you one step outside the joy that is genuinely available. The Four of Wands reversed asks you to step inside the garland and let yourself feel what has actually been earned."
  },
  "five-of-wands": {
   "line": "V · Wands · Fire",
   "title": "The Combatant / The Friction-Field",
   "meaning": "The productive friction of strong wills that have not yet found their synthesis — not all conflict is wrong, but this one needs direction.",
-  "shadow": "Conflict for its own sake — the energy that manufactures opposition when none is needed."
+  "shadow": "Conflict for its own sake — the energy that manufactures opposition when none is needed.",
+  "reversed": "The conflict has moved inside. The battle is no longer with the situation but within you — competing desires, competing voices, competing versions of what you want. The Five of Wands reversed asks which voice actually belongs to you, and which ones are inherited noise."
  },
  "six-of-wands": {
   "line": "VI · Wands · Fire",
   "title": "The Victor / The Recognized",
   "meaning": "A moment of genuine, earned recognition — you did something and it worked; you are allowed to ride through the gate.",
-  "shadow": "The identity that cannot exist without applause."
+  "shadow": "The identity that cannot exist without applause.",
+  "reversed": "The success is real but you cannot fully claim it. You minimize it, deflect the recognition, or find the achievement insufficient before the ink is dry. The Six of Wands reversed asks you to let yourself be seen in your success — not from ego, but from the honest acknowledgment that something went right."
  },
  "seven-of-wands": {
   "line": "VII · Wands · Fire",
   "title": "The Defender / The Stand-Taker",
   "meaning": "Holding the high ground under real pressure — staying with your position because it is genuinely yours.",
-  "shadow": "Defensiveness that has become permanent posture."
+  "shadow": "Defensiveness that has become permanent posture.",
+  "reversed": "You are fighting battles that belong to old versions of this situation. What you are defending may no longer need defending, or may not have been yours to defend in the first place. The Seven of Wands reversed asks: what are you actually protecting, and is it still worth the cost?"
  },
  "eight-of-wands": {
   "line": "VIII · Wands · Fire",
   "title": "The Arrow / The Swift Current",
   "meaning": "Everything moving at once, all in the same direction — the rare alignment of conditions, intention and momentum; now is the time to move.",
-  "shadow": "Speed without aim — mistaking velocity for direction."
+  "shadow": "Speed without aim — mistaking velocity for direction.",
+  "reversed": "The momentum has hit resistance. Something that should be moving freely has stalled — in transit, in communication, in execution. The Eight of Wands reversed asks you to find the specific blockage rather than pushing harder against everything."
  },
  "nine-of-wands": {
   "line": "IX · Wands · Fire",
   "title": "The Last Stand / The Weary Guardian",
   "meaning": "One more step from the end — you have been through the gauntlet and still you are standing.",
-  "shadow": "Resilience that has become its own prison, vigilance that cannot rest."
+  "shadow": "Resilience that has become its own prison, vigilance that cannot rest.",
+  "reversed": "Exhaustion has reached the point where you can no longer tell resilience from stubbornness. You are holding a position past the point of usefulness, unable to rest because rest feels like surrender. The Nine of Wands reversed asks what you would be allowed to put down if finishing was not the same as failing."
  },
  "ten-of-wands": {
   "line": "X · Wands · Fire",
   "title": "The Overburdened / The One Who Carries",
   "meaning": "A weight carried a long way — the question is whether all of it still needs carrying, and whether all of it is yours.",
-  "shadow": "Mistaking the burden for identity."
+  "shadow": "Mistaking the burden for identity.",
+  "reversed": "The weight has become invisible — you no longer feels the burden because it has been normalized. You have built your life around carrying it. The Ten of Wands reversed asks you to put the wands down one at a time and see which ones you actually choose to pick back up."
  },
  "page-of-wands": {
   "line": "Page · Wands · Fire",
   "title": "The Enthusiast / The First Fire",
   "meaning": "Unfiltered excitement at the edge of something new — this energy doesn’t know enough to be cautious yet, and that is its gift.",
-  "shadow": "The beginning that never becomes a middle."
+  "shadow": "The beginning that never becomes a middle.",
+  "reversed": "The enthusiasm is real but it has been discouraged — by past failures, by the voices of people who were more cautious, by your own inner critic. The Page of Wands reversed asks what you would start today if you gave yourself permission to be a beginner without apology."
  },
  "knight-of-wands": {
   "line": "Knight · Wands · Fire",
   "title": "The Charger / The Bold Mover",
   "meaning": "Fearless forward motion with genuine courage — the question is not whether to move but whether to give the movement a true direction.",
-  "shadow": "Action as avoidance — always already on to the next thing."
+  "shadow": "Action as avoidance — always already on to the next thing.",
+  "reversed": "The energy has become reckless. The Knight is charging but has stopped caring where. The Knight of Wands reversed asks you to hold the reins for a moment — not to stop, but to point the horse somewhere real before it bolts again."
  },
  "queen-of-wands": {
   "line": "Queen · Wands · Fire",
   "title": "The Warm Fire / The Magnetic One",
   "meaning": "Fully alive in herself and generous with it — she doesn’t perform warmth; she is warm, and the room responds.",
-  "shadow": "Charisma that has become performance, warmth conditional on being admired."
+  "shadow": "Charisma that has become performance, warmth conditional on being admired.",
+  "reversed": "The confidence has slipped into performance. You are working harder to appear certain than to actually be centered. The Queen of Wands reversed asks you to come home to yourself — not to the version you project, but to the one you actually are."
  },
  "king-of-wands": {
   "line": "King · Wands · Fire",
   "title": "The Visionary Leader / The Purposeful Fire",
   "meaning": "Mastery in service of something larger than the self — the fire that builds rather than consumes.",
-  "shadow": "Vision without patience for those who move more slowly."
+  "shadow": "Vision without patience for those who move more slowly.",
+  "reversed": "The vision is real but is being undermined by impatience or ego. The King of Wands reversed asks: is the ambition still in service of the vision, or has it started to serve the King's need to be right?"
  },
  "ace-of-cups": {
   "line": "Ace · Cups · Water",
   "title": "The Overflowing / The Opened Heart",
   "meaning": "The heart cracking open in the right direction — love or compassion offered without condition, the source that does not calculate what it gives.",
-  "shadow": "Emotional overwhelm that has not yet found form — all feeling, no vessel."
+  "shadow": "Emotional overwhelm that has not yet found form — all feeling, no vessel.",
+  "reversed": "Feeling is present but blocked from expression. You are aware of something opening but keep redirecting it, intellectualizing it, or deciding it is too much. The Ace of Cups reversed asks what you are afraid will happen if you let the feeling all the way through."
  },
  "two-of-cups": {
   "line": "II · Cups · Water",
   "title": "The Meeting / The Recognized Other",
   "meaning": "The moment two people genuinely see each other — equally, cleanly, without either one diminishing.",
-  "shadow": "Merging as avoidance — connection that requires each person to be slightly less than themselves."
+  "shadow": "Merging as avoidance — connection that requires each person to be slightly less than themselves.",
+  "reversed": "Something is imbalanced in this connection. One person gives more than they receive, or the attraction is real but the values beneath it are not aligned. The Two of Cups reversed asks you to be honest about whether this is a genuine meeting of equals, or whether someone has been made smaller to make the connection work."
  },
  "three-of-cups": {
   "line": "III · Cups · Water",
   "title": "The Circle / The Shared Joy",
   "meaning": "The particular joy that only exists when it is shared — the table where everyone present makes each other more.",
-  "shadow": "The in-group that keeps others out, community that requires conformity."
+  "shadow": "The in-group that keeps others out, community that requires conformity.",
+  "reversed": "The community or celebration is present but you are standing slightly outside it. Something — comparison, an old wound, the sense of not quite belonging — is keeping you from stepping into the circle. The Three of Cups reversed asks what you are waiting for before you let yourself be received."
  },
  "four-of-cups": {
   "line": "IV · Cups · Water",
   "title": "The Discontented / The Inward-Turned",
   "meaning": "Genuine introspection at a crossroads — the necessary pause before a reorientation; the cup being offered is real.",
-  "shadow": "Apathy mistaken for wisdom, withdrawal that calls itself discernment."
+  "shadow": "Apathy mistaken for wisdom, withdrawal that calls itself discernment.",
+  "reversed": "What was needed has been done — the withdrawal, the reflection, the quiet stocktaking. Now you are ready to re-engage, but hasn't fully turned toward what is being offered. The Four of Cups reversed says: the answer has been knocking. Open the door."
  },
  "five-of-cups": {
   "line": "V · Cups · Water",
   "title": "The Mourner / The One Facing the Spillage",
   "meaning": "Real loss, genuinely felt — honest grief that deserves to be honored; the two standing cups will still be there when the mourning has had its time.",
-  "shadow": "Grief that has become a permanent address."
+  "shadow": "Grief that has become a permanent address.",
+  "reversed": "The worst of the grief has passed and you are beginning — slowly, unevenly — to turn. The Five of Cups reversed doesn't ask for forced positivity; it asks for the small movement of the head that acknowledges what remains."
  },
  "six-of-cups": {
   "line": "VI · Cups · Water",
   "title": "The Memory / The Innocent Return",
   "meaning": "The warmth of what was genuinely good — the past has a gift for the present, if the present does not try to become the past.",
-  "shadow": "The past used as escape from the present."
+  "shadow": "The past used as escape from the present.",
+  "reversed": "You are more invested in the past than the present. You are measuring current experiences against remembered ones, and nothing in the present can compete with the gilded version of what was. The Six of Cups reversed asks you to let the memory be a touchstone rather than a residence."
  },
  "seven-of-cups": {
   "line": "VII · Cups · Water",
   "title": "The Dreamer / The Overwhelmed Chooser",
   "meaning": "More real options than can be held — not scarcity but abundance; the gift and the challenge is the requirement to choose.",
-  "shadow": "Fantasy as a full-time occupation, preferring possibility to any particular reality."
+  "shadow": "Fantasy as a full-time occupation, preferring possibility to any particular reality.",
+  "reversed": "The fog of options is clearing. You are beginning to see which of the cups actually holds what you want versus what you imagined. The Seven of Cups reversed says: clarity is available now — and with it comes the responsibility to actually choose."
  },
  "eight-of-cups": {
   "line": "VIII · Cups · Water",
   "title": "The Walker-Away / The One Who Leaves at Midnight",
   "meaning": "The courageous walk into the unknown — leaving not from defeat but because what was once enough is no longer.",
-  "shadow": "Leaving as a lifestyle, exiting before things can require more depth."
+  "shadow": "Leaving as a lifestyle, exiting before things can require more depth.",
+  "reversed": "You know you should leave or let go, but can't bring yourself to take the step. The Eight of Cups reversed asks: what is the one real thing keeping you here, and is it enough?"
  },
  "nine-of-cups": {
   "line": "IX · Cups · Water",
   "title": "The Fulfilled / The Satisfied One",
   "meaning": "Genuine satisfaction — the wish already granted; the only question is whether you will let yourself receive it.",
-  "shadow": "Contentment that has become complacency."
+  "shadow": "Contentment that has become complacency.",
+  "reversed": "Something is blocking you from receiving what is genuinely available. You have the satisfaction in front of you — maybe a wish that has actually come true — but you can't feel it fully. The Nine of Cups reversed asks: what would it mean to actually be content here? What is the obstacle to just letting this be good?"
  },
  "ten-of-cups": {
   "line": "X · Cups · Water",
   "title": "The Fulfilled Home / The Real Happiness",
   "meaning": "The emotional inheritance you always deserved — belonging, warmth, people who are genuinely glad you exist.",
-  "shadow": "The performance of happiness that papers over what is actually happening."
+  "shadow": "The performance of happiness that papers over what is actually happening.",
+  "reversed": "The picture looks complete from the outside but something essential is missing or misaligned. The Ten of Cups reversed asks you to name honestly what is not working before the gap becomes a fracture."
  },
  "page-of-cups": {
   "line": "Page · Cups · Water",
   "title": "The Dreamy Messenger / The Emotional Beginner",
   "meaning": "The surprise of the heart — a feeling that arrives from nowhere and speaks; the willingness to be moved without knowing why.",
-  "shadow": "Feeling as performance, sensitivity displayed rather than felt."
+  "shadow": "Feeling as performance, sensitivity displayed rather than felt.",
+  "reversed": "The emotional sensitivity is real but is being managed rather than felt. You have learned to process feelings at a safe distance — analyzing you, narrating you, performing you — without actually letting you land. The Page of Cups reversed asks what it would feel like to just be moved, without a story attached."
  },
  "knight-of-cups": {
   "line": "Knight · Cups · Water",
   "title": "The Romantic / The One Who Follows the Heart",
   "meaning": "Riding toward what is beautiful and true — the courage of the romantic is real, even when the romance is impractical.",
-  "shadow": "Idealism that cannot survive contact with reality."
+  "shadow": "Idealism that cannot survive contact with reality.",
+  "reversed": "The idealism has curdled into moodiness or withdrawal. The Knight came toward the beautiful thing but it was harder than expected, and now he is retreating into feeling rather than engaging with it. The Knight of Cups reversed asks: is the withdrawal honest, or is it a way of protecting the ideal from being tested?"
  },
  "queen-of-cups": {
   "line": "Queen · Cups · Water",
   "title": "The Emotional Depth / The Compassionate Container",
   "meaning": "The rarest kind of listening — a presence that makes others feel held, by someone deeply connected to her own interior life.",
-  "shadow": "Empathy without boundaries, absorbing everyone’s feelings until nothing of yourself is left."
+  "shadow": "Empathy without boundaries, absorbing everyone’s feelings until nothing of yourself is left.",
+  "reversed": "Your emotional depths are present but you are not trusting them. Either the feelings are being suppressed for the sake of others, or you have spent so long attending to everyone else's emotional world that you have lost track of your own. The Queen of Cups reversed asks: when did you last check in with how you actually feel?"
  },
  "king-of-cups": {
   "line": "King · Cups · Water",
   "title": "The Feeling Authority / The Master of the Interior",
   "meaning": "Maturity in the realm of feeling — the ability to feel deeply without being swept away, to lead from a place both warm and clear.",
-  "shadow": "Emotional control that has become manipulation."
+  "shadow": "Emotional control that has become manipulation.",
+  "reversed": "The emotional control is slipping, or it has become rigidity. Either you are suppressing so much that something is leaking through, or you have used emotional mastery as a way of never being vulnerable. The King of Cups reversed asks: is the steadiness genuine, or is it a way of never having to be affected?"
  },
  "ace-of-swords": {
   "line": "Ace · Swords · Air",
   "title": "The Breakthrough / The First Truth",
   "meaning": "The clarity that arrives like a blade parting fog — sudden, total, uncommissioned; the kind of knowing that cannot be unknown.",
-  "shadow": "Truth deployed without compassion."
+  "shadow": "Truth deployed without compassion.",
+  "reversed": "The clarity is available but you are not ready to receive it — or is afraid of what it will require you to do once it has arrived. The Ace of Swords reversed asks what you are protecting by staying in the fog."
  },
  "two-of-swords": {
   "line": "II · Swords · Air",
   "title": "The Stalemate / The Blindfolded One",
   "meaning": "Holding two impossibilities in balance — the real question is not which sword to drop but whether you can bear to look.",
-  "shadow": "The decision delayed until it makes itself."
+  "shadow": "The decision delayed until it makes itself.",
+  "reversed": "The blindfold is off — or coming off. You can now see the choice, and it is not easier than you feared. The Two of Swords reversed asks: now that you can see clearly, what are you waiting for?"
  },
  "three-of-swords": {
   "line": "III · Swords · Air",
   "title": "The Heartbreak / The Honest Wound",
   "meaning": "The clean cut of genuine heartbreak — nothing is wrong with this pain; it means something real was here.",
-  "shadow": "Grief made permanent, the swords left in place."
+  "shadow": "Grief made permanent, the swords left in place.",
+  "reversed": "The acute pain has passed but the grief is lingering. You are in the slow work of recovery — not over it, but moving through it. The Three of Swords reversed asks for patience with the process, and for the recognition that healing is not linear."
  },
  "four-of-swords": {
   "line": "IV · Swords · Air",
   "title": "The Resting Sword / The Necessary Retreat",
   "meaning": "Deliberate, strategic stillness — rest as an act of self-knowledge; the swords are set aside, not abandoned.",
-  "shadow": "Rest that becomes hiding."
+  "shadow": "Rest that becomes hiding.",
+  "reversed": "The period of rest has done its work. You have recovered enough to begin re-engaging. The Four of Swords reversed says: it is safe to return now. Reach for the sword."
  },
  "five-of-swords": {
   "line": "V · Swords · Air",
   "title": "The Hollow Win / The Cost of Conquest",
   "meaning": "The price of victory when it has cost something that mattered — what exactly has been won here?",
-  "shadow": "Winning as an end in itself."
+  "shadow": "Winning as an end in itself.",
+  "reversed": "The conflict is resolving, slowly and imperfectly. Reconciliation is available — not full, not clean, but real. The Five of Swords reversed asks you to decide whether you are more interested in being right or in being in relationship."
  },
  "six-of-swords": {
   "line": "VI · Swords · Air",
   "title": "The Crossing / The One Moving Through",
   "meaning": "The slow ferry across difficult water — not triumphant, but real; you are being carried toward what comes next.",
-  "shadow": "Departure without closure."
+  "shadow": "Departure without closure.",
+  "reversed": "The passage is stalled. You have stepped into the boat but the boat will not move — because something from the old shore is still being held onto. The Six of Swords reversed asks: what would you have to release to allow the crossing to complete?"
  },
  "seven-of-swords": {
   "line": "VII · Swords · Air",
   "title": "The Strategist / The One Slipping Away",
   "meaning": "Strategic action where direct confrontation would cost too much — the question is what you are trying to get away with.",
-  "shadow": "Cleverness in service of avoidance."
+  "shadow": "Cleverness in service of avoidance.",
+  "reversed": "The strategy has collapsed, or your conscience is making itself heard. Something that was concealed is becoming visible. The Seven of Swords reversed asks: what would it cost to just be honest about this?"
  },
  "eight-of-swords": {
   "line": "VIII · Swords · Air",
   "title": "The Self-Bound / The One Who Can Leave",
   "meaning": "Bound by perception, not by fact — the bindings loosen the moment you stop believing they are permanent.",
-  "shadow": "The prison that requires the prisoner’s cooperation."
+  "shadow": "The prison that requires the prisoner’s cooperation.",
+  "reversed": "The blindfold is beginning to slip. You are starting to see — tentatively, but genuinely — that the constraints you believed were external are at least partly constructed. The Eight of Swords reversed says: the way out is already present. Take one step toward it."
  },
  "nine-of-swords": {
   "line": "IX · Swords · Air",
   "title": "The Night Mind / The 3am Voice",
   "meaning": "The gap between the fear and the fact — the suffering is genuine, but its source is the mind feeding on itself.",
-  "shadow": "The catastrophe that lives only in the mind."
+  "shadow": "The catastrophe that lives only in the mind.",
+  "reversed": "The anxiety is lifting, slowly. The worst of the mental anguish is beginning to ease, or you are starting to find the thoughts manageable. The Nine of Swords reversed asks for gentleness in this recovery — the mind has been through something, and healing is not immediate."
  },
  "ten-of-swords": {
   "line": "X · Swords · Air",
   "title": "The Final Collapse / The Bottom That Holds",
   "meaning": "The bottom has been reached — what is over is completely over, and that is the ground the next thing grows from.",
-  "shadow": "Staying fallen because getting up would mean it actually happened."
+  "shadow": "Staying fallen because getting up would mean it actually happened.",
+  "reversed": "The worst has passed, or is passing. You are beginning to lift your head from the ground — not triumphant, not healed, but alive and no longer falling. The Ten of Swords reversed says: the bottom held you. Now, slowly, rise."
  },
  "page-of-swords": {
   "line": "Page · Swords · Air",
   "title": "The Curious Mind / The Vigilant Beginner",
   "meaning": "The delight of a new idea — sharp, fast, unafraid to ask the question no one else has thought to ask.",
-  "shadow": "Intelligence in service of surveillance."
+  "shadow": "Intelligence in service of surveillance.",
+  "reversed": "The mental energy is scattered or is being used in service of anxiety rather than curiosity. You are gathering information without integrating it, or using your intelligence to build a case rather than reach a truth. The Page of Swords reversed asks: what is all this thinking actually in service of?"
  },
  "knight-of-swords": {
   "line": "Knight · Swords · Air",
   "title": "The Charger / The Relentless Mind",
   "meaning": "Absolute commitment to a direction — the question is whether the destination was named before the charge began.",
-  "shadow": "Speed and force without the pause that separates courage from recklessness."
+  "shadow": "Speed and force without the pause that separates courage from recklessness.",
+  "reversed": "The force is present but it has become aggression rather than drive. You are pushing hard without checking whether the direction is still right. The Knight of Swords reversed asks: what are you charging toward, and what would you do if you arrived and found it wasn't what you expected?"
  },
  "queen-of-swords": {
   "line": "Queen · Swords · Air",
   "title": "The Clear Eye / The One Who Will Not Be Fooled",
   "meaning": "Sees without distortion, speaks without cruelty — the truth delivered with just enough warmth to be received.",
-  "shadow": "Clarity that has become coldness."
+  "shadow": "Clarity that has become coldness.",
+  "reversed": "The clarity has sharpened into bitterness. Past pain is distorting current perception. The Queen of Swords reversed asks: is the harshness protecting you, or is it running you?"
  },
  "king-of-swords": {
   "line": "King · Swords · Air",
   "title": "The Intellectual Authority / The Ethical Mind",
   "meaning": "The mind that has earned its authority — holding himself to the same standard he holds others.",
-  "shadow": "Law without mercy, logic used as a weapon."
+  "shadow": "Law without mercy, logic used as a weapon.",
+  "reversed": "The authority has become tyranny, or the rigorous mind has turned against you. The King of Swords reversed asks: who is the authority in this situation actually serving?"
  },
  "ace-of-pentacles": {
   "line": "Ace · Pentacles · Earth",
   "title": "The Seed of Form / The Material Beginning",
   "meaning": "A real, tangible opportunity — not a dream but a seed with actual growing potential, if it is planted in real ground.",
-  "shadow": "Opportunity mistaken for certainty."
+  "shadow": "Opportunity mistaken for certainty.",
+  "reversed": "The opportunity is real but the conditions are not yet right — or you are not yet ready to receive it. The Ace of Pentacles reversed asks whether the timing is genuinely off, or whether you are finding reasons to delay because starting something real requires real accountability."
  },
  "two-of-pentacles": {
   "line": "II · Pentacles · Earth",
   "title": "The Juggler / The One Keeping Everything Moving",
   "meaning": "The skill of holding competing demands in motion — the question is whether you are juggling toward something or just to avoid dropping.",
-  "shadow": "The permanent juggle that substitutes for a decision."
+  "shadow": "The permanent juggle that substitutes for a decision.",
+  "reversed": "Something has been dropped, or is about to be. The juggle is no longer sustainable. The Two of Pentacles reversed asks you to look honestly at which balls are actually worth catching, and which ones can be allowed to fall."
  },
  "three-of-pentacles": {
   "line": "III · Pentacles · Earth",
   "title": "The Craftsperson / The Collaborative Builder",
   "meaning": "Skill meets structure meets collaboration — what is being built is larger than any one person, and that is the point.",
-  "shadow": "Mastery that has become an ego."
+  "shadow": "Mastery that has become an ego.",
+  "reversed": "The collaboration has broken down, or your skill is not being applied with integrity. The Three of Pentacles reversed asks: what would it take to get all three figures working from the same plan again?"
  },
  "four-of-pentacles": {
   "line": "IV · Pentacles · Earth",
   "title": "The Holder / The One Who Will Not Let Go",
   "meaning": "The understandable desire for stability — the question is whether the grip has become so tight the held thing cannot breathe.",
-  "shadow": "Security as hoarding."
+  "shadow": "Security as hoarding.",
+  "reversed": "The grip is loosening — either by choice or by necessity. The Four of Pentacles reversed asks you to decide whether you are releasing from fear or from wisdom, and then to release deliberately."
  },
  "five-of-pentacles": {
   "line": "V · Pentacles · Earth",
   "title": "The Excluded / The One in the Cold",
   "meaning": "Real difficulty, genuinely felt — the window is lit and the door is not locked, but you have not yet looked up.",
-  "shadow": "Hardship as identity."
+  "shadow": "Hardship as identity.",
+  "reversed": "The worst of the material or emotional hardship is passing. The light that was always there is becoming visible. The Five of Pentacles reversed asks you to look up — to notice what support, resource, or warmth has been available that fear or shame had made invisible."
  },
  "six-of-pentacles": {
   "line": "VI · Pentacles · Earth",
   "title": "The Giver / The Balance of Exchange",
   "meaning": "Resources moving from where there is more to where there is less — is this freely given, and freely received?",
-  "shadow": "Generosity with conditions attached."
+  "shadow": "Generosity with conditions attached.",
+  "reversed": "The exchange is unequal or conditional. Generosity has become leverage, or you are giving so much that you have created an imbalance that serves no one. The Six of Pentacles reversed asks: what are the strings attached to this exchange, and whose hands are they in?"
  },
  "seven-of-pentacles": {
   "line": "VII · Pentacles · Earth",
   "title": "The Assessor / The Long-View Tender",
   "meaning": "The honest pause midway through a long effort — not to quit, but to look at what has grown and calibrate.",
-  "shadow": "Satisfaction perpetually deferred."
+  "shadow": "Satisfaction perpetually deferred.",
+  "reversed": "The investment has not returned what was hoped, or you are questioning whether the effort is aligned with what you actually want. The Seven of Pentacles reversed asks not for more effort, but for an honest reassessment — was this the right crop to plant?"
  },
  "eight-of-pentacles": {
   "line": "VIII · Pentacles · Earth",
   "title": "The Apprentice / The One Doing the Work",
   "meaning": "Skill built through repetition rather than inspiration — craft is the accumulated honesty of showing up.",
-  "shadow": "Perfectionism as avoidance."
+  "shadow": "Perfectionism as avoidance.",
+  "reversed": "The diligence has lost its meaning. You are going through the motions without engagement, or has become so focused on perfect execution that you have lost sight of what the work is for. The Eight of Pentacles reversed asks: do you still care about what you are making?"
  },
  "nine-of-pentacles": {
   "line": "IX · Pentacles · Earth",
   "title": "The Self-Made / The One Who Has Arrived in Themselves",
   "meaning": "The pleasure of a life built by your own hand — the satisfaction of having made something real and standing inside it.",
-  "shadow": "Independence that has become loneliness."
+  "shadow": "Independence that has become loneliness.",
+  "reversed": "The self-sufficiency is real but it is costing you connection or joy. You have built something good and are unable to enjoy it because receiving pleasure, help, or love feels like acknowledging need. The Nine of Pentacles reversed asks: what would it mean to let yourself have what you've actually built?"
  },
  "ten-of-pentacles": {
   "line": "X · Pentacles · Earth",
   "title": "The Legacy / The Enduring Structure",
   "meaning": "The multigenerational view — what is being built here that will outlast the building of it.",
-  "shadow": "Security that becomes rigidity."
+  "shadow": "Security that becomes rigidity.",
+  "reversed": "The legacy is cracking. What was meant to provide security has become a source of conflict or constraint. The Ten of Pentacles reversed asks whether the structure being maintained was built for the people currently inside it, or for a version of the family or the institution that no longer exists."
  },
  "page-of-pentacles": {
   "line": "Page · Pentacles · Earth",
   "title": "The Student / The Practical Dreamer",
   "meaning": "Holding the coin of a new opportunity up to the light — genuinely curious and willing to learn; the beginning of mastery.",
-  "shadow": "Perpetual preparation as a way of avoiding beginning."
+  "shadow": "Perpetual preparation as a way of avoiding beginning.",
+  "reversed": "The curiosity and the ambition are present but you are stuck in preparation. You are studying instead of doing, planning instead of starting. The Page of Pentacles reversed asks: at what point does the preparation become more comfortable than the thing being prepared for?"
  },
  "knight-of-pentacles": {
   "line": "Knight · Pentacles · Earth",
   "title": "The Reliable One / The Slow and Certain Mover",
   "meaning": "The unglamorous, necessary work of showing up in the same direction every day — not the hero, but the one who gets there.",
-  "shadow": "Reliability that has become stagnation."
+  "shadow": "Reliability that has become stagnation.",
+  "reversed": "The methodical approach has become a standstill. The Knight is not moving, or is moving so slowly that the destination has stopped mattering. The Knight of Pentacles reversed asks: is this patience, or is it the avoidance of a change that is genuinely being resisted?"
  },
  "queen-of-pentacles": {
   "line": "Queen · Pentacles · Earth",
   "title": "The Practical Nurturer / The One Who Makes Things Real",
   "meaning": "Care that makes itself felt in real and physical ways — the practical love that asks what is needed and then provides it.",
-  "shadow": "Provision without presence."
+  "shadow": "Provision without presence.",
+  "reversed": "The care has been misdirected or overextended. You are giving so much of your practical energy to others that you have nothing left for yourself, or the care has become control — managing the environment as a substitute for actual presence. The Queen of Pentacles reversed asks: who is taking care of you?"
  },
  "king-of-pentacles": {
   "line": "King · Pentacles · Earth",
   "title": "The Builder / The Reliable Provider",
   "meaning": "Mastery in the material world — someone who has built something durable and knows how to steward it.",
-  "shadow": "Wealth as identity."
+  "shadow": "Wealth as identity.",
+  "reversed": "The ambition has become possession. The King is holding his kingdom too tightly — using resources, security, or material success as a way of controlling what cannot be controlled. The King of Pentacles reversed asks: what are you holding that doesn't actually belong to you?"
  }
 }
