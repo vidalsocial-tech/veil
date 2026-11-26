@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { CONFIG } from '../config';
 import { shuffle } from '../reading/logic';
 import { LiveMoon, type LiveMoonHandle } from '../components/LiveMoon';
-import { PHASES, phaseIndex } from '../data/moon';
+import { PHASES, moonFraction, phaseIndex } from '../data/moon';
 import { cubicBezier } from '../lib/ease';
 
 /**
@@ -13,7 +13,7 @@ import { cubicBezier } from '../lib/ease';
  */
 export function Preparation({ active, onDone }: { active: boolean; onDone: () => void }) {
   const landOn = useMemo(() => phaseIndex(), []);
-  const target = landOn / 8;                      // the canonical shape for tonight's phase
+  const target = useMemo(() => moonFraction(), []); // tonight's real shape
   const [landed, setLanded] = useState(false);
   const moon = useRef<LiveMoonHandle>(null);
   const done = useRef(onDone);
@@ -62,12 +62,6 @@ export function Preparation({ active, onDone }: { active: boolean; onDone: () =>
       <div className="moon-caption" aria-live="polite">
         Tonight · {PHASES[landOn].label}
       </div>
-      <div className="prep-title">{CONFIG.copy.prepTitle}</div>
-      <p className="prep-sub">
-        {CONFIG.copy.prepSub[0]}
-        <br />
-        {CONFIG.copy.prepSub[1]}
-      </p>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import { useMemo, useState, type ReactNode } from 'react';
 import type { DrawnCard, Focus } from './data/types';
-import { currentPhase } from './data/moon';
 import { Atmosphere } from './components/Atmosphere';
 import { Landing } from './screens/Landing';
 import { FocusScreen } from './screens/FocusScreen';
@@ -46,7 +45,6 @@ export default function App() {
   });
   const [detailFrom, setDetailFrom] = useState<ExploreFrom>('library');
   const [aboutFrom, setAboutFrom] = useState<ExploreFrom>('library');
-  const phase = useMemo(() => currentPhase(), []);
 
   const goTo = (next: ScreenId) => {
     setScreen((prev) => {
@@ -135,7 +133,7 @@ export default function App() {
       {screenEl('draw', 's-draw', <Draw cards={cards} onAllRevealed={() => goTo('reading')} />)}
       {screenEl('reading', 's-reading', focus &&
         <Reading
-          cards={cards} focus={focus} answers={answers} stanzas={stanzas} phase={phase}
+          cards={cards} focus={focus} answers={answers} stanzas={stanzas}
           onReshuffle={onReshuffle}
           onShare={() => void shareReading(cards)}
         />)}

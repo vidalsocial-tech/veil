@@ -69,12 +69,10 @@ export const CONFIG = {
     heroHint: '78 cards · The complete tarot',
     focusTitle: 'What brings you here today?',
     focusSub: 'Choose a focus to begin.',
-    prepTitle: 'Something is being chosen for you',
-    prepSub: ['Be still.', 'The cards are listening.'],
     shuffle: 'The cards are listening …',
     draw: ['Three cards have been drawn.', 'Tap each one to reveal.'],
     yourCards: { eyebrow: 'Your cards', title: 'Three cards. One story.', body: ['Each card answers what you shared.', 'Turn the page to see how.'] },
-    whereYouAre: { eyebrow: 'Where you are', footer: 'The cards were drawn with this in mind.' },
+    whereYouAre: { eyebrow: 'Where you are' },
     hint: 'Swipe or tap to continue',
   },
 } as const;

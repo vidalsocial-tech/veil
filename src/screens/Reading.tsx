@@ -2,27 +2,25 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { CONFIG } from '../config';
 import type { DrawnCard, Focus } from '../data/types';
 import { FOCUS_LINE, QUESTIONS } from '../data/questions';
-import { moonReading } from '../data/moonReading';
-import type { Phase } from '../data/moon';
+import { veilLeaning } from '../data/veilLeaning';
 import { Logo, cardImage } from '../components/Logo';
-import { Moon } from '../components/Moon';
+import { VeilDoor } from '../components/VeilDoor';
 
 interface Props {
   cards: DrawnCard[];
   focus: Focus;
   answers: number[];
   stanzas: string[][];
-  phase: Phase;
   onReshuffle: () => void;
   onShare: () => void;
 }
 
 /**
  * Figma PR1–PR6: the reading as a stack of six pages.
- * Your cards → Where you are → card I → card II → card III → Tonight's moon.
+ * Your cards → Where you are → card I → card II → card III → The Veil is leaning.
  * Swipe, tap the card, use the arrows or ←/→ keys to turn the page.
  */
-export function Reading({ cards, focus, answers, stanzas, phase, onReshuffle, onShare }: Props) {
+export function Reading({ cards, focus, answers, stanzas, onReshuffle, onShare }: Props) {
   const [page, setPage] = useState(0);
   const [drag, setDrag] = useState(0);
   const start = useRef<{ x: number; y: number; t: number } | null>(null);
@@ -30,9 +28,9 @@ export function Reading({ cards, focus, answers, stanzas, phase, onReshuffle, on
 
   const pages: ReactNode[] = [
     <YourCards key="cards" cards={cards} />,
-    <WhereYouAre key="where" focus={focus} answers={answers} phase={phase} />,
+    <WhereYouAre key="where" focus={focus} answers={answers} />,
     ...cards.map((c, i) => <CardPage key={c.slug} card={c} index={i} lines={stanzas[i]} />),
-    <MoonReading key="moon" cards={cards} phase={phase} onReshuffle={onReshuffle} onShare={onShare} />,
+    <VeilLeaning key="veil" cards={cards} onReshuffle={onReshuffle} onShare={onShare} />,
   ];
   const last = pages.length - 1;
 
@@ -145,7 +143,7 @@ function YourCards({ cards }: { cards: DrawnCard[] }) {
   );
 }
 
-function WhereYouAre({ focus, answers, phase }: { focus: Focus; answers: number[]; phase: Phase }) {
+function WhereYouAre({ focus, answers }: { focus: Focus; answers: number[] }) {
   const qs = QUESTIONS[focus];
   return (
     <>
@@ -154,8 +152,6 @@ function WhereYouAre({ focus, answers, phase }: { focus: Focus; answers: number[
       <div className="page-sentences">
         {qs.map((q, i) => <p key={i}>{q.answers[answers[i]]?.sentence}</p>)}
       </div>
-      <p className="eyebrow small">Tonight · {phase.label}</p>
-      <p className="page-footnote">{CONFIG.copy.whereYouAre.footer}</p>
     </>
   );
 }
@@ -174,19 +170,19 @@ function CardPage({ card, index, lines }: { card: DrawnCard; index: number; line
   );
 }
 
-/** Figma "Moon Phases · Closing slide": tonight's moon, read for your focus and third answer. */
-function MoonReading({ cards, phase, onReshuffle, onShare }: {
-  cards: DrawnCard[]; phase: Phase; onReshuffle: () => void; onShare: () => void;
+/** Figma "Veil Leaning · Closing slide": where the Veil is leaning, read from the spread's shape. */
+function VeilLeaning({ cards, onReshuffle, onShare }: {
+  cards: DrawnCard[]; onReshuffle: () => void; onShare: () => void;
 }) {
-  const r = moonReading(cards, phase.key);
+  const r = veilLeaning(cards);
   return (
-    <div className="moon-reading" data-pattern={r.pattern} data-reversed={r.reversed}>
-      <p className="mr-eyebrow">Tonight’s moon</p>
-      <Moon phase={phase.key} className="mr-moon" />
-      <h2 className="mr-phase">{phase.label}</h2>
-      <p className="mr-tagline">{r.tagline}</p>
-      <p className="mr-body">{r.body}</p>
-      <div className="page-actions mr-actions">
+    <div className="veil-leaning" data-pattern={r.pattern} data-reversed={r.reversed} data-door={r.door}>
+      <p className="vl-eyebrow">The Veil is leaning</p>
+      <VeilDoor state={r.door} className="vl-door" />
+      <h2 className="vl-title">{r.title}</h2>
+      <p className="vl-whisper">{r.whisper}</p>
+      <p className="vl-body">{r.body}</p>
+      <div className="page-actions vl-actions">
         <button className="btn-gold" onClick={onReshuffle}>Reshuffle</button>
         {CONFIG.showShare && (
           <button className="btn-ghost" onClick={onShare}>
